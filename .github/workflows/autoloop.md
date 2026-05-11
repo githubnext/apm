@@ -11,7 +11,7 @@ description: |
   - Maintains a single draft PR per program that accumulates all accepted iterations
 
 on:
-  schedule: every 6h
+  schedule: every 30m
   workflow_dispatch:
     inputs:
       program:

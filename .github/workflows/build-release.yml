@@ -78,6 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_MODELS_PAT }}
           GITHUB_APM_PAT: ${{ secrets.GH_CLI_PAT }}
+          USERPROFILE: ${{ runner.temp }}
         run: uv run pytest tests/unit tests/test_console.py -n auto --dist worksteal
 
       # Smoke runs only at promotion boundaries:

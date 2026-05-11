@@ -118,6 +118,9 @@ steps:
 
 source: githubnext/autoloop
 engine: copilot
+
+features:
+  copilot-requests: true
 ---
 
 # Autoloop
@@ -880,4 +883,3 @@ The `delta` is **signed by metric direction**: for `higher`-direction programs a
 
 > ❌ **Do NOT modify files outside the program's Target list.**
 > The Target section of the program file is the allowlist. Touching anything else (including the evaluation script or the program file itself) is forbidden.
-

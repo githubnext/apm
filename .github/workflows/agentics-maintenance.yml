@@ -104,7 +104,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -149,7 +149,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -178,7 +178,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -192,21 +192,17 @@ jobs:
             const { main } = require('${{ runner.temp }}/gh-aw/actions/check_team_member.cjs');
             await main();
 
-      - name: Setup Go
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Build gh-aw
-        run: make build
+          version: v0.72.1
 
       - name: Run operation
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_AW_OPERATION: ${{ inputs.operation }}
-          GH_AW_CMD_PREFIX: ./gh-aw
+          GH_AW_CMD_PREFIX: gh aw
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -234,7 +230,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -280,7 +276,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -324,7 +320,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -338,19 +334,15 @@ jobs:
             const { main } = require('${{ runner.temp }}/gh-aw/actions/check_team_member.cjs');
             await main();
 
-      - name: Setup Go
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Build gh-aw
-        run: make build
+          version: v0.72.1
 
       - name: Create missing labels
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
-          GH_AW_CMD_PREFIX: ./gh-aw
+          GH_AW_CMD_PREFIX: gh aw
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -374,7 +366,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -388,14 +380,10 @@ jobs:
             const { main } = require('${{ runner.temp }}/gh-aw/actions/check_team_member.cjs');
             await main();
 
-      - name: Setup Go
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Build gh-aw
-        run: make build
+          version: v0.72.1
 
       - name: Restore activity report logs cache
         id: activity_report_logs_cache
@@ -411,7 +399,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_AW_CMD_PREFIX: ./gh-aw
+          GH_AW_CMD_PREFIX: gh aw
         run: |
           ${GH_AW_CMD_PREFIX} logs \
             --repo "${{ github.repository }}" \
@@ -482,7 +470,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -519,7 +507,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -533,19 +521,15 @@ jobs:
             const { main } = require('${{ runner.temp }}/gh-aw/actions/check_team_member.cjs');
             await main();
 
-      - name: Setup Go
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Build gh-aw
-        run: make build
+          version: v0.72.1
 
       - name: Validate workflows and file issue on findings
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
-          GH_AW_CMD_PREFIX: ./gh-aw
+          GH_AW_CMD_PREFIX: gh aw
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -569,22 +553,18 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Go
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Build gh-aw
-        run: make build
+          version: v0.72.1
 
       - name: Compile workflows
         run: |
-          ./gh-aw compile --validate --validate-images --verbose
+          gh aw compile --validate --validate-images --verbose
           echo "✓ All workflows compiled successfully"
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -616,7 +596,7 @@ jobs:
           node-version: '22'
 
       - name: Setup Scripts
-        uses: ./actions/setup
+        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 

@@ -1,0 +1,22 @@
+{
+  "last_run": "2026-05-12T13:08:47Z",
+  "validated_commands": {
+    "test_unit": "uv run --with pytest pytest tests/unit -q --tb=short (note: PyPy 3.10 env; some tests fail due to env, not code)",
+    "lint_check": "uv run --with ruff ruff check src/ tests/ && uv run --with ruff ruff format --check src/ tests/",
+    "lint_fix": "uv run --with ruff ruff check src/ tests/ --fix && uv run --with ruff ruff format src/ tests/"
+  },
+  "env_notes": "PyPy 3.10 env -- tracemalloc unavailable, jsonschema dev dep fails to build. CI uses CPython. Ignore PyPy-specific failures.",
+  "tasks_last_run": {
+    "task1": "2026-05-12",
+    "task2": "2026-05-12",
+    "task3": "2026-05-12",
+    "task7": "2026-05-12"
+  },
+  "completed_prs": [],
+  "testing_backlog": [
+    {"file": "src/apm_cli/core/conflict_detector.py", "priority": "medium", "reason": "0 tests, MCP conflict detection logic"},
+    {"file": "src/apm_cli/core/token_manager.py", "priority": "high", "reason": "0 tests, 497 lines, auth-critical"},
+    {"file": "src/apm_cli/commands/list_cmd.py", "priority": "low", "reason": "0 tests, 101 lines"},
+    {"file": "src/apm_cli/commands/self_update.py", "priority": "low", "reason": "0 tests, 190 lines"}
+  ]
+}

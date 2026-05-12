@@ -35,11 +35,6 @@ name: Agentic Maintenance
 on:
   schedule:
     - cron: "37 */6 * * *"  # Every 6 hours (based on minimum expires: 2 days)
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/*.md'
   workflow_dispatch:
     inputs:
       operation:
@@ -60,6 +55,7 @@ on:
           - 'clean_cache_memories'
           - 'update_pull_request_branches'
           - 'validate'
+          - 'forecast'
       run_url:
         description: 'Run URL or run ID to replay safe outputs from (e.g. https://github.com/owner/repo/actions/runs/12345 or 12345). Required when operation is safe_outputs.'
         required: false
@@ -68,7 +64,7 @@ on:
   workflow_call:
     inputs:
       operation:
-        description: 'Optional maintenance operation to run (disable, enable, update, upgrade, safe_outputs, create_labels, activity_report, close_agentic_workflows_issues, clean_cache_memories, update_pull_request_branches, validate)'
+        description: 'Optional maintenance operation to run (disable, enable, update, upgrade, safe_outputs, create_labels, activity_report, close_agentic_workflows_issues, clean_cache_memories, update_pull_request_branches, validate, forecast)'
         required: false
         type: string
         default: ''
@@ -96,15 +92,8 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: Checkout actions folder
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          sparse-checkout: |
-            actions
-          persist-credentials: false
-
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -141,15 +130,8 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Checkout actions folder
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          sparse-checkout: |
-            actions
-          persist-credentials: false
-
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -163,7 +145,7 @@ jobs:
             await main();
 
   run_operation:
-    if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.operation != '' && inputs.operation != 'safe_outputs' && inputs.operation != 'create_labels' && inputs.operation != 'activity_report' && inputs.operation != 'close_agentic_workflows_issues' && inputs.operation != 'clean_cache_memories' && inputs.operation != 'update_pull_request_branches' && inputs.operation != 'validate' && (!(github.event.repository.fork)) }}
+    if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.operation != '' && inputs.operation != 'safe_outputs' && inputs.operation != 'create_labels' && inputs.operation != 'activity_report' && inputs.operation != 'close_agentic_workflows_issues' && inputs.operation != 'clean_cache_memories' && inputs.operation != 'update_pull_request_branches' && inputs.operation != 'validate' && inputs.operation != 'forecast' && (!(github.event.repository.fork)) }}
     runs-on: ubuntu-slim
     permissions:
       actions: write
@@ -178,7 +160,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -193,9 +175,9 @@ jobs:
             await main();
 
       - name: Install gh-aw
-        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup-cli@092ce8b94ad531663e3efea1378acff0f5827639
         with:
-          version: v0.72.1
+          version: 092ce8b94ad531663e3efea1378acff0f5827639
 
       - name: Run operation
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -222,15 +204,8 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout actions folder
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          sparse-checkout: |
-            actions
-          persist-credentials: false
-
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -276,7 +251,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -320,7 +295,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -335,9 +310,9 @@ jobs:
             await main();
 
       - name: Install gh-aw
-        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup-cli@092ce8b94ad531663e3efea1378acff0f5827639
         with:
-          version: v0.72.1
+          version: 092ce8b94ad531663e3efea1378acff0f5827639
 
       - name: Create missing labels
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -366,7 +341,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -381,9 +356,9 @@ jobs:
             await main();
 
       - name: Install gh-aw
-        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup-cli@092ce8b94ad531663e3efea1378acff0f5827639
         with:
-          version: v0.72.1
+          version: 092ce8b94ad531663e3efea1378acff0f5827639
 
       - name: Restore activity report logs cache
         id: activity_report_logs_cache
@@ -456,21 +431,89 @@ jobs:
             });
             core.info('Created issue #' + createdIssue.data.number + ': ' + createdIssue.data.html_url);
 
+  forecast_report:
+    if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.operation == 'forecast' && (!(github.event.repository.fork)) }}
+    runs-on: ubuntu-slim
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Scripts
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
+        with:
+          destination: ${{ runner.temp }}/gh-aw/actions
+
+      - name: Check admin/maintainer permissions
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
+            setupGlobals(core, github, context, exec, io, getOctokit);
+            const { main } = require('${{ runner.temp }}/gh-aw/actions/check_team_member.cjs');
+            await main();
+
+      - name: Install gh-aw
+        uses: github/gh-aw/actions/setup-cli@092ce8b94ad531663e3efea1378acff0f5827639
+        with:
+          version: 092ce8b94ad531663e3efea1378acff0f5827639
+
+      - name: Restore forecast report logs cache
+        id: forecast_report_logs_cache
+        uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: .github/aw/logs
+          key: ${{ runner.os }}-forecast-report-logs-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-forecast-report-logs-${{ github.repository }}-
+            ${{ runner.os }}-forecast-report-logs-
+
+      - name: Generate forecast report
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_AW_CMD_PREFIX: gh aw
+        run: |
+          mkdir -p ./.cache/gh-aw/forecast
+          ${GH_AW_CMD_PREFIX} logs --repo "${{ github.repository }}" --start-date -30d --count 1500 > /dev/null
+          if ! compgen -G ".github/aw/logs/run-*/run_summary.json" > /dev/null; then
+            echo "::error::Missing run summary cache in .github/aw/logs after gh aw logs warm-up; cannot run forecast."
+            exit 1
+          fi
+          ${GH_AW_CMD_PREFIX} forecast --repo "${{ github.repository }}" --json 2> >(grep -Fv "forecast is an experimental command and may change without notice" >&2) > ./.cache/gh-aw/forecast/report.json
+
+      - name: Save forecast report logs cache
+        if: ${{ always() }}
+        uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: .github/aw/logs
+          key: ${{ steps.forecast_report_logs_cache.outputs.cache-primary-key }}
+
+      - name: Generate forecast issue
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
+            setupGlobals(core, github, context, exec, io, getOctokit);
+            const { main } = require('${{ runner.temp }}/gh-aw/actions/create_forecast_issue.cjs');
+            await main();
+
   close_agentic_workflows_issues:
     if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.operation == 'close_agentic_workflows_issues' && (!(github.event.repository.fork)) }}
     runs-on: ubuntu-slim
     permissions:
       issues: write
     steps:
-      - name: Checkout actions folder
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          sparse-checkout: |
-            actions
-          persist-credentials: false
-
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -507,7 +550,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup@092ce8b94ad531663e3efea1378acff0f5827639
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
 
@@ -522,9 +565,9 @@ jobs:
             await main();
 
       - name: Install gh-aw
-        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
+        uses: github/gh-aw/actions/setup-cli@092ce8b94ad531663e3efea1378acff0f5827639
         with:
-          version: v0.72.1
+          version: 092ce8b94ad531663e3efea1378acff0f5827639
 
       - name: Validate workflows and file issue on findings
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -537,95 +580,3 @@ jobs:
             setupGlobals(core, github, context, exec, io, getOctokit);
             const { main } = require('${{ runner.temp }}/gh-aw/actions/run_validate_workflows.cjs');
             await main();
-
-  compile-workflows:
-    if: ${{ (!(github.event.repository.fork)) && (github.event_name != 'workflow_dispatch' && github.event_name != 'workflow_call' || inputs.operation == '') }}
-    runs-on: ubuntu-slim
-    concurrency:
-      group: ${{ github.workflow }}-compile-workflows-${{ github.repository }}
-      cancel-in-progress: true
-    permissions:
-      contents: read
-      issues: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          persist-credentials: false
-
-      - name: Install gh-aw
-        uses: github/gh-aw/actions/setup-cli@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
-        with:
-          version: v0.72.1
-
-      - name: Compile workflows
-        run: |
-          gh aw compile --validate --validate-images --verbose
-          echo "✓ All workflows compiled successfully"
-
-      - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
-        with:
-          destination: ${{ runner.temp }}/gh-aw/actions
-
-      - name: Check for out-of-sync workflows and create issue if needed
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-        with:
-          script: |
-            const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
-            setupGlobals(core, github, context, exec, io, getOctokit);
-            const { main } = require('${{ runner.temp }}/gh-aw/actions/check_workflow_recompile_needed.cjs');
-            await main();
-
-  secret-validation:
-    if: ${{ (!(github.event.repository.fork)) && github.event_name != 'push' && (github.event_name != 'workflow_dispatch' && github.event_name != 'workflow_call' || inputs.operation == '') }}
-    runs-on: ubuntu-slim
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout actions folder
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          sparse-checkout: |
-            actions
-          persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: '22'
-
-      - name: Setup Scripts
-        uses: github/gh-aw/actions/setup@4a32129491598c66908107001a88d8e5cad631c8 # v0.72.1
-        with:
-          destination: ${{ runner.temp }}/gh-aw/actions
-
-      - name: Validate Secrets
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-        env:
-          # GitHub tokens
-          GH_AW_GITHUB_TOKEN: ${{ secrets.GH_AW_GITHUB_TOKEN }}
-          GH_AW_GITHUB_MCP_SERVER_TOKEN: ${{ secrets.GH_AW_GITHUB_MCP_SERVER_TOKEN }}
-          GH_AW_PROJECT_GITHUB_TOKEN: ${{ secrets.GH_AW_PROJECT_GITHUB_TOKEN }}
-          GH_AW_COPILOT_TOKEN: ${{ secrets.GH_AW_COPILOT_TOKEN }}
-          # AI Engine API keys
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
-          # Integration tokens
-          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
-        with:
-          script: |
-            const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
-            setupGlobals(core, github, context, exec, io, getOctokit);
-            const { main } = require('${{ runner.temp }}/gh-aw/actions/validate_secrets.cjs');
-            await main();
-
-      - name: Upload secret validation report
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: secret-validation-report
-          path: secret-validation-report.md
-          retention-days: 30
-          if-no-files-found: warn

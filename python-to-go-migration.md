@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T15:31:52Z |
-| Iteration Count | 3 |
-| Best Metric | 0.85 |
+| Last Run | 2026-05-12T16:30:00Z |
+| Iteration Count | 4 |
+| Best Metric | 1.15 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: migrate utils/guards.py, then larger modules.)*
+*(No specific priorities set -- agent is exploring freely. Next: migrate utils/content_hash.py, utils/exclude.py, or other mid-size leaf modules.)*
 
 ---
 
@@ -53,6 +53,8 @@
 - Git env sanitization maps well to Go: sync.Once for cached lookup, simple slice filter for env stripping.
 - Context-manager pattern translates to Enter/Exit methods in Go; the origErr parameter on Exit mirrors Python's exc_type guard to suppress guard violations when another error is propagating.
 - filepath.WalkDir with DirEntry type-check cleanly replicates os.walk(followlinks=False).
+- PyInstaller env restoration (subprocess_env.py): detect frozen via _MEIPASS env var; restore *_ORIG siblings or delete the var if no original existed.
+- Platform detection in Go: use runtime.GOOS directly instead of shelling out; maps darwin->macos cleanly.
 
 ---
 
@@ -64,13 +66,22 @@
 
 ## 🔭 Future Directions
 
+- Migrate `utils/content_hash.py` -- SHA-256 tree hashing (depends on install.cache_pin constant only)
+- Migrate `utils/exclude.py` -- gitignore-style file exclusion
 - Migrate `utils/console.py` -- CLI output helpers
-- Migrate `utils/process.py` or other small utils
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 4 — 2026-05-12 16:30 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25747630390)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate utils/subprocess_env.py and utils/helpers.py to Go (internal/utils/subprocenv, internal/utils/helpers)
+- **Metric**: 1.15 (previous best: 0.85, delta: +0.30)
+- **Commit**: 3b29fcc
+- **Notes**: subprocenv: PyInstaller _ORIG restoration pattern; stdlib-only with MapToSlice helper. helpers: IsToolAvailable via exec.LookPath, DetectPlatform via runtime.GOOS, FindPluginJSON with ordered candidate search.
 
 ### Iteration 3 — 2026-05-12 15:31 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25744614816)
 

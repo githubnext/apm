@@ -75,7 +75,7 @@ The page must stay concise and include:
 - All currently relevant benchmark signals, including the manifest benchmark script results when available.
 - Go build/test validation signals from Autoloop memory, with links to workflow runs.
 - Next-up work from the Autoloop memory "Future Directions" or "Current Priorities" sections.
-- A "Last updated" timestamp in UTC.
+- A "Last updated" timestamp in `YYYY-MM-DD HH:MM UTC` format.
 
 ## Guardrails
 

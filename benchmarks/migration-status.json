@@ -1,0 +1,43 @@
+{
+  "original_python_lines": 71696,
+  "migrated_python_lines": 285,
+  "migrated_modules": [
+    {
+      "module": "src/apm_cli/constants.py",
+      "go_package": "internal/constants",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Pure constants and enum - no external dependencies"
+    },
+    {
+      "module": "src/apm_cli/version.py",
+      "go_package": "internal/version",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Version resolution from build constants or pyproject.toml"
+    },
+    {
+      "module": "src/apm_cli/utils/short_sha.py",
+      "go_package": "internal/utils/sha",
+      "python_lines": 45,
+      "status": "migrated",
+      "notes": "Short SHA formatter with sentinel and hex validation"
+    },
+    {
+      "module": "src/apm_cli/utils/paths.py",
+      "go_package": "internal/utils/paths",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Cross-platform relative path utility"
+    },
+    {
+      "module": "src/apm_cli/utils/normalization.py",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 57,
+      "status": "migrated",
+      "notes": "Content normalization: BOM, CRLF, build-ID header stripping"
+    }
+  ],
+  "last_updated": "2026-05-12T06:42:14Z",
+  "iteration": 1
+}

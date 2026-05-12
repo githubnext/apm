@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T17:19:00Z |
-| Iteration Count | 5 |
-| Best Metric | 1.54 |
+| Last Run | 2026-05-12T18:19:00Z |
+| Iteration Count | 6 |
+| Best Metric | 1.92 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -58,6 +58,9 @@
 - SHA-256 tree hashing: filepath.WalkDir + sort + sha256.New().Write(path+contents) maps directly; symlinks excluded via Lstat/ModeSymlink check.
 - Glob ** patterns: bounded recursion with iterative fast-path for leading non-** segments avoids exponential blowup; filepath.Match handles single-level globs correctly.
 
+- ANSI colour output in Go: use a simple map of colour codes + NO_COLOR/TERM=dumb guard; no external dependency needed for console helpers.
+- Retry-on-lock pattern for file ops: exponential backoff with per-platform transient-lock detection (EBUSY on Unix, winerror 32/5 on Windows); use build tags to avoid syscall import on Windows.
+
 ---
 
 ## 🚧 Foreclosed Avenues
@@ -68,13 +71,20 @@
 
 ## 🔭 Future Directions
 
-- Migrate `utils/console.py` -- CLI output helpers (224 py lines)
-- Migrate `utils/file_ops.py` -- file operations (326 py lines)
+- Next: migrate `utils/reflink.py` (platform-specific copy-on-write cloning) or higher-level integration modules
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 6 — 2026-05-12 18:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25753379808)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate utils/console.py and utils/file_ops.py to Go (internal/utils/console, internal/utils/fileops)
+- **Metric**: 1.92 (previous best: 1.54, delta: +0.38)
+- **Commit**: 871f25c
+- **Notes**: console: StatusSymbols map + Echo/Success/Error/Warning/Info/Panel/PrintFilesTable/DownloadSpinner; ANSI colour with NO_COLOR/TERM=dumb guard; platform-agnostic. fileops: RobustRemoveAll/CopyTree/Copy2 with exponential-backoff retry; EBUSY detection via build-tag-split syscall file.
 
 ### Iteration 5 — 2026-05-12 17:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25750422526)
 

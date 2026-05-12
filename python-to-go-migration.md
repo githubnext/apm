@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T21:05:00Z |
-| Iteration Count | 9 |
-| Best Metric | 3.05 |
+| Last Run | 2026-05-12T21:57:00Z |
+| Iteration Count | 10 |
+| Best Metric | 3.93 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: migrate utils/diagnostics.py, utils/github_host.py, or install/cache_pin.py.)*
+*(No specific priorities set -- agent is exploring freely. Next: migrate utils/diagnostics.py, utils/github_host.py, or install/context.py.)*
 
 ---
 
@@ -65,7 +65,10 @@
 
 - config.py JSON config management: sync.RWMutex cache + dynamic home dir lookup (not package-level var) ensures test isolation when HOME changes.
 - Path security: iterative percent-decode via url.PathUnescape (max 8 rounds) catches multi-encoded traversal markers; filepath.Rel + HasPrefix("..") is the correct Go containment check.
-- Version comparison: parse semver into (major, minor, patch, prerelease) struct; stable beats prerelease at same major.minor.patch.
+- cache_pin.py -> Go: JSON schema v1 marker, WriteMarker (silent on failures) + VerifyMarker (typed errors); maps cleanly without external deps.
+- install/errors.py -> Go: typed error structs with constructor functions; errors.As works naturally for typed error handling.
+- reflink: platform-specific build tags (linux/darwin/other) isolate syscall imports; FICLONE ioctl + clonefile syscall with per-device capability cache via sync.Mutex map.
+- ** collapse in ValidateExcludePatterns: consecutive ** segments collapse to one before counting, so "**/**/**" is only 1 segment -- test must use non-consecutive ** patterns.
 
 ## 🚧 Foreclosed Avenues
 
@@ -75,14 +78,20 @@
 
 ## 🔭 Future Directions
 
-- Next: migrate higher-value modules (e.g. `utils/reflink.py`, `install/cache_pin.py`, `utils/diagnostics.py`, `utils/github_host.py`)
+- Next: migrate utils/diagnostics.py (486 lines), utils/github_host.py (624 lines), install/context.py (166 lines)
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
 
-### Iteration 9 — 2026-05-12 21:05 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25762042861)
+### Iteration 10 — 2026-05-12 21:57 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25764528420)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 10 modules to Go: contenthash, exclude, console, fileops, pathsecurity, versionchecker, config, cachepin, errors, reflink (1,989 new Python lines represented)
+- **Metric**: 3.93 (previous best: 3.05, delta: +0.88)
+- **Commit**: 9b2ac80
+- **Notes**: Branch was at iter 4 (iters 5-9 commits not on branch). Rebuilt all lost modules plus added cachepin, errors, reflink. All 21 Go packages pass `go test ./...`. ** collapse logic means consecutive ** segments count as one in validation.
 
 - **Status**: ✅ Accepted
 - **Change**: Migrate 7 modules to Go: config.py, path_security.py, version_checker.py, content_hash.py, exclude.py, console.py, file_ops.py (1362 new lines, branch rebuilt from iter 4)

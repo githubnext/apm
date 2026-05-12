@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 612,
+  "migrated_python_lines": 827,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -64,8 +64,22 @@
       "python_lines": 123,
       "status": "migrated",
       "notes": "ReadOnlyProjectGuard with snapshot-based mutation detection; stdlib-only"
+    },
+    {
+      "module": "src/apm_cli/utils/subprocess_env.py",
+      "go_package": "internal/utils/subprocenv",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "PyInstaller env restoration; stdlib-only; MapToSlice helper"
+    },
+    {
+      "module": "src/apm_cli/utils/helpers.py",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 131,
+      "status": "migrated",
+      "notes": "IsToolAvailable, GetAvailablePackageManagers, DetectPlatform, FindPluginJSON"
     }
   ],
-  "last_updated": "2026-05-12T15:33:35Z",
-  "iteration": 3
+  "last_updated": "2026-05-12T16:29:36Z",
+  "iteration": 4
 }

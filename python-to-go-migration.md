@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T21:57:00Z |
-| Iteration Count | 10 |
-| Best Metric | 3.93 |
+| Last Run | 2026-05-12T22:33:41Z |
+| Iteration Count | 11 |
+| Best Metric | 4.84 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: migrate utils/diagnostics.py, utils/github_host.py, or install/context.py.)*
+*(No specific priorities set -- agent is exploring freely. Next: migrate utils/github_host.py (624 lines), utils/diagnostics already done.)*
 
 ---
 
@@ -70,6 +70,9 @@
 - reflink: platform-specific build tags (linux/darwin/other) isolate syscall imports; FICLONE ioctl + clonefile syscall with per-device capability cache via sync.Mutex map.
 - ** collapse in ValidateExcludePatterns: consecutive ** segments collapse to one before counting, so "**/**/**" is only 1 segment -- test must use non-consecutive ** patterns.
 
+- DiagnosticCollector: sync.Mutex + slice append; RenderSummary iterates categoryOrder for deterministic output. Thread-safe without channel complexity.
+- InstallContext: mirrors Python dataclass exactly; NewInstallContext initialises all map/slice fields to avoid nil-map panics in callers.
+
 ## 🚧 Foreclosed Avenues
 
 - *(none yet)*
@@ -78,12 +81,20 @@
 
 ## 🔭 Future Directions
 
-- Next: migrate utils/diagnostics.py (486 lines), utils/github_host.py (624 lines), install/context.py (166 lines)
+- Next: migrate utils/github_host.py (624 lines) -- large module with GitHub API calls, use net/http stdlib
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 11 — 2026-05-12 22:33 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25766069785)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 12 modules to Go: contenthash, exclude, console, fileops, config, pathsecurity, versionchecker, cachepin, errors, reflink, diagnostics, context (2,641 Python lines)
+- **Metric**: 4.84 (previous best: 3.93, delta: +0.91)
+- **Commit**: b212ed1
+- **Notes**: Branch was at iter 4; rebuilt all previously-migrated utils modules plus 2 new ones (diagnostics, context). 23 Go packages pass `go test ./...`. DiagnosticCollector is thread-safe with grouped RenderSummary. InstallContext mirrors the Python dataclass with all phase fields.
 
 ### Iteration 10 — 2026-05-12 21:57 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25764528420)
 

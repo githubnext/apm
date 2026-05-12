@@ -1,0 +1,84 @@
+---
+title: Autoloop Go Migration Progress
+description: Current status, benchmark signals, and next work for the Autoloop Python-to-Go migration.
+---
+
+This page tracks the Autoloop program that is incrementally rewriting the APM CLI from Python to Go. It is seeded from the `memory/autoloop` branch, the Autoloop workflow history, issue [#3](https://github.com/githubnext/apm/issues/3), and PR [#17](https://github.com/githubnext/apm/pull/17).
+
+:::note[Refresh cadence]
+The `Autoloop Go Migration Progress Site` agentic workflow refreshes this page after relevant changes merge to `main`. When the migration branch advances without a docs merge, use the linked Autoloop issue, PR, and memory branch for the newest raw state.
+:::
+
+## Latest status
+
+| Field | Value |
+|---|---|
+| Program | `python-to-go-migration` |
+| Status | Active, open-ended |
+| Autoloop branch | [`autoloop/python-to-go-migration`](https://github.com/githubnext/apm/tree/autoloop/python-to-go-migration) |
+| Tracking issue | [#3 Python-to-Go Migration](https://github.com/githubnext/apm/issues/3) |
+| Accumulating PR | [#17 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/17) |
+| Last accepted iteration | Iteration 4, 2026-05-12 16:30 UTC |
+| Best metric | 1.15% migrated |
+| Migrated lines | 827 of 71,696 original Python lines |
+| Migrated modules | 11 |
+
+## Migration progress
+
+| Iteration | Run | Change | Metric |
+|---:|---|---|---:|
+| 1 | [25717987972](https://github.com/githubnext/apm/actions/runs/25717987972) | Initialized the Go module and migrated `constants.py`, `version.py`, `utils/short_sha.py`, `utils/paths.py`, and `utils/normalization.py`. | 0.40% |
+| 2 | [25736801433](https://github.com/githubnext/apm/actions/runs/25736801433) | Migrated `utils/yaml_io.py`, `utils/atomic_io.py`, and `utils/git_env.py`. | 0.68% |
+| 3 | [25744614816](https://github.com/githubnext/apm/actions/runs/25744614816) | Migrated `utils/guards.py` as `internal/utils/guards`. | 0.85% |
+| 4 | [25747630390](https://github.com/githubnext/apm/actions/runs/25747630390) | Migrated `utils/subprocess_env.py` and `utils/helpers.py`. | 1.15% |
+
+## Migrated modules
+
+| Python module | Go package | Python lines |
+|---|---|---:|
+| `src/apm_cli/constants.py` | `internal/constants` | 55 |
+| `src/apm_cli/version.py` | `internal/version` | 101 |
+| `src/apm_cli/utils/short_sha.py` | `internal/utils/sha` | 45 |
+| `src/apm_cli/utils/paths.py` | `internal/utils/paths` | 27 |
+| `src/apm_cli/utils/normalization.py` | `internal/utils/normalization` | 57 |
+| `src/apm_cli/utils/yaml_io.py` | `internal/utils/yamlio` | 55 |
+| `src/apm_cli/utils/atomic_io.py` | `internal/utils/atomicio` | 52 |
+| `src/apm_cli/utils/git_env.py` | `internal/utils/gitenv` | 97 |
+| `src/apm_cli/utils/guards.py` | `internal/utils/guards` | 123 |
+| `src/apm_cli/utils/subprocess_env.py` | `internal/utils/subprocenv` | 84 |
+| `src/apm_cli/utils/helpers.py` | `internal/utils/helpers` | 131 |
+
+## Benchmark snapshot
+
+Autoloop's current migration metric is `python_lines_migrated_pct`: `(migrated_python_lines / original_python_lines) * 100`. The latest recorded status file on the migration branch reports 827 migrated lines out of 71,696 total, or 1.15%.
+
+### Manifest operations benchmark
+
+The existing `scripts/benchmark_manifest_ops.py` benchmark measures Python manifest operation optimizations that remain relevant while Go parity work advances.
+
+| Scale | `check_collision` speedup | `sync_remove_files` speedup | `cleanup_empty_parents` speedup | Scoped uninstall speedup |
+|---|---:|---:|---:|---:|
+| Current: 10 packages, 50 paths | 21.6x | 1.9x | 1.0x | 1.7x |
+| Growing: 50 packages, 250 paths | 85.4x | 1.7x | 0.6x | 9.7x |
+| Large monorepo: 100 packages, 2,000 paths | 519.8x | 1.7x | 0.5x | 20.5x |
+
+### Go validation signals
+
+The Autoloop memory records that the Go module builds cleanly and `go test ./...` passes on accepted iterations. Module-specific Python-vs-Go timing data is not yet present in `benchmarks/migration-status.json`; the progress workflow should publish those timings here once Autoloop starts recording them.
+
+## Next up
+
+The Autoloop memory identifies these likely next targets:
+
+- `utils/content_hash.py`: SHA-256 tree hashing.
+- `utils/exclude.py`: gitignore-style file exclusion.
+- `utils/console.py`: CLI output helpers.
+- Eventually wire Go packages into the Python CLI via subprocess or replace the entry point.
+
+## Operating notes
+
+- Prefer leaf modules first; they have fewer internal APM dependencies and lower integration risk.
+- Keep Go implementations stdlib-only when sandbox networking blocks external module fetches.
+- Continue recording every accepted iteration in `benchmarks/migration-status.json` so this page can report real migration and benchmark data instead of estimates.
+
+Last seeded: 2026-05-12 17:11 UTC.

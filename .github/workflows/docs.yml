@@ -18,6 +18,11 @@ on:
         default: false
   release:
     types: [published]
+  push:
+    branches: [main]
+    paths:
+      - 'docs/src/content/docs/progress/autoloop-go-migration.mdx'
+      - 'docs/astro.config.mjs'
   pull_request:
     paths: ['docs/**']
   workflow_dispatch:
@@ -61,6 +66,7 @@ jobs:
         # build-only because none of the three branches match.
         if: |
           github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
           (github.event_name == 'release' && github.event.release.prerelease == false) ||
           (github.event_name == 'push' && github.ref_type == 'tag' && inputs.is_prerelease == false)
         uses: actions/upload-pages-artifact@v3
@@ -75,6 +81,7 @@ jobs:
     # event ('push' of a v* tag from build-release.yml), NOT 'workflow_call'.
     if: |
       github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'release' && github.event.release.prerelease == false) ||
       (github.event_name == 'push' && github.ref_type == 'tag' && inputs.is_prerelease == false)
     runs-on: ubuntu-latest

@@ -21,7 +21,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'docs/src/content/docs/progress/autoloop-go-migration.mdx'
+      - 'docs/src/content/docs/progress/**'
       - 'docs/astro.config.mjs'
   pull_request:
     paths: ['docs/**']

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T13:16:47Z |
-| Iteration Count | 2 |
-| Best Metric | 0.68 |
+| Last Run | 2026-05-12T15:31:52Z |
+| Iteration Count | 3 |
+| Best Metric | 0.85 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted |
 
 ---
 
@@ -51,6 +51,8 @@
 - External dependencies (gopkg.in/yaml.v3) cannot be fetched in the sandbox due to network restrictions; use stdlib-only implementations or vendored deps.
 - Atomic write pattern translates cleanly to Go: CreateTemp + WriteString + Rename. os.Rename is atomic on POSIX.
 - Git env sanitization maps well to Go: sync.Once for cached lookup, simple slice filter for env stripping.
+- Context-manager pattern translates to Enter/Exit methods in Go; the origErr parameter on Exit mirrors Python's exc_type guard to suppress guard violations when another error is propagating.
+- filepath.WalkDir with DirEntry type-check cleanly replicates os.walk(followlinks=False).
 
 ---
 
@@ -62,13 +64,21 @@
 
 ## 🔭 Future Directions
 
-- Migrate `utils/guards.py` (123 lines) -- precondition checks, no external deps
 - Migrate `utils/console.py` -- CLI output helpers
+- Migrate `utils/process.py` or other small utils
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 3 — 2026-05-12 15:31 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25744614816)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate utils/guards.py to Go as internal/utils/guards (ReadOnlyProjectGuard with snapshot-based mutation detection)
+- **Metric**: 0.85 (previous best: 0.68, delta: +0.17)
+- **Commit**: 2cfee5d
+- **Notes**: stdlib-only implementation; Enter/Exit methods mirror Python context-manager; 6 tests cover all mutation scenarios.
 
 ### Iteration 2 — 2026-05-12 13:16 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25736801433)
 

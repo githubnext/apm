@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 489,
+  "migrated_python_lines": 612,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -57,8 +57,15 @@
       "python_lines": 97,
       "status": "migrated",
       "notes": "Cached git lookup and subprocess env sanitization"
+    },
+    {
+      "module": "src/apm_cli/utils/guards.py",
+      "go_package": "internal/utils/guards",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "ReadOnlyProjectGuard with snapshot-based mutation detection; stdlib-only"
     }
   ],
-  "last_updated": "2026-05-12T13:16:47Z",
-  "iteration": 2
+  "last_updated": "2026-05-12T15:33:35Z",
+  "iteration": 3
 }

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T19:30:00Z |
-| Iteration Count | 7 |
-| Best Metric | 1.54 |
+| Last Run | 2026-05-12T20:12:00Z |
+| Iteration Count | 8 |
+| Best Metric | 2.69 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -71,12 +71,20 @@
 
 ## 🔭 Future Directions
 
-- Next: migrate `utils/console.py` and `utils/file_ops.py` (previously attempted in iter 6 but commits lost from branch)
+- Next: migrate higher-value modules (e.g. `utils/reflink.py`, `install/cache_pin.py`, or `config.py`)
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 8 — 2026-05-12 20:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25759356879)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate content_hash.py, exclude.py, console.py, and file_ops.py to Go (4 new packages, 827 Python lines)
+- **Metric**: 2.69 (previous best: 1.54, delta: +1.15)
+- **Commit**: 73205a9
+- **Notes**: contenthash: ComputePackageHash/ComputeFileHash/VerifyPackageHash with sha256+WalkDir; excludes .git/__pycache__ and root .apm-pin. exclude: ValidateExcludePatterns (** limit 5) + ShouldExclude with filepath.Match; bounded recursive ** matcher. console: StatusSymbols map + Echo/Success/Error/Warning/Info/Panel/PrintFilesTable/DownloadSpinner; ANSI colour with NO_COLOR/TERM=dumb guard. fileops: RobustRemoveAll/CopyTree/Copy2 with exponential-backoff retry; EBUSY detection via build-tag-split syscall file.
 
 ### Iteration 7 — 2026-05-12 19:30 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25756395012)
 

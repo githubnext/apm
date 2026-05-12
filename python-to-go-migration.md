@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T20:12:00Z |
-| Iteration Count | 8 |
-| Best Metric | 2.69 |
+| Last Run | 2026-05-12T21:05:00Z |
+| Iteration Count | 9 |
+| Best Metric | 3.05 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: migrate utils/console.py or utils/file_ops.py.)*
+*(No specific priorities set -- agent is exploring freely. Next: migrate utils/diagnostics.py, utils/github_host.py, or install/cache_pin.py.)*
 
 ---
 
@@ -63,6 +63,10 @@
 
 ---
 
+- config.py JSON config management: sync.RWMutex cache + dynamic home dir lookup (not package-level var) ensures test isolation when HOME changes.
+- Path security: iterative percent-decode via url.PathUnescape (max 8 rounds) catches multi-encoded traversal markers; filepath.Rel + HasPrefix("..") is the correct Go containment check.
+- Version comparison: parse semver into (major, minor, patch, prerelease) struct; stable beats prerelease at same major.minor.patch.
+
 ## 🚧 Foreclosed Avenues
 
 - *(none yet)*
@@ -71,12 +75,20 @@
 
 ## 🔭 Future Directions
 
-- Next: migrate higher-value modules (e.g. `utils/reflink.py`, `install/cache_pin.py`, or `config.py`)
+- Next: migrate higher-value modules (e.g. `utils/reflink.py`, `install/cache_pin.py`, `utils/diagnostics.py`, `utils/github_host.py`)
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 9 — 2026-05-12 21:05 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25762042861)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 7 modules to Go: config.py, path_security.py, version_checker.py, content_hash.py, exclude.py, console.py, file_ops.py (1362 new lines, branch rebuilt from iter 4)
+- **Metric**: 3.05 (previous best: 2.69, delta: +0.36)
+- **Commit**: 727d024
+- **Notes**: Branch was at iter 4 (iters 5-8 commits lost). Rebuilt all previously-migrated modules plus 3 new ones (config, pathsecurity, versionchecker). 12 Go packages now pass `go test ./...`. Dynamic home dir in config avoids package-level init ordering issues.
 
 ### Iteration 8 — 2026-05-12 20:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25759356879)
 

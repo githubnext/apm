@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T16:30:00Z |
-| Iteration Count | 4 |
-| Best Metric | 1.15 |
+| Last Run | 2026-05-12T17:19:00Z |
+| Iteration Count | 5 |
+| Best Metric | 1.54 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: migrate utils/content_hash.py, utils/exclude.py, or other mid-size leaf modules.)*
+*(No specific priorities set -- agent is exploring freely. Next: migrate utils/console.py or utils/file_ops.py.)*
 
 ---
 
@@ -55,6 +55,8 @@
 - filepath.WalkDir with DirEntry type-check cleanly replicates os.walk(followlinks=False).
 - PyInstaller env restoration (subprocess_env.py): detect frozen via _MEIPASS env var; restore *_ORIG siblings or delete the var if no original existed.
 - Platform detection in Go: use runtime.GOOS directly instead of shelling out; maps darwin->macos cleanly.
+- SHA-256 tree hashing: filepath.WalkDir + sort + sha256.New().Write(path+contents) maps directly; symlinks excluded via Lstat/ModeSymlink check.
+- Glob ** patterns: bounded recursion with iterative fast-path for leading non-** segments avoids exponential blowup; filepath.Match handles single-level globs correctly.
 
 ---
 
@@ -66,14 +68,21 @@
 
 ## 🔭 Future Directions
 
-- Migrate `utils/content_hash.py` -- SHA-256 tree hashing (depends on install.cache_pin constant only)
-- Migrate `utils/exclude.py` -- gitignore-style file exclusion
-- Migrate `utils/console.py` -- CLI output helpers
+- Migrate `utils/console.py` -- CLI output helpers (224 py lines)
+- Migrate `utils/file_ops.py` -- file operations (326 py lines)
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 5 — 2026-05-12 17:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25750422526)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate utils/content_hash.py and utils/exclude.py to Go (internal/utils/contenthash, internal/utils/exclude)
+- **Metric**: 1.54 (previous best: 1.15, delta: +0.39)
+- **Commit**: 6fb71c8
+- **Notes**: contenthash: stdlib SHA-256 WalkDir with symlink/dir-exclusion and root pin-marker guard. exclude: bounded recursive ** glob matcher; fast iterative path for leading non-** segments.
 
 ### Iteration 4 — 2026-05-12 16:30 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25747630390)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-12T18:19:00Z |
-| Iteration Count | 6 |
-| Best Metric | 1.92 |
+| Last Run | 2026-05-12T19:30:00Z |
+| Iteration Count | 7 |
+| Best Metric | 1.54 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -71,12 +71,20 @@
 
 ## 🔭 Future Directions
 
-- Next: migrate `utils/reflink.py` (platform-specific copy-on-write cloning) or higher-level integration modules
+- Next: migrate `utils/console.py` and `utils/file_ops.py` (previously attempted in iter 6 but commits lost from branch)
 - Eventually: wire Go packages into the Python CLI via subprocess or replace entry point
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 7 — 2026-05-12 19:30 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25756395012)
+
+- **Status**: ✅ Accepted
+- **Change**: Re-migrate content_hash.py and exclude.py to Go (branch was at iter 4; iters 5-6 commits were lost)
+- **Metric**: 1.54 (previous best on branch: 1.15, delta: +0.39)
+- **Commit**: faeed1b
+- **Notes**: contenthash: ComputePackageHash/ComputeFileHash/VerifyPackageHash; excludes .git/__pycache__ and root .apm-pin; stdlib sha256+WalkDir. exclude: ValidateExcludePatterns (** limit 5) + ShouldExclude with filepath.Match; all 13 tests pass.
 
 ### Iteration 6 — 2026-05-12 18:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25753379808)
 

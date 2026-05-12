@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 285,
+  "migrated_python_lines": 489,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -36,8 +36,29 @@
       "python_lines": 57,
       "status": "migrated",
       "notes": "Content normalization: BOM, CRLF, build-ID header stripping"
+    },
+    {
+      "module": "src/apm_cli/utils/yaml_io.py",
+      "go_package": "internal/utils/yamlio",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "YAML I/O with UTF-8; stdlib-only implementation (gopkg.in/yaml.v3 pending network)"
+    },
+    {
+      "module": "src/apm_cli/utils/atomic_io.py",
+      "go_package": "internal/utils/atomicio",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Atomic file write via temp+rename, same-filesystem rename"
+    },
+    {
+      "module": "src/apm_cli/utils/git_env.py",
+      "go_package": "internal/utils/gitenv",
+      "python_lines": 97,
+      "status": "migrated",
+      "notes": "Cached git lookup and subprocess env sanitization"
     }
   ],
-  "last_updated": "2026-05-12T06:42:14Z",
-  "iteration": 1
+  "last_updated": "2026-05-12T13:16:47Z",
+  "iteration": 2
 }

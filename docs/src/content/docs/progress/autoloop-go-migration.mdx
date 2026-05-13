@@ -17,11 +17,11 @@ The `Autoloop Go Migration Progress Site` agentic workflow refreshes this page a
 | Status | Active, open-ended |
 | Autoloop branch | [`autoloop/python-to-go-migration`](https://github.com/githubnext/apm/tree/autoloop/python-to-go-migration) |
 | Tracking issue | [#3 Python-to-Go Migration](https://github.com/githubnext/apm/issues/3) |
-| Accumulating PR | [#17 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/17) |
+| PR | [#17 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/17) (merged 2026-05-13) |
 | Last accepted iteration | Iteration 24, 2026-05-13 14:22 UTC |
 | Best metric | 9.89% migrated (`python_lines_migrated_pct`) |
 | Migrated lines (best) | ~7,092 of 71,696 original Python lines |
-| Migrated modules (status.json) | 24 (iter-13 baseline; see note below) |
+| Migrated modules (best, all iters) | 54 total; 24 recorded in `benchmarks/migration-status.json` (iter-13 baseline; see note below) |
 
 :::caution[Branch reset caveat]
 The migration branch periodically fast-forward-resets when main merges. Each Autoloop iteration rebuilds lost modules before adding new ones. `benchmarks/migration-status.json` reflects the iter-13 stable baseline (24 modules, 4,245 lines). Iteration 24 committed an additional 30 Go packages on top of that baseline; those modules are not yet captured in the JSON. The machine-state `best_metric` of 9.89 corresponds to ~7,092 migrated lines and is the authoritative progress signal.
@@ -85,9 +85,9 @@ Run locally on 2026-05-13 with `python3 scripts/benchmark_manifest_ops.py`. Resu
 
 | Scale | `check_collision` speedup | `sync_remove_files` speedup | `cleanup_empty_parents` speedup | Scoped uninstall speedup |
 |---|---:|---:|---:|---:|
-| Current: 10 pkgs, 50 paths | 24.9x | 1.8x | 0.9x | 2.0x |
-| Growing: 50 pkgs, 250 paths | 117.6x | 1.7x | 0.6x | 9.6x |
-| Large monorepo: 100 pkgs, 2,000 paths | 923.3x | 1.7x | 0.5x | 24.2x |
+| Current: 10 pkgs, 50 paths | 18.1x | 0.8x | 0.7x | 1.4x |
+| Growing: 50 pkgs, 250 paths | 17.4x | 1.6x | 0.5x | 12.2x |
+| Large monorepo: 100 pkgs, 2,000 paths | 1,606.6x | 2.2x | 0.6x | 26.0x |
 
 `cleanup_empty_parents` shows a small regression at scale (0.5x–0.9x) because the batch bottom-up algorithm has higher constant overhead than the legacy per-file walk-up at low deleted-file counts. This is expected and acceptable given the gains on the other three operations.
 
@@ -116,4 +116,4 @@ From the Autoloop memory `Future Directions`:
 - Keep Go implementations stdlib-only when sandbox networking blocks external module fetches (e.g., use a line-scanner for YAML frontmatter instead of `gopkg.in/yaml.v3`).
 - Record every accepted iteration in `benchmarks/migration-status.json` so this page can report complete module data.
 
-Last updated: 2026-05-13 15:14 UTC.
+Last updated: 2026-05-13 16:32 UTC.

@@ -1,17 +1,17 @@
-// Package console provides utility functions for formatting and CLI output.
+// Package console provides console utility functions for formatted CLI output.
 //
-// Provides STATUS_SYMBOLS and rich-echo helpers with ANSI colour output.
-// All output stays within printable ASCII (U+0020-U+007E).
+// All output is within printable ASCII (U+0020-U+007E). Color codes use ANSI
+// escape sequences, disabled automatically when NO_COLOR is set or TERM=dumb.
 package console
 
 import (
 	"fmt"
 	"io"
 	"os"
-	"sync"
+	"strings"
 )
 
-// StatusSymbols maps symbol names to ASCII bracket notation.
+// StatusSymbols maps semantic names to ASCII bracket notation.
 var StatusSymbols = map[string]string{
 	"success":  "[*]",
 	"sparkles": "[*]",
@@ -38,97 +38,119 @@ var StatusSymbols = map[string]string{
 	"equal":    "[=]",
 }
 
-// ANSI colour codes (ASCII-safe; guarded by NO_COLOR / TERM=dumb).
-var ansiColors = map[string]string{
-	"red":     "\033[31m",
-	"green":   "\033[32m",
-	"yellow":  "\033[33m",
-	"blue":    "\033[34m",
-	"magenta": "\033[35m",
-	"cyan":    "\033[36m",
-	"white":   "\033[37m",
-	"muted":   "\033[37m",
-	"info":    "\033[34m",
-	"reset":   "\033[0m",
-	"bold":    "\033[1m",
-}
-
-var (
-	colorEnabled     bool
-	colorEnabledOnce sync.Once
+// ANSI color codes.
+const (
+	ansiReset  = "\033[0m"
+	ansiRed    = "\033[31m"
+	ansiGreen  = "\033[32m"
+	ansiYellow = "\033[33m"
+	ansiBlue   = "\033[34m"
+	ansiCyan   = "\033[36m"
+	ansiBold   = "\033[1m"
 )
 
-func isColorEnabled() bool {
-	colorEnabledOnce.Do(func() {
-		if os.Getenv("NO_COLOR") != "" {
-			colorEnabled = false
-			return
-		}
-		term := os.Getenv("TERM")
-		if term == "dumb" {
-			colorEnabled = false
-			return
-		}
-		colorEnabled = true
-	})
-	return colorEnabled
+// colorEnabled returns true when ANSI color output is supported.
+func colorEnabled() bool {
+	if os.Getenv("NO_COLOR") != "" {
+		return false
+	}
+	if os.Getenv("TERM") == "dumb" {
+		return false
+	}
+	return true
 }
 
-// DefaultOut is the output writer (defaults to os.Stdout).
-var DefaultOut io.Writer = os.Stdout
-
-// RichEcho writes a coloured message to DefaultOut.
-func RichEcho(message, color string, bold bool, symbol string) {
-	if sym, ok := StatusSymbols[symbol]; ok {
+// Echo writes a message to w (defaults to os.Stdout) with optional color and
+// symbol prefix. color may be "red", "green", "yellow", "blue", "cyan", or
+// empty for default terminal color.
+func Echo(w io.Writer, message, color, symbol string, bold bool) {
+	if w == nil {
+		w = os.Stdout
+	}
+	if sym, ok := StatusSymbols[symbol]; ok && symbol != "" {
 		message = sym + " " + message
 	}
-	if isColorEnabled() {
-		prefix := ""
-		if c, ok := ansiColors[color]; ok {
-			prefix += c
-		}
+	if colorEnabled() && color != "" {
+		code := colorCode(color)
 		if bold {
-			prefix += ansiColors["bold"]
+			fmt.Fprintf(w, "%s%s%s%s\n", ansiBold, code, message, ansiReset)
+		} else {
+			fmt.Fprintf(w, "%s%s%s\n", code, message, ansiReset)
 		}
-		if prefix != "" {
-			fmt.Fprintf(DefaultOut, "%s%s%s\n", prefix, message, ansiColors["reset"])
-			return
-		}
+	} else {
+		fmt.Fprintln(w, message)
 	}
-	fmt.Fprintln(DefaultOut, message)
 }
 
-// RichSuccess displays a success message (green, bold).
-func RichSuccess(message, symbol string) {
-	RichEcho(message, "green", true, symbol)
+func colorCode(color string) string {
+	switch strings.ToLower(color) {
+	case "red":
+		return ansiRed
+	case "green":
+		return ansiGreen
+	case "yellow":
+		return ansiYellow
+	case "blue":
+		return ansiBlue
+	case "cyan":
+		return ansiCyan
+	default:
+		return ""
+	}
 }
 
-// RichError displays an error message (red).
-func RichError(message, symbol string) {
-	RichEcho(message, "red", false, symbol)
+// Success prints a success message (green, bold).
+func Success(message, symbol string) {
+	Echo(os.Stdout, message, "green", symbol, true)
 }
 
-// RichWarning displays a warning message (yellow).
-func RichWarning(message, symbol string) {
-	RichEcho(message, "yellow", false, symbol)
+// Error prints an error message (red).
+func Error(message, symbol string) {
+	Echo(os.Stderr, message, "red", symbol, false)
 }
 
-// RichInfo displays an info message (blue).
-func RichInfo(message, symbol string) {
-	RichEcho(message, "blue", false, symbol)
+// Warning prints a warning message (yellow).
+func Warning(message, symbol string) {
+	Echo(os.Stdout, message, "yellow", symbol, false)
 }
 
-// RichPanel displays content in a simple text panel.
-func RichPanel(content, title, style string) {
+// Info prints an info message (blue).
+func Info(message, symbol string) {
+	Echo(os.Stdout, message, "blue", symbol, false)
+}
+
+// Panel prints content framed by a simple ASCII border with an optional title.
+func Panel(content, title, style string) {
 	if title != "" {
-		fmt.Fprintf(DefaultOut, "\n--- %s ---\n", title)
+		fmt.Printf("\n--- %s ---\n", title)
 	}
-	fmt.Fprintln(DefaultOut, content)
+	fmt.Println(content)
 	if title != "" {
-		border := ""
-		for i := 0; i < len(title)+8; i++ {
-			border += "-"
-		}
-		fmt.Fprintln(DefaultOut, border)
+		fmt.Println(strings.Repeat("-", len(title)+8))
 	}
+}
+
+// PrintFilesTable prints a simple two-column table of file name + description.
+func PrintFilesTable(files [][]string, tableTitle string) {
+	if tableTitle != "" {
+		fmt.Println(tableTitle)
+	}
+	for _, row := range files {
+		name := ""
+		desc := ""
+		if len(row) > 0 {
+			name = row[0]
+		}
+		if len(row) > 1 {
+			desc = row[1]
+		}
+		fmt.Printf("  %-40s %s\n", name, desc)
+	}
+}
+
+// DownloadSpinner prints a simple download-in-progress message and calls fn.
+// Unlike Python's context-manager spinner, this is a function-based helper.
+func DownloadSpinner(repoName string, fn func()) {
+	fmt.Printf("[>] Downloading %s...\n", repoName)
+	fn()
 }

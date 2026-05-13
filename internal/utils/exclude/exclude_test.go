@@ -1,63 +1,72 @@
 package exclude_test
 
 import (
-	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/githubnext/apm/internal/utils/exclude"
 )
 
-func TestValidateExcludePatterns(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    []string
-		wantErr  bool
-		wantLen  int
-	}{
-		{"nil input", nil, false, 0},
-		{"empty", []string{}, false, 0},
-		{"simple", []string{"foo/bar"}, false, 1},
-		{"collapses consecutive **", []string{"**/**/foo"}, false, 1},
-		{"too many stars", []string{"a/**/b/**/c/**/d/**/e/**/f/**/g"}, true, 0},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := exclude.ValidateExcludePatterns(tt.input)
-			if (err != nil) != tt.wantErr {
-				t.Fatalf("want err=%v got %v", tt.wantErr, err)
-			}
-			if !tt.wantErr && len(got) != tt.wantLen {
-				t.Fatalf("want len=%d got %d", tt.wantLen, len(got))
-			}
-		})
+func TestValidateExcludePatterns_nil(t *testing.T) {
+	out, err := exclude.ValidateExcludePatterns(nil)
+	if err != nil || len(out) != 0 {
+		t.Errorf("nil input: got %v %v", out, err)
 	}
 }
 
-func TestShouldExclude(t *testing.T) {
-	base, err := os.MkdirTemp("", "exclude-test")
+func TestValidateExcludePatterns_normal(t *testing.T) {
+	patterns := []string{"docs/**", "build/", "*.log"}
+	out, err := exclude.ValidateExcludePatterns(patterns)
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(base)
-
-	tests := []struct {
-		file     string
-		patterns []string
-		want     bool
-	}{
-		{"docs/foo.md", []string{"docs/"}, true},
-		{"src/main.go", []string{"docs/"}, false},
-		{"build/output.bin", []string{"build/*"}, true},
-		{"src/a/b/c.py", []string{"src/**/*.py"}, true},
-		{"src/a/b/c.go", []string{"src/**/*.py"}, false},
+	if len(out) != 3 {
+		t.Errorf("expected 3, got %d", len(out))
 	}
+}
 
-	for _, tt := range tests {
-		full := filepath.Join(base, filepath.FromSlash(tt.file))
-		os.MkdirAll(filepath.Dir(full), 0o755)
-		if got := exclude.ShouldExclude(full, base, tt.patterns); got != tt.want {
-			t.Errorf("ShouldExclude(%q, patterns=%v) = %v, want %v", tt.file, tt.patterns, got, tt.want)
+func TestValidateExcludePatterns_tooManyStars(t *testing.T) {
+	pattern := "a/**/b/**/c/**/d/**/e/**/f/**"
+	_, err := exclude.ValidateExcludePatterns([]string{pattern})
+	if err == nil {
+		t.Error("expected error for too many ** segments")
+	}
+}
+
+func TestValidateExcludePatterns_collapsesConsecutiveStars(t *testing.T) {
+	out, err := exclude.ValidateExcludePatterns([]string{"a/**/**/b"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out[0] != "a/**/b" {
+		t.Errorf("expected collapsed pattern, got %s", out[0])
+	}
+}
+
+func TestShouldExclude_basic(t *testing.T) {
+	cases := []struct {
+		rel     string
+		pattern string
+		want    bool
+	}{
+		{"docs/foo.md", "docs/**", true},
+		{"src/main.go", "docs/**", false},
+		{"build/out.bin", "build/", true},
+		{"log.txt", "*.log", false},
+		{"foo.log", "*.log", true},
+		{"a/b/c.go", "a/**/c.go", true},
+		{"a/x/y/c.go", "a/**/c.go", true},
+		{"a/b/d.go", "a/**/c.go", false},
+	}
+	for _, tc := range cases {
+		got := exclude.ShouldExclude("/base/"+tc.rel, "/base", []string{tc.pattern})
+		if got != tc.want {
+			t.Errorf("ShouldExclude(%q, %q): got %v, want %v", tc.rel, tc.pattern, got, tc.want)
 		}
+	}
+}
+
+func TestShouldExclude_noPatterns(t *testing.T) {
+	if exclude.ShouldExclude("/base/file.go", "/base", nil) {
+		t.Error("nil patterns should never exclude")
 	}
 }

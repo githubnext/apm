@@ -88,6 +88,12 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Progress',
+					items: [
+						{ label: 'Autoloop Go Migration', slug: 'progress/autoloop-go-migration' },
+					],
+				},
+				{
 					label: 'Enterprise',
 					items: [
 						{ label: 'Enterprise', slug: 'enterprise' },

@@ -1,123 +1,116 @@
-// Package fileops provides retry-aware file operations for cross-platform reliability.
+// Package fileops provides retry-aware file operations for cross-platform
+// reliability.
 //
 // On Windows, antivirus and endpoint-protection software briefly lock files
 // while scanning them in temp directories. This package provides drop-in
-// replacements for common file operations that transparently retry on
-// transient lock errors with exponential backoff.
+// replacements for os.RemoveAll, filepath.WalkDir-based copy, and os.Copy
+// that transparently retry on transient lock errors with exponential backoff.
 package fileops
 
 import (
-	"errors"
+	"fmt"
 	"io"
-	"io/fs"
 	"os"
 	"path/filepath"
-	"runtime"
 	"time"
 )
 
-// RetryConfig controls retry behaviour.
-type RetryConfig struct {
-	MaxRetries    int
-	InitialDelay  time.Duration
-	MaxDelay      time.Duration
-	BackoffFactor float64
-}
+const (
+	defaultMaxRetries    = 5
+	defaultInitialDelay  = 100 * time.Millisecond
+	defaultMaxDelay      = 2 * time.Second
+	defaultBackoffFactor = 2.0
+)
 
-// DefaultRetryConfig is tuned for AV scan locks (sub-second to ~3 s total wait).
-var DefaultRetryConfig = RetryConfig{
-	MaxRetries:    5,
-	InitialDelay:  100 * time.Millisecond,
-	MaxDelay:      2 * time.Second,
-	BackoffFactor: 2.0,
-}
+// isTransientLockError returns true when err looks like a transient file-lock
+// error. Platform-specific detection is in lock_unix.go / lock_windows.go.
+// The function defined here handles the Unix EBUSY case; the build-tag files
+// add Windows winerror 32/5 detection.
 
-// isTransientLockError returns true if err looks like a transient file-lock error.
-func isTransientLockError(err error) bool {
-	if err == nil {
-		return false
-	}
-	if runtime.GOOS == "windows" {
-		// Check for Windows sharing violation (winerror 32) or access denied (5)
-		// We check the error message as a portable fallback
-		msg := err.Error()
-		if contains(msg, "The process cannot access the file") ||
-			contains(msg, "Access is denied") {
-			return true
-		}
-	}
-	// Unix: EBUSY
-	var pathErr *os.PathError
-	if errors.As(err, &pathErr) {
-		// errno.EBUSY check via the underlying error
-		if pathErr.Err.Error() == "device or resource busy" {
-			return true
-		}
-	}
-	return false
-}
-
-func contains(s, sub string) bool {
-	return len(s) >= len(sub) && (s == sub || len(s) > 0 && indexStr(s, sub) >= 0)
-}
-
-func indexStr(s, sub string) int {
-	for i := 0; i <= len(s)-len(sub); i++ {
-		if s[i:i+len(sub)] == sub {
-			return i
-		}
-	}
-	return -1
-}
-
-func retryOnLock(cfg RetryConfig, op func() error) error {
-	delay := cfg.InitialDelay
+// retryOnLock executes op, retrying on transient lock errors.
+func retryOnLock(op func() error, desc string, maxRetries int, initial, max time.Duration, backoff float64, beforeRetry func()) error {
+	delay := initial
 	var lastErr error
-	for attempt := 0; attempt <= cfg.MaxRetries; attempt++ {
-		if err := op(); err == nil {
+	for attempt := 0; attempt <= maxRetries; attempt++ {
+		err := op()
+		if err == nil {
 			return nil
-		} else {
-			lastErr = err
-			if !isTransientLockError(err) || attempt == cfg.MaxRetries {
-				return err
-			}
+		}
+		lastErr = err
+		if !isTransientLockError(err) || attempt == maxRetries {
+			return err
+		}
+		debugFileOp(fmt.Sprintf("%s: transient lock (attempt %d/%d), retrying in %s -- %v",
+			desc, attempt+1, maxRetries, delay, err))
+		if beforeRetry != nil {
+			beforeRetry()
 		}
 		time.Sleep(delay)
-		delay = time.Duration(float64(delay) * cfg.BackoffFactor)
-		if delay > cfg.MaxDelay {
-			delay = cfg.MaxDelay
+		next := time.Duration(float64(delay) * backoff)
+		if next > max {
+			next = max
 		}
+		delay = next
 	}
 	return lastErr
 }
 
-// RobustRmtree removes path and everything under it, retrying on transient lock errors.
-func RobustRmtree(path string) error {
-	return retryOnLock(DefaultRetryConfig, func() error {
-		err := os.RemoveAll(path)
-		if err != nil {
-			// Make read-only files writable and retry once
-			_ = filepath.WalkDir(path, func(p string, d fs.DirEntry, e error) error {
-				if e == nil {
-					_ = os.Chmod(p, 0o700)
-				}
-				return nil
-			})
-			return os.RemoveAll(path)
+// debugFileOp prints debug output when APM_DEBUG is set.
+func debugFileOp(msg string) {
+	if os.Getenv("APM_DEBUG") != "" {
+		fmt.Fprintf(os.Stderr, "[DEBUG] %s\n", msg)
+	}
+}
+
+// RobustRemoveAll removes a directory tree, retrying on transient lock errors.
+// If ignoreErrors is true, any error after retries is silently discarded.
+func RobustRemoveAll(path string, ignoreErrors bool, maxRetries int) error {
+	if maxRetries <= 0 {
+		maxRetries = defaultMaxRetries
+	}
+	err := retryOnLock(func() error {
+		return removeAllWritable(path)
+	}, "rmtree "+path, maxRetries, defaultInitialDelay, defaultMaxDelay, defaultBackoffFactor, nil)
+	if err != nil && ignoreErrors {
+		return nil
+	}
+	return err
+}
+
+// removeAllWritable removes path, chmod-ing read-only files writable first.
+func removeAllWritable(path string) error {
+	// chmod all files writable so rmtree succeeds on read-only trees (e.g. git pack).
+	_ = filepath.WalkDir(path, func(p string, d os.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return nil
 		}
+		_ = os.Chmod(p, 0o666)
 		return nil
 	})
+	return os.RemoveAll(path)
 }
 
-// RobustCopytree copies the directory tree at src to dst, retrying on transient lock errors.
-func RobustCopytree(src, dst string) error {
-	return retryOnLock(DefaultRetryConfig, func() error {
-		return copyDirTree(src, dst)
-	})
+// RobustCopyTree copies a directory tree from src to dst, retrying on
+// transient lock errors. Any partial dst is removed before each retry
+// unless dirsExistOK is true.
+func RobustCopyTree(src, dst string, symlinks, dirsExistOK bool, maxRetries int) error {
+	if maxRetries <= 0 {
+		maxRetries = defaultMaxRetries
+	}
+	var beforeRetry func()
+	if !dirsExistOK {
+		beforeRetry = func() {
+			_ = os.RemoveAll(dst)
+		}
+	}
+	return retryOnLock(func() error {
+		return copyTree(src, dst, symlinks, dirsExistOK)
+	}, fmt.Sprintf("copytree %s -> %s", src, dst), maxRetries, defaultInitialDelay, defaultMaxDelay, defaultBackoffFactor, beforeRetry)
 }
 
-func copyDirTree(src, dst string) error {
-	return filepath.WalkDir(src, func(path string, d fs.DirEntry, err error) error {
+// copyTree is the inner copy-tree implementation (no retry).
+func copyTree(src, dst string, symlinks, dirsExistOK bool) error {
+	return filepath.WalkDir(src, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -127,20 +120,45 @@ func copyDirTree(src, dst string) error {
 		}
 		target := filepath.Join(dst, rel)
 		if d.IsDir() {
-			return os.MkdirAll(target, 0o755)
+			if mkErr := os.MkdirAll(target, 0o755); mkErr != nil && !dirsExistOK {
+				return mkErr
+			}
+			return nil
+		}
+		if d.Type()&os.ModeSymlink != 0 {
+			if symlinks {
+				link, readErr := os.Readlink(path)
+				if readErr != nil {
+					return readErr
+				}
+				return os.Symlink(link, target)
+			}
+			// Dereference symlink: stat the real file.
+			info, statErr := os.Stat(path)
+			if statErr != nil || !info.Mode().IsRegular() {
+				return nil
+			}
 		}
 		return copyFile(path, target)
 	})
 }
 
-// RobustCopy2 copies a single file from src to dst, retrying on transient lock errors.
-func RobustCopy2(src, dst string) error {
-	return retryOnLock(DefaultRetryConfig, func() error {
+// RobustCopy2 copies a single file with metadata, retrying on transient lock
+// errors.
+func RobustCopy2(src, dst string, maxRetries int) error {
+	if maxRetries <= 0 {
+		maxRetries = defaultMaxRetries
+	}
+	return retryOnLock(func() error {
 		return copyFile(src, dst)
-	})
+	}, fmt.Sprintf("copy2 %s -> %s", src, dst), maxRetries, defaultInitialDelay, defaultMaxDelay, defaultBackoffFactor, nil)
 }
 
+// copyFile copies src to dst, preserving permissions.
 func copyFile(src, dst string) error {
+	if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
+		return err
+	}
 	in, err := os.Open(src)
 	if err != nil {
 		return err
@@ -152,15 +170,14 @@ func copyFile(src, dst string) error {
 		return err
 	}
 
-	if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
-		return err
-	}
 	out, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, info.Mode())
 	if err != nil {
 		return err
 	}
-	defer out.Close()
-
-	_, err = io.Copy(out, in)
-	return err
+	_, copyErr := io.Copy(out, in)
+	closeErr := out.Close()
+	if copyErr != nil {
+		return copyErr
+	}
+	return closeErr
 }

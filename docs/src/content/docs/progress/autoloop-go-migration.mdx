@@ -1,0 +1,119 @@
+---
+title: Autoloop Go Migration Progress
+description: Current status, benchmark signals, and next work for the Autoloop Python-to-Go migration.
+---
+
+This page tracks the Autoloop program that is incrementally rewriting the APM CLI from Python to Go. It is seeded from the `memory/autoloop` branch, the Autoloop workflow history, issue [#3](https://github.com/githubnext/apm/issues/3), and PR [#17](https://github.com/githubnext/apm/pull/17).
+
+:::note[Refresh cadence]
+The `Autoloop Go Migration Progress Site` agentic workflow refreshes this page after relevant changes merge to `main`. When the migration branch advances without a docs merge, use the linked Autoloop issue, PR, and memory branch for the newest raw state.
+:::
+
+## Latest status
+
+| Field | Value |
+|---|---|
+| Program | `python-to-go-migration` |
+| Status | Active, open-ended |
+| Autoloop branch | [`autoloop/python-to-go-migration`](https://github.com/githubnext/apm/tree/autoloop/python-to-go-migration) |
+| Tracking issue | [#3 Python-to-Go Migration](https://github.com/githubnext/apm/issues/3) |
+| Accumulating PR | [#17 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/17) |
+| Last accepted iteration | Iteration 24, 2026-05-13 14:22 UTC |
+| Best metric | 9.89% migrated (`python_lines_migrated_pct`) |
+| Migrated lines (best) | ~7,092 of 71,696 original Python lines |
+| Migrated modules (status.json) | 24 (iter-13 baseline; see note below) |
+
+:::caution[Branch reset caveat]
+The migration branch periodically fast-forward-resets when main merges. Each Autoloop iteration rebuilds lost modules before adding new ones. `benchmarks/migration-status.json` reflects the iter-13 stable baseline (24 modules, 4,245 lines). Iteration 24 committed an additional 30 Go packages on top of that baseline; those modules are not yet captured in the JSON. The machine-state `best_metric` of 9.89 corresponds to ~7,092 migrated lines and is the authoritative progress signal.
+:::
+
+## Migration progress
+
+| Iteration | Run | Change | Metric |
+|---:|---|---|---:|
+| 1 | [25717987972](https://github.com/githubnext/apm/actions/runs/25717987972) | Initialized Go module; migrated `constants.py`, `version.py`, `utils/short_sha.py`, `utils/paths.py`, `utils/normalization.py`. | 0.40% |
+| 2 | [25736801433](https://github.com/githubnext/apm/actions/runs/25736801433) | Migrated `utils/yaml_io.py`, `utils/atomic_io.py`, `utils/git_env.py`. | 0.68% |
+| 3 | [25744614816](https://github.com/githubnext/apm/actions/runs/25744614816) | Migrated `utils/guards.py`. | 0.85% |
+| 4 | [25747630390](https://github.com/githubnext/apm/actions/runs/25747630390) | Migrated `utils/subprocess_env.py`, `utils/helpers.py`. | 1.15% |
+| 5-12 | — | Migrated `utils/content_hash.py`, `utils/exclude.py`, `utils/path_security.py`, `utils/version_checker.py`, `utils/file_ops.py`, `utils/console.py`, `utils/diagnostics.py`, `utils/install_tui.py`, `utils/github_host.py`, `utils/reflink.py`; branch resets caused repeated rebuilds. | 0.0%–5.41% |
+| 13 | [25771166584](https://github.com/githubnext/apm/actions/runs/25771166584) | Migrated 13 modules including `install/errors.py`, `install/cache_pin.py`, `install/context.py`; 4,245 total lines — stable baseline now recorded in `benchmarks/migration-status.json`. | 5.92% |
+| 14-21 | — | Repeatedly rebuilt modules lost to branch resets; added `compilation/*`, `models/*`, `policy/*`, `marketplace/*`, `cache/*`, `integration/*`, `workflow/*`, `primitives/*`; metrics oscillated with each reset. | 6.39%–8.66% |
+| 22 | [25798457534](https://github.com/githubnext/apm/actions/runs/25798457534) | Migrated 26 modules: `compilation/buildid+outputwriter+constitution`, `models/results+dependency/types`, `policy/schema+matcher+inheritance`, `install/request+summary+mcpargs`, `runtime/base`, `marketplace/validator+errors+tagpattern`, `cache/urlnormalize+paths+integrity`, `integration/utils+coverage`, `workflow/discovery+parser`, `core/nulllogger`, `deps/gitremoteops+aggregator`, `primitives/models`. | 9.37% |
+| 23 | [25801585559](https://github.com/githubnext/apm/actions/runs/25801585559) | Rebuilt 28 modules after another branch reset to iter-13 state. | 6.99% |
+| 24 | [25805061357](https://github.com/githubnext/apm/actions/runs/25805061357) | Rebuilt 27 modules and added 3 new ones (`marketplace/shadowdetector`, `core/dockerargs`, `deps/installedpackage`); +2,847 lines over iter-13 baseline. | **9.89%** |
+
+## Migrated modules
+
+The table below lists the 24 modules recorded in `benchmarks/migration-status.json` on the migration branch (iter-13 stable baseline). Iteration 24 also includes 30 additional Go packages on the branch that are not yet captured in the JSON.
+
+| Python module | Go package | Python lines |
+|---|---|---:|
+| `src/apm_cli/constants.py` | `internal/constants` | 55 |
+| `src/apm_cli/version.py` | `internal/version` | 101 |
+| `src/apm_cli/utils/short_sha.py` | `internal/utils/sha` | 45 |
+| `src/apm_cli/utils/paths.py` | `internal/utils/paths` | 27 |
+| `src/apm_cli/utils/normalization.py` | `internal/utils/normalization` | 57 |
+| `src/apm_cli/utils/yaml_io.py` | `internal/utils/yamlio` | 55 |
+| `src/apm_cli/utils/atomic_io.py` | `internal/utils/atomicio` | 52 |
+| `src/apm_cli/utils/git_env.py` | `internal/utils/gitenv` | 97 |
+| `src/apm_cli/utils/guards.py` | `internal/utils/guards` | 123 |
+| `src/apm_cli/utils/subprocess_env.py` | `internal/utils/subprocenv` | 84 |
+| `src/apm_cli/utils/helpers.py` | `internal/utils/helpers` | 131 |
+| `src/apm_cli/utils/content_hash.py` | `internal/utils/contenthash` | 108 |
+| `src/apm_cli/utils/exclude.py` | `internal/utils/exclude` | 169 |
+| `src/apm_cli/utils/path_security.py` | `internal/utils/pathsecurity` | 130 |
+| `src/apm_cli/utils/version_checker.py` | `internal/utils/versionchecker` | 193 |
+| `src/apm_cli/utils/file_ops.py` | `internal/utils/fileops` | 326 |
+| `src/apm_cli/utils/console.py` | `internal/utils/console` | 224 |
+| `src/apm_cli/utils/diagnostics.py` | `internal/utils/diagnostics` | 486 |
+| `src/apm_cli/utils/install_tui.py` | `internal/utils/installtui` | 365 |
+| `src/apm_cli/utils/github_host.py` | `internal/utils/githubhost` | 624 |
+| `src/apm_cli/utils/reflink.py` | `internal/utils/reflink` | 281 |
+| `src/apm_cli/install/errors.py` | `internal/install/errors` | 113 |
+| `src/apm_cli/install/cache_pin.py` | `internal/install/cachepin` | 233 |
+| `src/apm_cli/install/context.py` | `internal/install/installctx` | 166 |
+
+## Benchmark signals
+
+### Migration metric
+
+Autoloop tracks `python_lines_migrated_pct = (migrated_python_lines / original_python_lines) * 100`. The best recorded value is **9.89%** (iteration 24, ~7,092 of 71,696 lines). `go build ./...` and `go test ./...` pass on all accepted iterations. Module-specific Python-vs-Go timing data is not yet present in `benchmarks/migration-status.json`.
+
+### Manifest operations benchmark (`scripts/benchmark_manifest_ops.py`)
+
+Run locally on 2026-05-13 with `python3 scripts/benchmark_manifest_ops.py`. Results are nondeterministic micro-benchmarks; order-of-magnitude values are stable across runs.
+
+| Scale | `check_collision` speedup | `sync_remove_files` speedup | `cleanup_empty_parents` speedup | Scoped uninstall speedup |
+|---|---:|---:|---:|---:|
+| Current: 10 pkgs, 50 paths | 24.9x | 1.8x | 0.9x | 2.0x |
+| Growing: 50 pkgs, 250 paths | 117.6x | 1.7x | 0.6x | 9.6x |
+| Large monorepo: 100 pkgs, 2,000 paths | 923.3x | 1.7x | 0.5x | 24.2x |
+
+`cleanup_empty_parents` shows a small regression at scale (0.5x–0.9x) because the batch bottom-up algorithm has higher constant overhead than the legacy per-file walk-up at low deleted-file counts. This is expected and acceptable given the gains on the other three operations.
+
+### Go build/test validation
+
+| Signal | Status | Notes |
+|---|---|---|
+| `go build ./...` | Pass (all accepted iters) | Confirmed in iter-13, iter-22, iter-23, iter-24 notes |
+| `go test ./...` | Pass (all accepted iters) | Confirmed in iter-13, iter-22, iter-23, iter-24 notes |
+| External deps | Unavailable in sandbox | `gopkg.in/yaml.v3` blocked; stdlib-only YAML scanner used for `workflow/parser` and `deps/aggregator` |
+
+## Next up
+
+From the Autoloop memory `Future Directions`:
+
+- `install/pipeline.py` (741 lines), `install/sources.py` (734 lines), `install/services.py` (734 lines) -- larger install modules, clear patterns.
+- `policy/discovery.py` (1,365 lines) -- highest-impact policy module.
+- `deps/github_downloader.py` (1,686 lines) -- requires HTTP client work.
+- `install/phases/finalize.py` (92), `install/template.py` (140), `install/service.py` (146) -- smaller fill-in modules.
+- Wire Go packages into the Python CLI via subprocess or subprocess-replacement.
+- Address recurring branch-reset issue: consider a stable upstream merge strategy so `benchmarks/migration-status.json` stays current.
+
+## Operating notes
+
+- Prefer leaf modules first; fewer internal APM dependencies and lower integration risk.
+- Keep Go implementations stdlib-only when sandbox networking blocks external module fetches (e.g., use a line-scanner for YAML frontmatter instead of `gopkg.in/yaml.v3`).
+- Record every accepted iteration in `benchmarks/migration-status.json` so this page can report complete module data.
+
+Last updated: 2026-05-13 15:14 UTC.

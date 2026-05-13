@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T19:10:00Z |
-| Iteration Count | 28 |
-| Best Metric | 18.93 |
+| Last Run | 2026-05-13T20:20:00Z |
+| Iteration Count | 29 |
+| Best Metric | 23.56 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | — |
+| PR | (new, created iter 29) |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,14 +32,14 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: (see PR labeled [Autoloop: python-to-go-migration])
+**Pull Request**: (new PR created iter 29)
 **Issue**: #3
 
 ---
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: tackle install/pipeline.py (741), install/sources.py (734), install/services.py (734), install/drift.py (731), install/validation.py (647))*
+*(No specific priorities set -- agent is exploring freely. Next: tackle integration/skill_integrator.py (1513), install/phases/lockfile.py (260), install/phases/post_deps_local.py (117), install/local_bundle_handler.py (399), install/mcp/*.py)*
 
 ---
 
@@ -67,7 +67,7 @@
 - github_host.py: GHES precedence logic (GITHUB_HOST overrides GitLab env vars for the same host); IsValidFQDN uses a single compiled regexp.
 - installtui.py: deferred spinner (250ms via goroutine + time.After); ShouldAnimate checks APM_PROGRESS env, NO_COLOR, TERM=dumb, and TTY mode bit.
 - The branch loses commits when the ahead=0 fast-forward-push fires in new runs. Each iteration must rebuild lost modules. This is a known structural issue.
-- Batching many modules per iteration is efficient -- 35 modules in iter 25 = +3691 new lines vs baseline.
+- Batching many modules per iteration is efficient -- rebuilding 16 lost + 7 new in iter 29 = +4.63% metric improvement.
 - policy/matcher.py glob pattern: split on ** vs * iteratively into a strings.Builder; compile to regexp and cache in sync.Mutex map.
 - models/dependency/types.py: Go iota enums + String() methods replace Python Enum; ParseGitReference uses pre-compiled regexps.
 - compilation/build_id.py: sha256.Sum256 + fmt.Sprintf("%x")[:12]; strings.Split + Join correctly preserves trailing newline.
@@ -85,6 +85,9 @@
 - Heal Chain pattern: Go interface + slice of healers; exclusive_group short-circuit via FiredGroups map; BranchRefDrift + BuggyLockfileRecovery map cleanly.
 - install/insecure_policy.py: url.Parse for host extraction; FQDN validation with simple label regex; two-condition policy (dep-level + CLI flag) maps to two if-checks.
 - skillpathmigration: regexp.MustCompile for legacy pattern; filepath.Clean + Rel for containment checks; iterative parent cleanup stops at project root.
+- policy/discovery.py: PolicyCacheManager with atomic writes (WriteFile + Rename); sync.Mutex for concurrent access; SHA-256 for cache key derivation; hash pin validation maps to ParseHashPin helper.
+- policy/policy_checks.py and ci_checks.py: CheckResult/CIAuditResult structs with HasFailures() + RenderSummary helpers; baseline checks (manifest-parse, lockfile-exists, lockfile-sync, integrity) as standalone functions.
+- install/phases (integrate, resolve, targets, heal): each phase is a struct with Name()/Run(ctx) interface; Context interface carries shared state; results are typed structs.
 
 ---
 
@@ -96,16 +99,26 @@
 
 ## 🔭 Future Directions
 
-- policy/discovery.py (1365 lines) -- largest policy module; high impact
+- integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling
+- integration/hook_integrator.py (1071), integration/targets.py (846) -- sizeable
+- install/phases/lockfile.py (260), install/phases/post_deps_local.py (117) -- small phases
+- install/local_bundle_handler.py (399) -- local bundle handling
+- install/mcp/*.py (registry 277, command 160, writer 132, warnings 123, conflicts 122) -- MCP integration
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
-- integration/base_integrator.py (562), integration/skill_integrator.py (1513) -- large integrators
-- integration/targets.py (846), integration/hook_integrator.py (1071) -- sizeable
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 29 — 2026-05-13 20:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25823679450)
+
+- **Status**: ✅ Accepted
+- **Change**: Rebuilt 16 lost modules (plan, service, insecurepolicy, template, packageresolution, skillpathmigration, heals, securityscan, dryrun, dispatch, pipeline, sources, services, drift, validation, updatepolicy) + 7 new modules (policy/discovery 1365, policychecks 1010, cichecks 588, phases/integrate 544, phases/resolve 488, phases/targets 445, phases/heal 90) = 16894 total migrated Python lines
+- **Metric**: 23.56 (previous best: 18.93, delta: +4.63)
+- **Commit**: baf798d
+- **Notes**: Branch was at iter-25 state (7936 lines) due to reset. Rebuilt all lost work from iters 26-28 plus 7 new modules. go build ./... and go test ./... pass.
 
 ### Iteration 28 — 2026-05-13 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25820592047)
 
@@ -115,30 +128,6 @@
 - **Commit**: 7509435
 - **Notes**: Branch was at iter-25 state (7936 lines) due to reset. Rebuilt all lost work plus 5 new large install-phase modules. go build ./... and go test ./... pass.
 
-### Iteration 27 — 2026-05-13 18:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25817705977)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 15 modules: updatepolicy, install/plan, install/service, install/heals (base+branch_ref_drift+buggy_lockfile_recovery), install/phases/heal, integration/dispatch, install/insecurepolicy, install/template, install/helpers/securityscan, install/presentation/dryrun, install/packageresolution, install/skillpathmigration (+2084 Python lines, 10020 total)
-- **Metric**: 13.98 (previous best: 12.56, delta: +1.42)
-- **Commit**: 68f6adb
-- **Notes**: Branch was at iteration-25 state (7936 lines). Rebuilt iter-26 lost modules plus 6 new ones. go build ./... and go test ./... pass.
-
-### Iteration 26 — 2026-05-13 17:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25814868234)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 9 modules: updatepolicy, install/plan, install/service, install/heals (base+branch_ref_drift+buggy_lockfile_recovery+chain), install/phases/heal, integration/dispatch (+1068 Python lines, 9004 total)
-- **Metric**: 12.56 (previous best: 11.07, delta: +1.49)
-- **Commit**: f1270af
-- **Notes**: PR #17 was merged by maintainer; new PR created. Added core install-phase modules and the heal chain. go build ./... and go test ./... pass.
-
-### Iteration 25 — 2026-05-13 16:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25812073376)
-
-- **Status**: ✅ Accepted
-- **Change**: Rebuild 30 modules from iter-24 + add 5 new: workflow/discovery, compilation/claude_formatter+gemini_formatter (agentformatter), injector, template_builder (+3691 Python lines, 7936 total)
-- **Metric**: 11.07 (previous best: 9.89, delta: +1.18)
-- **Commit**: 5c06076
-- **Notes**: Branch was at iter-13 state (4245 lines). Rebuilt all 30 iter-24 modules plus 5 new compilation/workflow modules. go build ./... and go test ./... pass. CI green.
-
-### Iters 13-24 — 2026-05-13 — ✅ (metrics 5.92->9.89): rebuilt lost modules repeatedly plus added new ones each iteration.
+### Iters 13-27 — 2026-05-13 — ✅ (metrics 5.92->13.98): rebuilt lost modules repeatedly plus added new ones each iteration.
 
 ### Iters 1-12 — 2026-05-12 — ✅ (metrics 0.0->5.41): initialized Go module; migrated utils, version, constants, various helpers; branch reset issues caused repeated rebuilds.

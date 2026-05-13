@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T13:20:00Z |
-| Iteration Count | 23 |
-| Best Metric | 6.99 |
+| Last Run | 2026-05-13T14:22:00Z |
+| Iteration Count | 24 |
+| Best Metric | 9.89 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -76,6 +76,9 @@
 - primitives/models.py: Python dataclass hierarchy with conflict detection maps to Go structs + per-type index maps for O(1) conflict lookup.
 - policy/inheritance.py: escalation ladders (map[string]int) enable stricter() helper; merge uses append for accumulating deny/require lists.
 - best_metric in state file gets inflated vs branch reality due to repeated branch resets. Each iter rebuilds from iter-13 baseline; best_metric now tracks actual branch state.
+- Batching 30 modules per iteration is effective -- each rebuild recovers 27 lost modules and adds 3 new ones. Total line count grows consistently.
+- workflow/parser and deps/aggregator required stdlib-only YAML frontmatter parsing (gopkg.in/yaml.v3 unavailable); simple line scanner handles the nested-list case correctly.
+- cache/integrity.py: read .git/HEAD directly (packed-refs fallback) -- avoids subprocess, handles worktree gitdir: indirection.
 
 ---
 
@@ -99,6 +102,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 24 — 2026-05-13 14:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25805061357)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 30 modules: compilation/buildid+outputwriter+constitution+constants, models/results+dependency/types, policy/schema+matcher+inheritance, install/request+summary+mcpargs, runtime/base, marketplace/validator+errors+semver+tagpattern+shadowdetector, cache/urlnormalize+cachepaths+integrity, integration/utils+coverage, workflow/parser, core/nulllogger+dockerargs, deps/gitremoteops+aggregator+installedpackage, primitives/models (+2847 Python lines)
+- **Metric**: 9.89 (previous best: 6.99, delta: +2.90)
+- **Commit**: e6cfcd7
+- **Notes**: Branch was at iter-13 baseline (4245 lines, 5.92%) after main merge. Rebuilt 27 modules from iters 14-23 and added 3 new ones (shadowdetector, dockerargs, installedpackage). Stdlib-only YAML frontmatter parser used for workflow/parser and deps/aggregator.
 
 ### Iteration 23 — 2026-05-13 13:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25801585559)
 

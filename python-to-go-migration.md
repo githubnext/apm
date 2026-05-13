@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T21:06:00Z |
-| Iteration Count | 30 |
-| Best Metric | 13.45 |
+| Last Run | 2026-05-14T00:00:00Z |
+| Iteration Count | 31 |
+| Best Metric | 15.16 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -106,8 +106,8 @@
 - integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling
 - integration/hook_integrator.py (1071), integration/targets.py (846) -- sizeable
 - install/local_bundle_handler.py (399) -- local bundle handling
-- install/mcp/*.py (registry 277, command 160, writer 132, warnings 123, conflicts 122) -- MCP integration
-- install/phases/policy_target_check.py (113), install/phases/local_content.py (191), install/phases/cleanup.py -- remaining small phases
+- install/mcp/*.py -- all 5 modules now migrated (mcpwarnings, mcpconflicts, mcpentry, mcpwriter, mcpcommand, mcpregistry)
+- install/phases remaining: policy_target_check.py, local_content.py -- both now migrated
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
@@ -115,6 +115,13 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 31 — 2026-05-14 00:00 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25828800403)
+
+- **Status**: Accepted (pending CI)
+- **Change**: Rebuilt 9 batch-1 modules from iter 30 (plan 425, insecurepolicy 229, cleanup 158, finalize 92, heal 90, lockfile 260, policygate 204, download 135, postdepslocal 117) + 8 new batch-2 modules (localcontent 191, policytargetcheck 113, mcpwarnings 123, mcpconflicts 122, mcpentry 106, mcpwriter 132, mcpcommand 160, mcpregistry 277) = +1224 new lines
+- **Metric**: 15.16 (previous best: 13.45, delta: +1.71)
+- **Notes**: Branch was at iter-25 state (7936 lines) after reset. All 17 modules use stdlib-only Go. go build ./... and go test ./... pass. PR created.
 
 ### Iteration 30 — 2026-05-13 21:06 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25826362727)
 

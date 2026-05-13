@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T14:22:00Z |
-| Iteration Count | 24 |
-| Best Metric | 9.89 |
+| Last Run | 2026-05-13T16:40:00Z |
+| Iteration Count | 25 |
+| Best Metric | 11.07 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) and larger modules like policy/discovery, deps/github_downloader.)*
+*(No specific priorities set -- agent is exploring freely. Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) and larger modules like policy/discovery.)*
 
 ---
 
@@ -67,7 +67,7 @@
 - github_host.py: GHES precedence logic (GITHUB_HOST overrides GitLab env vars for the same host); IsValidFQDN uses a single compiled regexp.
 - installtui.py: deferred spinner (250ms via goroutine + time.After); ShouldAnimate checks APM_PROGRESS env, NO_COLOR, TERM=dumb, and TTY mode bit.
 - The branch loses commits when the ahead=0 fast-forward-push fires in new runs. Each iteration must rebuild lost modules. This is a known structural issue.
-- Batching many modules per iteration is efficient -- 28 modules in iter 23 = +766 new Go lines.
+- Batching many modules per iteration is efficient -- 35 modules in iter 25 = +3691 new lines vs baseline.
 - policy/matcher.py glob pattern: split on ** vs * iteratively into a strings.Builder; compile to regexp and cache in sync.Mutex map.
 - models/dependency/types.py: Go iota enums + String() methods replace Python Enum; ParseGitReference uses pre-compiled regexps.
 - compilation/build_id.py: sha256.Sum256 + fmt.Sprintf("%x")[:12]; strings.Split + Join correctly preserves trailing newline.
@@ -76,9 +76,11 @@
 - primitives/models.py: Python dataclass hierarchy with conflict detection maps to Go structs + per-type index maps for O(1) conflict lookup.
 - policy/inheritance.py: escalation ladders (map[string]int) enable stricter() helper; merge uses append for accumulating deny/require lists.
 - best_metric in state file gets inflated vs branch reality due to repeated branch resets. Each iter rebuilds from iter-13 baseline; best_metric now tracks actual branch state.
-- Batching 30 modules per iteration is effective -- each rebuild recovers 27 lost modules and adds 3 new ones. Total line count grows consistently.
 - workflow/parser and deps/aggregator required stdlib-only YAML frontmatter parsing (gopkg.in/yaml.v3 unavailable); simple line scanner handles the nested-list case correctly.
 - cache/integrity.py: read .git/HEAD directly (packed-refs fallback) -- avoids subprocess, handles worktree gitdir: indirection.
+- claude_formatter.py + gemini_formatter.py combined into single agentformatter package; reduces package proliferation for closely related formatters.
+- compilation/injector.py: extract/inject constitution block via simple string marker search; InjectionStatus iota enum.
+- compilation/template_builder.py: RenderInstructionsBlock splits global vs scoped instructions, sorts by pattern then by relpath within each group.
 
 ---
 
@@ -90,18 +92,25 @@
 
 ## 🔭 Future Directions
 
-- Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) -- these are larger but follow clear patterns
-- policy/discovery.py (1365 lines) -- largest policy module; high impact if migratable
-- deps/github_downloader.py (1686 lines) -- but likely requires HTTP client work
-- install/phases/finalize.py (92), install/template.py (140), install/service.py (146)
+- Next: tackle install/pipeline.py (741), install/sources.py (734), install/services.py (734) -- larger but clear patterns
+- install/drift.py (731), install/validation.py (647) -- moderate complexity
+- policy/discovery.py (1365 lines) -- largest policy module; high impact
+- deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
 - marketplace/semver Go semver impl is complete and dependency-free.
-- tag_pattern: regexp.QuoteMeta + sentinel substitution cleanly maps Python's re.escape approach.
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 25 — 2026-05-13 16:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25812073376)
+
+- **Status**: ✅ Accepted
+- **Change**: Rebuild 30 modules from iter-24 + add 5 new: workflow/discovery, compilation/claude_formatter+gemini_formatter (agentformatter), injector, template_builder (+3691 Python lines, 7936 total)
+- **Metric**: 11.07 (previous best: 9.89, delta: +1.18)
+- **Commit**: 5c06076
+- **Notes**: Branch was at iter-13 state (4245 lines). Rebuilt all 30 iter-24 modules plus 5 new compilation/workflow modules. go build ./... and go test ./... pass. CI green.
 
 ### Iteration 24 — 2026-05-13 14:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25805061357)
 
@@ -111,22 +120,7 @@
 - **Commit**: e6cfcd7
 - **Notes**: Branch was at iter-13 baseline (4245 lines, 5.92%) after main merge. Rebuilt 27 modules from iters 14-23 and added 3 new ones (shadowdetector, dockerargs, installedpackage). Stdlib-only YAML frontmatter parser used for workflow/parser and deps/aggregator.
 
-### Iteration 23 — 2026-05-13 13:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25801585559)
-
-- **Status**: ✅ Accepted
-- **Change**: Rebuild 28 Go modules after branch reset (compilation/buildid+outputwriter+constitution+constants, models/results+dependency, policy/schema+matcher+inheritance, install/request+summary+mcpargs, runtime/base, marketplace/validator+errors+semver+tagpattern, cache/urlnormalize+cachepaths+integrity, integration/utils+coverage, workflow/discovery+parser, core/nulllogger, deps/gitremoteops+aggregator, primitives/models)
-- **Metric**: 6.99 (previous best: 5.92 on branch, state file showed 9.37 before reset, delta: +1.07 from branch state)
-- **Commit**: 50e9b02
-- **Notes**: Branch was again at iter-13 state (4245 lines, 5.92%) after merge-with-main fast-forward reset. Rebuilt all 28 modules from iters 14-22 into a single commit. All packages build and go test ./... passes. best_metric updated to reflect actual branch state.
-
-### Iteration 22 — 2026-05-13 12:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25798457534)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 26 modules to Go: compilation/buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, policy/inheritance, install/request, install/summary, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/paths, cache/integrity, integration/utils, integration/coverage, workflow/discovery, workflow/parser, core/nulllogger, deps/gitremoteops, deps/aggregator, install/mcp/args, primitives/models (+2471 lines, 6716 total)
-- **Metric**: 9.37 (previous best: 8.66, delta: +0.71)
-- **Commit**: cdc11a4
-
-### Iters 14-21 — 2026-05-13 — ✅ (metrics 6.39->8.66): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones.
+### Iters 14-23 — 2026-05-13 — ✅ (metrics 5.92->8.66->9.37): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones.
 
 ### Iteration 13 — 2026-05-13 00:52 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25771166584)
 

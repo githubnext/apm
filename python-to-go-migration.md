@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T20:20:00Z |
-| Iteration Count | 29 |
-| Best Metric | 23.56 |
+| Last Run | 2026-05-13T21:06:00Z |
+| Iteration Count | 30 |
+| Best Metric | 13.45 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | (new, created iter 29) |
+| PR | (new, pending) |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -88,6 +88,10 @@
 - policy/discovery.py: PolicyCacheManager with atomic writes (WriteFile + Rename); sync.Mutex for concurrent access; SHA-256 for cache key derivation; hash pin validation maps to ParseHashPin helper.
 - policy/policy_checks.py and ci_checks.py: CheckResult/CIAuditResult structs with HasFailures() + RenderSummary helpers; baseline checks (manifest-parse, lockfile-exists, lockfile-sync, integrity) as standalone functions.
 - install/phases (integrate, resolve, targets, heal): each phase is a struct with Name()/Run(ctx) interface; Context interface carries shared state; results are typed structs.
+- install/plan.py: pure diff (BuildUpdatePlan) + ASCII renderer (RenderPlanText) + LockfileSatisfiesManifest; all pure functions, no I/O -- translates cleanly to Go.
+- install/phases/download.py: parallel pre-download via sync.WaitGroup + buffered channel semaphore; silently swallow failures (integration loop handles errors).
+- install/phases/lockfile.py: LockfileBuilder as struct with ctx interface; ComputeDeployedHashes uses Lstat to exclude symlinks; writeIfChanged uses temp-file rename for atomicity.
+- Best metric tracks branch reality not state-file claims; state-file inflation from branch resets caused confusion in iters 26-29.
 
 ---
 
@@ -101,9 +105,9 @@
 
 - integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling
 - integration/hook_integrator.py (1071), integration/targets.py (846) -- sizeable
-- install/phases/lockfile.py (260), install/phases/post_deps_local.py (117) -- small phases
 - install/local_bundle_handler.py (399) -- local bundle handling
 - install/mcp/*.py (registry 277, command 160, writer 132, warnings 123, conflicts 122) -- MCP integration
+- install/phases/policy_target_check.py (113), install/phases/local_content.py (191), install/phases/cleanup.py -- remaining small phases
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
@@ -111,6 +115,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 30 — 2026-05-13 21:06 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25826362727)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 9 install modules: phases/heal (90), phases/finalize (92), phases/cleanup (158), phases/post_deps_local (117), phases/download (135), phases/lockfile (260), phases/policy_gate (204), insecure_policy (229), plan (425) = +1710 Python lines
+- **Metric**: 13.45 (previous best: 11.07, delta: +2.38)
+- **Commit**: a27b161
+- **Notes**: Branch had only iter-13 JSON data (7936 lines). All new modules use stdlib-only Go. go build ./... and go test ./... pass. Best metric reset to 13.45 (branch reality after repeated resets from 23.56 inflated state).
 
 ### Iteration 29 — 2026-05-13 20:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25823679450)
 

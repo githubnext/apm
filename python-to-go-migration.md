@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T03:15:00Z |
-| Iteration Count | 15 |
-| Best Metric | 6.57 |
+| Last Run | 2026-05-13T04:49:00Z |
+| Iteration Count | 16 |
+| Best Metric | 6.88 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -92,6 +92,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 16 — 2026-05-13 04:49 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25778918102)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 10 modules to Go: compilation/constants, compilation/build_id, compilation/output_writer, marketplace/tag_pattern, cache/integrity, core/docker_args, deps/git_remote_ops, deps/installed_package, install/request, install/summary (+687 lines, 4932 total)
+- **Metric**: 6.88 (previous best: 6.57, delta: +0.31)
+- **Commit**: 176ff10
+- **Notes**: All 10 packages build and test cleanly. Tests added for tagpattern and gitremoteops. cache/integrity handles all 3 git dir layouts. Branch state confirmed at iter 13; iters 14/15 commits were on the PR but lost to branch reset -- rebuilt the missing modules fresh.
 
 ### Iteration 15 — 2026-05-13 03:15 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25775950804)
 

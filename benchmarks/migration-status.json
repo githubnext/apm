@@ -1,0 +1,176 @@
+{
+  "original_python_lines": 71696,
+  "migrated_python_lines": 4245,
+  "migrated_modules": [
+    {
+      "module": "src/apm_cli/constants.py",
+      "go_package": "internal/constants",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Pure constants and enum - no external dependencies"
+    },
+    {
+      "module": "src/apm_cli/version.py",
+      "go_package": "internal/version",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Version resolution from build constants or pyproject.toml"
+    },
+    {
+      "module": "src/apm_cli/utils/short_sha.py",
+      "go_package": "internal/utils/sha",
+      "python_lines": 45,
+      "status": "migrated",
+      "notes": "Short SHA formatter with sentinel and hex validation"
+    },
+    {
+      "module": "src/apm_cli/utils/paths.py",
+      "go_package": "internal/utils/paths",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Cross-platform relative path utility"
+    },
+    {
+      "module": "src/apm_cli/utils/normalization.py",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 57,
+      "status": "migrated",
+      "notes": "Content normalization: BOM, CRLF, build-ID header stripping"
+    },
+    {
+      "module": "src/apm_cli/utils/yaml_io.py",
+      "go_package": "internal/utils/yamlio",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "YAML I/O with UTF-8; stdlib-only implementation"
+    },
+    {
+      "module": "src/apm_cli/utils/atomic_io.py",
+      "go_package": "internal/utils/atomicio",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Atomic file write via temp+rename, same-filesystem rename"
+    },
+    {
+      "module": "src/apm_cli/utils/git_env.py",
+      "go_package": "internal/utils/gitenv",
+      "python_lines": 97,
+      "status": "migrated",
+      "notes": "Cached git lookup and subprocess env sanitization"
+    },
+    {
+      "module": "src/apm_cli/utils/guards.py",
+      "go_package": "internal/utils/guards",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "ReadOnlyProjectGuard with snapshot-based mutation detection"
+    },
+    {
+      "module": "src/apm_cli/utils/subprocess_env.py",
+      "go_package": "internal/utils/subprocenv",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "PyInstaller env restoration; stdlib-only; MapToSlice helper"
+    },
+    {
+      "module": "src/apm_cli/utils/helpers.py",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 131,
+      "status": "migrated",
+      "notes": "IsToolAvailable, GetAvailablePackageManagers, DetectPlatform, FindPluginJSON"
+    },
+    {
+      "module": "src/apm_cli/utils/content_hash.py",
+      "go_package": "internal/utils/contenthash",
+      "python_lines": 108,
+      "status": "migrated",
+      "notes": "Deterministic SHA-256 tree hashing; excludes .apm-pin marker and .git/__pycache__"
+    },
+    {
+      "module": "src/apm_cli/utils/exclude.py",
+      "go_package": "internal/utils/exclude",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Glob pattern matching with ** support; bounded recursion; safety limit on ** count"
+    },
+    {
+      "module": "src/apm_cli/utils/path_security.py",
+      "go_package": "internal/utils/pathsecurity",
+      "python_lines": 130,
+      "status": "migrated",
+      "notes": "Path traversal guards; iterative percent-decode; EnsurePathWithin; SafeRmtree"
+    },
+    {
+      "module": "src/apm_cli/utils/version_checker.py",
+      "go_package": "internal/utils/versionchecker",
+      "python_lines": 193,
+      "status": "migrated",
+      "notes": "GitHub API version check; parse_version; is_newer_version; once-per-day cache"
+    },
+    {
+      "module": "src/apm_cli/utils/file_ops.py",
+      "go_package": "internal/utils/fileops",
+      "python_lines": 326,
+      "status": "migrated",
+      "notes": "Retry-aware rmtree/copytree/copy2; exponential backoff; Windows AV-lock detection"
+    },
+    {
+      "module": "src/apm_cli/utils/console.py",
+      "go_package": "internal/utils/console",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "STATUS_SYMBOLS; RichEcho/Success/Error/Warning/Info; ANSI colour with NO_COLOR guard"
+    },
+    {
+      "module": "src/apm_cli/utils/diagnostics.py",
+      "go_package": "internal/utils/diagnostics",
+      "python_lines": 486,
+      "status": "migrated",
+      "notes": "DiagnosticCollector; thread-safe; grouped RenderSummary; all category constants"
+    },
+    {
+      "module": "src/apm_cli/utils/install_tui.py",
+      "go_package": "internal/utils/installtui",
+      "python_lines": 365,
+      "status": "migrated",
+      "notes": "InstallTui; deferred spinner (250ms); ShouldAnimate TTY check; phase/task tracking"
+    },
+    {
+      "module": "src/apm_cli/utils/github_host.py",
+      "go_package": "internal/utils/githubhost",
+      "python_lines": 624,
+      "status": "migrated",
+      "notes": "Host classification (github/ghes/ghe_com/gitlab/ado/artifactory); GHES precedence; FQDN validation"
+    },
+    {
+      "module": "src/apm_cli/utils/reflink.py",
+      "go_package": "internal/utils/reflink",
+      "python_lines": 281,
+      "status": "migrated",
+      "notes": "CoW reflink via FICLONE ioctl (Linux); device capability cache; regularCopy fallback"
+    },
+    {
+      "module": "src/apm_cli/install/errors.py",
+      "go_package": "internal/install/errors",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "DirectDependencyError, AuthenticationError, FrozenInstallError, PolicyViolationError"
+    },
+    {
+      "module": "src/apm_cli/install/cache_pin.py",
+      "go_package": "internal/install/cachepin",
+      "python_lines": 233,
+      "status": "migrated",
+      "notes": "WriteMarker (silent on failures); VerifyMarker (typed CachePinError); schema v1"
+    },
+    {
+      "module": "src/apm_cli/install/context.py",
+      "go_package": "internal/install/installctx",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "InstallContext dataclass -> Go struct; all maps/slices initialised in New()"
+    }
+  ],
+  "last_updated": "2026-05-13T00:52:00Z",
+  "iteration": 13
+}

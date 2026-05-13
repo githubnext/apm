@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T17:19:00Z |
-| Iteration Count | 26 |
-| Best Metric | 12.56 |
+| Last Run | 2026-05-13T18:20:00Z |
+| Iteration Count | 27 |
+| Best Metric | 13.98 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | pending (PR #17 merged; new PR being created) |
+| PR | pending (new PR being created) |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,14 +32,14 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: pending (PR #17 merged; new PR being created)
+**Pull Request**: pending
 **Issue**: #3
 
 ---
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) and larger modules like policy/discovery.)*
+*(No specific priorities set -- agent is exploring freely. Next: tackle install/pipeline.py (741), install/sources.py (734), install/services.py (734), install/drift.py (731), install/validation.py (647))*
 
 ---
 
@@ -81,6 +81,10 @@
 - claude_formatter.py + gemini_formatter.py combined into single agentformatter package; reduces package proliferation for closely related formatters.
 - compilation/injector.py: extract/inject constitution block via simple string marker search; InjectionStatus iota enum.
 - compilation/template_builder.py: RenderInstructionsBlock splits global vs scoped instructions, sorts by pattern then by relpath within each group.
+- install/plan.py: pure update-plan diff translates cleanly; PlanEntry/UpdatePlan as Go structs with interface-based DepRef/LockFile; no I/O.
+- Heal Chain pattern: Go interface + slice of healers; exclusive_group short-circuit via FiredGroups map; BranchRefDrift + BuggyLockfileRecovery map cleanly.
+- install/insecure_policy.py: url.Parse for host extraction; FQDN validation with simple label regex; two-condition policy (dep-level + CLI flag) maps to two if-checks.
+- skillpathmigration: regexp.MustCompile for legacy pattern; filepath.Clean + Rel for containment checks; iterative parent cleanup stops at project root.
 
 ---
 
@@ -92,17 +96,24 @@
 
 ## 🔭 Future Directions
 
-- Next: tackle install/pipeline.py (741), install/sources.py (734), install/services.py (734) -- larger but clear patterns
-- install/drift.py (731), install/validation.py (647) -- moderate complexity
+- Next: install/pipeline.py (741), install/sources.py (734), install/services.py (734) -- larger but clear patterns
+- install/drift.py (731), install/validation.py (647) -- moderate complexity, validation has `requests` dep
 - policy/discovery.py (1365 lines) -- largest policy module; high impact
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
-- marketplace/semver Go semver impl is complete and dependency-free.
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 27 — 2026-05-13 18:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25817705977)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 15 modules: updatepolicy, install/plan, install/service, install/heals (base+branch_ref_drift+buggy_lockfile_recovery), install/phases/heal, integration/dispatch, install/insecurepolicy, install/template, install/helpers/securityscan, install/presentation/dryrun, install/packageresolution, install/skillpathmigration (+2084 Python lines, 10020 total)
+- **Metric**: 13.98 (previous best: 12.56, delta: +1.42)
+- **Commit**: 68f6adb
+- **Notes**: Branch was at iteration-25 state (7936 lines). Rebuilt iter-26 lost modules plus 6 new ones. go build ./... and go test ./... pass.
 
 ### Iteration 26 — 2026-05-13 17:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25814868234)
 
@@ -120,21 +131,6 @@
 - **Commit**: 5c06076
 - **Notes**: Branch was at iter-13 state (4245 lines). Rebuilt all 30 iter-24 modules plus 5 new compilation/workflow modules. go build ./... and go test ./... pass. CI green.
 
-### Iteration 24 — 2026-05-13 14:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25805061357)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 30 modules: compilation/buildid+outputwriter+constitution+constants, models/results+dependency/types, policy/schema+matcher+inheritance, install/request+summary+mcpargs, runtime/base, marketplace/validator+errors+semver+tagpattern+shadowdetector, cache/urlnormalize+cachepaths+integrity, integration/utils+coverage, workflow/parser, core/nulllogger+dockerargs, deps/gitremoteops+aggregator+installedpackage, primitives/models (+2847 Python lines)
-- **Metric**: 9.89 (previous best: 6.99, delta: +2.90)
-- **Commit**: e6cfcd7
-- **Notes**: Branch was at iter-13 baseline (4245 lines, 5.92%) after main merge. Rebuilt 27 modules from iters 14-23 and added 3 new ones (shadowdetector, dockerargs, installedpackage). Stdlib-only YAML frontmatter parser used for workflow/parser and deps/aggregator.
-
-### Iters 14-23 — 2026-05-13 — ✅ (metrics 5.92->8.66->9.37): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones.
-
-### Iteration 13 — 2026-05-13 00:52 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25771166584)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 13 modules: content_hash, exclude, path_security, version_checker, file_ops, console, diagnostics, install_tui, github_host, reflink, install/errors, install/cache_pin, install/context (+3418 lines, 4245 total)
-- **Metric**: 5.92 (delta: +0.51)
-- **Commit**: 2da6aca
+### Iters 13-24 — 2026-05-13 — ✅ (metrics 5.92->9.89): rebuilt lost modules repeatedly plus added new ones each iteration.
 
 ### Iters 1-12 — 2026-05-12 — ✅ (metrics 0.0->5.41): initialized Go module; migrated utils, version, constants, various helpers; branch reset issues caused repeated rebuilds.

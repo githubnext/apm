@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T11:22:00Z |
-| Iteration Count | 21 |
-| Best Metric | 8.66 |
+| Last Run | 2026-05-13T12:18:00Z |
+| Iteration Count | 22 |
+| Best Metric | 9.37 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -74,7 +74,8 @@
 - compilation/build_id.py: sha256.Sum256 + fmt.Sprintf("%x")[:12]; strings.Split + Join correctly preserves trailing newline.
 - cache/url_normalize.py: SCP-like regex + url.Parse; only github.com/gitlab.com/bitbucket.org get lowercase paths.
 - cache/paths.py: APM_NO_CACHE/APM_CACHE_DIR env vars; platform-specific defaults via runtime.GOOS; per-invocation tempdir via sync.Mutex singleton.
-- Branch state was at iter 13 (4245 lines) when iter 19 started due to prior branch resets. Iter 19 rebuilt all previously claimed but lost modules and added the cache/* packages.
+- primitives/models.py: Python dataclass hierarchy with conflict detection maps to Go structs + per-type index maps for O(1) conflict lookup.
+- policy/inheritance.py: escalation ladders (map[string]int) enable stricter() helper; merge uses append for accumulating deny/require lists.
 
 ---
 
@@ -99,6 +100,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 22 — 2026-05-13 12:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25798457534)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 26 modules to Go: compilation/buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, policy/inheritance, install/request, install/summary, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/paths, cache/integrity, integration/utils, integration/coverage, workflow/discovery, workflow/parser, core/nulllogger, deps/gitremoteops, deps/aggregator, install/mcp/args, primitives/models (+2471 lines, 6716 total)
+- **Metric**: 9.37 (previous best: 8.66, delta: +0.71)
+- **Commit**: cdc11a4
+- **Notes**: Branch was at iter 13 (4245 lines) after merge-with-main. Rebuilt all previously-lost modules from iters 14-21 plus added primitives/models and policy/inheritance as net-new. All packages build and go test ./... passes.
+
 ### Iteration 21 — 2026-05-13 11:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25795852903)
 
 - **Status**: ✅ Accepted
@@ -107,40 +116,13 @@
 - **Commit**: eb0a9f1
 - **Notes**: Branch was at iter 13 state (4245 lines) again after merge-with-main. Rebuilt all previously-lost modules from iters 14-20 plus added cache/paths, install/summary, workflow/parser, deps/gitremoteops, deps/aggregator, integration/coverage as net-new. All packages build and go test ./... passes.
 
-### Iteration 20 — 2026-05-13 10:21 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25792967046)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 19 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, updatepolicy, install/request, install/mcp/args, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/integrity, integration/utils, workflow/discovery, deps/installedpkg (+1342 lines, 5587 total)
-- **Metric**: 7.79 (previous best: 7.59, delta: +0.20)
-- **Commit**: 20110db
-- **Notes**: Branch was at iter 13 (4245 lines) after merge-with-main. Rebuilt all previously-lost modules from iters 14-19 plus added marketplace/errors, marketplace/tagpattern, workflow/discovery as net-new. All packages build and go test ./... passes.
-
-### Iteration 19 — 2026-05-13 09:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25789487963)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 16 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, core/nulllogger, install/request, updatepolicy, runtime/base, marketplace/validator, cache/urlnormalize, cache/cachepaths, cache/integrity (+1200 lines, 5445 total)
-- **Metric**: 7.59 (previous best: 5.92, delta: +1.67)
-- **Commit**: 21eafd3
-- **Notes**: Branch was at iter 13 (4245 lines) due to branch reset. Rebuilt all previously claimed modules from iters 14-18 (which were lost) plus added 3 new cache packages. All 40 Go packages build and test cleanly.
-
-### Iteration 18 — 2026-05-13 07:37 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25785177141)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 26 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/matcher, policy/helptext, integration/utils, integration/coverage, core/nulllogger, deps/gitremoteops, deps/installedpkg, deps/aggregator, install/request, install/summary, install/heals, install/helpers, install/mcp/args, updatepolicy, runtime/base, workflow/parser, marketplace/validator, marketplace/gitutils, marketplace/mio, adapters/pkgmgrbase (+1416 lines, 5661 total)
-- **Metric**: 7.90 (previous best: 7.77, delta: +0.13)
-- **Commit**: 7790ecb
-- **Notes**: Branch was again at iter 13 (4245 lines) due to branch reset. Rebuilt all lost modules from iters 14-17 plus added 6 new modules (heals, helpers, mio, helptext, pkgmgrbase, aggregator). All 46 Go packages build and test cleanly.
-
-### Iters 14-17 — 2026-05-13 — ✅ (metrics 6.39->7.77): rebuilt lost modules due to branch resets; each iter added a subset of the same modules.
+### Iters 14-21 — 2026-05-13 — ✅ (metrics 6.39->8.66): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones. Net progress: rebuilt all 24 iter-13 modules each time plus steadily added new packages.
 
 ### Iteration 13 — 2026-05-13 00:52 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25771166584)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrate 13 modules to Go: content_hash, exclude, path_security, version_checker, file_ops, console, diagnostics, install_tui, github_host, reflink, install/errors, install/cache_pin, install/context (+3418 lines, 4245 total)
-- **Metric**: 5.92 (previous best: 5.41, delta: +0.51)
+- **Change**: Migrate 13 modules: content_hash, exclude, path_security, version_checker, file_ops, console, diagnostics, install_tui, github_host, reflink, install/errors, install/cache_pin, install/context (+3418 lines, 4245 total)
+- **Metric**: 5.92 (delta: +0.51)
 - **Commit**: 2da6aca
-- **Notes**: Branch was at iteration 4 (827 lines) due to force-forward reset. Rebuilt all missing modules and added install_tui + console + versionchecker. Tests added for exclude, pathsecurity, githubhost. All 24 Go packages build and test cleanly.
 
-### Iters 5-12 — 2026-05-12 — ✅ (metrics 1.54->5.41): repeatedly rebuilt lost modules; each iter added a subset of the same set due to branch reset issues.
-
-### Iters 1-4 — 2026-05-12 — ✅ (metrics 0.0->1.15): initialized Go module; migrated constants, version, short_sha, paths, normalization, yaml_io, atomic_io, git_env, guards, subprocess_env, helpers.
+### Iters 1-12 — 2026-05-12 — ✅ (metrics 0.0->5.41): initialized Go module; migrated utils, version, constants, various helpers; branch reset issues caused repeated rebuilds.

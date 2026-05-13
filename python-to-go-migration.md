@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T10:21:00Z |
-| Iteration Count | 20 |
-| Best Metric | 7.79 |
+| Last Run | 2026-05-13T11:22:00Z |
+| Iteration Count | 21 |
+| Best Metric | 8.66 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -98,6 +98,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 21 — 2026-05-13 11:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25795852903)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 25 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, install/request, install/summary, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/paths, cache/integrity, integration/utils, workflow/discovery, workflow/parser, core/nulllogger, deps/gitremoteops, deps/aggregator, install/mcp/args, integration/coverage (+1963 lines, 6208 total)
+- **Metric**: 8.66 (previous best: 7.79, delta: +0.87)
+- **Commit**: eb0a9f1
+- **Notes**: Branch was at iter 13 state (4245 lines) again after merge-with-main. Rebuilt all previously-lost modules from iters 14-20 plus added cache/paths, install/summary, workflow/parser, deps/gitremoteops, deps/aggregator, integration/coverage as net-new. All packages build and go test ./... passes.
 
 ### Iteration 20 — 2026-05-13 10:21 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25792967046)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T09:10:01Z |
-| Iteration Count | 19 |
-| Best Metric | 7.59 |
+| Last Run | 2026-05-13T10:21:00Z |
+| Iteration Count | 20 |
+| Best Metric | 7.79 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -92,10 +92,20 @@
 - install/phases/finalize.py (92), install/template.py (140), install/service.py (146)
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
+- marketplace/errors Go error hierarchy: embed base struct + constructor functions; errors.As works naturally.
+- tag_pattern: regexp.QuoteMeta + sentinel substitution cleanly maps Python's re.escape approach.
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 20 — 2026-05-13 10:21 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25792967046)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 19 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, updatepolicy, install/request, install/mcp/args, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/integrity, integration/utils, workflow/discovery, deps/installedpkg (+1342 lines, 5587 total)
+- **Metric**: 7.79 (previous best: 7.59, delta: +0.20)
+- **Commit**: 20110db
+- **Notes**: Branch was at iter 13 (4245 lines) after merge-with-main. Rebuilt all previously-lost modules from iters 14-19 plus added marketplace/errors, marketplace/tagpattern, workflow/discovery as net-new. All packages build and go test ./... passes.
 
 ### Iteration 19 — 2026-05-13 09:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25789487963)
 

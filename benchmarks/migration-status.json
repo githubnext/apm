@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 4245,
+  "migrated_python_lines": 7936,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -169,8 +169,253 @@
       "python_lines": 166,
       "status": "migrated",
       "notes": "InstallContext dataclass -> Go struct; all maps/slices initialised in New()"
+    },
+    {
+      "module": "src/apm_cli/compilation/build_id.py",
+      "go_package": "internal/compilation/buildid",
+      "python_lines": 39,
+      "status": "migrated",
+      "notes": "Build ID stabilization via SHA256"
+    },
+    {
+      "module": "src/apm_cli/compilation/constants.py",
+      "go_package": "internal/compilation/compilationconst",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Constitution markers and build ID placeholder"
+    },
+    {
+      "module": "src/apm_cli/compilation/output_writer.py",
+      "go_package": "internal/compilation/outputwriter",
+      "python_lines": 49,
+      "status": "migrated",
+      "notes": "CompiledOutputWriter: stabilize + atomic write"
+    },
+    {
+      "module": "src/apm_cli/compilation/constitution.py",
+      "go_package": "internal/compilation/constitution",
+      "python_lines": 51,
+      "status": "migrated",
+      "notes": "Constitution read with process-lifetime cache"
+    },
+    {
+      "module": "src/apm_cli/models/results.py",
+      "go_package": "internal/models/results",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "InstallResult and PrimitiveCounts"
+    },
+    {
+      "module": "src/apm_cli/models/dependency/types.py",
+      "go_package": "internal/models/deptypes",
+      "python_lines": 74,
+      "status": "migrated",
+      "notes": "GitReferenceType, RemoteRef, ResolvedReference, ParseGitReference"
+    },
+    {
+      "module": "src/apm_cli/policy/schema.py",
+      "go_package": "internal/policy/schema",
+      "python_lines": 117,
+      "status": "migrated",
+      "notes": "ApmPolicy, DependencyPolicy, McpPolicy, CompilationPolicy structs"
+    },
+    {
+      "module": "src/apm_cli/policy/matcher.py",
+      "go_package": "internal/policy/matcher",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "Policy pattern matching with ** and * glob support"
+    },
+    {
+      "module": "src/apm_cli/policy/inheritance.py",
+      "go_package": "internal/policy/inheritance",
+      "python_lines": 257,
+      "status": "migrated",
+      "notes": "MergeDependencyPolicies, MergeMcpPolicies with escalation ladder"
+    },
+    {
+      "module": "src/apm_cli/install/request.py",
+      "go_package": "internal/install/request",
+      "python_lines": 60,
+      "status": "migrated",
+      "notes": "InstallRequest: typed install pipeline input"
+    },
+    {
+      "module": "src/apm_cli/install/summary.py",
+      "go_package": "internal/install/summary",
+      "python_lines": 73,
+      "status": "migrated",
+      "notes": "FormatSummary: post-install summary renderer"
+    },
+    {
+      "module": "src/apm_cli/install/mcp/args.py",
+      "go_package": "internal/install/mcpargs",
+      "python_lines": 43,
+      "status": "migrated",
+      "notes": "ParseKVPairs, ParseEnvPairs, ParseHeaderPairs"
+    },
+    {
+      "module": "src/apm_cli/runtime/base.py",
+      "go_package": "internal/runtime/base",
+      "python_lines": 63,
+      "status": "migrated",
+      "notes": "RuntimeAdapter interface"
+    },
+    {
+      "module": "src/apm_cli/marketplace/validator.py",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_lines": 78,
+      "status": "migrated",
+      "notes": "ValidateMarketplace, ValidatePluginSchema, ValidateNoDuplicateNames"
+    },
+    {
+      "module": "src/apm_cli/marketplace/errors.py",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_lines": 132,
+      "status": "migrated",
+      "notes": "MarketplaceNotFoundError, PluginNotFoundError, MarketplaceYmlError, MarketplaceFetchError"
+    },
+    {
+      "module": "src/apm_cli/marketplace/semver.py",
+      "go_package": "internal/marketplace/semver",
+      "python_lines": 234,
+      "status": "migrated",
+      "notes": "SemVer parse+compare; SatisfiesRange: ^, ~, >=, <=, >, <, exact, wildcard, AND"
+    },
+    {
+      "module": "src/apm_cli/marketplace/tag_pattern.py",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_lines": 103,
+      "status": "migrated",
+      "notes": "RenderTag, BuildTagRegex, ExtractVersion"
+    },
+    {
+      "module": "src/apm_cli/marketplace/shadow_detector.py",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_lines": 75,
+      "status": "migrated",
+      "notes": "DetectShadows: cross-marketplace plugin name shadowing"
+    },
+    {
+      "module": "src/apm_cli/cache/url_normalize.py",
+      "go_package": "internal/cache/urlnormalize",
+      "python_lines": 133,
+      "status": "migrated",
+      "notes": "NormalizeRepoURL: SCP->SSH, lowercase host, strip default ports; CacheKey"
+    },
+    {
+      "module": "src/apm_cli/cache/paths.py",
+      "go_package": "internal/cache/cachepaths",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "GetCacheRoot: APM_NO_CACHE, APM_CACHE_DIR, platform defaults"
+    },
+    {
+      "module": "src/apm_cli/cache/integrity.py",
+      "go_package": "internal/cache/integrity",
+      "python_lines": 104,
+      "status": "migrated",
+      "notes": "ReadHeadSHA: .git dir/file/worktree; packed-refs fallback; VerifyCheckout"
+    },
+    {
+      "module": "src/apm_cli/integration/utils.py",
+      "go_package": "internal/integration/intutils",
+      "python_lines": 46,
+      "status": "migrated",
+      "notes": "NormalizeRepoURL: owner/repo format"
+    },
+    {
+      "module": "src/apm_cli/integration/coverage.py",
+      "go_package": "internal/integration/coverage",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "CheckPrimitiveCoverage: bidirectional dispatch table validation"
+    },
+    {
+      "module": "src/apm_cli/workflow/parser.py",
+      "go_package": "internal/workflow/wfparser",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "ParseWorkflowFile: stdlib YAML frontmatter; WorkflowDefinition"
+    },
+    {
+      "module": "src/apm_cli/core/null_logger.py",
+      "go_package": "internal/core/nulllogger",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "NullCommandLogger: console-fallback logger facade"
+    },
+    {
+      "module": "src/apm_cli/core/docker_args.py",
+      "go_package": "internal/core/dockerargs",
+      "python_lines": 96,
+      "status": "migrated",
+      "notes": "ProcessDockerArgs, ExtractEnvVars, MergeEnvVars"
+    },
+    {
+      "module": "src/apm_cli/deps/git_remote_ops.py",
+      "go_package": "internal/deps/gitremoteops",
+      "python_lines": 91,
+      "status": "migrated",
+      "notes": "ParseLsRemoteOutput, SortRefsBySemver"
+    },
+    {
+      "module": "src/apm_cli/deps/aggregator.py",
+      "go_package": "internal/deps/aggregator",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "ScanWorkflowsForDependencies: stdlib frontmatter parser"
+    },
+    {
+      "module": "src/apm_cli/deps/installed_package.py",
+      "go_package": "internal/deps/installedpkg",
+      "python_lines": 54,
+      "status": "migrated",
+      "notes": "InstalledPackage record"
+    },
+    {
+      "module": "src/apm_cli/primitives/models.py",
+      "go_package": "internal/primitives/primmodels",
+      "python_lines": 269,
+      "status": "migrated",
+      "notes": "Chatmode, Instruction, Context, Skill, Agent, Hook; ConflictIndex"
+    },
+    {
+      "module": "src/apm_cli/workflow/discovery.py",
+      "go_package": "internal/workflow/discovery",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "DiscoverWorkflows: WalkDir .prompt.md files"
+    },
+    {
+      "module": "src/apm_cli/compilation/claude_formatter.py",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 354,
+      "status": "migrated",
+      "notes": "ClaudePlacement, ClaudeCompilationResult, RenderClaudeHeader, RenderGeminiStub"
+    },
+    {
+      "module": "src/apm_cli/compilation/gemini_formatter.py",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 121,
+      "status": "migrated",
+      "notes": "GeminiPlacement, GeminiCompilationResult (combined with claude_formatter)"
+    },
+    {
+      "module": "src/apm_cli/compilation/injector.py",
+      "go_package": "internal/compilation/injector",
+      "python_lines": 94,
+      "status": "migrated",
+      "notes": "ConstitutionInjector: detect+inject constitution block"
+    },
+    {
+      "module": "src/apm_cli/compilation/template_builder.py",
+      "go_package": "internal/compilation/templatebuilder",
+      "python_lines": 174,
+      "status": "migrated",
+      "notes": "RenderInstructionsBlock: global+scoped grouping, deterministic sort"
     }
   ],
-  "last_updated": "2026-05-13T00:52:00Z",
-  "iteration": 13
+  "last_updated": "2026-05-13T16:25:00Z",
+  "iteration": 25
 }

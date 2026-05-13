@@ -10,20 +10,20 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T16:40:00Z |
-| Iteration Count | 25 |
-| Best Metric | 11.07 |
+| Last Run | 2026-05-13T17:19:00Z |
+| Iteration Count | 26 |
+| Best Metric | 12.56 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | #17 |
+| PR | pending (PR #17 merged; new PR being created) |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -32,7 +32,7 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: #17
+**Pull Request**: pending (PR #17 merged; new PR being created)
 **Issue**: #3
 
 ---
@@ -103,6 +103,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 26 — 2026-05-13 17:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25814868234)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 9 modules: updatepolicy, install/plan, install/service, install/heals (base+branch_ref_drift+buggy_lockfile_recovery+chain), install/phases/heal, integration/dispatch (+1068 Python lines, 9004 total)
+- **Metric**: 12.56 (previous best: 11.07, delta: +1.49)
+- **Commit**: f1270af
+- **Notes**: PR #17 was merged by maintainer; new PR created. Added core install-phase modules and the heal chain. go build ./... and go test ./... pass.
 
 ### Iteration 25 — 2026-05-13 16:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25812073376)
 

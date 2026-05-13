@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T01:45:00Z |
-| Iteration Count | 14 |
-| Best Metric | 6.39 |
+| Last Run | 2026-05-13T03:15:00Z |
+| Iteration Count | 15 |
+| Best Metric | 6.57 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -83,15 +83,23 @@
 
 ## 🔭 Future Directions
 
-- Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) -- these are larger but follow clear patterns
-- Other good small targets: install/summary.py (73), deps/aggregator.py (66), integration/coverage.py (66), install/plan.py (425)
+- Other good small targets: install/plan.py (425), install/summary.py (now done)
 - Migrate utils/config.py (if it exists in the project) -- JSON config management
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Consider adding darwin build tag for reflink using clonefile(2) syscall
+- Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) -- these are larger but follow clear patterns
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 15 — 2026-05-13 03:15 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25775950804)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 9 modules to Go: compilation/constants, compilation/build_id, compilation/output_writer, models/results, models/dependency/types, policy/matcher, integration/utils, deps/aggregator, integration/coverage (+469 lines, 4714 total)
+- **Metric**: 6.57 (previous best: 6.39, delta: +0.18)
+- **Commit**: cde587c
+- **Notes**: iter 14 metric was speculative (state updated but branch commit was lost). Rebuilt all 9 modules plus added deps/aggregator (WalkDir scanner) and integration/coverage. All packages build and test cleanly.
 
 ### Iteration 14 — 2026-05-13 01:45 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25772920432)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T12:18:00Z |
-| Iteration Count | 22 |
-| Best Metric | 9.37 |
+| Last Run | 2026-05-13T13:20:00Z |
+| Iteration Count | 23 |
+| Best Metric | 6.99 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -66,9 +66,8 @@
 - InstallContext: mirrors Python dataclass exactly; New() initialises all map/slice fields to avoid nil-map panics in callers.
 - github_host.py: GHES precedence logic (GITHUB_HOST overrides GitLab env vars for the same host); IsValidFQDN uses a single compiled regexp.
 - installtui.py: deferred spinner (250ms via goroutine + time.After); ShouldAnimate checks APM_PROGRESS env, NO_COLOR, TERM=dumb, and TTY mode bit.
-- The branch loses commits when the ahead=0 fast-forward-push fires in new runs. In iter 13 we rebuilt all lost modules (iters 5-12) plus added installtui. Rebuilding is wasteful but effective.
-- Batching many modules per iteration is efficient -- 16 modules in one commit (iter 19) = +1200 lines (+1.67%).
-- Small leaf modules (constants, types, simple utils) accumulate quickly: 7 modules in iter 14 = +337 lines (+0.47%).
+- The branch loses commits when the ahead=0 fast-forward-push fires in new runs. Each iteration must rebuild lost modules. This is a known structural issue.
+- Batching many modules per iteration is efficient -- 28 modules in iter 23 = +766 new Go lines.
 - policy/matcher.py glob pattern: split on ** vs * iteratively into a strings.Builder; compile to regexp and cache in sync.Mutex map.
 - models/dependency/types.py: Go iota enums + String() methods replace Python Enum; ParseGitReference uses pre-compiled regexps.
 - compilation/build_id.py: sha256.Sum256 + fmt.Sprintf("%x")[:12]; strings.Split + Join correctly preserves trailing newline.
@@ -76,6 +75,7 @@
 - cache/paths.py: APM_NO_CACHE/APM_CACHE_DIR env vars; platform-specific defaults via runtime.GOOS; per-invocation tempdir via sync.Mutex singleton.
 - primitives/models.py: Python dataclass hierarchy with conflict detection maps to Go structs + per-type index maps for O(1) conflict lookup.
 - policy/inheritance.py: escalation ladders (map[string]int) enable stricter() helper; merge uses append for accumulating deny/require lists.
+- best_metric in state file gets inflated vs branch reality due to repeated branch resets. Each iter rebuilds from iter-13 baseline; best_metric now tracks actual branch state.
 
 ---
 
@@ -93,12 +93,20 @@
 - install/phases/finalize.py (92), install/template.py (140), install/service.py (146)
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
-- marketplace/errors Go error hierarchy: embed base struct + constructor functions; errors.As works naturally.
+- marketplace/semver Go semver impl is complete and dependency-free.
 - tag_pattern: regexp.QuoteMeta + sentinel substitution cleanly maps Python's re.escape approach.
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 23 — 2026-05-13 13:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25801585559)
+
+- **Status**: ✅ Accepted
+- **Change**: Rebuild 28 Go modules after branch reset (compilation/buildid+outputwriter+constitution+constants, models/results+dependency, policy/schema+matcher+inheritance, install/request+summary+mcpargs, runtime/base, marketplace/validator+errors+semver+tagpattern, cache/urlnormalize+cachepaths+integrity, integration/utils+coverage, workflow/discovery+parser, core/nulllogger, deps/gitremoteops+aggregator, primitives/models)
+- **Metric**: 6.99 (previous best: 5.92 on branch, state file showed 9.37 before reset, delta: +1.07 from branch state)
+- **Commit**: 50e9b02
+- **Notes**: Branch was again at iter-13 state (4245 lines, 5.92%) after merge-with-main fast-forward reset. Rebuilt all 28 modules from iters 14-22 into a single commit. All packages build and go test ./... passes. best_metric updated to reflect actual branch state.
 
 ### Iteration 22 — 2026-05-13 12:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25798457534)
 
@@ -106,17 +114,8 @@
 - **Change**: Migrate 26 modules to Go: compilation/buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, policy/inheritance, install/request, install/summary, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/paths, cache/integrity, integration/utils, integration/coverage, workflow/discovery, workflow/parser, core/nulllogger, deps/gitremoteops, deps/aggregator, install/mcp/args, primitives/models (+2471 lines, 6716 total)
 - **Metric**: 9.37 (previous best: 8.66, delta: +0.71)
 - **Commit**: cdc11a4
-- **Notes**: Branch was at iter 13 (4245 lines) after merge-with-main. Rebuilt all previously-lost modules from iters 14-21 plus added primitives/models and policy/inheritance as net-new. All packages build and go test ./... passes.
 
-### Iteration 21 — 2026-05-13 11:22 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25795852903)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 25 modules to Go: compilation/constants, buildid, outputwriter, constitution, models/results, models/dependency/types, policy/schema, policy/matcher, install/request, install/summary, runtime/base, marketplace/validator, marketplace/errors, marketplace/tagpattern, cache/urlnormalize, cache/paths, cache/integrity, integration/utils, workflow/discovery, workflow/parser, core/nulllogger, deps/gitremoteops, deps/aggregator, install/mcp/args, integration/coverage (+1963 lines, 6208 total)
-- **Metric**: 8.66 (previous best: 7.79, delta: +0.87)
-- **Commit**: eb0a9f1
-- **Notes**: Branch was at iter 13 state (4245 lines) again after merge-with-main. Rebuilt all previously-lost modules from iters 14-20 plus added cache/paths, install/summary, workflow/parser, deps/gitremoteops, deps/aggregator, integration/coverage as net-new. All packages build and go test ./... passes.
-
-### Iters 14-21 — 2026-05-13 — ✅ (metrics 6.39->8.66): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones. Net progress: rebuilt all 24 iter-13 modules each time plus steadily added new packages.
+### Iters 14-21 — 2026-05-13 — ✅ (metrics 6.39->8.66): repeatedly rebuilt modules lost to branch resets; each iter added same core modules plus new ones.
 
 ### Iteration 13 — 2026-05-13 00:52 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25771166584)
 

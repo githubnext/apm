@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T00:52:00Z |
-| Iteration Count | 13 |
-| Best Metric | 5.92 |
+| Last Run | 2026-05-13T01:45:00Z |
+| Iteration Count | 14 |
+| Best Metric | 6.39 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -68,6 +68,10 @@
 - installtui.py: deferred spinner (250ms via goroutine + time.After); ShouldAnimate checks APM_PROGRESS env, NO_COLOR, TERM=dumb, and TTY mode bit.
 - The branch loses commits when the ahead=0 fast-forward-push fires in new runs. In iter 13 we rebuilt all lost modules (iters 5-12) plus added installtui. Rebuilding is wasteful but effective.
 - Batching many modules per iteration is efficient -- 13 modules in one commit vs one per iteration.
+- Small leaf modules (constants, types, simple utils) accumulate quickly: 7 modules in iter 14 = +337 lines (+0.47%).
+- policy/matcher.py glob pattern: split on ** vs * iteratively into a strings.Builder; compile to regexp and cache in sync.Mutex map.
+- models/dependency/types.py: Go iota enums + String() methods replace Python Enum; ParseGitReference uses pre-compiled regexps.
+- compilation/build_id.py: sha256.Sum256 + fmt.Sprintf("%x")[:12]; strings.Split + Join correctly preserves trailing newline.
 
 ---
 
@@ -80,6 +84,7 @@
 ## 🔭 Future Directions
 
 - Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) -- these are larger but follow clear patterns
+- Other good small targets: install/summary.py (73), deps/aggregator.py (66), integration/coverage.py (66), install/plan.py (425)
 - Migrate utils/config.py (if it exists in the project) -- JSON config management
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Consider adding darwin build tag for reflink using clonefile(2) syscall
@@ -87,6 +92,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 14 — 2026-05-13 01:45 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25772920432)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 7 modules to Go: compilation/constants, compilation/build_id, compilation/output_writer, models/results, models/dependency/types, policy/matcher, integration/utils (+337 lines, 4582 total)
+- **Metric**: 6.39 (previous best: 5.92, delta: +0.47)
+- **Commit**: 6b51c03
+- **Notes**: Targeted small leaf modules with no APM-internal dependencies. All compile and test cleanly. Pattern cache for policy/matcher uses sync.Mutex map mirroring Python's lru_cache.
 
 ### Iteration 13 — 2026-05-13 00:52 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25771166584)
 

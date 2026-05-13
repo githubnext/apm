@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T18:20:00Z |
-| Iteration Count | 27 |
-| Best Metric | 13.98 |
+| Last Run | 2026-05-13T19:10:00Z |
+| Iteration Count | 28 |
+| Best Metric | 18.93 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | pending (new PR being created) |
+| PR | — |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,7 +32,7 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: pending
+**Pull Request**: (see PR labeled [Autoloop: python-to-go-migration])
 **Issue**: #3
 
 ---
@@ -96,16 +96,24 @@
 
 ## 🔭 Future Directions
 
-- Next: install/pipeline.py (741), install/sources.py (734), install/services.py (734) -- larger but clear patterns
-- install/drift.py (731), install/validation.py (647) -- moderate complexity, validation has `requests` dep
 - policy/discovery.py (1365 lines) -- largest policy module; high impact
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
+- integration/base_integrator.py (562), integration/skill_integrator.py (1513) -- large integrators
+- integration/targets.py (846), integration/hook_integrator.py (1071) -- sizeable
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 28 — 2026-05-13 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25820592047)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 19 modules: rebuilt lost iter-26/27 modules (plan, service, insecurepolicy, template, packageresolution, skillpathmigration, heals, phases/heal, securityscan, dryrun, dispatch, updatepolicy) + 5 new large modules: pipeline (741), sources (734), services (734), drift (731), validation (647) (+5638 Python lines, 13574 total)
+- **Metric**: 18.93 (previous best: 13.98, delta: +4.95)
+- **Commit**: 7509435
+- **Notes**: Branch was at iter-25 state (7936 lines) due to reset. Rebuilt all lost work plus 5 new large install-phase modules. go build ./... and go test ./... pass.
 
 ### Iteration 27 — 2026-05-13 18:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25817705977)
 

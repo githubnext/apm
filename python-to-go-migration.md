@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-13T04:49:00Z |
-| Iteration Count | 16 |
-| Best Metric | 6.88 |
+| Last Run | 2026-05-13T06:12:00Z |
+| Iteration Count | 17 |
+| Best Metric | 7.77 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -88,12 +88,19 @@
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Consider adding darwin build tag for reflink using clonefile(2) syscall
 - Next: tackle install/pipeline modules (pipeline.py 741, sources.py 734, services.py 734) -- these are larger but follow clear patterns
+- Branch reset issue is recurring -- iter 17 also had to rebuild lost iters 14-16 work. Consider if a stable upstream merge strategy can prevent this.
 
 ---
 
 ## 📊 Iteration History
 
-### Iteration 16 — 2026-05-13 04:49 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25778918102)
+### Iteration 17 — 2026-05-13 06:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25781763484)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrate 20 modules to Go: compilation/constants, compilation/build_id, compilation/output_writer, compilation/constitution, models/results, models/dependency/types, policy/matcher, integration/utils, integration/coverage, marketplace/tag_pattern, marketplace/validator, cache/integrity, core/docker_args, core/null_logger, deps/git_remote_ops, deps/installed_package, install/request, update_policy, runtime/base, workflow/parser (+1329 lines, 5574 total)
+- **Metric**: 7.77 (previous best: 6.88, delta: +0.89)
+- **Commit**: 5bff974
+- **Notes**: Branch was again at iter 13 (4245 lines) due to branch reset. Rebuilt iters 14-16 modules plus added 7 new modules (constitution, null_logger, validator, runtime/base, workflow/parser, update_policy, integration/coverage). All 44 Go packages build and test cleanly.
 
 - **Status**: ✅ Accepted
 - **Change**: Migrate 10 modules to Go: compilation/constants, compilation/build_id, compilation/output_writer, marketplace/tag_pattern, cache/integrity, core/docker_args, deps/git_remote_ops, deps/installed_package, install/request, install/summary (+687 lines, 4932 total)

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T20:08:00Z |
-| Iteration Count | 49 |
-| Best Metric | 52.96 |
+| Last Run | 2026-05-14T20:58:00Z |
+| Iteration Count | 50 |
+| Best Metric | 65.26 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), deps/github_downloader.py (1686), core/safe_installer.py)*
+*(No specific priorities set -- agent is exploring freely. Next candidates: deps/github_downloader.py (1686), integration/mcp_integrator.py (1540), policy/discovery.py (1365), compilation/agents_compiler.py (1273))*
 
 ---
 
@@ -81,6 +81,9 @@
 - core/auth.py: AuthResolver maps cleanly to Go struct with sync.Mutex cache; tokenmanager.ResolveCredentialFromGit/GhCLI are package-level functions (not methods); HostInfo.DisplayName() suppresses well-known ports 443/80/22.
 - marketplace/ref_resolver.py: RefResolver + RefCache with per-remote mutexes; context.WithTimeout replaces subprocess timeout; parseLsRemoteOutput skips peeled tags (^{}); buildHTTPSCloneURL inlines x-access-token auth.
 - marketplace/builder.py: MarketplaceBuilder with concurrent resolve via goroutines+semaphore; JSON composition uses map[string]interface{}; subtractPluginRoot uses HasPrefix on normalized paths.
+- Tracking gap: when migrations span multiple commits or branch resets, migration-status.json may fall behind actual Go code. Always verify Go packages vs tracked modules before proposing new work -- reconcile gaps first for a quick metric boost.
+- drift.py: pure interface-based Go (DependencyRef/LockedDep/LockFile interfaces); DetectConfigDrift uses recursive configsEqual; DetectOrphans/StaleFiles are pure set operations.
+- experimental.py: feature-flag registry as static map; config read/write via ~/.apm/config.json with sync.RWMutex cache + invalidation on write; difflib-like suggestions use contains heuristic.
 
 ---
 
@@ -102,72 +105,32 @@
 
 ## 📊 Iteration History
 
+### Iteration 50 — 2026-05-14 20:58 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25885268645)
+
+- **Status**: ✅ Accepted
+- **Change**: Registered 10 previously untracked Go modules (+8009 lines) + migrated 3 new modules: security/audit_report (253), core/experimental (278), install/drift (282) = +8822 Python lines total
+- **Metric**: 65.26 (previous best: 52.96, delta: +12.30)
+- **Commit**: 053ab4a
+- **Notes**: Untracked modules already had Go implementations from earlier iterations but were missing from migration-status.json: skill_integrator, hook_integrator, command_integrator, base_integrator, agent_integrator, targets, core/auth, marketplace/builder, ref_resolver, deps/depgraph. New Go code: auditreport (JSON/SARIF/Markdown output), experimental (feature-flag registry with config persistence), drift (pure stateless drift-detection functions with interface-based types).
+
+### Iteration 49 — 2026-05-14 20:08 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25885268645)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: deps/apm_resolver (918), deps/download_strategies (1122), core/operations (145) = +2185 Python lines
+- **Metric**: 52.96 (previous best: 49.91, delta: +3.05)
+- **Commit**: 8f7ba3b
+- **Notes**: apmresolver: BFS resolver with parallel download, cycle detection, NPM-hoisting flatten. downloadstrategies: DownloadDelegate with resilient HTTP GET, GitHub/ADO/GitLab/Artifactory file download, CDN fast-path. operations: lightweight orchestration facade.
+
 ### Iteration 48 — 2026-05-14 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25879951640)
 
 - **Status**: ✅ Accepted
 - **Change**: Migrated 3 modules: core/auth (1005), marketplace/ref_resolver (345), marketplace/builder (1059) = +2409 Python lines
 - **Metric**: 49.91 (previous best: 46.55, delta: +3.36)
 - **Commit**: e0fb689
-- **Notes**: auth: AuthResolver with thread-safe cache, host classification (github/ghe_cloud/ghes/ado/gitlab/generic), token resolution chain, TryWithFallback fallback strategy. refresolver: RefResolver + RefCache with per-remote mutexes, context.WithTimeout, git ls-remote subprocess. builder: MarketplaceBuilder with concurrent resolve, compose to Anthropic-compliant JSON, atomic write.
+- **Notes**: auth: AuthResolver + refresolver: RefResolver+RefCache + builder: MarketplaceBuilder concurrent resolve.
 
-### Iteration 47 — 2026-05-14 18:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25876945928)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 2 modules: core/script_runner (1138), output/formatters (999) = +2137 Python lines
-- **Metric**: 46.55 (previous best: 43.57, delta: +2.98)
-- **Commit**: df43625
-- **Notes**: scriptrunner: ScriptRunner+PromptCompiler with runtime detection, prompt discovery, env-var extraction, subprocess exec. compilationformatter: CompilationFormatter with default/verbose/dry-run modes, plain-text rendering (no Rich dependency).
-
-### Iteration 46 — 2026-05-14 17:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25874088970)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 2 modules: models/dependency/reference (1559), deps/plugin_parser (677) = +2236 Python lines
-- **Metric**: 43.57 (previous best: 40.45, delta: +3.12)
-- **Commit**: b6bc8e8
-- **Notes**: depreference: full DependencyReference struct with Parse()/ToCanonical()/GetInstallPath(); added IsSupportedGitHost/IsArtifactoryPath/ParseArtifactoryPath to githubhost. pluginparser: plugin.json manifest parsing and apm.yml synthesis with stdlib-only json.
-
-### Iteration 45 — 2026-05-14 16:17 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25871294987)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 2 modules: core/token_manager (497), primitives/discovery (612) = +1109 Python lines
-- **Metric**: 40.45 (previous best: 38.91, delta: +1.54)
-- **Commit**: 85a851b
-- **Notes**: tokenmanager: GitHubTokenManager with credential-fill subprocess, gh CLI fallback, per-(host,port) cache. discovery: PrimitiveCollection with conflict detection, local/dependency scanning, segment-aware globMatch.
-
-### Iteration 44 — 2026-05-14 15:25 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25868342116)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 7 modules: marketplace utils, windsurf adapter, securityscan, git_auth_env, codex/llm runtimes = +608 lines
-- **Metric**: 38.91 (delta: +0.85) | Commit: f06a60f
-
-### Iteration 43 — 2026-05-14 14:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25865196805)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated policy/helptext, outcome_routing, primitives/parser, output/script_formatters = +837 lines
-- **Metric**: 38.06 (delta: +1.17) | Commit: 59b06fb
-
-### Iteration 42 — 2026-05-14 13:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25861743202)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated core/target_detection, models/apm_package, marketplace/yml_schema = +1953 lines
-- **Metric**: 36.89 (delta: +2.72) | Commit: 92fc6ac
-
-### Iteration 41 — 2026-05-14 12:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25859136824)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated core/command_logger, models/validation = +1551 lines
-- **Metric**: 34.17 (delta: +2.17) | Commit: 4d11dc6
-
-### Iteration 40 — 2026-05-14 11:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25857101991)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated skill_integrator, hook_integrator, command_integrator = +3359 lines
-- **Metric**: 32.00 (delta: +4.68) | Commit: 572990c
+### Iters 40-47 — 2026-05-14 — ✅ (metrics 32.00->49.91): skill/hook/cmd integrators, command_logger, validation, target_detection, apm_package, yml_schema, helptext, outcome_routing, primitives/parser, script_formatters, marketplace utils, windsurf, tokenmanager, primitives/discovery, depreference, plugin_parser, script_runner, formatters.
 
 ### Iters 33-39 — 2026-05-14 — ✅ (metrics 18.22->27.32): base/agent/instruction/prompt integrators, update_policy, template, factory, registry, git_stderr, targets, lockfile, local_bundle_handler; 9+ modules.
 
-### Iters 28-32 — 2026-05-13/14 — ✅ (metrics 13.45->16.68): rebuilt modules lost from branch resets; added policy/discovery, phases/integrate, phases/resolve, phases/targets, pipeline, sources, services, drift, validation, MCP modules, policy_checks, ci_checks.
-
-### Iters 13-27 — 2026-05-13 — ✅ (metrics 5.92->13.98): rebuilt lost modules repeatedly plus added new ones each iteration.
-
-### Iters 1-12 — 2026-05-12 — ✅ (metrics 0.0->5.41): initialized Go module; migrated utils, version, constants, various helpers; branch reset issues caused repeated rebuilds.
+### Iters 1-32 — 2026-05-12/13 — ✅ (metrics 0.0->16.68): initialized Go module; migrated utils, version, constants, helpers, policy/phases/pipeline, MCP modules, policy_checks, ci_checks; branch resets caused some rebuilds.

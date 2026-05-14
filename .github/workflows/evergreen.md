@@ -174,7 +174,8 @@ steps:
           """Trigger this repository's ci.yml for `branch` by pushing an empty
           commit with GH_AW_CI_TRIGGER_TOKEN. Because the push is attributed to
           a real user instead of GITHUB_TOKEN, GitHub emits the PR synchronize
-          event that starts the pull_request CI workflow."""
+          event that starts the pull_request CI workflow; this is separate from
+          the manual workflow_dispatch trigger available in ci.yml."""
           ci_token = os.environ.get("GH_AW_CI_TRIGGER_TOKEN", "") or token
           try:
               # Get current HEAD SHA
@@ -385,7 +386,7 @@ steps:
               print(f"  Triggering ci.yml on branch {branch} (attempt {prior_attempts + 1}/{MAX_ATTEMPTS})")
               ok = trigger_ci_workflow(branch)
               if ok:
-                  print(f"  [+] Dispatched ci.yml on {branch}")
+                  print(f"  [+] Triggered ci.yml on {branch}")
                   workflow_url = (
                       f"https://github.com/{repo}/actions/workflows/ci.yml"
                       f"?query=branch%3A{branch}"
@@ -394,7 +395,7 @@ steps:
                       pr_num,
                       (
                           "Evergreen: this PR's HEAD had no completed CI checks, "
-                          "so I dispatched the `ci.yml` workflow on this branch. "
+                          "so I pushed an empty commit to trigger the `ci.yml` workflow on this branch. "
                           f"See [recent CI runs]({workflow_url}).\n\n"
                           "_(Triggered automatically because pushes via `GITHUB_TOKEN` "
                           "do not start workflows.)_"

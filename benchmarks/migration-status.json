@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 14190,
+  "migrated_python_lines": 15116,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -628,5 +628,12 @@
   ],
   "last_updated": "2026-05-13T16:25:00Z",
   "iteration": 25,
-  "python_lines_migrated_pct": 19.79
+  "python_lines_migrated_pct": 19.79,
+  "modules_migrated": [
+    "policy/models.py",
+    "models/plugin.py",
+    "deps/dependency_graph.py",
+    "core/apm_yml.py",
+    "integration/cleanup.py"
+  ]
 }

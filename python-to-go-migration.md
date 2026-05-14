@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T11:18:00Z |
-| Iteration Count | 40 |
-| Best Metric | 32.00 |
+| Last Run | 2026-05-14T12:09:00Z |
+| Iteration Count | 41 |
+| Best Metric | 34.17 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), integration/command_integrator.py (775) -- all 3 done in iter 40. Next: deps/github_downloader.py (1686) or other large modules)*
+*(No specific priorities set -- agent is exploring freely. Next candidates: output/formatters.py (999), core/target_detection.py (777), models/dependency/reference.py (1559), integration/mcp_integrator.py (1540))*
 
 ---
 
@@ -70,6 +70,8 @@
 - template.py: Config struct + function callbacks decouple template from Strategy implementations cleanly.
 - base_integrator.py: CheckCollision, PartitionManagedFiles (trie-based longest-prefix routing), SyncRemoveFiles, FindFilesByGlob all map cleanly to Go static functions; interface{} Diagnostics interface avoids circular deps.
 - agent_integrator.py: TOML/Windsurf transforms use simple string manipulation without external libs; codex_agent uses multiline literal TOML; stdlib-only parseSimpleYAML sufficient for frontmatter.
+- validation.py: PackageType iota + String() works cleanly; DetectPackageType cascade (7 cases) maps to simple Go switch; apmYMLDeclaresDependencies uses line-scanner heuristic (no external YAML needed).
+- command_logger.py: CommandLogger + InstallLogger delegate to console package; nil io.Writer handled by console.Echo; no field for diagnostics needed at this level.
 
 ---
 
@@ -81,15 +83,22 @@
 
 ## 🔭 Future Directions
 
-- integration/skill_integrator.py (1513 lines) -- DONE in iter 40
-- integration/hook_integrator.py (1071) -- DONE in iter 40
-- integration/command_integrator.py (775) -- DONE in iter 40
-- deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
-- Wire Go packages into the Python CLI via subprocess or subprocess-replacement
+- output/formatters.py (999 lines) -- uses rich heavily; may need stub approach
+- core/target_detection.py (777 lines) -- internal logic, moderate complexity
+- models/dependency/reference.py (1559 lines) -- large but mostly data structs
+- integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 41 — 2026-05-14 12:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25859136824)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 2 modules: core/command_logger (751), models/validation (800) = +1551 Python lines
+- **Metric**: 34.17 (previous best: 32.00, delta: +2.17)
+- **Commit**: 4d11dc6
+- **Notes**: command_logger provides CommandLogger+InstallLogger delegating to console; validation provides PackageType iota, ValidationResult, and full 7-case DetectPackageType cascade. Test suite (6 tests) passes.
 
 ### Iteration 40 — 2026-05-14 11:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25857101991)
 

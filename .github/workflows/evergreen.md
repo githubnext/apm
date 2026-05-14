@@ -1,6 +1,6 @@
 ---
 description: |
-  Evergreen — keeps pull requests healthy by automatically fixing merge conflicts
+  Evergreen -- keeps pull requests healthy by automatically fixing merge conflicts
   and failing CI checks. Runs on a short schedule, deterministically selects one
   PR per run, and gives up after 5 attempts that don't improve the same repo state.
 
@@ -288,14 +288,14 @@ steps:
           # Detect missing/stale CI for autoloop PRs.
           # Pushes via GITHUB_TOKEN don't trigger workflows, so autoloop PRs
           # can sit indefinitely with no checks. Only autoloop branches are
-          # eligible — never trigger CI automatically on outside-contributor PRs.
+          # eligible -- never trigger CI automatically on outside-contributor PRs.
           if is_autoloop_pr(pr):
               completed_runs = [cr for cr in check_runs if cr.get("status") == "completed"]
               # No check runs at all on this HEAD SHA
               if not check_runs:
                   issues.append("missing_checks: no check runs on HEAD")
               # All runs are still queued / in_progress and the HEAD has been
-              # sitting around for a while — likely a stuck/missing trigger.
+              # sitting around for a while -- likely a stuck/missing trigger.
               elif not completed_runs:
                   head_date = get_commit_date(pr["head"]["sha"])
                   if head_date:
@@ -354,8 +354,8 @@ steps:
           print(f"  Issues: {issues}")
 
           # Handle `missing_checks` for autoloop PRs directly in the pre-flight,
-          # without invoking the agent. The action is purely an API dispatch —
-          # no code fix is needed — and keeping the privileged CI trigger token
+          # without invoking the agent. The action is purely an API dispatch --
+          # no code fix is needed -- and keeping the privileged CI trigger token
           # out of the agent context is a security win. We only do this for
           # autoloop branches (the detector enforces this), and only if
           # `missing_checks` is the *only* issue: any other issue (merge
@@ -385,7 +385,7 @@ steps:
               print(f"  Triggering ci.yml on branch {branch} (attempt {prior_attempts + 1}/{MAX_ATTEMPTS})")
               ok = trigger_ci_workflow(branch)
               if ok:
-                  print(f"  ✓ Dispatched ci.yml on {branch}")
+                  print(f"  [+] Dispatched ci.yml on {branch}")
                   workflow_url = (
                       f"https://github.com/{repo}/actions/workflows/ci.yml"
                       f"?query=branch%3A{branch}"
@@ -423,12 +423,12 @@ steps:
                           f"| last_result | ci_dispatched |\n"
                       )
               else:
-                  print(f"  ✗ Failed to dispatch ci.yml on {branch}")
+                  print(f"  [x] Failed to dispatch ci.yml on {branch}")
                   skipped.append({
                       "pr": pr_num,
                       "reason": "missing_checks: CI trigger push failed",
                   })
-              # Do NOT add to candidates — the agent has nothing to fix here.
+              # Do NOT add to candidates -- the agent has nothing to fix here.
               continue
 
           # Check attempt tracking
@@ -445,7 +445,7 @@ steps:
                   continue
           else:
               attempts = 0
-              print(f"  New SHA detected — resetting attempt counter")
+              print(f"  New SHA detected -- resetting attempt counter")
 
           candidates.append({
               "pr_number": pr_num,
@@ -457,7 +457,7 @@ steps:
               "attempts": attempts,
           })
 
-      # Select the first candidate (lowest PR number — deterministic)
+      # Select the first candidate (lowest PR number -- deterministic)
       selected = candidates[0] if candidates else None
 
       result = {
@@ -492,7 +492,7 @@ features:
   copilot-requests: true
 ---
 
-# Evergreen — PR Health Keeper
+# Evergreen -- PR Health Keeper
 
 You are the Evergreen agent. Your job is to fix pull requests that have merge conflicts or failing CI checks.
 
@@ -503,45 +503,45 @@ A pre-flight step has already identified a PR that needs attention. Read the sel
 ## Workflow
 
 1. **Read the selection file** at `/tmp/gh-aw/evergreen.json`. It contains:
-   - `selected.pr_number` — the PR to fix
-   - `selected.issues` — list of problems (e.g., `"merge_conflict"`, `"failing_checks: Test & Lint"`)
-   - `selected.head_sha` — current HEAD of the PR branch
-   - `selected.head_branch` — the PR's branch name
-   - `selected.base_branch` — the target branch (usually `main`)
-   - `selected.attempts` — how many times we've already tried on this SHA
+   - `selected.pr_number` -- the PR to fix
+   - `selected.issues` -- list of problems (e.g., `"merge_conflict"`, `"failing_checks: Test & Lint"`)
+   - `selected.head_sha` -- current HEAD of the PR branch
+   - `selected.head_branch` -- the PR's branch name
+   - `selected.base_branch` -- the target branch (usually `main`)
+   - `selected.attempts` -- how many times we've already tried on this SHA
 
-   > If `selected` is `null`, no PRs need attention right now. Call the **noop** tool with a message like "All PRs are healthy — nothing to fix." and stop.
+   > If `selected` is `null`, no PRs need attention right now. Call the **noop** tool with a message like "All PRs are healthy -- nothing to fix." and stop.
 
 2. The pre-flight step already checks out `selected.head_branch` as a named local tracking branch before you start. Keep working on that branch (do not switch back to `main` or use detached HEAD).
 
-3. **Fix the issues** — always follow this sequence, in order. Each push is a separate `push-to-pull-request-branch` call:
+3. **Fix the issues** -- always follow this sequence, in order. Each push is a separate `push-to-pull-request-branch` call:
 
-   ### Step 1 — Merge `main` first if the PR is behind (or has conflicts)
-   If `selected.issues` contains `"merge_conflict"` **or** any `"behind_main: …"` entry, you must bring the branch up to date with `main` before doing anything else:
+   ### Step 1 -- Merge `main` first if the PR is behind (or has conflicts)
+   If `selected.issues` contains `"merge_conflict"` **or** any `"behind_main: ..."` entry, you must bring the branch up to date with `main` before doing anything else:
 
    - `git fetch origin main`
    - `git merge origin/main` (or `origin/<base_branch>` if the base isn't `main`)
    - Resolve any conflicts intelligently by understanding the intent of both sides. If the PR is from an autoloop branch, prefer the PR's changes for feature code and `main`'s changes for infrastructure/config.
    - Run tests/lint/typecheck locally to make sure the merge is clean.
 
-   ### Step 2 — Push the merge as its own commit
+   ### Step 2 -- Push the merge as its own commit
    - Push the merge commit using `push-to-pull-request-branch` **before doing anything else**.
    - This is the *first* push of the run. It contains *only* the merge with `main` (plus any conflict resolutions). Do **not** mix CI-fix changes into this patch.
    - Merging `main` often fixes CI on its own (the failure was just drift). After the push, re-check whether CI is still failing on the new HEAD.
 
-   ### Step 3 — Re-check CI after the merge
+   ### Step 3 -- Re-check CI after the merge
    - Look at the failing checks for the new HEAD SHA (the one you just pushed).
-   - If everything is green or pending-but-likely-green, you're done — skip to step 5.
+   - If everything is green or pending-but-likely-green, you're done -- skip to step 5.
    - If checks are still failing, continue to step 4.
 
-   ### Step 4 — Fix the failing checks (second push)
+   ### Step 4 -- Fix the failing checks (second push)
    - Read the failing check logs using GitHub tools.
    - Identify the root cause (test failures, lint errors, type errors, build failures).
    - Fix the code on the (now-merged) PR branch.
    - Run the relevant checks locally to verify the fix before pushing.
-   - Push the fix using `push-to-pull-request-branch`. This is the *second* push of the run, and it contains *only* the CI fix — no merge commits.
+   - Push the fix using `push-to-pull-request-branch`. This is the *second* push of the run, and it contains *only* the CI fix -- no merge commits.
 
-   ### Step 5 — Update tracking and comment
+   ### Step 5 -- Update tracking and comment
    Continue to steps 4 and 5 below.
 
 4. **Update attempt tracking** by writing to repo-memory. Write a file to the repo-memory directory at `/tmp/gh-aw/repo-memory/evergreen/pr-{number}.md` with this format:
@@ -568,7 +568,7 @@ A pre-flight step has already identified a PR that needs attention. Read the sel
 
 - **Be surgical**: make the minimum changes needed to fix the issue. Do not refactor, improve, or add features.
 - **Don't break things**: always run tests/lint/typecheck locally before pushing.
-- **Always merge `main` first, as its own push.** If the PR branch is behind `main` (or has merge conflicts), the *first* `push-to-pull-request-branch` call of the run must contain only the merge commit (and any conflict resolutions). Do **NOT** include a merge of `main` inside a CI-fix patch — that's a separate, second push. Mixing the two causes patch conflicts when the remote PR branch hasn't been merged yet.
+- **Always merge `main` first, as its own push.** If the PR branch is behind `main` (or has merge conflicts), the *first* `push-to-pull-request-branch` call of the run must contain only the merge commit (and any conflict resolutions). Do **NOT** include a merge of `main` inside a CI-fix patch -- that's a separate, second push. Mixing the two causes patch conflicts when the remote PR branch hasn't been merged yet.
 - **One concern per push**: the merge push contains only the merge; the fix push contains only the fix. Never combine them.
 - **Give up gracefully**: if you cannot fix the issue after investigating, update the attempt counter and leave a comment explaining what went wrong. Do not force-push or make destructive changes.
 - **One PR per run**: only fix the selected PR. Do not touch other PRs.
@@ -576,23 +576,23 @@ A pre-flight step has already identified a PR that needs attention. Read the sel
 
 ## Autoloop PRs
 
-Evergreen treats Autoloop draft PRs (branch name `autoloop/*`, label `autoloop`) the same as human-authored PRs for CI-failure and merge-conflict fixing. These PRs are produced by the Autoloop agent (`.github/workflows/autoloop.md`), which has its own in-iteration fix-retry loop (up to 5 attempts per iteration). If Autoloop exhausts its budget or hits its per-iteration wall-clock cap, it sets `paused: true` in its state file (`{program-name}.md` on the `memory/autoloop` branch) with a `pause_reason` like `"ci-fix-exhausted: <signature>"` or `"stuck in CI fix loop: <signature>"`. The PR is left in a failing state — deliberately, so Evergreen (or a human) can continue from there.
+Evergreen treats Autoloop draft PRs (branch name `autoloop/*`, label `autoloop`) the same as human-authored PRs for CI-failure and merge-conflict fixing. These PRs are produced by the Autoloop agent (`.github/workflows/autoloop.md`), which has its own in-iteration fix-retry loop (up to 5 attempts per iteration). If Autoloop exhausts its budget or hits its per-iteration wall-clock cap, it sets `paused: true` in its state file (`{program-name}.md` on the `memory/autoloop` branch) with a `pause_reason` like `"ci-fix-exhausted: <signature>"` or `"stuck in CI fix loop: <signature>"`. The PR is left in a failing state -- deliberately, so Evergreen (or a human) can continue from there.
 
 When Evergreen is selected for an Autoloop PR:
 
 1. Identify it by the branch prefix `autoloop/` and/or the `autoloop` label.
-2. Attempt the fix as usual — read failing check logs, make the minimum change, run local checks, push via `push-to-pull-request-branch`.
+2. Attempt the fix as usual -- read failing check logs, make the minimum change, run local checks, push via `push-to-pull-request-branch`.
 3. If the push succeeds **and** you believe the fix is correct, also **un-pause the Autoloop program**:
    - Clone or checkout the `memory/autoloop` branch.
    - Find the state file `{program-name}.md` where `{program-name}` is the part of the branch name after `autoloop/`.
-   - In the **⚙️ Machine State** table, set `Paused` to `false` and `Pause Reason` to `—`.
+   - In the **Machine State** table, set `Paused` to `false` and `Pause Reason` to `--`.
    - Commit and push the state-file change to `memory/autoloop`.
    - Leave a comment on the Autoloop program issue (`[Autoloop: {program-name}]`, labeled `autoloop-program`) noting that Evergreen pushed a CI fix and un-paused the program, with links to the commit and the newly-green check run.
-4. If you cannot fix it, the standard attempt-tracker (5 attempts per HEAD SHA) applies — do **not** un-pause. Autoloop remains paused for human review.
+4. If you cannot fix it, the standard attempt-tracker (5 attempts per HEAD SHA) applies -- do **not** un-pause. Autoloop remains paused for human review.
 
 > The same 5-attempts-per-SHA rule applies to Autoloop PRs: Evergreen eventually gives up rather than burning cycles on a hopelessly broken change.
 
-## Missing CI checks (autoloop PRs only — handled in pre-flight)
+## Missing CI checks (autoloop PRs only -- handled in pre-flight)
 
 If an autoloop PR's HEAD has no CI check runs (or only stuck queued/in-progress runs), the **pre-flight step** detects this (`missing_checks` issue) and dispatches the `ci.yml` workflow directly via the GitHub API using `GH_AW_CI_TRIGGER_TOKEN`. It also posts a comment on the PR. No agent run is needed in that case, so the PR will not appear in `selected` for `missing_checks`-only issues.
 

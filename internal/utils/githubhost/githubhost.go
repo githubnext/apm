@@ -211,6 +211,35 @@ func AzureDevOpsOrgFromHostname(hostname string) string {
 	return parts[0]
 }
 
+// IsSupportedGitHost returns true for any hostname that APM recognises as a valid
+// Git host: github.com, GHES, GHE.com, GitLab, Azure DevOps, or Artifactory.
+// Any syntactically valid FQDN is accepted (self-hosted instances).
+func IsSupportedGitHost(hostname string) bool {
+	if hostname == "" {
+		return false
+	}
+	h := normalizeHost(hostname)
+	return IsValidFQDN(h)
+}
+
+// IsArtifactoryPath returns true when path segments start with "artifactory/".
+func IsArtifactoryPath(segments []string) bool {
+	return len(segments) >= 4 && strings.EqualFold(segments[0], "artifactory")
+}
+
+// ParseArtifactoryPath extracts (prefix, owner, repo) from Artifactory path segments.
+// Segments are expected as ["artifactory", "<repo-key>", "<owner>", "<repo>", ...].
+// Returns empty strings if the segments do not match.
+func ParseArtifactoryPath(segments []string) (prefix, owner, repo string) {
+	if !IsArtifactoryPath(segments) {
+		return
+	}
+	prefix = strings.Join(segments[:2], "/")
+	owner = segments[2]
+	repo = segments[3]
+	return
+}
+
 func normalizeHost(s string) string {
 	s = strings.TrimSpace(s)
 	s = strings.ToLower(s)

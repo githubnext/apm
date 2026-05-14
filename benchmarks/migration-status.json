@@ -1,7 +1,42 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 15116,
+  "migrated_python_lines": 53813,
   "migrated_modules": [
+    {
+      "module": "deps/apm_resolver",
+      "go_package": "internal/deps/apmresolver",
+      "python_lines": 918,
+      "status": "migrated",
+      "notes": "BFS dependency resolver with parallel download, cycle detection, NPM-hoisting flatten"
+    },
+    {
+      "module": "deps/download_strategies",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 1122,
+      "status": "migrated",
+      "notes": "DownloadDelegate: resilient HTTP GET, GitHub/ADO/GitLab/Artifactory file download, CDN fast-path"
+    },
+    {
+      "module": "core/operations",
+      "go_package": "internal/core/operations",
+      "python_lines": 145,
+      "status": "migrated",
+      "notes": "Core operations facade: ConfigureClient, InstallPackage, UninstallPackage"
+    },
+    {
+      "module": "models/dependency/reference",
+      "go_package": "internal/models/depreference",
+      "python_lines": 1559,
+      "status": "migrated",
+      "notes": "DependencyReference struct with full parse/canonicalize/install-path logic"
+    },
+    {
+      "module": "deps/plugin_parser",
+      "go_package": "internal/deps/pluginparser",
+      "python_lines": 677,
+      "status": "migrated",
+      "notes": "Claude plugin.json parser and apm.yml synthesizer"
+    },
     {
       "module": "src/apm_cli/constants.py",
       "go_package": "internal/constants",
@@ -624,16 +659,372 @@
       "python_lines": 232,
       "status": "migrated",
       "notes": "Thread-safe shared bare-clone cache"
+    },
+    {
+      "module": "src/apm_cli/install/template.py",
+      "go_package": "internal/install/template",
+      "python_lines": 140,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/runtime/factory.py",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 139,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/marketplace/registry.py",
+      "go_package": "internal/marketplace/registry",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/marketplace/git_stderr.py",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_lines": 173,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/update_policy.py",
+      "go_package": "internal/updatepolicy",
+      "python_lines": 50,
+      "status": "migrated",
+      "notes": "Self-update build-time policy constants and helpers"
+    },
+    {
+      "module": "src/apm_cli/output/models.py",
+      "go_package": "internal/output/models",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Compilation output data models: PlacementStrategy, ProjectAnalysis, CompilationResults, etc."
+    },
+    {
+      "module": "src/apm_cli/integration/prompt_integrator.py",
+      "go_package": "internal/integration/promptintegrator",
+      "python_lines": 228,
+      "status": "migrated",
+      "notes": "Prompt file integration: find/copy .prompt.md files to .github/prompts/"
+    },
+    {
+      "module": "src/apm_cli/integration/instruction_integrator.py",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_lines": 479,
+      "status": "migrated",
+      "notes": "Instruction integration with cursor/claude/windsurf format transforms"
+    },
+    {
+      "module": "src/apm_cli/core/command_logger.py",
+      "go_package": "internal/core/commandlogger",
+      "python_lines": 751,
+      "status": "migrated",
+      "notes": "CLI command logger infrastructure with Install/Command loggers"
+    },
+    {
+      "module": "src/apm_cli/models/validation.py",
+      "go_package": "internal/models/validation",
+      "python_lines": 800,
+      "status": "migrated",
+      "notes": "PackageType/ValidationResult enums and DetectPackageType logic"
+    },
+    {
+      "module": "src/apm_cli/core/target_detection.py",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 777,
+      "status": "migrated",
+      "notes": "Signal whitelist, detect_target v1, resolve_targets v2, expand_all_targets, format_provenance"
+    },
+    {
+      "module": "src/apm_cli/models/apm_package.py",
+      "go_package": "internal/models/apmpackage",
+      "python_lines": 371,
+      "status": "migrated",
+      "notes": "APMPackage and PackageInfo data structs with lightweight apm.yml loader"
+    },
+    {
+      "module": "src/apm_cli/marketplace/yml_schema.py",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_lines": 805,
+      "status": "migrated",
+      "notes": "MarketplaceOwner, MarketplaceBuild, PackageEntry, MarketplaceConfig with YAML loader"
+    },
+    {
+      "module": "src/apm_cli/policy/_help_text.py",
+      "go_package": "internal/policy/helptext",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Single help-text constant"
+    },
+    {
+      "module": "src/apm_cli/policy/outcome_routing.py",
+      "go_package": "internal/policy/outcomerouting",
+      "python_lines": 195,
+      "status": "migrated",
+      "notes": "9-outcome policy routing table; PolicyFetchResult + PolicyViolationError"
+    },
+    {
+      "module": "src/apm_cli/primitives/parser.py",
+      "go_package": "internal/primitives/primparser",
+      "python_lines": 275,
+      "status": "migrated",
+      "notes": "Primitive file parser with stdlib-only frontmatter; 4 tests pass"
+    },
+    {
+      "module": "src/apm_cli/output/script_formatters.py",
+      "go_package": "internal/output/scriptformatters",
+      "python_lines": 349,
+      "status": "migrated",
+      "notes": "ASCII-only script execution formatter; no rich dependency"
+    },
+    {
+      "module": "src/apm_cli/marketplace/_git_utils.py",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 19,
+      "status": "migrated",
+      "notes": "RedactToken utility"
+    },
+    {
+      "module": "src/apm_cli/marketplace/_io.py",
+      "go_package": "internal/marketplace/mkio",
+      "python_lines": 30,
+      "status": "migrated",
+      "notes": "AtomicWrite/AtomicWriteString"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/windsurf.py",
+      "go_package": "internal/adapters/windsurf",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Windsurf/Cascade MCP client adapter"
+    },
+    {
+      "module": "src/apm_cli/install/helpers/security_scan.py",
+      "go_package": "internal/install/securityscan",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Pre-deploy hidden-character security scan"
+    },
+    {
+      "module": "src/apm_cli/deps/git_auth_env.py",
+      "go_package": "internal/deps/gitauthenv",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "GitAuthEnvBuilder: SetupEnvironment, NoninteractiveEnv, SubprocessEnvDict"
+    },
+    {
+      "module": "src/apm_cli/runtime/codex_runtime.py",
+      "go_package": "internal/runtime/codexruntime",
+      "python_lines": 151,
+      "status": "migrated",
+      "notes": "Codex CLI runtime adapter"
+    },
+    {
+      "module": "src/apm_cli/runtime/llm_runtime.py",
+      "go_package": "internal/runtime/llmruntime",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "LLM CLI runtime adapter"
+    },
+    {
+      "module": "src/apm_cli/core/script_runner.py",
+      "go_package": "internal/core/scriptrunner",
+      "python_lines": 1138,
+      "status": "migrated",
+      "notes": "ScriptRunner+PromptCompiler: runtime detection, prompt discovery, command building, parameter substitution"
+    },
+    {
+      "module": "src/apm_cli/output/formatters.py",
+      "go_package": "internal/output/compilationformatter",
+      "python_lines": 999,
+      "status": "migrated",
+      "notes": "CompilationFormatter: default/verbose/dry-run output formatting with plain-text rendering"
+    },
+    {
+      "module": "src/apm_cli/integration/skill_integrator.py",
+      "go_package": "internal/integration/skillintegrator",
+      "python_lines": 1513,
+      "status": "migrated",
+      "notes": "SkillIntegrator: deploy SKILL.md-based packages to multiple target directories with collision detection and atomic writes"
+    },
+    {
+      "module": "src/apm_cli/integration/hook_integrator.py",
+      "go_package": "internal/integration/hookintegrator",
+      "python_lines": 1071,
+      "status": "migrated",
+      "notes": "HookIntegrator: deploy hook scripts with permission setting and cleanup support"
+    },
+    {
+      "module": "src/apm_cli/integration/command_integrator.py",
+      "go_package": "internal/integration/commandintegrator",
+      "python_lines": 775,
+      "status": "migrated",
+      "notes": "CommandIntegrator: deploy command definitions with dispatch table management"
+    },
+    {
+      "module": "src/apm_cli/integration/base_integrator.py",
+      "go_package": "internal/integration/baseintegrator",
+      "python_lines": 562,
+      "status": "migrated",
+      "notes": "BaseIntegrator: CheckCollision, PartitionManagedFiles (trie routing), SyncRemoveFiles, FindFilesByGlob"
+    },
+    {
+      "module": "src/apm_cli/integration/agent_integrator.py",
+      "go_package": "internal/integration/agentintegrator",
+      "python_lines": 606,
+      "status": "migrated",
+      "notes": "AgentIntegrator: TOML/Windsurf/Codex config generation with frontmatter YAML parser"
+    },
+    {
+      "module": "src/apm_cli/integration/targets.py",
+      "go_package": "internal/integration/targets",
+      "python_lines": 846,
+      "status": "migrated",
+      "notes": "TargetProfile with UserSupported interface{}; ForScope handles CLAUDE_CONFIG_DIR env"
+    },
+    {
+      "module": "src/apm_cli/core/auth.py",
+      "go_package": "internal/core/auth",
+      "python_lines": 1005,
+      "status": "migrated",
+      "notes": "AuthResolver: thread-safe cache, host classification (github/ghe/ghes/ado/gitlab/generic), token resolution chain"
+    },
+    {
+      "module": "src/apm_cli/marketplace/builder.py",
+      "go_package": "internal/marketplace/builder",
+      "python_lines": 1059,
+      "status": "migrated",
+      "notes": "MarketplaceBuilder: concurrent resolve via goroutines+semaphore, JSON composition, atomic write"
+    },
+    {
+      "module": "src/apm_cli/marketplace/ref_resolver.py",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 345,
+      "status": "migrated",
+      "notes": "RefResolver+RefCache with per-remote mutexes; context.WithTimeout; parseLsRemoteOutput"
+    },
+    {
+      "module": "src/apm_cli/deps/dependency_graph.py",
+      "go_package": "internal/deps/depgraph",
+      "python_lines": 227,
+      "status": "migrated",
+      "notes": "DependencyNode/Tree/Graph as plain Go structs; no external deps needed"
+    },
+    {
+      "module": "src/apm_cli/security/audit_report.py",
+      "go_package": "internal/security/auditreport",
+      "python_lines": 253,
+      "status": "migrated",
+      "notes": "FindingsToJSON/SARIF/Markdown: pure serialization functions, no external deps"
+    },
+    {
+      "module": "src/apm_cli/core/experimental.py",
+      "go_package": "internal/core/experimental",
+      "python_lines": 278,
+      "status": "migrated",
+      "notes": "Feature-flag registry with ~/.apm/config.json persistence; IsEnabled/Enable/Disable/Reset"
+    },
+    {
+      "module": "src/apm_cli/drift.py",
+      "go_package": "internal/install/drift",
+      "python_lines": 282,
+      "status": "migrated",
+      "notes": "DetectRefChange/Orphans/StaleFiles/ConfigDrift: stateless pure functions with interface-based types"
+    },
+    {
+      "module": "src/apm_cli/deps/download_strategies.py",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 1122,
+      "status": "migrated",
+      "notes": "DownloadDelegate with resilient HTTP GET, GitHub/ADO/GitLab/Artifactory file download, CDN fast-path"
+    },
+    {
+      "module": "src/apm_cli/deps/apm_resolver.py",
+      "go_package": "internal/deps/apmresolver",
+      "python_lines": 918,
+      "status": "migrated",
+      "notes": "BFS resolver with parallel download, cycle detection, NPM-hoisting flatten"
+    },
+    {
+      "module": "src/apm_cli/core/operations.py",
+      "go_package": "internal/core/operations",
+      "python_lines": 145,
+      "status": "migrated",
+      "notes": "Lightweight orchestration facade"
+    },
+    {
+      "module": "src/apm_cli/models/dependency/reference.py",
+      "go_package": "internal/models/depreference",
+      "python_lines": 1559,
+      "status": "migrated",
+      "notes": "DependencyReference struct + Parse() with 3-phase approach (virtual detect, SSH parse, standard URL)"
+    },
+    {
+      "module": "src/apm_cli/primitives/discovery.py",
+      "go_package": "internal/primitives/discovery",
+      "python_lines": 612,
+      "status": "migrated",
+      "notes": "PrimitiveCollection with type switch + per-type name-index maps; globMatch with memoized DP"
+    },
+    {
+      "module": "src/apm_cli/deps/plugin_parser.py",
+      "go_package": "internal/deps/pluginparser",
+      "python_lines": 677,
+      "status": "migrated",
+      "notes": "Pure Go with stdlib json; CLAUDE_PLUGIN_ROOT substitution via recursive walk; security: symlinks skipped, path escapes rejected"
+    },
+    {
+      "module": "src/apm_cli/deps/host_backends.py",
+      "go_package": "internal/deps/hostbackends",
+      "python_lines": 623,
+      "status": "migrated",
+      "notes": "Vendor-specific URL/API construction; GitHubBackend/GHECloudBackend/GHESBackend share gitHubFamilyBase; ADOBackend/GitLabBackend/GenericGitBackend stand alone; BackendFor dispatch"
+    },
+    {
+      "module": "src/apm_cli/policy/discovery.py",
+      "go_package": "internal/policy/discovery",
+      "python_lines": 1365,
+      "status": "migrated",
+      "notes": "Auto-discovery from git remote; GitHub Contents API fetch; file load; URL fetch; hash-pin verification; cache with TTL and stale fallback; minimal YAML policy parser"
     }
   ],
-  "last_updated": "2026-05-13T16:25:00Z",
-  "iteration": 25,
-  "python_lines_migrated_pct": 19.79,
-  "modules_migrated": [
-    "policy/models.py",
-    "models/plugin.py",
-    "deps/dependency_graph.py",
-    "core/apm_yml.py",
-    "integration/cleanup.py"
+  "last_updated": "2026-05-14T21:46:18Z",
+  "iteration": 46,
+  "python_lines_migrated_pct": 75.06,
+  "modules_migrated": 141,
+  "modules": [
+    {
+      "module": "models/dependency/reference",
+      "status": "migrated",
+      "python_lines": 1559
+    },
+    {
+      "module": "deps/plugin_parser",
+      "status": "migrated",
+      "python_lines": 677
+    },
+    {
+      "module": "core/auth",
+      "python_file": "src/apm_cli/core/auth.py",
+      "go_package": "internal/core/auth",
+      "python_lines": 1005,
+      "status": "migrated"
+    },
+    {
+      "module": "marketplace/ref_resolver",
+      "python_file": "src/apm_cli/marketplace/ref_resolver.py",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 345,
+      "status": "migrated"
+    },
+    {
+      "module": "marketplace/builder",
+      "python_file": "src/apm_cli/marketplace/builder.py",
+      "go_package": "internal/marketplace/builder",
+      "python_lines": 1059,
+      "status": "migrated"
+    }
   ]
 }

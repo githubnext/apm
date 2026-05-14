@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T17:12:00Z |
-| Iteration Count | 46 |
-| Best Metric | 43.57 |
+| Last Run | 2026-05-14T18:10:00Z |
+| Iteration Count | 47 |
+| Best Metric | 46.55 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), output/formatters.py (999), deps/plugin_parser.py done, deps/github_downloader.py (1686), core/script_runner.py (1138))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), deps/github_downloader.py (1686), core/auth.py (1005), deps/apm_resolver.py (918), marketplace/builder.py (1059))*
 
 ---
 
@@ -76,6 +76,8 @@
 - primitives/discovery.py: PrimitiveCollection uses type switch + per-type name-index maps; globMatch with memoized DP handles ** segments; shouldReplace (local>dependency) drives conflict resolution.
 - models/dependency/reference.py: DependencyReference struct + Parse() with 3-phase approach (virtual detect, SSH parse, standard URL); IsSupportedGitHost/IsArtifactoryPath/ParseArtifactoryPath added to githubhost; ValidatePathSegments needs 4-arg form.
 - deps/plugin_parser.py: pure Go with stdlib json; ${CLAUDE_PLUGIN_ROOT} substitution via recursive walk; security: symlinks skipped, path escapes rejected with resolve+HasPrefix.
+- script_runner.py: ScriptRunner+PromptCompiler map cleanly; simple POSIX tokenizer for shlex; minimal YAML parser for apm.yml; runtime detection via regex; env-var extraction from arg prefix; subprocess exec via exec.Command.
+- output/formatters.py: CompilationFormatter plain-text fallback renders all format modes; rich-library formatting is not needed for Go (all formatting is text-based); OptimizationStats/PlacementSummary are clean Go structs.
 
 ---
 
@@ -88,14 +90,22 @@
 ## 🔭 Future Directions
 
 - integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
-- output/formatters.py (999 lines) -- uses rich heavily; may need stub approach
 - deps/github_downloader.py (1686 lines) -- download logic, HTTP client
-- core/script_runner.py (1138 lines) -- subprocess orchestration
-- deps/download_strategies.py (1122 lines) -- strategy pattern
+- core/auth.py (1005 lines) -- authentication logic
+- deps/apm_resolver.py (918 lines) -- dependency resolver
+- marketplace/builder.py (1059 lines) -- marketplace package builder
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 47 — 2026-05-14 18:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25876945928)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 2 modules: core/script_runner (1138), output/formatters (999) = +2137 Python lines
+- **Metric**: 46.55 (previous best: 43.57, delta: +2.98)
+- **Commit**: df43625
+- **Notes**: scriptrunner: ScriptRunner+PromptCompiler with runtime detection, prompt discovery, env-var extraction, subprocess exec. compilationformatter: CompilationFormatter with default/verbose/dry-run modes, plain-text rendering (no Rich dependency).
 
 ### Iteration 46 — 2026-05-14 17:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25874088970)
 

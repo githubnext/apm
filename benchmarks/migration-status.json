@@ -1,7 +1,21 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 29003,
+  "migrated_python_lines": 31239,
   "migrated_modules": [
+    {
+      "module": "models/dependency/reference",
+      "go_package": "internal/models/depreference",
+      "python_lines": 1559,
+      "status": "migrated",
+      "notes": "DependencyReference struct with full parse/canonicalize/install-path logic"
+    },
+    {
+      "module": "deps/plugin_parser",
+      "go_package": "internal/deps/pluginparser",
+      "python_lines": 677,
+      "status": "migrated",
+      "notes": "Claude plugin.json parser and apm.yml synthesizer"
+    },
     {
       "module": "src/apm_cli/constants.py",
       "go_package": "internal/constants",
@@ -794,55 +808,20 @@
       "notes": "LLM CLI runtime adapter"
     }
   ],
-  "last_updated": "2026-05-14T16:23:30Z",
-  "iteration": 44,
-  "python_lines_migrated_pct": 40.45,
-  "modules_migrated": 106,
+  "last_updated": "2026-05-14T17:21:16Z",
+  "iteration": 45,
+  "python_lines_migrated_pct": 43.57,
+  "modules_migrated": 108,
   "modules": [
     {
-      "module": "integration/base_integrator",
+      "module": "models/dependency/reference",
       "status": "migrated",
-      "python_lines": 562
+      "python_lines": 1559
     },
     {
-      "module": "integration/agent_integrator",
+      "module": "deps/plugin_parser",
       "status": "migrated",
-      "python_lines": 606
-    },
-    {
-      "module": "integration/utils",
-      "status": "migrated",
-      "python_lines": 46
-    },
-    {
-      "name": "integration/skill_integrator",
-      "python_lines": 1513,
-      "go_package": "internal/integration/skillintegrator",
-      "status": "migrated"
-    },
-    {
-      "name": "integration/hook_integrator",
-      "python_lines": 1071,
-      "go_package": "internal/integration/hookintegrator",
-      "status": "migrated"
-    },
-    {
-      "name": "integration/command_integrator",
-      "python_lines": 775,
-      "go_package": "internal/integration/commandintegrator",
-      "status": "migrated"
-    },
-    {
-      "module": "core/token_manager",
-      "status": "migrated",
-      "python_lines": 497,
-      "go_package": "internal/core/tokenmanager"
-    },
-    {
-      "module": "primitives/discovery",
-      "status": "migrated",
-      "python_lines": 612,
-      "go_package": "internal/primitives/discovery"
+      "python_lines": 677
     }
   ]
 }

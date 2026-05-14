@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T00:57:18Z |
-| Iteration Count | 32 |
-| Best Metric | 16.68 |
+| Last Run | 2026-05-14T01:46:06Z |
+| Iteration Count | 33 |
+| Best Metric | 18.22 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | (created this iteration) |
+| PR | #39 |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -24,10 +24,6 @@
 | Completed Reason | — |
 | Consecutive Errors | 0 |
 | Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
-
----
-
-## 📋 Program Info
 
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
@@ -92,6 +88,9 @@
 - install/phases/download.py: parallel pre-download via sync.WaitGroup + buffered channel semaphore; silently swallow failures (integration loop handles errors).
 - install/phases/lockfile.py: LockfileBuilder as struct with ctx interface; ComputeDeployedHashes uses Lstat to exclude symlinks; writeIfChanged uses temp-file rename for atomicity.
 - Best metric tracks branch reality not state-file claims; state-file inflation from branch resets caused confusion in iters 26-29.
+- Consolidating related heals into one package (heals.go) avoids package proliferation; Heal interface + RunHealChain dispatcher; exclusive_group via FiredGroups map.
+- constitution_block.py: RenderBlock + InjectOrUpdate translate cleanly; InjectionStatus as typed string constants; regex for block + hash extraction.
+- Dispatch registry: pure data struct (PrimitiveDispatch) + DefaultDispatchTable() factory; no interface needed -- just a map lookup.
 
 ---
 
@@ -103,18 +102,25 @@
 
 ## 🔭 Future Directions
 
-- integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling
+- integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling next
 - integration/hook_integrator.py (1071), integration/targets.py (846) -- sizeable
 - install/local_bundle_handler.py (399) -- local bundle handling
-- install/mcp/*.py -- all 5 modules now migrated (mcpwarnings, mcpconflicts, mcpentry, mcpwriter, mcpcommand, mcpregistry)
-- install/phases remaining: policy_target_check.py, local_content.py -- both now migrated
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
+- Next smaller targets: core/scope.py (163), install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136)
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 33 — 2026-05-14 01:46 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25836695236)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 9 modules: skill_transformer (113), dispatch (91), heals/base (122), heals/branch_ref_drift (66), heals/buggy_lockfile_recovery (99), constitution_block (104), phases/local_content (191), phases/policy_target_check (113), phases/policy_gate (204) = +1103 Python lines
+- **Metric**: 18.22 (previous best: 16.68, delta: +1.54)
+- **Commit**: 64d69a4
+- **Notes**: All 9 modules use stdlib-only Go. go build ./... and go test ./... pass. Consolidated heals into single package.
 
 ### Iteration 32 — 2026-05-14 00:57 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25835089265)
 

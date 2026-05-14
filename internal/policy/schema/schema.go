@@ -54,6 +54,8 @@ Cache       PolicyCache
 Deps        DependencyPolicy
 MCP         McpPolicy
 Compilation CompilationPolicy
+Enforcement  string // warn | block | off (default: warn)
+FetchFailure string // warn | block (default: warn)
 }
 
 // DefaultDependencyPolicy returns a DependencyPolicy with sensible defaults.

@@ -1,6 +1,11 @@
 // Package primmodels defines data models for APM primitives.
 package primmodels
 
+// Primitive is the common interface for all APM primitive types.
+type Primitive interface {
+	Validate() []string
+}
+
 // Chatmode represents a chatmode primitive.
 type Chatmode struct {
 Name        string
@@ -60,6 +65,14 @@ Version     string
 Source      string
 }
 
+// Validate returns validation errors for a Context.
+func (c *Context) Validate() []string {
+if c.Content == "" {
+return []string{"Empty content"}
+}
+return nil
+}
+
 // Skill represents a skill primitive.
 type Skill struct {
 Name        string
@@ -70,6 +83,11 @@ Content     string
 Author      string
 Version     string
 Source      string
+}
+
+// Validate returns validation errors for a Skill.
+func (s *Skill) Validate() []string {
+return nil
 }
 
 // Agent represents an agent primitive.

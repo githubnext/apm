@@ -3,7 +3,7 @@ title: Autoloop Go Migration Progress
 description: Current status, benchmark signals, and next work for the Autoloop Python-to-Go migration.
 ---
 
-This page tracks the Autoloop program that is incrementally rewriting the APM CLI from Python to Go. It is seeded from the `memory/autoloop` branch, the Autoloop workflow history, issue [#3](https://github.com/githubnext/apm/issues/3), and PR [#17](https://github.com/githubnext/apm/pull/17).
+This page tracks the Autoloop program that is incrementally rewriting the APM CLI from Python to Go. It is seeded from the `memory/autoloop` branch, the Autoloop workflow history, issue [#3](https://github.com/githubnext/apm/issues/3), and PR [#39](https://github.com/githubnext/apm/pull/39).
 
 :::note[Refresh cadence]
 The `Autoloop Go Migration Progress Site` agentic workflow refreshes this page after relevant changes merge to `main`. When the migration branch advances without a docs merge, use the linked Autoloop issue, PR, and memory branch for the newest raw state.
@@ -17,15 +17,11 @@ The `Autoloop Go Migration Progress Site` agentic workflow refreshes this page a
 | Status | Active, open-ended |
 | Autoloop branch | [`autoloop/python-to-go-migration`](https://github.com/githubnext/apm/tree/autoloop/python-to-go-migration) |
 | Tracking issue | [#3 Python-to-Go Migration](https://github.com/githubnext/apm/issues/3) |
-| PR | [#17 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/17) (merged 2026-05-13) |
-| Last accepted iteration | Iteration 24, 2026-05-13 14:22 UTC |
-| Best metric | 9.89% migrated (`python_lines_migrated_pct`) |
-| Migrated lines (best) | ~7,092 of 71,696 original Python lines |
-| Migrated modules (best, all iters) | 54 total; 24 recorded in `benchmarks/migration-status.json` (iter-13 baseline; see note below) |
-
-:::caution[Branch reset caveat]
-The migration branch periodically fast-forward-resets when main merges. Each Autoloop iteration rebuilds lost modules before adding new ones. `benchmarks/migration-status.json` reflects the iter-13 stable baseline (24 modules, 4,245 lines). Iteration 24 committed an additional 30 Go packages on top of that baseline; those modules are not yet captured in the JSON. The machine-state `best_metric` of 9.89 corresponds to ~7,092 migrated lines and is the authoritative progress signal.
-:::
+| PR | [#39 Autoloop: python-to-go-migration](https://github.com/githubnext/apm/pull/39) (merged 2026-05-14) |
+| Last accepted iteration | Iteration 35, 2026-05-14 04:48 UTC |
+| Best metric | 21.08% migrated (`python_lines_migrated_pct`) |
+| Migrated lines | 15,116 of 71,696 original Python lines |
+| Migrated modules | 89 recorded in `benchmarks/migration-status.json` |
 
 ## Migration progress
 
@@ -36,15 +32,17 @@ The migration branch periodically fast-forward-resets when main merges. Each Aut
 | 3 | [25744614816](https://github.com/githubnext/apm/actions/runs/25744614816) | Migrated `utils/guards.py`. | 0.85% |
 | 4 | [25747630390](https://github.com/githubnext/apm/actions/runs/25747630390) | Migrated `utils/subprocess_env.py`, `utils/helpers.py`. | 1.15% |
 | 5-12 | — | Migrated `utils/content_hash.py`, `utils/exclude.py`, `utils/path_security.py`, `utils/version_checker.py`, `utils/file_ops.py`, `utils/console.py`, `utils/diagnostics.py`, `utils/install_tui.py`, `utils/github_host.py`, `utils/reflink.py`; branch resets caused repeated rebuilds. | 0.0%–5.41% |
-| 13 | [25771166584](https://github.com/githubnext/apm/actions/runs/25771166584) | Migrated 13 modules including `install/errors.py`, `install/cache_pin.py`, `install/context.py`; 4,245 total lines — stable baseline now recorded in `benchmarks/migration-status.json`. | 5.92% |
-| 14-21 | — | Repeatedly rebuilt modules lost to branch resets; added `compilation/*`, `models/*`, `policy/*`, `marketplace/*`, `cache/*`, `integration/*`, `workflow/*`, `primitives/*`; metrics oscillated with each reset. | 6.39%–8.66% |
-| 22 | [25798457534](https://github.com/githubnext/apm/actions/runs/25798457534) | Migrated 26 modules: `compilation/buildid+outputwriter+constitution`, `models/results+dependency/types`, `policy/schema+matcher+inheritance`, `install/request+summary+mcpargs`, `runtime/base`, `marketplace/validator+errors+tagpattern`, `cache/urlnormalize+paths+integrity`, `integration/utils+coverage`, `workflow/discovery+parser`, `core/nulllogger`, `deps/gitremoteops+aggregator`, `primitives/models`. | 9.37% |
-| 23 | [25801585559](https://github.com/githubnext/apm/actions/runs/25801585559) | Rebuilt 28 modules after another branch reset to iter-13 state. | 6.99% |
-| 24 | [25805061357](https://github.com/githubnext/apm/actions/runs/25805061357) | Rebuilt 27 modules and added 3 new ones (`marketplace/shadowdetector`, `core/dockerargs`, `deps/installedpackage`); +2,847 lines over iter-13 baseline. | **9.89%** |
+| 13 | [25771166584](https://github.com/githubnext/apm/actions/runs/25771166584) | Migrated 13 modules including `install/errors.py`, `install/cache_pin.py`, `install/context.py`; 4,245 total lines — stable JSON baseline. | 5.92% |
+| 14-27 | — | Repeatedly rebuilt modules lost to branch resets; added `compilation/*`, `models/*`, `policy/*`, `marketplace/*`, `cache/*`, `integration/*`, `workflow/*`, `primitives/*`, `core/*`, `deps/*`; metrics oscillated with each reset. | 6.39%–13.98% |
+| 28-31 | — | Rebuilt lost modules from branch resets; added `policy/discovery`, `phases/integrate`, `phases/resolve`, `phases/targets`, MCP sub-modules, pipeline, sources, services, drift, and validation modules. Metrics: 13.45%–15.16%. | 13.45%–15.16% |
+| 32 | [25835089265](https://github.com/githubnext/apm/actions/runs/25835089265) | Migrated 16 modules (+4,024 lines): all install phases, all 6 MCP sub-modules, `policy/policy_checks` (1010), `policy/ci_checks` (588). | 16.68% |
+| 33 | [25836695236](https://github.com/githubnext/apm/actions/runs/25836695236) | Migrated 9 modules (+1,103 lines): `skill_transformer`, `dispatch`, heals chain (base+2 healers), `constitution_block`, `phases/local_content`, `phases/policy_target_check`, `phases/policy_gate`. | 18.22% |
+| 34 | [25838675792](https://github.com/githubnext/apm/actions/runs/25838675792) | Migrated 5 modules (+1,127 lines): `core/scope`, `marketplace/models`, `integration/copilot_cowork_paths`, `models/dependency/mcp`, `deps/shared_clone_cache`. | 19.79% |
+| 35 | [25842273066](https://github.com/githubnext/apm/actions/runs/25842273066) | Migrated 5 modules (+926 lines): `policy/models`, `models/plugin`, `deps/dependency_graph`, `core/apm_yml`, `integration/cleanup`. | **21.08%** |
 
 ## Migrated modules
 
-The table below lists the 24 modules recorded in `benchmarks/migration-status.json` on the migration branch (iter-13 stable baseline). Iteration 24 also includes 30 additional Go packages on the branch that are not yet captured in the JSON.
+All 89 modules recorded in `benchmarks/migration-status.json` on branch `autoloop/python-to-go-migration` (as of iteration 35).
 
 | Python module | Go package | Python lines |
 |---|---|---:|
@@ -72,16 +70,86 @@ The table below lists the 24 modules recorded in `benchmarks/migration-status.js
 | `src/apm_cli/install/errors.py` | `internal/install/errors` | 113 |
 | `src/apm_cli/install/cache_pin.py` | `internal/install/cachepin` | 233 |
 | `src/apm_cli/install/context.py` | `internal/install/installctx` | 166 |
+| `src/apm_cli/compilation/build_id.py` | `internal/compilation/buildid` | 39 |
+| `src/apm_cli/compilation/constants.py` | `internal/compilation/compilationconst` | 18 |
+| `src/apm_cli/compilation/output_writer.py` | `internal/compilation/outputwriter` | 49 |
+| `src/apm_cli/compilation/constitution.py` | `internal/compilation/constitution` | 51 |
+| `src/apm_cli/models/results.py` | `internal/models/results` | 27 |
+| `src/apm_cli/models/dependency/types.py` | `internal/models/deptypes` | 74 |
+| `src/apm_cli/policy/schema.py` | `internal/policy/schema` | 117 |
+| `src/apm_cli/policy/matcher.py` | `internal/policy/matcher` | 84 |
+| `src/apm_cli/policy/inheritance.py` | `internal/policy/inheritance` | 257 |
+| `src/apm_cli/install/request.py` | `internal/install/request` | 60 |
+| `src/apm_cli/install/summary.py` | `internal/install/summary` | 73 |
+| `src/apm_cli/install/mcp/args.py` | `internal/install/mcpargs` | 43 |
+| `src/apm_cli/runtime/base.py` | `internal/runtime/base` | 63 |
+| `src/apm_cli/marketplace/validator.py` | `internal/marketplace/mktvalidator` | 78 |
+| `src/apm_cli/marketplace/errors.py` | `internal/marketplace/mkterrors` | 132 |
+| `src/apm_cli/marketplace/semver.py` | `internal/marketplace/semver` | 234 |
+| `src/apm_cli/marketplace/tag_pattern.py` | `internal/marketplace/tagpattern` | 103 |
+| `src/apm_cli/marketplace/shadow_detector.py` | `internal/marketplace/shadowdetector` | 75 |
+| `src/apm_cli/cache/url_normalize.py` | `internal/cache/urlnormalize` | 133 |
+| `src/apm_cli/cache/paths.py` | `internal/cache/cachepaths` | 169 |
+| `src/apm_cli/cache/integrity.py` | `internal/cache/integrity` | 104 |
+| `src/apm_cli/integration/utils.py` | `internal/integration/intutils` | 46 |
+| `src/apm_cli/integration/coverage.py` | `internal/integration/coverage` | 66 |
+| `src/apm_cli/workflow/parser.py` | `internal/workflow/wfparser` | 92 |
+| `src/apm_cli/core/null_logger.py` | `internal/core/nulllogger` | 84 |
+| `src/apm_cli/core/docker_args.py` | `internal/core/dockerargs` | 96 |
+| `src/apm_cli/deps/git_remote_ops.py` | `internal/deps/gitremoteops` | 91 |
+| `src/apm_cli/deps/aggregator.py` | `internal/deps/aggregator` | 66 |
+| `src/apm_cli/deps/installed_package.py` | `internal/deps/installedpkg` | 54 |
+| `src/apm_cli/primitives/models.py` | `internal/primitives/primmodels` | 269 |
+| `src/apm_cli/workflow/discovery.py` | `internal/workflow/discovery` | 101 |
+| `src/apm_cli/compilation/claude_formatter.py` | `internal/compilation/agentformatter` | 354 |
+| `src/apm_cli/compilation/gemini_formatter.py` | `internal/compilation/agentformatter` | 121 |
+| `src/apm_cli/compilation/injector.py` | `internal/compilation/injector` | 94 |
+| `src/apm_cli/compilation/template_builder.py` | `internal/compilation/templatebuilder` | 174 |
+| `src/apm_cli/install/plan.py` | `internal/install/plan` | 425 |
+| `src/apm_cli/install/insecure_policy.py` | `internal/install/insecurepolicy` | 229 |
+| `src/apm_cli/install/phases/cleanup.py` | `internal/install/phases/cleanup` | 158 |
+| `src/apm_cli/install/phases/finalize.py` | `internal/install/phases/finalize` | 92 |
+| `src/apm_cli/install/phases/heal.py` | `internal/install/phases/heal` | 90 |
+| `src/apm_cli/install/phases/lockfile.py` | `internal/install/phases/lockfile` | 260 |
+| `src/apm_cli/install/phases/post_deps_local.py` | `internal/install/phases/postdepslocal` | 117 |
+| `src/apm_cli/install/phases/download.py` | `internal/install/phases/download` | 135 |
+| `src/apm_cli/install/mcp/warnings.py` | `internal/install/mcp/mcpwarnings` | 123 |
+| `src/apm_cli/install/mcp/conflicts.py` | `internal/install/mcp/mcpconflicts` | 122 |
+| `src/apm_cli/install/mcp/entry.py` | `internal/install/mcp/mcpentry` | 106 |
+| `src/apm_cli/install/mcp/writer.py` | `internal/install/mcp/mcpwriter` | 132 |
+| `src/apm_cli/install/mcp/command.py` | `internal/install/mcp/mcpcommand` | 160 |
+| `src/apm_cli/install/mcp/registry.py` | `internal/install/mcp/mcpregistry` | 277 |
+| `src/apm_cli/policy/policy_checks.py` | `internal/policy/policychecks` | 1010 |
+| `src/apm_cli/policy/ci_checks.py` | `internal/policy/cichecks` | 588 |
+| `src/apm_cli/integration/skill_transformer.py` | `internal/integration/skilltransformer` | 113 |
+| `src/apm_cli/integration/dispatch.py` | `internal/integration/dispatch` | 91 |
+| `src/apm_cli/install/heals/base.py` | `internal/install/heals` | 122 |
+| `src/apm_cli/install/heals/branch_ref_drift.py` | `internal/install/heals` | 66 |
+| `src/apm_cli/install/heals/buggy_lockfile_recovery.py` | `internal/install/heals` | 99 |
+| `src/apm_cli/compilation/constitution_block.py` | `internal/compilation/constitutionblock` | 104 |
+| `src/apm_cli/install/phases/local_content.py` | `internal/install/phases/localcontent` | 191 |
+| `src/apm_cli/install/phases/policy_target_check.py` | `internal/install/phases/policytargetcheck` | 113 |
+| `src/apm_cli/install/phases/policy_gate.py` | `internal/install/phases/policygate` | 204 |
+| `src/apm_cli/core/scope.py` | `internal/core/scope` | 163 |
+| `src/apm_cli/marketplace/models.py` | `internal/marketplace/mktmodels` | 224 |
+| `src/apm_cli/integration/copilot_cowork_paths.py` | `internal/integration/coworkpaths` | 241 |
+| `src/apm_cli/models/dependency/mcp.py` | `internal/models/mcpdep` | 267 |
+| `src/apm_cli/deps/shared_clone_cache.py` | `internal/deps/sharedclonecache` | 232 |
+| `src/apm_cli/policy/models.py` | `internal/policy/policymodels` | 143 |
+| `src/apm_cli/models/plugin.py` | `internal/models/plugin` | 152 |
+| `src/apm_cli/deps/dependency_graph.py` | `internal/deps/depgraph` | 227 |
+| `src/apm_cli/core/apm_yml.py` | `internal/core/apmyml` | 107 |
+| `src/apm_cli/integration/cleanup.py` | `internal/integration/cleanuphelper` | 297 |
 
 ## Benchmark signals
 
 ### Migration metric
 
-Autoloop tracks `python_lines_migrated_pct = (migrated_python_lines / original_python_lines) * 100`. The best recorded value is **9.89%** (iteration 24, ~7,092 of 71,696 lines). `go build ./...` and `go test ./...` pass on all accepted iterations. Module-specific Python-vs-Go timing data is not yet present in `benchmarks/migration-status.json`.
+Autoloop tracks `python_lines_migrated_pct = (migrated_python_lines / original_python_lines) * 100`. The best recorded value is **21.08%** (iteration 35, 15,116 of 71,696 lines). `go build ./...` and `go test ./...` pass on all accepted iterations. Module-specific Python-vs-Go timing data is not yet present in `benchmarks/migration-status.json`.
 
 ### Manifest operations benchmark (`scripts/benchmark_manifest_ops.py`)
 
-Run locally on 2026-05-13 with `python3 scripts/benchmark_manifest_ops.py`. Results are nondeterministic micro-benchmarks; order-of-magnitude values are stable across runs.
+The script `scripts/benchmark_manifest_ops.py` exists in the repository. A local run was attempted but could not complete (permission denied in the sandbox environment). Results from the previous documented run (2026-05-13) are shown below for reference; re-run locally to get current values.
 
 | Scale | `check_collision` speedup | `sync_remove_files` speedup | `cleanup_empty_parents` speedup | Scoped uninstall speedup |
 |---|---:|---:|---:|---:|
@@ -89,31 +157,32 @@ Run locally on 2026-05-13 with `python3 scripts/benchmark_manifest_ops.py`. Resu
 | Growing: 50 pkgs, 250 paths | 17.4x | 1.6x | 0.5x | 12.2x |
 | Large monorepo: 100 pkgs, 2,000 paths | 1,606.6x | 2.2x | 0.6x | 26.0x |
 
-`cleanup_empty_parents` shows a small regression at scale (0.5x–0.9x) because the batch bottom-up algorithm has higher constant overhead than the legacy per-file walk-up at low deleted-file counts. This is expected and acceptable given the gains on the other three operations.
+`cleanup_empty_parents` shows a small regression at scale (0.5x-0.9x) because the batch bottom-up algorithm has higher constant overhead than the legacy per-file walk-up at low deleted-file counts. This is expected and acceptable given the gains on the other three operations.
 
 ### Go build/test validation
 
 | Signal | Status | Notes |
 |---|---|---|
-| `go build ./...` | Pass (all accepted iters) | Confirmed in iter-13, iter-22, iter-23, iter-24 notes |
-| `go test ./...` | Pass (all accepted iters) | Confirmed in iter-13, iter-22, iter-23, iter-24 notes |
-| External deps | Unavailable in sandbox | `gopkg.in/yaml.v3` blocked; stdlib-only YAML scanner used for `workflow/parser` and `deps/aggregator` |
+| `go build ./...` | Pass (all accepted iters) | Confirmed in iter-32, iter-33, iter-34, iter-35 notes |
+| `go test ./...` | Pass (all accepted iters) | Confirmed in iter-32, iter-33, iter-34, iter-35 notes |
+| External deps | Unavailable in sandbox | `gopkg.in/yaml.v3` blocked; stdlib-only YAML scanner used throughout |
 
 ## Next up
 
 From the Autoloop memory `Future Directions`:
 
-- `install/pipeline.py` (741 lines), `install/sources.py` (734 lines), `install/services.py` (734 lines) -- larger install modules, clear patterns.
-- `policy/discovery.py` (1,365 lines) -- highest-impact policy module.
-- `deps/github_downloader.py` (1,686 lines) -- requires HTTP client work.
-- `install/phases/finalize.py` (92), `install/template.py` (140), `install/service.py` (146) -- smaller fill-in modules.
+- `integration/skill_integrator.py` (1,513 lines) -- large integrator; worth tackling next.
+- `integration/hook_integrator.py` (1,071 lines), `integration/targets.py` (846 lines) -- sizeable integrators.
+- `install/local_bundle_handler.py` (399 lines) -- local bundle handling.
+- `deps/github_downloader.py` (1,686 lines) -- requires HTTP client; deferred.
+- Smaller targets: `install/template.py` (140), `runtime/factory.py` (139), `marketplace/registry.py` (136), `marketplace/git_stderr.py` (173).
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement.
-- Address recurring branch-reset issue: consider a stable upstream merge strategy so `benchmarks/migration-status.json` stays current.
+- Address recurring branch-reset issue: consider a stable upstream merge strategy.
 
 ## Operating notes
 
 - Prefer leaf modules first; fewer internal APM dependencies and lower integration risk.
-- Keep Go implementations stdlib-only when sandbox networking blocks external module fetches (e.g., use a line-scanner for YAML frontmatter instead of `gopkg.in/yaml.v3`).
+- Keep Go implementations stdlib-only when sandbox networking blocks external module fetches.
 - Record every accepted iteration in `benchmarks/migration-status.json` so this page can report complete module data.
 
-Last updated: 2026-05-13 16:32 UTC.
+Last updated: 2026-05-14 05:33 UTC.

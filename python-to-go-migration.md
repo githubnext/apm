@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T01:46:06Z |
-| Iteration Count | 33 |
-| Best Metric | 18.22 |
+| Last Run | 2026-05-14T02:49:18Z |
+| Iteration Count | 34 |
+| Best Metric | 19.79 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -108,11 +108,19 @@
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
-- Next smaller targets: core/scope.py (163), install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136)
+- Next smaller targets: install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136), marketplace/git_stderr.py (173)
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 34 — 2026-05-14 02:49 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25838675792)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 5 modules: core/scope (163), marketplace/models (224), integration/copilot_cowork_paths (241), models/dependency/mcp (267), deps/shared_clone_cache (232) = +1127 Python lines
+- **Metric**: 19.79 (previous best: 18.22, delta: +1.57)
+- **Commit**: 80395db
+- **Notes**: All 5 modules use stdlib-only Go. go build ./... and go test ./... pass. MCPDependency includes full validation logic.
 
 ### Iteration 33 — 2026-05-14 01:46 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25836695236)
 

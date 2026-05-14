@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T14:19:00Z |
-| Iteration Count | 43 |
-| Best Metric | 38.06 |
+| Last Run | 2026-05-14T15:25:00Z |
+| Iteration Count | 44 |
+| Best Metric | 38.91 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -91,6 +91,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 44 — 2026-05-14 15:25 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25868342116)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 7 modules: marketplace/_git_utils (19), marketplace/_io (30), adapters/client/windsurf (48), install/helpers/security_scan (48), deps/git_auth_env (152), runtime/codex_runtime (151), runtime/llm_runtime (160) = +608 Python lines
+- **Metric**: 38.91 (previous best: 38.06, delta: +0.85)
+- **Commit**: f06a60f
+- **Notes**: Small utility + adapter modules; gitutils provides RedactToken; mkio provides AtomicWrite; windsurf adapter mirrors Copilot config schema; securityscan stdlib-only hidden-char scan; gitauthenv builds three git env flavours (setup/noninteractive/subprocess); codexruntime and llmruntime wrap CLI subprocess execution. All stdlib-only Go.
 
 ### Iteration 43 — 2026-05-14 14:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25865196805)
 

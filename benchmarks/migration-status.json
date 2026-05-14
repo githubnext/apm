@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 31239,
+  "migrated_python_lines": 33376,
   "migrated_modules": [
     {
       "module": "models/dependency/reference",
@@ -806,6 +806,20 @@
       "python_lines": 160,
       "status": "migrated",
       "notes": "LLM CLI runtime adapter"
+    },
+    {
+      "module": "src/apm_cli/core/script_runner.py",
+      "go_package": "internal/core/scriptrunner",
+      "python_lines": 1138,
+      "status": "migrated",
+      "notes": "ScriptRunner+PromptCompiler: runtime detection, prompt discovery, command building, parameter substitution"
+    },
+    {
+      "module": "src/apm_cli/output/formatters.py",
+      "go_package": "internal/output/compilationformatter",
+      "python_lines": 999,
+      "status": "migrated",
+      "notes": "CompilationFormatter: default/verbose/dry-run output formatting with plain-text rendering"
     }
   ],
   "last_updated": "2026-05-14T17:21:16Z",

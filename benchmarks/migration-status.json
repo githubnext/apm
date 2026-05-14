@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 33376,
+  "migrated_python_lines": 35785,
   "migrated_modules": [
     {
       "module": "models/dependency/reference",
@@ -824,7 +824,7 @@
   ],
   "last_updated": "2026-05-14T17:21:16Z",
   "iteration": 45,
-  "python_lines_migrated_pct": 43.57,
+  "python_lines_migrated_pct": 49.91,
   "modules_migrated": 108,
   "modules": [
     {
@@ -836,6 +836,27 @@
       "module": "deps/plugin_parser",
       "status": "migrated",
       "python_lines": 677
+    },
+    {
+      "module": "core/auth",
+      "python_file": "src/apm_cli/core/auth.py",
+      "go_package": "internal/core/auth",
+      "python_lines": 1005,
+      "status": "migrated"
+    },
+    {
+      "module": "marketplace/ref_resolver",
+      "python_file": "src/apm_cli/marketplace/ref_resolver.py",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 345,
+      "status": "migrated"
+    },
+    {
+      "module": "marketplace/builder",
+      "python_file": "src/apm_cli/marketplace/builder.py",
+      "go_package": "internal/marketplace/builder",
+      "python_lines": 1059,
+      "status": "migrated"
     }
   ]
 }

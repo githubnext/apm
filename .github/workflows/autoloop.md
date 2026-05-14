@@ -36,6 +36,7 @@ network:
 
 safe-outputs:
   max-patch-size: 10240
+  max-patch-files: 500
   add-comment:
     max: 7
     target: "*"
@@ -43,12 +44,38 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, autoloop]
-    protected-files: fallback-to-issue
+    protected-files:
+      policy: fallback-to-issue
+      exclude:
+        - go.mod
+        - go.sum
+        - package.json
+        - package-lock.json
+        - requirements.txt
+        - pyproject.toml
+        - setup.py
+        - setup.cfg
+        - Pipfile
+        - Pipfile.lock
     preserve-branch-name: true
+    recreate-ref: true
     max: 1
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Autoloop"
+    protected-files:
+      policy: allowed
+      exclude:
+        - go.mod
+        - go.sum
+        - package.json
+        - package-lock.json
+        - requirements.txt
+        - pyproject.toml
+        - setup.py
+        - setup.cfg
+        - Pipfile
+        - Pipfile.lock
     max: 1
   create-issue:
     labels: [automation, autoloop]

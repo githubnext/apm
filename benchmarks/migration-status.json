@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 16891,
+  "migrated_python_lines": 17479,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -624,11 +624,15 @@
       "python_lines": 232,
       "status": "migrated",
       "notes": "Thread-safe shared bare-clone cache"
-    }
+    },
+    "install/template",
+    "runtime/factory",
+    "marketplace/registry",
+    "marketplace/git_stderr"
   ],
-  "last_updated": "2026-05-13T16:25:00Z",
-  "iteration": 25,
-  "python_lines_migrated_pct": 19.79,
+  "last_updated": "2026-05-14T07:36:03Z",
+  "iteration": 26,
+  "python_lines_migrated_pct": 24.38,
   "modules_migrated": [
     "policy/models.py",
     "models/plugin.py",
@@ -637,6 +641,10 @@
     "integration/cleanup.py",
     "integration/targets.py",
     "deps/lockfile.py",
-    "install/local_bundle_handler.py"
+    "install/local_bundle_handler.py",
+    "install/template",
+    "runtime/factory",
+    "marketplace/registry",
+    "marketplace/git_stderr"
   ]
 }

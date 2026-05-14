@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T10:19:00Z |
-| Iteration Count | 39 |
-| Best Metric | 27.32 |
+| Last Run | 2026-05-14T11:18:00Z |
+| Iteration Count | 40 |
+| Best Metric | 32.00 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071))*
+*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), integration/command_integrator.py (775) -- all 3 done in iter 40. Next: deps/github_downloader.py (1686) or other large modules)*
 
 ---
 
@@ -81,15 +81,23 @@
 
 ## 🔭 Future Directions
 
-- integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling next
-- integration/hook_integrator.py (1071) -- hook management integrator
-- integration/command_integrator.py (775) -- command integration
+- integration/skill_integrator.py (1513 lines) -- DONE in iter 40
+- integration/hook_integrator.py (1071) -- DONE in iter 40
+- integration/command_integrator.py (775) -- DONE in iter 40
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 40 — 2026-05-14 11:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25857101991)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: integration/skill_integrator (1513), integration/hook_integrator (1071), integration/command_integrator (775) = +3359 Python lines
+- **Metric**: 32.00 (previous best: 27.32, delta: +4.68)
+- **Commit**: 572990c
+- **Notes**: skill_integrator handles SKILL.md native skills, SKILL_BUNDLE promotion, sub-skill dedup; hook_integrator merges hooks into claude/cursor/codex JSON configs with _apm_source idempotent upsert; command_integrator transforms .prompt.md to claude/cursor/gemini commands with frontmatter passthrough.
 
 ### Iteration 39 — 2026-05-14 10:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25854672963)
 

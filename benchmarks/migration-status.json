@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 19586,
+  "migrated_python_lines": 22945,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -714,6 +714,24 @@
       "module": "integration/utils",
       "status": "migrated",
       "python_lines": 46
+    },
+    {
+      "name": "integration/skill_integrator",
+      "python_lines": 1513,
+      "go_package": "internal/integration/skillintegrator",
+      "status": "migrated"
+    },
+    {
+      "name": "integration/hook_integrator",
+      "python_lines": 1071,
+      "go_package": "internal/integration/hookintegrator",
+      "status": "migrated"
+    },
+    {
+      "name": "integration/command_integrator",
+      "python_lines": 775,
+      "go_package": "internal/integration/commandintegrator",
+      "status": "migrated"
     }
   ]
 }

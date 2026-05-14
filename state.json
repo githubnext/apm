@@ -1,19 +1,20 @@
 {
-  "last_run": "2026-05-13T21:00:00Z",
+  "last_run": "2026-05-14T20:55:00Z",
   "validated_commands": {
     "test_unit": "uv run --extra dev pytest tests/unit -q --tb=short (note: PyPy 3.10 env; some tests fail due to env, not code)",
     "lint_check": "uv run --extra dev ruff check src/ tests/ && uv run --extra dev ruff format --check src/ tests/",
-    "lint_fix": "uv run --extra dev ruff check src/ tests/ --fix && uv run --extra dev ruff format src/ tests/"
+    "lint_fix": "uv run --extra dev ruff check src/ tests/ --fix && uv run --extra dev ruff format src/ tests/",
+    "alt_install": "pip install -e '.[dev]' && python3 -m pytest tests/unit -q --tb=short"
   },
-  "env_notes": "PyPy 3.10 env -- many deps (yaml, click, pydantic-core) fail to build. CI uses CPython. Use .venv/bin/python3 -m pytest --noconftest for isolated tests locally.",
+  "env_notes": "PyPy 3.10 env -- many deps (yaml, click, pydantic-core) fail to build. CI uses CPython. Use pip install -e .[dev] + python3 -m pytest for isolated tests locally.",
   "tasks_last_run": {
     "task1": "2026-05-12",
     "task2": "2026-05-13",
-    "task3": "2026-05-13",
+    "task3": "2026-05-14",
     "task4": "2026-05-12",
-    "task5": "never",
+    "task5": "2026-05-14",
     "task6": "never",
-    "task7": "2026-05-13"
+    "task7": "2026-05-14"
   },
   "completed_prs": [
     {
@@ -27,6 +28,12 @@
       "description": "26 unit tests for update_policy module (build-time self-update policy)",
       "date": "2026-05-13",
       "status": "submitted"
+    },
+    {
+      "branch": "test-assist/file-scanner-tests",
+      "description": "15 unit tests for security/file_scanner module (scan_lockfile_packages orchestration)",
+      "date": "2026-05-14",
+      "status": "submitted"
     }
   ],
   "testing_backlog": [
@@ -34,12 +41,9 @@
     {"file": "src/apm_cli/commands/compile/watcher.py", "priority": "medium", "reason": "0 tests, 170 lines, file watcher"},
     {"file": "src/apm_cli/install/phases/post_deps_local.py", "priority": "medium", "reason": "0 tests, 117 lines"},
     {"file": "src/apm_cli/deps/git_remote_ops.py", "priority": "low", "reason": "0 tests, 91 lines"},
-    {"file": "src/apm_cli/security/file_scanner.py", "priority": "low", "reason": "0 tests, 85 lines"},
-    {"file": "src/apm_cli/core/conflict_detector.py", "priority": "done", "reason": "already has extensive tests"},
-    {"file": "src/apm_cli/commands/self_update.py", "priority": "done", "reason": "tests in test_update_command.py"},
-    {"file": "src/apm_cli/commands/list_cmd.py", "priority": "done", "reason": "tests in test_list_command.py"},
-    {"file": "src/apm_cli/update_policy.py", "priority": "done", "reason": "PR submitted: test-assist/update-policy-tests (26 tests)"},
-    {"file": "src/apm_cli/core/token_manager.py", "priority": "done", "reason": "PR submitted: test-assist/token-manager-internals (37 tests)"}
+    {"file": "src/apm_cli/security/file_scanner.py", "priority": "done", "reason": "PR submitted: test-assist/file-scanner-tests (15 tests)"},
+    {"file": "src/apm_cli/core/token_manager.py", "priority": "done", "reason": "PR submitted: test-assist/token-manager-internals (37 tests)"},
+    {"file": "src/apm_cli/update_policy.py", "priority": "done", "reason": "PR submitted: test-assist/update-policy-tests (26 tests)"}
   ],
   "monthly_issue": "2026-05 created"
 }

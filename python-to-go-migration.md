@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T06:10:37Z |
-| Iteration Count | 36 |
-| Best Metric | 23.56 |
+| Last Run | 2026-05-14T07:40:00Z |
+| Iteration Count | 37 |
+| Best Metric | 24.38 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | #39 |
+| PR | — |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -25,18 +25,21 @@
 | Consecutive Errors | 0 |
 | Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
+---
+
+## 📋 Program Info
 
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: (new PR created iter 29)
+**Pull Request**: (new PR needed -- #39 was merged)
 **Issue**: #3
 
 ---
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136))*
+*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071))*
 
 ---
 
@@ -45,7 +48,7 @@
 - Stdlib-only Go works throughout: gopkg.in/yaml.v3 unavailable in sandbox; use line scanners or simple parsers.
 - go build ./... and go test ./... pass after every iteration; always verify before commit.
 - Branch resets (ahead=0 fast-forward) lose prior commits; each iter must rebuild from branch state.
-- Batching 5-16 modules per iter is efficient; target ~900-1100 Python lines per iteration.
+- Batching 4-16 modules per iter is efficient; target ~600-1100 Python lines per iteration.
 - Atomic writes: os.CreateTemp + Write + Rename. sync.Once for singletons. sync.Mutex for maps.
 - Python Enum -> Go iota + String(). Python dataclass -> Go struct with New() constructor.
 - Context-manager -> Enter/Exit methods. filepath.WalkDir replaces os.walk. runtime.GOOS for platform.
@@ -61,6 +64,10 @@
 - targets.py: TargetProfile with interface{} for UserSupported (bool or "partial"); ForScope handles CLAUDE_CONFIG_DIR env.
 - lockfile.py: minimal line-by-line YAML parser sufficient for known schema; self-entry synthesis from local_deployed_files.
 - local_bundle_handler.py: .mcp.json case-insensitive lookup; MCPServerSpec captures all Anthropic plugin fields.
+- registry.py: sync.Mutex cache + atomic os.Rename for marketplace list; FromDict/ToDict preserve extra fields.
+- git_stderr.py: pure classification + pattern matching; "could not resolve host" beats "could not resolve" for KindTimeout.
+- factory.py: ConstructableAdapter interface with New(model)/NewDefault() enables ordered preference-list selection.
+- template.py: Config struct + function callbacks decouple template from Strategy implementations cleanly.
 
 ---
 
@@ -77,11 +84,18 @@
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
-- Next smaller targets: install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136), marketplace/git_stderr.py (173)
+- Next smaller targets: marketplace/models.go already done; check for other untouched small modules
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 37 — 2026-05-14 07:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25847876982)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 4 modules: install/template (140), runtime/factory (139), marketplace/registry (136), marketplace/git_stderr (173) = +588 Python lines
+- **Metric**: 24.38 (previous best: 23.56, delta: +0.82)
+- **Notes**: All 4 use stdlib-only Go. gitstderr has full test suite (6 tests pass). PR #39 was merged; new PR needed.
 
 ### Iteration 36 — 2026-05-14 06:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25844894761)
 
@@ -89,7 +103,6 @@
 - **Change**: Migrated 3 modules: integration/targets (846), deps/lockfile (530), install/local_bundle_handler (399) = +1775 Python lines
 - **Metric**: 23.56 (previous best: 21.08, delta: +2.48)
 - **Commit**: e415d93
-- **Notes**: All 3 modules use stdlib-only Go. go build ./... and go test ./... pass. Lockfile uses line-scanner YAML parser; targets uses interface{} for UserSupported field.
 
 ### Iteration 35 — 2026-05-14 04:48 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25842273066)
 
@@ -97,7 +110,6 @@
 - **Change**: Migrated 5 modules: policy/models (143), models/plugin (152), deps/dependency_graph (227), core/apm_yml (107), integration/cleanup (297) = +926 Python lines
 - **Metric**: 21.08 (previous best: 19.79, delta: +1.29)
 - **Commit**: f0e57d6
-- **Notes**: All 5 modules use stdlib-only Go. go build ./... and go test ./... pass. cleanup.go includes all 3 safety gates.
 
 ### Iteration 34 — 2026-05-14 02:49 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25838675792)
 
@@ -105,7 +117,6 @@
 - **Change**: Migrated 5 modules: core/scope (163), marketplace/models (224), integration/copilot_cowork_paths (241), models/dependency/mcp (267), deps/shared_clone_cache (232) = +1127 Python lines
 - **Metric**: 19.79 (previous best: 18.22, delta: +1.57)
 - **Commit**: 80395db
-- **Notes**: All 5 modules use stdlib-only Go. go build ./... and go test ./... pass. MCPDependency includes full validation logic.
 
 ### Iteration 33 — 2026-05-14 01:46 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25836695236)
 
@@ -113,17 +124,8 @@
 - **Change**: Migrated 9 modules: skill_transformer (113), dispatch (91), heals/base (122), heals/branch_ref_drift (66), heals/buggy_lockfile_recovery (99), constitution_block (104), phases/local_content (191), phases/policy_target_check (113), phases/policy_gate (204) = +1103 Python lines
 - **Metric**: 18.22 (previous best: 16.68, delta: +1.54)
 - **Commit**: 64d69a4
-- **Notes**: All 9 modules use stdlib-only Go. go build ./... and go test ./... pass. Consolidated heals into single package.
 
-### Iteration 32 — 2026-05-14 00:57 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25835089265)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 16 modules: install/plan (425), insecure_policy (229), phases/cleanup (158), phases/finalize (92), phases/heal (90), phases/lockfile (260), phases/post_deps_local (117), phases/download (135), mcp/warnings (123), mcp/conflicts (122), mcp/entry (106), mcp/writer (132), mcp/command (160), mcp/registry (277), policy_checks (1010), ci_checks (588) = +4024 Python lines
-- **Metric**: 16.68 (previous best: 15.16, delta: +1.52)
-- **Commit**: b50c0f4
-- **Notes**: Branch was at iter-13 state (7936 lines) after merge with main. All 16 modules use stdlib-only Go. go build ./... and go test ./... pass.
-
-### Iters 28-31 — 2026-05-13/14 — ✅ (metrics 13.45->15.16): rebuilt modules lost from branch resets; added policy/discovery, phases/integrate, phases/resolve, phases/targets, pipeline, sources, services, drift, validation, and MCP modules.
+### Iters 28-32 — 2026-05-13/14 — ✅ (metrics 13.45->16.68): rebuilt modules lost from branch resets; added policy/discovery, phases/integrate, phases/resolve, phases/targets, pipeline, sources, services, drift, validation, MCP modules, policy_checks, ci_checks.
 
 ### Iters 13-27 — 2026-05-13 — ✅ (metrics 5.92->13.98): rebuilt lost modules repeatedly plus added new ones each iteration.
 

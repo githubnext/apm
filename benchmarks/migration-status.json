@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 27894,
+  "migrated_python_lines": 29003,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -794,9 +794,9 @@
       "notes": "LLM CLI runtime adapter"
     }
   ],
-  "last_updated": "2026-05-14T12:17:24Z",
-  "iteration": 43,
-  "python_lines_migrated_pct": 38.06,
+  "last_updated": "2026-05-14T16:23:30Z",
+  "iteration": 44,
+  "python_lines_migrated_pct": 40.45,
   "modules_migrated": 106,
   "modules": [
     {
@@ -831,6 +831,18 @@
       "python_lines": 775,
       "go_package": "internal/integration/commandintegrator",
       "status": "migrated"
+    },
+    {
+      "module": "core/token_manager",
+      "status": "migrated",
+      "python_lines": 497,
+      "go_package": "internal/core/tokenmanager"
+    },
+    {
+      "module": "primitives/discovery",
+      "status": "migrated",
+      "python_lines": 612,
+      "go_package": "internal/primitives/discovery"
     }
   ]
 }

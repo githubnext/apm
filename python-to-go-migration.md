@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T04:48:41Z |
-| Iteration Count | 35 |
-| Best Metric | 21.08 |
+| Last Run | 2026-05-14T06:10:37Z |
+| Iteration Count | 36 |
+| Best Metric | 23.56 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -36,7 +36,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), integration/targets.py (846), install/local_bundle_handler.py (399), deps/lockfile.py (530))*
+*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), install/template.py (140), runtime/factory.py (139), marketplace/registry.py (136))*
 
 ---
 
@@ -58,6 +58,9 @@
 - cleanup.py safety gates: (1) path validation, (2) dir rejection, (3) provenance hash check (fails CLOSED).
 - depgraph.py: DependencyNode/Tree/Graph as plain Go structs; no external deps needed.
 - apm_yml.py: targets/target field CSV/list sugar maps cleanly; typed errors for conflicting/empty/unknown.
+- targets.py: TargetProfile with interface{} for UserSupported (bool or "partial"); ForScope handles CLAUDE_CONFIG_DIR env.
+- lockfile.py: minimal line-by-line YAML parser sufficient for known schema; self-entry synthesis from local_deployed_files.
+- local_bundle_handler.py: .mcp.json case-insensitive lookup; MCPServerSpec captures all Anthropic plugin fields.
 
 ---
 
@@ -70,8 +73,7 @@
 ## 🔭 Future Directions
 
 - integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling next
-- integration/hook_integrator.py (1071), integration/targets.py (846) -- sizeable
-- install/local_bundle_handler.py (399) -- local bundle handling
+- integration/hook_integrator.py (1071) -- hook management integrator
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
 - Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
@@ -80,6 +82,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 36 — 2026-05-14 06:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25844894761)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: integration/targets (846), deps/lockfile (530), install/local_bundle_handler (399) = +1775 Python lines
+- **Metric**: 23.56 (previous best: 21.08, delta: +2.48)
+- **Commit**: e415d93
+- **Notes**: All 3 modules use stdlib-only Go. go build ./... and go test ./... pass. Lockfile uses line-scanner YAML parser; targets uses interface{} for UserSupported field.
 
 ### Iteration 35 — 2026-05-14 04:48 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25842273066)
 

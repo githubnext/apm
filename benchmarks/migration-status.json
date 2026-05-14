@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 17479,
+  "migrated_python_lines": 18372,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -625,13 +625,65 @@
       "status": "migrated",
       "notes": "Thread-safe shared bare-clone cache"
     },
-    "install/template",
-    "runtime/factory",
-    "marketplace/registry",
-    "marketplace/git_stderr"
+    {
+      "module": "src/apm_cli/install/template.py",
+      "go_package": "internal/install/template",
+      "python_lines": 140,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/runtime/factory.py",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 139,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/marketplace/registry.py",
+      "go_package": "internal/marketplace/registry",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/marketplace/git_stderr.py",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_lines": 173,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "src/apm_cli/update_policy.py",
+      "go_package": "internal/updatepolicy",
+      "python_lines": 50,
+      "status": "migrated",
+      "notes": "Self-update build-time policy constants and helpers"
+    },
+    {
+      "module": "src/apm_cli/output/models.py",
+      "go_package": "internal/output/models",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Compilation output data models: PlacementStrategy, ProjectAnalysis, CompilationResults, etc."
+    },
+    {
+      "module": "src/apm_cli/integration/prompt_integrator.py",
+      "go_package": "internal/integration/promptintegrator",
+      "python_lines": 228,
+      "status": "migrated",
+      "notes": "Prompt file integration: find/copy .prompt.md files to .github/prompts/"
+    },
+    {
+      "module": "src/apm_cli/integration/instruction_integrator.py",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_lines": 479,
+      "status": "migrated",
+      "notes": "Instruction integration with cursor/claude/windsurf format transforms"
+    }
   ],
-  "last_updated": "2026-05-14T07:36:03Z",
-  "iteration": 26,
+  "last_updated": "2026-05-14T09:05:00Z",
+  "iteration": 38,
   "python_lines_migrated_pct": 24.38,
   "modules_migrated": [
     "policy/models.py",

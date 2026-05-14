@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T13:09:00Z |
-| Iteration Count | 42 |
-| Best Metric | 36.89 |
+| Last Run | 2026-05-14T14:19:00Z |
+| Iteration Count | 43 |
+| Best Metric | 38.06 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: models/dependency/reference.py (1559), integration/mcp_integrator.py (1540), output/formatters.py (999))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: models/dependency/reference.py (1559), integration/mcp_integrator.py (1540), output/formatters.py (999), primitives/discovery.py (612))*
 
 ---
 
@@ -91,6 +91,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 43 — 2026-05-14 14:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25865196805)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 4 modules: policy/helptext (18), policy/outcome_routing (195), primitives/parser (275), output/script_formatters (349) = +837 Python lines
+- **Metric**: 38.06 (previous best: 36.89, delta: +1.17)
+- **Commit**: 59b06fb
+- **Notes**: helptext is a single constant; outcomerouting implements 9-outcome routing with PolicyViolationError; primparser uses stdlib-only frontmatter parser (4 tests pass); scriptformatters is ASCII-only with no rich dependency. Extended schema.ApmPolicy with Enforcement/FetchFailure fields.
 
 ### Iteration 42 — 2026-05-14 13:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25861743202)
 

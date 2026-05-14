@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T18:10:00Z |
-| Iteration Count | 47 |
-| Best Metric | 46.55 |
+| Last Run | 2026-05-14T19:10:00Z |
+| Iteration Count | 48 |
+| Best Metric | 49.91 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), deps/github_downloader.py (1686), core/auth.py (1005), deps/apm_resolver.py (918), marketplace/builder.py (1059))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), deps/github_downloader.py (1686), deps/apm_resolver.py (918), core/operations.py, deps/download_strategies.py)*
 
 ---
 
@@ -78,6 +78,9 @@
 - deps/plugin_parser.py: pure Go with stdlib json; ${CLAUDE_PLUGIN_ROOT} substitution via recursive walk; security: symlinks skipped, path escapes rejected with resolve+HasPrefix.
 - script_runner.py: ScriptRunner+PromptCompiler map cleanly; simple POSIX tokenizer for shlex; minimal YAML parser for apm.yml; runtime detection via regex; env-var extraction from arg prefix; subprocess exec via exec.Command.
 - output/formatters.py: CompilationFormatter plain-text fallback renders all format modes; rich-library formatting is not needed for Go (all formatting is text-based); OptimizationStats/PlacementSummary are clean Go structs.
+- core/auth.py: AuthResolver maps cleanly to Go struct with sync.Mutex cache; tokenmanager.ResolveCredentialFromGit/GhCLI are package-level functions (not methods); HostInfo.DisplayName() suppresses well-known ports 443/80/22.
+- marketplace/ref_resolver.py: RefResolver + RefCache with per-remote mutexes; context.WithTimeout replaces subprocess timeout; parseLsRemoteOutput skips peeled tags (^{}); buildHTTPSCloneURL inlines x-access-token auth.
+- marketplace/builder.py: MarketplaceBuilder with concurrent resolve via goroutines+semaphore; JSON composition uses map[string]interface{}; subtractPluginRoot uses HasPrefix on normalized paths.
 
 ---
 
@@ -91,13 +94,21 @@
 
 - integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
 - deps/github_downloader.py (1686 lines) -- download logic, HTTP client
-- core/auth.py (1005 lines) -- authentication logic
 - deps/apm_resolver.py (918 lines) -- dependency resolver
-- marketplace/builder.py (1059 lines) -- marketplace package builder
+- core/operations.py -- operations orchestration
+- deps/download_strategies.py -- download strategies
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 48 — 2026-05-14 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25879951640)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: core/auth (1005), marketplace/ref_resolver (345), marketplace/builder (1059) = +2409 Python lines
+- **Metric**: 49.91 (previous best: 46.55, delta: +3.36)
+- **Commit**: e0fb689
+- **Notes**: auth: AuthResolver with thread-safe cache, host classification (github/ghe_cloud/ghes/ado/gitlab/generic), token resolution chain, TryWithFallback fallback strategy. refresolver: RefResolver + RefCache with per-remote mutexes, context.WithTimeout, git ls-remote subprocess. builder: MarketplaceBuilder with concurrent resolve, compose to Anthropic-compliant JSON, atomic write.
 
 ### Iteration 47 — 2026-05-14 18:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25876945928)
 

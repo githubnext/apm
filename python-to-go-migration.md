@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T16:17:00Z |
-| Iteration Count | 45 |
-| Best Metric | 40.45 |
+| Last Run | 2026-05-14T17:12:00Z |
+| Iteration Count | 46 |
+| Best Metric | 43.57 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: models/dependency/reference.py (1559), integration/mcp_integrator.py (1540), output/formatters.py (999), primitives/discovery.py (612))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: integration/mcp_integrator.py (1540), output/formatters.py (999), deps/plugin_parser.py done, deps/github_downloader.py (1686), core/script_runner.py (1138))*
 
 ---
 
@@ -74,6 +74,8 @@
 - command_logger.py: CommandLogger + InstallLogger delegate to console package; nil io.Writer handled by console.Echo; no field for diagnostics needed at this level.
 - token_manager.py: GitHubTokenManager maps to Go struct with per-(host,port) credential cache; subprocess exec with goroutine+timer replaces Python's subprocess.run(timeout=); *string nil pointer for absent credentials.
 - primitives/discovery.py: PrimitiveCollection uses type switch + per-type name-index maps; globMatch with memoized DP handles ** segments; shouldReplace (local>dependency) drives conflict resolution.
+- models/dependency/reference.py: DependencyReference struct + Parse() with 3-phase approach (virtual detect, SSH parse, standard URL); IsSupportedGitHost/IsArtifactoryPath/ParseArtifactoryPath added to githubhost; ValidatePathSegments needs 4-arg form.
+- deps/plugin_parser.py: pure Go with stdlib json; ${CLAUDE_PLUGIN_ROOT} substitution via recursive walk; security: symlinks skipped, path escapes rejected with resolve+HasPrefix.
 
 ---
 
@@ -85,14 +87,23 @@
 
 ## 🔭 Future Directions
 
-- output/formatters.py (999 lines) -- uses rich heavily; may need stub approach
-- models/dependency/reference.py (1559 lines) -- large but mostly data structs
 - integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
-- deps/plugin_parser.py (677 lines) -- uses yaml; stub approach or line scanner
+- output/formatters.py (999 lines) -- uses rich heavily; may need stub approach
+- deps/github_downloader.py (1686 lines) -- download logic, HTTP client
+- core/script_runner.py (1138 lines) -- subprocess orchestration
+- deps/download_strategies.py (1122 lines) -- strategy pattern
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 46 — 2026-05-14 17:12 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25874088970)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 2 modules: models/dependency/reference (1559), deps/plugin_parser (677) = +2236 Python lines
+- **Metric**: 43.57 (previous best: 40.45, delta: +3.12)
+- **Commit**: b6bc8e8
+- **Notes**: depreference: full DependencyReference struct with Parse()/ToCanonical()/GetInstallPath(); added IsSupportedGitHost/IsArtifactoryPath/ParseArtifactoryPath to githubhost. pluginparser: plugin.json manifest parsing and apm.yml synthesis with stdlib-only json.
 
 ### Iteration 45 — 2026-05-14 16:17 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25871294987)
 

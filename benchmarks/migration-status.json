@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 13063,
+  "migrated_python_lines": 14190,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -589,8 +589,44 @@
       "python_lines": 204,
       "status": "migrated",
       "notes": "PolicyViolationError; EnforcementResult; IsDisabledByEnvVar"
+    },
+    {
+      "module": "src/apm_cli/core/scope.py",
+      "go_package": "internal/core/scope",
+      "python_lines": 163,
+      "status": "migrated",
+      "notes": "InstallScope enum + path helpers"
+    },
+    {
+      "module": "src/apm_cli/marketplace/models.py",
+      "go_package": "internal/marketplace/mktmodels",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "Marketplace dataclasses and JSON parser"
+    },
+    {
+      "module": "src/apm_cli/integration/copilot_cowork_paths.py",
+      "go_package": "internal/integration/coworkpaths",
+      "python_lines": 241,
+      "status": "migrated",
+      "notes": "OneDrive cowork path resolution and lockfile translation"
+    },
+    {
+      "module": "src/apm_cli/models/dependency/mcp.py",
+      "go_package": "internal/models/mcpdep",
+      "python_lines": 267,
+      "status": "migrated",
+      "notes": "MCPDependency model with validation"
+    },
+    {
+      "module": "src/apm_cli/deps/shared_clone_cache.py",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_lines": 232,
+      "status": "migrated",
+      "notes": "Thread-safe shared bare-clone cache"
     }
   ],
   "last_updated": "2026-05-13T16:25:00Z",
-  "iteration": 25
+  "iteration": 25,
+  "python_lines_migrated_pct": 19.79
 }

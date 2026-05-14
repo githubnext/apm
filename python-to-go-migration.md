@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T20:58:00Z |
-| Iteration Count | 50 |
-| Best Metric | 65.26 |
+| Last Run | 2026-05-15T00:00:00Z |
+| Iteration Count | 51 |
+| Best Metric | 75.06 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -104,6 +104,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 51 — 2026-05-15 00:00 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25886940959)
+
+- **Status**: ✅ Accepted
+- **Change**: Registered 6 untracked modules (+5033 lines): download_strategies (1122), apm_resolver (918), core/operations (145), models/depreference (1559), primitives/discovery (612), plugin_parser (677). New Go migrations: deps/host_backends (623) -> hostbackends: HostBackend interface + GitHubBackend/GHECloudBackend/GHESBackend/ADOBackend/GitLabBackend/GenericGitBackend. policy/discovery (1365) -> DiscoverPolicy/DiscoverPolicyWithChain; GitHub Contents API fetch; hash-pin verification; JSON cache with TTL + stale fallback; atomic writes.
+- **Metric**: 75.06 (previous best: 65.26, delta: +9.80)
+- **Commit**: 9f8ab44
+- **Notes**: Many modules were implemented in iterations 49-50 but not registered in migration-status.json due to iteration truncation. This iteration both registered them and added 2 new implementations.
 
 ### Iteration 50 — 2026-05-14 20:58 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25885268645)
 

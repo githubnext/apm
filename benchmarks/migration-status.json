@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 18372,
+  "migrated_python_lines": 19586,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -684,7 +684,7 @@
   ],
   "last_updated": "2026-05-14T09:05:00Z",
   "iteration": 38,
-  "python_lines_migrated_pct": 24.38,
+  "python_lines_migrated_pct": 27.32,
   "modules_migrated": [
     "policy/models.py",
     "models/plugin.py",
@@ -698,5 +698,22 @@
     "runtime/factory",
     "marketplace/registry",
     "marketplace/git_stderr"
+  ],
+  "modules": [
+    {
+      "module": "integration/base_integrator",
+      "status": "migrated",
+      "python_lines": 562
+    },
+    {
+      "module": "integration/agent_integrator",
+      "status": "migrated",
+      "python_lines": 606
+    },
+    {
+      "module": "integration/utils",
+      "status": "migrated",
+      "python_lines": 46
+    }
   ]
 }

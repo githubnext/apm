@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T12:09:00Z |
-| Iteration Count | 41 |
-| Best Metric | 34.17 |
+| Last Run | 2026-05-14T13:09:00Z |
+| Iteration Count | 42 |
+| Best Metric | 36.89 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: output/formatters.py (999), core/target_detection.py (777), models/dependency/reference.py (1559), integration/mcp_integrator.py (1540))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: models/dependency/reference.py (1559), integration/mcp_integrator.py (1540), output/formatters.py (999))*
 
 ---
 
@@ -91,6 +91,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 42 — 2026-05-14 13:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25861743202)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: core/target_detection (777), models/apm_package (371), marketplace/yml_schema (805) = +1953 Python lines
+- **Metric**: 36.89 (previous best: 34.17, delta: +2.72)
+- **Commit**: 92fc6ac
+- **Notes**: targetdetection implements signal whitelist + v1 detect_target + v2 resolve_targets; apmpackage provides APMPackage/PackageInfo with lightweight apm.yml loader; ymlschema provides MarketplaceOwner/Build/PackageEntry/Config structs. All stdlib-only Go.
 
 ### Iteration 41 — 2026-05-14 12:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25859136824)
 

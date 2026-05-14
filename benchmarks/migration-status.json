@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 15116,
+  "migrated_python_lines": 16891,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -634,6 +634,9 @@
     "models/plugin.py",
     "deps/dependency_graph.py",
     "core/apm_yml.py",
-    "integration/cleanup.py"
+    "integration/cleanup.py",
+    "integration/targets.py",
+    "deps/lockfile.py",
+    "install/local_bundle_handler.py"
   ]
 }

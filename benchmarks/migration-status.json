@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 27286,
+  "migrated_python_lines": 27894,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -743,6 +743,55 @@
       "python_lines": 349,
       "status": "migrated",
       "notes": "ASCII-only script execution formatter; no rich dependency"
+    },
+    {
+      "module": "src/apm_cli/marketplace/_git_utils.py",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 19,
+      "status": "migrated",
+      "notes": "RedactToken utility"
+    },
+    {
+      "module": "src/apm_cli/marketplace/_io.py",
+      "go_package": "internal/marketplace/mkio",
+      "python_lines": 30,
+      "status": "migrated",
+      "notes": "AtomicWrite/AtomicWriteString"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/windsurf.py",
+      "go_package": "internal/adapters/windsurf",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Windsurf/Cascade MCP client adapter"
+    },
+    {
+      "module": "src/apm_cli/install/helpers/security_scan.py",
+      "go_package": "internal/install/securityscan",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Pre-deploy hidden-character security scan"
+    },
+    {
+      "module": "src/apm_cli/deps/git_auth_env.py",
+      "go_package": "internal/deps/gitauthenv",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "GitAuthEnvBuilder: SetupEnvironment, NoninteractiveEnv, SubprocessEnvDict"
+    },
+    {
+      "module": "src/apm_cli/runtime/codex_runtime.py",
+      "go_package": "internal/runtime/codexruntime",
+      "python_lines": 151,
+      "status": "migrated",
+      "notes": "Codex CLI runtime adapter"
+    },
+    {
+      "module": "src/apm_cli/runtime/llm_runtime.py",
+      "go_package": "internal/runtime/llmruntime",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "LLM CLI runtime adapter"
     }
   ],
   "last_updated": "2026-05-14T12:17:24Z",

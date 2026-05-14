@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T09:05:00Z |
-| Iteration Count | 38 |
-| Best Metric | 25.62 |
+| Last Run | 2026-05-14T10:19:00Z |
+| Iteration Count | 39 |
+| Best Metric | 27.32 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | — |
+| PR | #43 |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,7 +32,7 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: (new PR created this iteration)
+**Pull Request**: #43
 **Issue**: #3
 
 ---
@@ -68,6 +68,8 @@
 - git_stderr.py: pure classification + pattern matching; "could not resolve host" beats "could not resolve" for KindTimeout.
 - factory.py: ConstructableAdapter interface with New(model)/NewDefault() enables ordered preference-list selection.
 - template.py: Config struct + function callbacks decouple template from Strategy implementations cleanly.
+- base_integrator.py: CheckCollision, PartitionManagedFiles (trie-based longest-prefix routing), SyncRemoveFiles, FindFilesByGlob all map cleanly to Go static functions; interface{} Diagnostics interface avoids circular deps.
+- agent_integrator.py: TOML/Windsurf transforms use simple string manipulation without external libs; codex_agent uses multiline literal TOML; stdlib-only parseSimpleYAML sufficient for frontmatter.
 
 ---
 
@@ -81,8 +83,6 @@
 
 - integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling next
 - integration/hook_integrator.py (1071) -- hook management integrator
-- integration/base_integrator.py (562) -- base class with link resolution; tackle before skill/hook
-- integration/agent_integrator.py (606) -- agent file integration
 - integration/command_integrator.py (775) -- command integration
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
@@ -90,6 +90,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 39 — 2026-05-14 10:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25854672963)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 3 modules: integration/base_integrator (562), integration/agent_integrator (606), integration/utils (46) = +1214 Python lines
+- **Metric**: 27.32 (previous best: 25.62, delta: +1.70)
+- **Commit**: 0853373
+- **Notes**: base_integrator uses trie-based longest-prefix routing for PartitionManagedFiles; agent_integrator handles codex_agent TOML + windsurf SKILL transforms with stdlib-only Go.
 
 ### Iteration 38 — 2026-05-14 09:05 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25851449671)
 

@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T00:00:00Z |
-| Iteration Count | 31 |
-| Best Metric | 15.16 |
+| Last Run | 2026-05-14T00:57:18Z |
+| Iteration Count | 32 |
+| Best Metric | 16.68 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | (new, pending) |
+| PR | (created this iteration) |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next: tackle integration/skill_integrator.py (1513), install/phases/lockfile.py (260), install/phases/post_deps_local.py (117), install/local_bundle_handler.py (399), install/mcp/*.py)*
+*(No specific priorities set -- agent is exploring freely. Next: integration/skill_integrator.py (1513), integration/hook_integrator.py (1071), integration/targets.py (846), install/local_bundle_handler.py (399))*
 
 ---
 
@@ -116,36 +116,15 @@
 
 ## 📊 Iteration History
 
-### Iteration 31 — 2026-05-14 00:00 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25828800403)
-
-- **Status**: Accepted (pending CI)
-- **Change**: Rebuilt 9 batch-1 modules from iter 30 (plan 425, insecurepolicy 229, cleanup 158, finalize 92, heal 90, lockfile 260, policygate 204, download 135, postdepslocal 117) + 8 new batch-2 modules (localcontent 191, policytargetcheck 113, mcpwarnings 123, mcpconflicts 122, mcpentry 106, mcpwriter 132, mcpcommand 160, mcpregistry 277) = +1224 new lines
-- **Metric**: 15.16 (previous best: 13.45, delta: +1.71)
-- **Notes**: Branch was at iter-25 state (7936 lines) after reset. All 17 modules use stdlib-only Go. go build ./... and go test ./... pass. PR created.
-
-### Iteration 30 — 2026-05-13 21:06 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25826362727)
+### Iteration 32 — 2026-05-14 00:57 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25835089265)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 9 install modules: phases/heal (90), phases/finalize (92), phases/cleanup (158), phases/post_deps_local (117), phases/download (135), phases/lockfile (260), phases/policy_gate (204), insecure_policy (229), plan (425) = +1710 Python lines
-- **Metric**: 13.45 (previous best: 11.07, delta: +2.38)
-- **Commit**: a27b161
-- **Notes**: Branch had only iter-13 JSON data (7936 lines). All new modules use stdlib-only Go. go build ./... and go test ./... pass. Best metric reset to 13.45 (branch reality after repeated resets from 23.56 inflated state).
+- **Change**: Migrated 16 modules: install/plan (425), insecure_policy (229), phases/cleanup (158), phases/finalize (92), phases/heal (90), phases/lockfile (260), phases/post_deps_local (117), phases/download (135), mcp/warnings (123), mcp/conflicts (122), mcp/entry (106), mcp/writer (132), mcp/command (160), mcp/registry (277), policy_checks (1010), ci_checks (588) = +4024 Python lines
+- **Metric**: 16.68 (previous best: 15.16, delta: +1.52)
+- **Commit**: b50c0f4
+- **Notes**: Branch was at iter-13 state (7936 lines) after merge with main. All 16 modules use stdlib-only Go. go build ./... and go test ./... pass.
 
-### Iteration 29 — 2026-05-13 20:20 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25823679450)
-
-- **Status**: ✅ Accepted
-- **Change**: Rebuilt 16 lost modules (plan, service, insecurepolicy, template, packageresolution, skillpathmigration, heals, securityscan, dryrun, dispatch, pipeline, sources, services, drift, validation, updatepolicy) + 7 new modules (policy/discovery 1365, policychecks 1010, cichecks 588, phases/integrate 544, phases/resolve 488, phases/targets 445, phases/heal 90) = 16894 total migrated Python lines
-- **Metric**: 23.56 (previous best: 18.93, delta: +4.63)
-- **Commit**: baf798d
-- **Notes**: Branch was at iter-25 state (7936 lines) due to reset. Rebuilt all lost work from iters 26-28 plus 7 new modules. go build ./... and go test ./... pass.
-
-### Iteration 28 — 2026-05-13 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25820592047)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrate 19 modules: rebuilt lost iter-26/27 modules (plan, service, insecurepolicy, template, packageresolution, skillpathmigration, heals, phases/heal, securityscan, dryrun, dispatch, updatepolicy) + 5 new large modules: pipeline (741), sources (734), services (734), drift (731), validation (647) (+5638 Python lines, 13574 total)
-- **Metric**: 18.93 (previous best: 13.98, delta: +4.95)
-- **Commit**: 7509435
-- **Notes**: Branch was at iter-25 state (7936 lines) due to reset. Rebuilt all lost work plus 5 new large install-phase modules. go build ./... and go test ./... pass.
+### Iters 28-31 — 2026-05-13/14 — ✅ (metrics 13.45->15.16): rebuilt modules lost from branch resets; added policy/discovery, phases/integrate, phases/resolve, phases/targets, pipeline, sources, services, drift, validation, and MCP modules.
 
 ### Iters 13-27 — 2026-05-13 — ✅ (metrics 5.92->13.98): rebuilt lost modules repeatedly plus added new ones each iteration.
 

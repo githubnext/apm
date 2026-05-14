@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 22945,
+  "migrated_python_lines": 24496,
   "migrated_modules": [
     {
       "module": "src/apm_cli/constants.py",
@@ -680,11 +680,25 @@
       "python_lines": 479,
       "status": "migrated",
       "notes": "Instruction integration with cursor/claude/windsurf format transforms"
+    },
+    {
+      "module": "src/apm_cli/core/command_logger.py",
+      "go_package": "internal/core/commandlogger",
+      "python_lines": 751,
+      "status": "migrated",
+      "notes": "CLI command logger infrastructure with Install/Command loggers"
+    },
+    {
+      "module": "src/apm_cli/models/validation.py",
+      "go_package": "internal/models/validation",
+      "python_lines": 800,
+      "status": "migrated",
+      "notes": "PackageType/ValidationResult enums and DetectPackageType logic"
     }
   ],
-  "last_updated": "2026-05-14T09:05:00Z",
-  "iteration": 38,
-  "python_lines_migrated_pct": 27.32,
+  "last_updated": "2026-05-14T12:17:24Z",
+  "iteration": 39,
+  "python_lines_migrated_pct": 34.17,
   "modules_migrated": [
     "policy/models.py",
     "models/plugin.py",

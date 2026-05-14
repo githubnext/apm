@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T07:40:00Z |
-| Iteration Count | 37 |
-| Best Metric | 24.38 |
+| Last Run | 2026-05-14T09:05:00Z |
+| Iteration Count | 38 |
+| Best Metric | 25.62 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -32,7 +32,7 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: (new PR needed -- #39 was merged)
+**Pull Request**: (new PR created this iteration)
 **Issue**: #3
 
 ---
@@ -81,14 +81,23 @@
 
 - integration/skill_integrator.py (1513 lines) -- large integrator; worth tackling next
 - integration/hook_integrator.py (1071) -- hook management integrator
+- integration/base_integrator.py (562) -- base class with link resolution; tackle before skill/hook
+- integration/agent_integrator.py (606) -- agent file integration
+- integration/command_integrator.py (775) -- command integration
 - deps/github_downloader.py (1686 lines) -- requires HTTP client; defer
 - Wire Go packages into the Python CLI via subprocess or subprocess-replacement
-- Branch reset is recurring -- each iter must rebuild lost work; consider a stable upstream merge strategy
-- Next smaller targets: marketplace/models.go already done; check for other untouched small modules
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 38 — 2026-05-14 09:05 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25851449671)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 4 modules: update_policy (50), output/models (136), integration/prompt_integrator (228), integration/instruction_integrator (479) = +893 Python lines
+- **Metric**: 25.62 (previous best: 24.38, delta: +1.24)
+- **Commit**: f7d1e26
+- **Notes**: instruction_integrator includes test suite for cursor/claude/windsurf format transforms. All use stdlib-only Go.
 
 ### Iteration 37 — 2026-05-14 07:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25847876982)
 

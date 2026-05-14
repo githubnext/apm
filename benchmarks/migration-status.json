@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 46792,
+  "migrated_python_lines": 53813,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -932,12 +932,68 @@
       "python_lines": 282,
       "status": "migrated",
       "notes": "DetectRefChange/Orphans/StaleFiles/ConfigDrift: stateless pure functions with interface-based types"
+    },
+    {
+      "module": "src/apm_cli/deps/download_strategies.py",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 1122,
+      "status": "migrated",
+      "notes": "DownloadDelegate with resilient HTTP GET, GitHub/ADO/GitLab/Artifactory file download, CDN fast-path"
+    },
+    {
+      "module": "src/apm_cli/deps/apm_resolver.py",
+      "go_package": "internal/deps/apmresolver",
+      "python_lines": 918,
+      "status": "migrated",
+      "notes": "BFS resolver with parallel download, cycle detection, NPM-hoisting flatten"
+    },
+    {
+      "module": "src/apm_cli/core/operations.py",
+      "go_package": "internal/core/operations",
+      "python_lines": 145,
+      "status": "migrated",
+      "notes": "Lightweight orchestration facade"
+    },
+    {
+      "module": "src/apm_cli/models/dependency/reference.py",
+      "go_package": "internal/models/depreference",
+      "python_lines": 1559,
+      "status": "migrated",
+      "notes": "DependencyReference struct + Parse() with 3-phase approach (virtual detect, SSH parse, standard URL)"
+    },
+    {
+      "module": "src/apm_cli/primitives/discovery.py",
+      "go_package": "internal/primitives/discovery",
+      "python_lines": 612,
+      "status": "migrated",
+      "notes": "PrimitiveCollection with type switch + per-type name-index maps; globMatch with memoized DP"
+    },
+    {
+      "module": "src/apm_cli/deps/plugin_parser.py",
+      "go_package": "internal/deps/pluginparser",
+      "python_lines": 677,
+      "status": "migrated",
+      "notes": "Pure Go with stdlib json; CLAUDE_PLUGIN_ROOT substitution via recursive walk; security: symlinks skipped, path escapes rejected"
+    },
+    {
+      "module": "src/apm_cli/deps/host_backends.py",
+      "go_package": "internal/deps/hostbackends",
+      "python_lines": 623,
+      "status": "migrated",
+      "notes": "Vendor-specific URL/API construction; GitHubBackend/GHECloudBackend/GHESBackend share gitHubFamilyBase; ADOBackend/GitLabBackend/GenericGitBackend stand alone; BackendFor dispatch"
+    },
+    {
+      "module": "src/apm_cli/policy/discovery.py",
+      "go_package": "internal/policy/discovery",
+      "python_lines": 1365,
+      "status": "migrated",
+      "notes": "Auto-discovery from git remote; GitHub Contents API fetch; file load; URL fetch; hash-pin verification; cache with TTL and stale fallback; minimal YAML policy parser"
     }
   ],
-  "last_updated": "2026-05-14T17:21:16Z",
-  "iteration": 45,
-  "python_lines_migrated_pct": 65.26,
-  "modules_migrated": 108,
+  "last_updated": "2026-05-14T21:46:18Z",
+  "iteration": 46,
+  "python_lines_migrated_pct": 75.06,
+  "modules_migrated": 141,
   "modules": [
     {
       "module": "models/dependency/reference",

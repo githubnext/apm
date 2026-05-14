@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-14T15:25:00Z |
-| Iteration Count | 44 |
-| Best Metric | 38.91 |
+| Last Run | 2026-05-14T16:17:00Z |
+| Iteration Count | 45 |
+| Best Metric | 40.45 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -72,6 +72,8 @@
 - agent_integrator.py: TOML/Windsurf transforms use simple string manipulation without external libs; codex_agent uses multiline literal TOML; stdlib-only parseSimpleYAML sufficient for frontmatter.
 - validation.py: PackageType iota + String() works cleanly; DetectPackageType cascade (7 cases) maps to simple Go switch; apmYMLDeclaresDependencies uses line-scanner heuristic (no external YAML needed).
 - command_logger.py: CommandLogger + InstallLogger delegate to console package; nil io.Writer handled by console.Echo; no field for diagnostics needed at this level.
+- token_manager.py: GitHubTokenManager maps to Go struct with per-(host,port) credential cache; subprocess exec with goroutine+timer replaces Python's subprocess.run(timeout=); *string nil pointer for absent credentials.
+- primitives/discovery.py: PrimitiveCollection uses type switch + per-type name-index maps; globMatch with memoized DP handles ** segments; shouldReplace (local>dependency) drives conflict resolution.
 
 ---
 
@@ -84,104 +86,53 @@
 ## 🔭 Future Directions
 
 - output/formatters.py (999 lines) -- uses rich heavily; may need stub approach
-- core/target_detection.py (777 lines) -- internal logic, moderate complexity
 - models/dependency/reference.py (1559 lines) -- large but mostly data structs
 - integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
+- deps/plugin_parser.py (677 lines) -- uses yaml; stub approach or line scanner
 
 ---
 
 ## 📊 Iteration History
 
+### Iteration 45 — 2026-05-14 16:17 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25871294987)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 2 modules: core/token_manager (497), primitives/discovery (612) = +1109 Python lines
+- **Metric**: 40.45 (previous best: 38.91, delta: +1.54)
+- **Commit**: 85a851b
+- **Notes**: tokenmanager: GitHubTokenManager with credential-fill subprocess, gh CLI fallback, per-(host,port) cache. discovery: PrimitiveCollection with conflict detection, local/dependency scanning, segment-aware globMatch.
+
 ### Iteration 44 — 2026-05-14 15:25 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25868342116)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 7 modules: marketplace/_git_utils (19), marketplace/_io (30), adapters/client/windsurf (48), install/helpers/security_scan (48), deps/git_auth_env (152), runtime/codex_runtime (151), runtime/llm_runtime (160) = +608 Python lines
-- **Metric**: 38.91 (previous best: 38.06, delta: +0.85)
-- **Commit**: f06a60f
-- **Notes**: Small utility + adapter modules; gitutils provides RedactToken; mkio provides AtomicWrite; windsurf adapter mirrors Copilot config schema; securityscan stdlib-only hidden-char scan; gitauthenv builds three git env flavours (setup/noninteractive/subprocess); codexruntime and llmruntime wrap CLI subprocess execution. All stdlib-only Go.
+- **Change**: Migrated 7 modules: marketplace utils, windsurf adapter, securityscan, git_auth_env, codex/llm runtimes = +608 lines
+- **Metric**: 38.91 (delta: +0.85) | Commit: f06a60f
 
 ### Iteration 43 — 2026-05-14 14:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25865196805)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 4 modules: policy/helptext (18), policy/outcome_routing (195), primitives/parser (275), output/script_formatters (349) = +837 Python lines
-- **Metric**: 38.06 (previous best: 36.89, delta: +1.17)
-- **Commit**: 59b06fb
-- **Notes**: helptext is a single constant; outcomerouting implements 9-outcome routing with PolicyViolationError; primparser uses stdlib-only frontmatter parser (4 tests pass); scriptformatters is ASCII-only with no rich dependency. Extended schema.ApmPolicy with Enforcement/FetchFailure fields.
+- **Change**: Migrated policy/helptext, outcome_routing, primitives/parser, output/script_formatters = +837 lines
+- **Metric**: 38.06 (delta: +1.17) | Commit: 59b06fb
 
 ### Iteration 42 — 2026-05-14 13:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25861743202)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: core/target_detection (777), models/apm_package (371), marketplace/yml_schema (805) = +1953 Python lines
-- **Metric**: 36.89 (previous best: 34.17, delta: +2.72)
-- **Commit**: 92fc6ac
-- **Notes**: targetdetection implements signal whitelist + v1 detect_target + v2 resolve_targets; apmpackage provides APMPackage/PackageInfo with lightweight apm.yml loader; ymlschema provides MarketplaceOwner/Build/PackageEntry/Config structs. All stdlib-only Go.
+- **Change**: Migrated core/target_detection, models/apm_package, marketplace/yml_schema = +1953 lines
+- **Metric**: 36.89 (delta: +2.72) | Commit: 92fc6ac
 
 ### Iteration 41 — 2026-05-14 12:09 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25859136824)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 2 modules: core/command_logger (751), models/validation (800) = +1551 Python lines
-- **Metric**: 34.17 (previous best: 32.00, delta: +2.17)
-- **Commit**: 4d11dc6
-- **Notes**: command_logger provides CommandLogger+InstallLogger delegating to console; validation provides PackageType iota, ValidationResult, and full 7-case DetectPackageType cascade. Test suite (6 tests) passes.
+- **Change**: Migrated core/command_logger, models/validation = +1551 lines
+- **Metric**: 34.17 (delta: +2.17) | Commit: 4d11dc6
 
 ### Iteration 40 — 2026-05-14 11:18 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25857101991)
 
 - **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: integration/skill_integrator (1513), integration/hook_integrator (1071), integration/command_integrator (775) = +3359 Python lines
-- **Metric**: 32.00 (previous best: 27.32, delta: +4.68)
-- **Commit**: 572990c
-- **Notes**: skill_integrator handles SKILL.md native skills, SKILL_BUNDLE promotion, sub-skill dedup; hook_integrator merges hooks into claude/cursor/codex JSON configs with _apm_source idempotent upsert; command_integrator transforms .prompt.md to claude/cursor/gemini commands with frontmatter passthrough.
+- **Change**: Migrated skill_integrator, hook_integrator, command_integrator = +3359 lines
+- **Metric**: 32.00 (delta: +4.68) | Commit: 572990c
 
-### Iteration 39 — 2026-05-14 10:19 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25854672963)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: integration/base_integrator (562), integration/agent_integrator (606), integration/utils (46) = +1214 Python lines
-- **Metric**: 27.32 (previous best: 25.62, delta: +1.70)
-- **Commit**: 0853373
-- **Notes**: base_integrator uses trie-based longest-prefix routing for PartitionManagedFiles; agent_integrator handles codex_agent TOML + windsurf SKILL transforms with stdlib-only Go.
-
-### Iteration 38 — 2026-05-14 09:05 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25851449671)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 4 modules: update_policy (50), output/models (136), integration/prompt_integrator (228), integration/instruction_integrator (479) = +893 Python lines
-- **Metric**: 25.62 (previous best: 24.38, delta: +1.24)
-- **Commit**: f7d1e26
-- **Notes**: instruction_integrator includes test suite for cursor/claude/windsurf format transforms. All use stdlib-only Go.
-
-### Iteration 37 — 2026-05-14 07:40 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25847876982)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 4 modules: install/template (140), runtime/factory (139), marketplace/registry (136), marketplace/git_stderr (173) = +588 Python lines
-- **Metric**: 24.38 (previous best: 23.56, delta: +0.82)
-- **Notes**: All 4 use stdlib-only Go. gitstderr has full test suite (6 tests pass). PR #39 was merged; new PR needed.
-
-### Iteration 36 — 2026-05-14 06:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25844894761)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: integration/targets (846), deps/lockfile (530), install/local_bundle_handler (399) = +1775 Python lines
-- **Metric**: 23.56 (previous best: 21.08, delta: +2.48)
-- **Commit**: e415d93
-
-### Iteration 35 — 2026-05-14 04:48 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25842273066)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 5 modules: policy/models (143), models/plugin (152), deps/dependency_graph (227), core/apm_yml (107), integration/cleanup (297) = +926 Python lines
-- **Metric**: 21.08 (previous best: 19.79, delta: +1.29)
-- **Commit**: f0e57d6
-
-### Iteration 34 — 2026-05-14 02:49 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25838675792)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 5 modules: core/scope (163), marketplace/models (224), integration/copilot_cowork_paths (241), models/dependency/mcp (267), deps/shared_clone_cache (232) = +1127 Python lines
-- **Metric**: 19.79 (previous best: 18.22, delta: +1.57)
-- **Commit**: 80395db
-
-### Iteration 33 — 2026-05-14 01:46 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25836695236)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 9 modules: skill_transformer (113), dispatch (91), heals/base (122), heals/branch_ref_drift (66), heals/buggy_lockfile_recovery (99), constitution_block (104), phases/local_content (191), phases/policy_target_check (113), phases/policy_gate (204) = +1103 Python lines
-- **Metric**: 18.22 (previous best: 16.68, delta: +1.54)
-- **Commit**: 64d69a4
+### Iters 33-39 — 2026-05-14 — ✅ (metrics 18.22->27.32): base/agent/instruction/prompt integrators, update_policy, template, factory, registry, git_stderr, targets, lockfile, local_bundle_handler; 9+ modules.
 
 ### Iters 28-32 — 2026-05-13/14 — ✅ (metrics 13.45->16.68): rebuilt modules lost from branch resets; added policy/discovery, phases/integrate, phases/resolve, phases/targets, pipeline, sources, services, drift, validation, MCP modules, policy_checks, ci_checks.
 

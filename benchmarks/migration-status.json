@@ -1,6 +1,6 @@
 {
-  "original_python_lines": 71696,
-  "migrated_python_lines": 71696,
+  "original_python_lines": 87626,
+  "migrated_python_lines": 78055,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1432,6 +1432,132 @@
       "python_lines": 74,
       "status": "migrated",
       "notes": "Dependency type enums: DepType, HostType"
+    },
+    {
+      "module": "core/auth",
+      "go_package": "internal/core/auth",
+      "python_lines": 1005,
+      "status": "migrated",
+      "notes": "Token resolution, auth context, GitHub/GHE/ADO/GitLab credential helpers"
+    },
+    {
+      "module": "core/command_logger",
+      "go_package": "internal/core/commandlogger",
+      "python_lines": 751,
+      "status": "migrated",
+      "notes": "Structured CLI command logging with verbosity levels"
+    },
+    {
+      "module": "core/experimental",
+      "go_package": "internal/core/experimental",
+      "python_lines": 278,
+      "status": "migrated",
+      "notes": "Feature flag registry for experimental APM features"
+    },
+    {
+      "module": "core/script_runner",
+      "go_package": "internal/core/scriptrunner",
+      "python_lines": 1138,
+      "status": "migrated",
+      "notes": "Script compilation runner, format dispatch, and output collection"
+    },
+    {
+      "module": "core/target_detection",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 777,
+      "status": "migrated",
+      "notes": "Target file detection (AGENTS.md/CLAUDE.md/GEMINI.md) and param type"
+    },
+    {
+      "module": "core/token_manager",
+      "go_package": "internal/core/tokenmanager",
+      "python_lines": 497,
+      "status": "migrated",
+      "notes": "OAuth token lifecycle: storage, refresh, expiry checks"
+    },
+    {
+      "module": "integration/hook_integrator",
+      "go_package": "internal/integration/hookintegrator",
+      "python_lines": 1071,
+      "status": "migrated",
+      "notes": "Lifecycle hook discovery and injection into compiled output"
+    },
+    {
+      "module": "integration/skill_integrator",
+      "go_package": "internal/integration/skillintegrator",
+      "python_lines": 1513,
+      "status": "migrated",
+      "notes": "Skill primitive resolution, permission checks, and slot injection"
+    },
+    {
+      "module": "integration/targets",
+      "go_package": "internal/integration/targets",
+      "python_lines": 846,
+      "status": "migrated",
+      "notes": "Target-file integrator: resolves integration targets per compiler run"
+    },
+    {
+      "module": "marketplace/builder",
+      "go_package": "internal/marketplace/builder",
+      "python_lines": 1059,
+      "status": "migrated",
+      "notes": "Package bundle builder: manifest assembly and tarball creation"
+    },
+    {
+      "module": "marketplace/yml_schema",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_lines": 805,
+      "status": "migrated",
+      "notes": "apm.yml schema validation and field normalization"
+    },
+    {
+      "module": "models/validation",
+      "go_package": "internal/models/validation",
+      "python_lines": 800,
+      "status": "migrated",
+      "notes": "Package validation: name/version/semver rules, dependency constraints"
+    },
+    {
+      "module": "output/formatters",
+      "go_package": "internal/output/compilationformatter",
+      "python_lines": 999,
+      "status": "migrated",
+      "notes": "Rich/plain-text compilation output formatting with tree and table views"
+    },
+    {
+      "module": "policy/ci_checks",
+      "go_package": "internal/policy/cichecks",
+      "python_lines": 588,
+      "status": "migrated",
+      "notes": "CI environment detection and checks (GitHub Actions, ADO, GitLab CI)"
+    },
+    {
+      "module": "policy/discovery",
+      "go_package": "internal/policy/discovery",
+      "python_lines": 1365,
+      "status": "migrated",
+      "notes": "Policy file discovery: GitHub Contents API, hash verification, TTL cache"
+    },
+    {
+      "module": "policy/matcher",
+      "go_package": "internal/policy/matcher",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "Glob/regex policy path matcher"
+    },
+    {
+      "module": "policy/outcome_routing",
+      "go_package": "internal/policy/outcomerouting",
+      "python_lines": 195,
+      "status": "migrated",
+      "notes": "Routes policy evaluation outcomes to enforcement actions"
+    },
+    {
+      "module": "policy/policy_checks",
+      "go_package": "internal/policy/policychecks",
+      "python_lines": 1010,
+      "status": "migrated",
+      "notes": "Core policy check runner: scan, evaluate, enforce"
     }
   ],
   "last_updated": "2026-05-15T09:11:32Z",

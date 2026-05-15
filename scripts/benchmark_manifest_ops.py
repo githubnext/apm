@@ -37,6 +37,7 @@ FILES_PER_PACKAGE = 5
 INTEGRATOR_TYPES = 6  # prompts, agents-gh, agents-cl, commands, skills, hooks
 DOC_START = "{/* benchmark_manifest_ops:start */}"
 DOC_END = "{/* benchmark_manifest_ops:end */}"
+HELP_DESCRIPTION = "Benchmark manifest-based collision detection and sync operations."
 SCALES = [
     ("Current (10 pkgs x 5 files = 50 paths)", "Current: 10 pkgs, 50 paths", 10, 5),
     ("Growing (50 pkgs x 5 files = 250 paths)", "Growing: 50 pkgs, 250 paths", 50, 5),
@@ -365,18 +366,18 @@ def render_markdown(results: list[dict[str, str]]) -> str:
 
 
 def update_doc(path: Path, markdown: str) -> None:
-    content = path.read_text()
+    content = path.read_text(encoding="utf-8")
     if DOC_START not in content:
         raise ValueError(f"Could not update {path}: missing {DOC_START} marker")
     start = content.index(DOC_START)
     if DOC_END not in content[start:]:
         raise ValueError(f"Could not update {path}: missing {DOC_END} marker")
     end = content.index(DOC_END, start) + len(DOC_END)
-    path.write_text(f"{content[:start]}{markdown}{content[end:]}")
+    path.write_text(f"{content[:start]}{markdown}{content[end:]}", encoding="utf-8")
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=HELP_DESCRIPTION)
     parser.add_argument(
         "--work-dir",
         type=Path,

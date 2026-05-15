@@ -30,7 +30,8 @@ def test_run_benchmarks_uses_configured_work_dir(tmp_path, monkeypatch):
         "Large monorepo: 100 pkgs, 2,000 paths",
     ]
     assert created_paths
-    assert all(path.is_relative_to(tmp_path) for path in created_paths)
+    paths_outside_work_dir = [path for path in created_paths if not path.is_relative_to(tmp_path)]
+    assert not paths_outside_work_dir, f"Paths outside work dir: {paths_outside_work_dir}"
     assert not any(tmp_path.iterdir())
 
     markdown = benchmark.render_markdown(results)

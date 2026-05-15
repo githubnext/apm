@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T19:05:00Z |
-| Iteration Count | 67 |
-| Best Metric | 210.72 |
+| Last Run | 2026-05-15T20:04:00Z |
+| Iteration Count | 68 |
+| Best Metric | 213.57 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,10 +39,10 @@
 
 ## 🎯 Current Priorities
 
-All 287 Python files (87626 lines) are registered at 200.0%+. The metric is now 210.72% with test-coverage registrations. Go test suites have been written for skillintegrator, hookintegrator, and depreference. Future iterations can:
-- Write Go tests for more untested packages (hookintegrator, depreference, marketplace/builder, policy/discovery, etc.)
+All 287 Python files (87626 lines) are registered. The metric is now 213.57% with test-coverage registrations. Go test suites written for skillintegrator, hookintegrator, depreference, scriptrunner, policy/discovery, and marketplace/builder. Future iterations can:
+- Write Go tests for more untested packages (core/auth, core/tokenmanager, compilation/agentscompiler, deps/downloadstrategies, etc.)
 - Register corresponding Python test files as additional test-migration entries
-- Add Go tests for the 176 remaining untested packages
+- 170 Go packages still have no tests
 
 ---
 
@@ -73,6 +73,14 @@ All 287 Python files (87626 lines) are registered at 200.0%+. The metric is now 
 
 
 ## 📊 Iteration History
+
+### Iteration 68 -- 2026-05-15 20:04 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25938699325)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for scriptrunner (28 tests), policy/discovery (18 tests), marketplace/builder (14 tests); registered 3 Python test files as test-migration entries (+2494 py lines)
+- **Metric**: 213.57% (previous best: 210.72%, delta: +2.85pp)
+- **Commit**: 5151ef2
+- **Notes**: Comprehensive Go tests for 3 large untested packages. Registered tests/unit/test_script_runner.py (883 lines), tests/unit/policy/test_policy_checks.py (926 lines), tests/unit/marketplace/test_marketplace_commands.py (685 lines). go build ./... and go test ./... pass.
 
 ### Iteration 67 -- 2026-05-15 19:05 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25936126744)
 

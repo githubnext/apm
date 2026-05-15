@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 88648,
+  "migrated_python_lines": 99894,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1712,6 +1712,433 @@
       "python_lines": 362,
       "status": "migrated",
       "notes": "Experimental feature flags: EnableFlag, DisableFlag, ResetFlags, ListFlags, IsEnabled, NormaliseFlag with ~/.apm/config.json persistence"
+    },
+    {
+      "module": "deps/lockfile",
+      "go_package": "internal/deps/lockfile",
+      "python_lines": 530,
+      "status": "migrated",
+      "notes": "Go implementation in internal/deps/lockfile"
+    },
+    {
+      "module": "deps/aggregator",
+      "go_package": "internal/deps/aggregator",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "Go implementation in internal/deps/aggregator"
+    },
+    {
+      "module": "deps",
+      "go_package": "internal/deps",
+      "python_lines": 36,
+      "status": "migrated",
+      "notes": "Go implementation in internal/deps"
+    },
+    {
+      "module": "commands/deps",
+      "go_package": "internal/commands/deps",
+      "python_lines": 30,
+      "status": "migrated",
+      "notes": "Go implementation in internal/commands/deps"
+    },
+    {
+      "module": "commands/compile",
+      "go_package": "internal/commands/compile",
+      "python_lines": 11,
+      "status": "migrated",
+      "notes": "Go implementation in internal/commands/compile"
+    },
+    {
+      "module": "commands",
+      "go_package": "internal/commands",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Go implementation in internal/commands"
+    },
+    {
+      "module": "commands/marketplace",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 1434,
+      "status": "migrated",
+      "notes": "Go implementation in internal/commands/marketplace"
+    },
+    {
+      "module": "primitives/discovery",
+      "go_package": "internal/primitives/discovery",
+      "python_lines": 612,
+      "status": "migrated",
+      "notes": "Go implementation in internal/primitives/discovery"
+    },
+    {
+      "module": "primitives",
+      "go_package": "internal/primitives",
+      "python_lines": 24,
+      "status": "migrated",
+      "notes": "Go implementation in internal/primitives"
+    },
+    {
+      "module": "compilation/injector",
+      "go_package": "internal/compilation/injector",
+      "python_lines": 94,
+      "status": "migrated",
+      "notes": "Go implementation in internal/compilation/injector"
+    },
+    {
+      "module": "compilation/constitution",
+      "go_package": "internal/compilation/constitution",
+      "python_lines": 51,
+      "status": "migrated",
+      "notes": "Go implementation in internal/compilation/constitution"
+    },
+    {
+      "module": "compilation",
+      "go_package": "internal/compilation",
+      "python_lines": 26,
+      "status": "migrated",
+      "notes": "Go implementation in internal/compilation"
+    },
+    {
+      "module": "constants",
+      "go_package": "internal/constants",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Go implementation in internal/constants"
+    },
+    {
+      "module": "version",
+      "go_package": "internal/version",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Go implementation in internal/version"
+    },
+    {
+      "module": "policy/inheritance",
+      "go_package": "internal/policy/inheritance",
+      "python_lines": 257,
+      "status": "migrated",
+      "notes": "Go implementation in internal/policy/inheritance"
+    },
+    {
+      "module": "policy",
+      "go_package": "internal/policy",
+      "python_lines": 49,
+      "status": "migrated",
+      "notes": "Go implementation in internal/policy"
+    },
+    {
+      "module": "policy/schema",
+      "go_package": "internal/policy/schema",
+      "python_lines": 117,
+      "status": "migrated",
+      "notes": "Go implementation in internal/policy/schema"
+    },
+    {
+      "module": "cache",
+      "go_package": "internal/cache",
+      "python_lines": 16,
+      "status": "migrated",
+      "notes": "Go implementation in internal/cache"
+    },
+    {
+      "module": "install/heals",
+      "go_package": "internal/install/heals",
+      "python_lines": 33,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/heals"
+    },
+    {
+      "module": "install/plan",
+      "go_package": "internal/install/plan",
+      "python_lines": 425,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/plan"
+    },
+    {
+      "module": "install/errors",
+      "go_package": "internal/install/errors",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/errors"
+    },
+    {
+      "module": "install/presentation",
+      "go_package": "internal/install/presentation",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/presentation"
+    },
+    {
+      "module": "install/phases",
+      "go_package": "internal/install/phases",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/phases"
+    },
+    {
+      "module": "install/mcp",
+      "go_package": "internal/install/mcp",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/mcp"
+    },
+    {
+      "module": "install",
+      "go_package": "internal/install",
+      "python_lines": 24,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install"
+    },
+    {
+      "module": "install/drift",
+      "go_package": "internal/install/drift",
+      "python_lines": 731,
+      "status": "migrated",
+      "notes": "Go implementation in internal/install/drift"
+    },
+    {
+      "module": "workflow",
+      "go_package": "internal/workflow",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Go implementation in internal/workflow"
+    },
+    {
+      "module": "adapters/client/copilot",
+      "go_package": "internal/adapters/client/copilot",
+      "python_lines": 1261,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/copilot"
+    },
+    {
+      "module": "adapters/client/claude",
+      "go_package": "internal/adapters/client/claude",
+      "python_lines": 240,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/claude"
+    },
+    {
+      "module": "adapters/client/vscode",
+      "go_package": "internal/adapters/client/vscode",
+      "python_lines": 579,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/vscode"
+    },
+    {
+      "module": "adapters/client/gemini",
+      "go_package": "internal/adapters/client/gemini",
+      "python_lines": 263,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/gemini"
+    },
+    {
+      "module": "adapters/client/base",
+      "go_package": "internal/adapters/client/base",
+      "python_lines": 198,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/base"
+    },
+    {
+      "module": "adapters/client/codex",
+      "go_package": "internal/adapters/client/codex",
+      "python_lines": 619,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/codex"
+    },
+    {
+      "module": "adapters/client",
+      "go_package": "internal/adapters/client",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client"
+    },
+    {
+      "module": "adapters/client/cursor",
+      "go_package": "internal/adapters/client/cursor",
+      "python_lines": 326,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters/client/cursor"
+    },
+    {
+      "module": "adapters",
+      "go_package": "internal/adapters",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Go implementation in internal/adapters"
+    },
+    {
+      "module": "core/errors",
+      "go_package": "internal/core/errors",
+      "python_lines": 182,
+      "status": "migrated",
+      "notes": "Go implementation in internal/core/errors"
+    },
+    {
+      "module": "core/scope",
+      "go_package": "internal/core/scope",
+      "python_lines": 163,
+      "status": "migrated",
+      "notes": "Go implementation in internal/core/scope"
+    },
+    {
+      "module": "core",
+      "go_package": "internal/core",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Go implementation in internal/core"
+    },
+    {
+      "module": "integration",
+      "go_package": "internal/integration",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Go implementation in internal/integration"
+    },
+    {
+      "module": "security",
+      "go_package": "internal/security",
+      "python_lines": 26,
+      "status": "migrated",
+      "notes": "Go implementation in internal/security"
+    },
+    {
+      "module": "utils/exclude",
+      "go_package": "internal/utils/exclude",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/exclude"
+    },
+    {
+      "module": "utils/reflink",
+      "go_package": "internal/utils/reflink",
+      "python_lines": 281,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/reflink"
+    },
+    {
+      "module": "utils/normalization",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 57,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/normalization"
+    },
+    {
+      "module": "utils/helpers",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 131,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/helpers"
+    },
+    {
+      "module": "utils/guards",
+      "go_package": "internal/utils/guards",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/guards"
+    },
+    {
+      "module": "utils/diagnostics",
+      "go_package": "internal/utils/diagnostics",
+      "python_lines": 486,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/diagnostics"
+    },
+    {
+      "module": "utils/paths",
+      "go_package": "internal/utils/paths",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/paths"
+    },
+    {
+      "module": "utils",
+      "go_package": "internal/utils",
+      "python_lines": 41,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils"
+    },
+    {
+      "module": "utils/console",
+      "go_package": "internal/utils/console",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "Go implementation in internal/utils/console"
+    },
+    {
+      "module": "registry",
+      "go_package": "internal/registry",
+      "python_lines": 7,
+      "status": "migrated",
+      "notes": "Go implementation in internal/registry"
+    },
+    {
+      "module": "runtime/factory",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 139,
+      "status": "migrated",
+      "notes": "Go implementation in internal/runtime/factory"
+    },
+    {
+      "module": "runtime/base",
+      "go_package": "internal/runtime/base",
+      "python_lines": 63,
+      "status": "migrated",
+      "notes": "Go implementation in internal/runtime/base"
+    },
+    {
+      "module": "runtime",
+      "go_package": "internal/runtime",
+      "python_lines": 17,
+      "status": "migrated",
+      "notes": "Go implementation in internal/runtime"
+    },
+    {
+      "module": "output",
+      "go_package": "internal/output",
+      "python_lines": 12,
+      "status": "migrated",
+      "notes": "Go implementation in internal/output"
+    },
+    {
+      "module": "models/results",
+      "go_package": "internal/models/results",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Go implementation in internal/models/results"
+    },
+    {
+      "module": "models",
+      "go_package": "internal/models",
+      "python_lines": 44,
+      "status": "migrated",
+      "notes": "Go implementation in internal/models"
+    },
+    {
+      "module": "models/plugin",
+      "go_package": "internal/models/plugin",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "Go implementation in internal/models/plugin"
+    },
+    {
+      "module": "marketplace/registry",
+      "go_package": "internal/marketplace/registry",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Go implementation in internal/marketplace/registry"
+    },
+    {
+      "module": "marketplace/semver",
+      "go_package": "internal/marketplace/semver",
+      "python_lines": 234,
+      "status": "migrated",
+      "notes": "Go implementation in internal/marketplace/semver"
+    },
+    {
+      "module": "marketplace",
+      "go_package": "internal/marketplace",
+      "python_lines": 96,
+      "status": "migrated",
+      "notes": "Go implementation in internal/marketplace"
     }
   ],
   "last_updated": "2026-05-15T12:24:22Z",

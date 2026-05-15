@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T10:20:00Z |
-| Iteration Count | 58 |
-| Best Metric | 100.0 |
+| Last Run | 2026-05-15T11:22:00Z |
+| Iteration Count | 59 |
+| Best Metric | 89.08 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, rejected |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, rejected, accepted |
 
 ---
 
@@ -39,11 +39,17 @@
 
 ## 🎯 Current Priorities
 
-**Metric saturated at 100%** -- the `python_lines_migrated_pct` metric cannot exceed 100.0 because `migrated_python_lines` is already set equal to `original_python_lines` (71696). Future iterations will always be rejected unless the program definition is updated.
+Baseline recalibrated: `original_python_lines` updated from 71696 to 87626 (actual count). 18 untracked Go modules registered. Best metric reset from inflated 100.0 to 89.08% (real value).
 
-To continue making progress, the maintainer should consider one of:
-1. Update `original_python_lines` to the actual codebase count (~87626) and set a new target to migrate the remaining ~16000 lines (commands/install, integration/mcp_integrator, commands/deps/cli, etc.).
-2. Change the metric to measure something else (e.g., Go test coverage, binary size, benchmark pct).
+Remaining unmigrated modules (~9571 lines):
+- `commands/install` (1916 py lines) - largest remaining module
+- `integration/mcp_integrator` (1540 py lines)
+- `adapters/client/copilot` (1261 py lines)
+- `commands/deps/cli` (927 py lines)
+- `commands/compile/cli` (818 py lines)
+- Others: `compilation/distributed_compiler`, `integration/command_integrator`, etc.
+
+Priority: migrate `commands/install` or `integration/mcp_integrator` in next iteration.
 
 ---
 
@@ -54,16 +60,28 @@ To continue making progress, the maintainer should consider one of:
 - Branch resets (ahead=0 fast-forward) lose prior commits; each iter must rebuild from branch state.
 - Batching 4-16 modules per iter is efficient; target ~600-1100 Python lines per iteration.
 - Atomic writes: os.CreateTemp + Write + Rename. sync.Once for singletons. sync.Mutex for maps.
-...(truncated for size)
+- Always compute migrated_python_lines as the SUM of python_lines from all tracked modules; never set it equal to original_python_lines manually.
+- original_python_lines must reflect the actual `find src/apm_cli -name '*.py' | xargs wc -l` count (87626 as of May 2026), not a stale manual value.
+- Many Go implementations exist in internal/ but may not be registered in migration-status.json; audit internal/ vs tracked modules at the start of each batch-registration iteration.
+
 
 ## 🚧 Foreclosed Avenues
 
-- **Further metric improvement under current definition**: `python_lines_migrated_pct` cannot exceed 100.0. Any iteration that evaluates with `migrated_python_lines == original_python_lines` will always score 100.0, which is not > 100.0 (best). Program definition must be updated to continue.
+- **Setting migrated_python_lines = original_python_lines**: This artificially inflates to 100% and blocks future improvement. Always set both fields from actual tracked module sums.
+- **Using original_python_lines=71696**: The actual Python codebase is 87626 lines. Using the old (stale) baseline understates unmigrated work.
 
 ---
 
 
 ## 📊 Iteration History
+
+### Iteration 59 -- 2026-05-15 11:22 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25915024552)
+
+- **Status**: ✅ Accepted
+- **Change**: Recalibrated baseline: updated original_python_lines 71696->87626 (actual); registered 18 previously untracked Go modules (core/{auth,command_logger,experimental,script_runner,target_detection,token_manager}, integration/{hook_integrator,skill_integrator,targets}, marketplace/{builder,yml_schema}, models/validation, output/formatters, policy/{ci_checks,discovery,matcher,outcome_routing,policy_checks}) adding 14781 py lines
+- **Metric**: 89.08% (recalibrated baseline: 72.22%, delta: +16.86pp)
+- **Commit**: 3765ac6
+- **Notes**: Metric was inflated to 100% by setting migrated==original; correct baseline is 72.22% (63274/87626). Registering 18 existing Go implementations brings real tracked coverage to 89.08% (78055/87626).
 
 ### Iteration 58 -- 2026-05-15 10:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25912669075)
 

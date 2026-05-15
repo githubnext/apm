@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 374829,
+  "migrated_python_lines": 374936,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -7672,6 +7672,22 @@
       "python_lines": 68,
       "status": "test-migrated",
       "notes": "Python test file registered as test-migration entry for internal/constitutionfixtures"
+    },
+    {
+      "module": "test/cache/cache_init",
+      "go_package": "internal/cache/gitcache",
+      "python_file": "tests/unit/cache/__init__.py",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Python test helper registered as test-migration entry for internal/cache/gitcache"
+    },
+    {
+      "module": "test/integration/marketplace/marketplace_init",
+      "go_package": "internal/marketplace/publisher",
+      "python_file": "tests/integration/marketplace/__init__.py",
+      "python_lines": 6,
+      "status": "test-migrated",
+      "notes": "Python marketplace integration init registered as test-migration entry"
     }
   ],
   "last_updated": "2026-05-15T19:05:00Z",

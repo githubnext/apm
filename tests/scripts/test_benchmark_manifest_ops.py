@@ -10,8 +10,17 @@ def load_benchmark_module():
     return module
 
 
-def test_run_benchmarks_uses_configured_work_dir(tmp_path):
+def test_run_benchmarks_uses_configured_work_dir(tmp_path, monkeypatch):
     benchmark = load_benchmark_module()
+    created_paths = []
+    original_mkdtemp = benchmark.tempfile.mkdtemp
+
+    def recording_mkdtemp(*args, **kwargs):
+        path = Path(original_mkdtemp(*args, **kwargs))
+        created_paths.append(path)
+        return str(path)
+
+    monkeypatch.setattr(benchmark.tempfile, "mkdtemp", recording_mkdtemp)
 
     results = benchmark.run_benchmarks(work_dir=tmp_path, emit_text=False)
 
@@ -20,6 +29,8 @@ def test_run_benchmarks_uses_configured_work_dir(tmp_path):
         "Growing: 50 pkgs, 250 paths",
         "Large monorepo: 100 pkgs, 2,000 paths",
     ]
+    assert created_paths
+    assert all(path.is_relative_to(tmp_path) for path in created_paths)
     assert not any(tmp_path.iterdir())
 
     markdown = benchmark.render_markdown(results)

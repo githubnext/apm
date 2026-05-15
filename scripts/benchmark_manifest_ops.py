@@ -142,7 +142,7 @@ def _make_temp_dir(work_dir: Path | None) -> Path:
 
 def _format_speedup(speedup: float) -> str:
     if speedup == float("inf"):
-        return "∞x"
+        return "inf x"
     return f"{speedup:.1f}x"
 
 
@@ -366,7 +366,11 @@ def render_markdown(results: list[dict[str, str]]) -> str:
 
 def update_doc(path: Path, markdown: str) -> None:
     content = path.read_text()
+    if DOC_START not in content:
+        raise ValueError(f"Could not update {path}: missing {DOC_START} marker")
     start = content.index(DOC_START)
+    if DOC_END not in content[start:]:
+        raise ValueError(f"Could not update {path}: missing {DOC_END} marker")
     end = content.index(DOC_END, start) + len(DOC_END)
     path.write_text(f"{content[:start]}{markdown}{content[end:]}")
 

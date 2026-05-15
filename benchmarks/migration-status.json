@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 175252,
+  "migrated_python_lines": 184649,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -4015,12 +4015,36 @@
       "python_lines": 217,
       "status": "migrated",
       "notes": "Copilot runtime adapter"
+    },
+    {
+      "module": "test/integration/skill_integrator",
+      "go_package": "internal/integration/skillintegrator",
+      "python_file": "tests/unit/integration/test_skill_integrator.py",
+      "python_lines": 4141,
+      "status": "test-migrated",
+      "notes": "Go test suite written for skillintegrator: ToHyphenCase, ValidateSkillName, NormalizeSkillName, IntegrateNativeSkill, IntegratePackageSkill, SyncIntegration"
+    },
+    {
+      "module": "test/integration/hook_integrator",
+      "go_package": "internal/integration/hookintegrator",
+      "python_file": "tests/unit/integration/test_hook_integrator.py",
+      "python_lines": 3269,
+      "status": "test-migrated",
+      "notes": "Go test suite written for hookintegrator: FindHookFiles, IntegratePackageHooks, SyncIntegration, HookIntegrationResult"
+    },
+    {
+      "module": "test/models/dependency_reference",
+      "go_package": "internal/models/depreference",
+      "python_file": "tests/test_apm_package_models.py",
+      "python_lines": 1987,
+      "status": "test-migrated",
+      "notes": "Go test suite written for depreference: Parse, ParseFromDict, IsLocalPath, GetUniqueKey, ToCanonical, GetInstallPath, IsVirtualFile, IsVirtualSubdirectory, IsArtifactory"
     }
   ],
-  "last_updated": "2026-05-15T18:11:35Z",
-  "iteration": 60,
-  "python_lines_migrated_pct": 200.0,
-  "modules_migrated": 574,
+  "last_updated": "2026-05-15T19:05:00Z",
+  "iteration": 67,
+  "python_lines_migrated_pct": 210.72,
+  "modules_migrated": 577,
   "modules": [
     {
       "module": "models/dependency/reference",

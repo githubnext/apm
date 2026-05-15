@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T22:25:00Z |
-| Iteration Count | 71 |
-| Best Metric | 427.76 |
+| Last Run | 2026-05-15T23:38:00Z |
+| Iteration Count | 72 |
+| Best Metric | 427.88 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,9 +39,9 @@
 
 ## 🎯 Current Priorities
 
-Metric at 427.76%. Go tests added for audit/compile/tokenmanager; all 429 remaining Python test files now registered. ~157 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (compilation/agentscompiler, adapters/client/copilot, cache/gitcache, marketplace/*, etc.)
-- Register any newly added Python test files
+Metric at 427.88%. Go tests added for agentscompiler/semver/constitution/copilot/gitcache; 2 remaining Python init files registered. ~118 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (compilation/contextoptimizer, models/apmpackage, policy/policychecks, marketplace/tagpattern, etc.)
+- Metric gains will be small (+0.1-0.5pp per iter) from here; focus on broad test coverage
 
 ---
 
@@ -63,6 +63,8 @@ Metric at 427.76%. Go tests added for audit/compile/tokenmanager; all 429 remain
 - Go test suites: DependencyReference Parse format uses #ref not @ref; aliasRE rejects many characters; IsLocal detection based on ./, ../, / prefix.
 - Test-coverage registration pattern: register Python test files (tests/unit/...) as "test-migrated" entries against the Go package being tested; use module key "test/integration/<name>".
 - 123 Go packages have no tests after iter 70; largest untested: commands/audit, commands/compile, compilation/agentscompiler, core/tokenmanager, adapters/client/copilot.
+- After iter 72: agentscompiler (14 tests), semver (4 test funcs), constitution (5 tests), copilot (7 tests), gitcache (6 tests) all have coverage. ~118 packages remain untested.
+- Only 2 unregistered Python files remain (init files, 107 lines total); metric gains from test registration are nearly exhausted.
 
 ## 🚧 Foreclosed Avenues
 
@@ -73,6 +75,14 @@ Metric at 427.76%. Go tests added for audit/compile/tokenmanager; all 429 remain
 
 
 ## 📊 Iteration History
+
+### Iteration 72 -- 2026-05-15 23:38 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25946090207)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for agentscompiler (14 tests), semver (4 funcs/14 cases), constitution (5 tests), copilot adapter (7 tests), gitcache (6 tests); registered 2 remaining Python init files (+107 py lines)
+- **Metric**: 427.88% (previous best: 427.76%, delta: +0.12pp)
+- **Commit**: 17c1050
+- **Notes**: Tests cover DefaultConfig/resolveTargets/finalizeBuildID/CleanupCopilotRoot, semver Parse/Compare/SatisfiesRange, constitution cache/ReadConstitution, TranslateEnvPlaceholder/HasEnvPlaceholder/ExtractLegacyAngleVars, GitCache New/Stats/Prune/sanitizeURL. go build ./... and go test ./... pass.
 
 ### Iteration 71 -- 2026-05-15 22:25 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25944266253)
 

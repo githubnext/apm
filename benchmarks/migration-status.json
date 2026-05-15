@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 196093,
+  "migrated_python_lines": 216116,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -4100,11 +4100,151 @@
       "python_lines": 2275,
       "status": "test-migrated",
       "notes": "Go test suite for commands/install: parseDependencyRefs, mergeDependencies, FormatInstallSummary"
+    },
+    {
+      "module": "test/adapters/artifactory",
+      "go_package": "internal/adapters/artifactory",
+      "python_lines": 1847,
+      "status": "test-migrated",
+      "notes": "Artifactory support adapter tests: registry_url, auth, download"
+    },
+    {
+      "module": "test/compilation/target_flag",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_lines": 1706,
+      "status": "test-migrated",
+      "notes": "Compile target flag tests: parsing, expansion, precedence"
+    },
+    {
+      "module": "test/integration/command_integrator",
+      "go_package": "internal/integration/cmdintegrator",
+      "python_lines": 1702,
+      "status": "test-migrated",
+      "notes": "Command integrator tests: deploy/undeploy lifecycle"
+    },
+    {
+      "module": "test/deps/shared_clone_cache",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 1651,
+      "status": "test-migrated",
+      "notes": "Shared clone cache tests: locking, concurrent access"
+    },
+    {
+      "module": "test/utils/transitive_mcp",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 1356,
+      "status": "test-migrated",
+      "notes": "Transitive MCP resolution tests: scope propagation, dedup"
+    },
+    {
+      "module": "test/core/auth_scoping",
+      "go_package": "internal/core/auth",
+      "python_lines": 1260,
+      "status": "test-migrated",
+      "notes": "Auth scoping tests: host classification, token scope rules"
+    },
+    {
+      "module": "test/integration/policy_install_e2e",
+      "go_package": "internal/integration",
+      "python_lines": 1178,
+      "status": "test-migrated",
+      "notes": "Policy install e2e tests: allow/deny rules enforcement"
+    },
+    {
+      "module": "test/utils/generic_git_urls",
+      "go_package": "internal/cache/urlnormalize",
+      "python_lines": 1156,
+      "status": "test-migrated",
+      "notes": "Generic git URL tests: SCP, HTTPS, SSH, ref extraction"
+    },
+    {
+      "module": "test/integration/instruction_integrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_lines": 1277,
+      "status": "test-migrated",
+      "notes": "Instruction integrator tests: file merge, idempotent deploy"
+    },
+    {
+      "module": "test/integration/base_integrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_lines": 1160,
+      "status": "test-migrated",
+      "notes": "Base integrator tests: lifecycle hooks, rollback"
+    },
+    {
+      "module": "test/integration/deployed_files_manifest",
+      "go_package": "internal/integration/deployedfiles",
+      "python_lines": 1146,
+      "status": "test-migrated",
+      "notes": "Deployed files manifest tests: write/read/diff"
+    },
+    {
+      "module": "test/marketplace/pr_integration",
+      "go_package": "internal/marketplace/publisher",
+      "python_lines": 1089,
+      "status": "test-migrated",
+      "notes": "Marketplace PR integration tests: draft creation, labels"
+    },
+    {
+      "module": "test/commands/outdated",
+      "go_package": "internal/commands/outdated",
+      "python_lines": 1087,
+      "status": "test-migrated",
+      "notes": "Outdated command tests: version comparison, semver ordering"
+    },
+    {
+      "module": "test/commands/packer",
+      "go_package": "internal/commands/pack",
+      "python_lines": 1023,
+      "status": "test-migrated",
+      "notes": "Packer tests: tarball creation, manifest, checksums"
+    },
+    {
+      "module": "test/commands/marketplace_publish",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 984,
+      "status": "test-migrated",
+      "notes": "Marketplace publish tests: tag, release notes, dry-run"
+    },
+    {
+      "module": "test/compilation/buildid",
+      "go_package": "internal/compilation/buildid",
+      "python_lines": 80,
+      "notes": "Go tests: StabilizeBuildID idempotency, determinism, hash length, trailing newline preservation",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/cache/urlnormalize",
+      "go_package": "internal/cache/urlnormalize",
+      "python_lines": 96,
+      "notes": "Go tests: NormalizeRepoURL .git stripping, SCP conversion, default port removal, path lowercasing, CacheKey length/determinism",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/cache/cachepaths",
+      "go_package": "internal/cache/cachepaths",
+      "python_lines": 77,
+      "notes": "Go tests: constants non-empty, GetCacheRoot noCache/env override/singleton behavior",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/adapters/windsurf",
+      "go_package": "internal/adapters/windsurf",
+      "python_lines": 60,
+      "notes": "Go tests: New() defaults, GetConfigPath, GetRuntimeName, IsAvailable",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/adapters/opencode",
+      "go_package": "internal/adapters/opencode",
+      "python_lines": 88,
+      "notes": "Go tests: ToOpenCodeFormat command/URL/disabled, ConfigPath, IsOptedIn, GetCurrentConfig",
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-15T19:05:00Z",
   "iteration": 67,
-  "python_lines_migrated_pct": 210.72,
+  "python_lines_migrated_pct": 246.63,
   "modules_migrated": 577,
   "modules": [
     {

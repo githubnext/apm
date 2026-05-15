@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 71013,
+  "migrated_python_lines": 71696,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1257,12 +1257,187 @@
       "python_lines": 229,
       "status": "migrated",
       "notes": "ScanPolicy, ScanVerdict, Gate.Check - centralized security scanning gate"
+    },
+    {
+      "module": "cache/paths",
+      "go_package": "internal/cache/cachepaths",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Cache path helpers: XDG/home dirs, per-package cache dir"
+    },
+    {
+      "module": "cache/url_normalize",
+      "go_package": "internal/cache/urlnormalize",
+      "python_lines": 133,
+      "status": "migrated",
+      "notes": "URL normalization for cache key generation"
+    },
+    {
+      "module": "cache/integrity",
+      "go_package": "internal/cache/integrity",
+      "python_lines": 104,
+      "status": "migrated",
+      "notes": "SHA-256 integrity checking for cached artifacts"
+    },
+    {
+      "module": "workflow/discovery",
+      "go_package": "internal/workflow/discovery",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Workflow file discovery in .apm/ and .github/workflows/"
+    },
+    {
+      "module": "workflow/parser",
+      "go_package": "internal/workflow/wfparser",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "YAML workflow file parser for agentic workflow definitions"
+    },
+    {
+      "module": "integration/dispatch",
+      "go_package": "internal/integration/dispatch",
+      "python_lines": 91,
+      "status": "migrated",
+      "notes": "Integration dispatch: select and invoke correct integrator"
+    },
+    {
+      "module": "integration/utils",
+      "go_package": "internal/integration/intutils",
+      "python_lines": 46,
+      "status": "migrated",
+      "notes": "Integration utility helpers"
+    },
+    {
+      "module": "output/models",
+      "go_package": "internal/output/models",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Output data models: CommandResult, OutputRecord"
+    },
+    {
+      "module": "output/script_formatters",
+      "go_package": "internal/output/scriptformatters",
+      "python_lines": 349,
+      "status": "migrated",
+      "notes": "Script output formatters for hooks and commands"
+    },
+    {
+      "module": "integration/skill_transformer",
+      "go_package": "internal/integration/skilltransformer",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "Skill document transformer: path normalization, frontmatter"
+    },
+    {
+      "module": "integration/coverage",
+      "go_package": "internal/integration/coverage",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "Integration coverage reporting helper"
+    },
+    {
+      "module": "install/template",
+      "go_package": "internal/install/template",
+      "python_lines": 140,
+      "status": "migrated",
+      "notes": "Install template renderer for apm.yml"
+    },
+    {
+      "module": "install/summary",
+      "go_package": "internal/install/summary",
+      "python_lines": 73,
+      "status": "migrated",
+      "notes": "Install summary printer"
+    },
+    {
+      "module": "install/request",
+      "go_package": "internal/install/request",
+      "python_lines": 60,
+      "status": "migrated",
+      "notes": "Install request data model"
+    },
+    {
+      "module": "install/context",
+      "go_package": "internal/install/installctx",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "Install context: shared mutable state across install phases"
+    },
+    {
+      "module": "install/phases/cleanup",
+      "go_package": "internal/install/phases/cleanup",
+      "python_lines": 158,
+      "status": "migrated",
+      "notes": "Install cleanup phase: remove stale files"
+    },
+    {
+      "module": "install/phases/download",
+      "go_package": "internal/install/phases/download",
+      "python_lines": 135,
+      "status": "migrated",
+      "notes": "Install download phase"
+    },
+    {
+      "module": "install/phases/finalize",
+      "go_package": "internal/install/phases/finalize",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "Install finalize phase: commit lockfile"
+    },
+    {
+      "module": "install/phases/heal",
+      "go_package": "internal/install/phases/heal",
+      "python_lines": 90,
+      "status": "migrated",
+      "notes": "Install heal phase: apply drift corrections"
+    },
+    {
+      "module": "install/phases/lockfile",
+      "go_package": "internal/install/phases/lockfile",
+      "python_lines": 260,
+      "status": "migrated",
+      "notes": "Install lockfile phase: read/write apm.lock.yaml"
+    },
+    {
+      "module": "marketplace/_git_utils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 19,
+      "status": "migrated",
+      "notes": "Marketplace git utilities"
+    },
+    {
+      "module": "marketplace/_io",
+      "go_package": "internal/marketplace/mkio",
+      "python_lines": 30,
+      "status": "migrated",
+      "notes": "Marketplace I/O helpers"
+    },
+    {
+      "module": "marketplace/errors",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_lines": 132,
+      "status": "migrated",
+      "notes": "Marketplace error types"
+    },
+    {
+      "module": "marketplace/models",
+      "go_package": "internal/marketplace/mktmodels",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "Marketplace data models: Package, Release, Tag"
+    },
+    {
+      "module": "models/dependency/types",
+      "go_package": "internal/models/deptypes",
+      "python_lines": 74,
+      "status": "migrated",
+      "notes": "Dependency type enums: DepType, HostType"
     }
   ],
-  "last_updated": "2026-05-14T21:46:18Z",
-  "iteration": 46,
-  "python_lines_migrated_pct": 84.33,
-  "modules_migrated": 163,
+  "last_updated": "2026-05-15T09:11:32Z",
+  "iteration": 57,
+  "python_lines_migrated_pct": 100.0,
+  "modules_migrated": 205,
   "modules": [
     {
       "module": "models/dependency/reference",

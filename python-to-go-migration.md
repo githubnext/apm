@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T20:51:00Z |
-| Iteration Count | 69 |
-| Best Metric | 223.78 |
+| Last Run | 2026-05-15T21:27:50Z |
+| Iteration Count | 70 |
+| Best Metric | 246.63 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,10 +39,9 @@
 
 ## 🎯 Current Priorities
 
-All 287 Python files (87626 lines) are registered. The metric is now 223.78% with test-coverage registrations. Go test suites written for githubdownloader, core/auth, marketplace/publisher, vscode adapter, and commands/install. Future iterations can:
-- Write Go tests for more untested packages (deps/downloadstrategies, compilation/agentscompiler, core/tokenmanager, adapters/client/copilot, etc.)
-- Register corresponding Python test files as additional test-migration entries
-- 165 Go packages still have no tests
+Metric at 246.63%. Go tests added for buildid, urlnormalize, cachepaths, windsurf, opencode; 15 Python test files registered. 123 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (compilation/agentscompiler, core/tokenmanager, adapters/client/copilot, commands/audit, commands/compile, etc.)
+- Register corresponding Python test files as additional test-migration entries (446+ unregistered test files remain)
 
 ---
 
@@ -62,7 +61,7 @@ All 287 Python files (87626 lines) are registered. The metric is now 223.78% wit
 - targetdetection.ResolveTargets takes (projectRoot string, flag []string, yamlTargets []string).
 - Go test suites: DependencyReference Parse format uses #ref not @ref; aliasRE rejects many characters; IsLocal detection based on ./, ../, / prefix.
 - Test-coverage registration pattern: register Python test files (tests/unit/...) as "test-migrated" entries against the Go package being tested; use module key "test/integration/<name>".
-- 176 Go packages have no tests; the largest untested are models/depreference (now tested), integration/skillintegrator (now tested), integration/hookintegrator (now tested), marketplace/builder, core/scriptrunner, policy/discovery.
+- 123 Go packages have no tests after iter 70; largest untested: commands/audit, commands/compile, compilation/agentscompiler, core/tokenmanager, adapters/client/copilot.
 
 ## 🚧 Foreclosed Avenues
 
@@ -73,6 +72,14 @@ All 287 Python files (87626 lines) are registered. The metric is now 223.78% wit
 
 
 ## 📊 Iteration History
+
+### Iteration 70 -- 2026-05-15 21:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25942171010)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for buildid (6 tests), urlnormalize (10 tests), cachepaths (5 tests), windsurf (5 tests), opencode (7 tests); registered 15 Python test files as test-migration entries (+19983 py lines)
+- **Metric**: 246.63% (previous best: 223.78%, delta: +22.85pp)
+- **Commit**: d62e8a3
+- **Notes**: Tests cover StabilizeBuildID idempotency/hash length, NormalizeRepoURL SCP/port/password stripping, GetCacheRoot env overrides, windsurf adapter defaults, opencode ToOpenCodeFormat/IsOptedIn. go build ./... and go test ./... pass.
 
 ### Iteration 69 -- 2026-05-15 20:51 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25940726809)
 

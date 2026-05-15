@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T00:50:30Z |
-| Iteration Count | 52 |
-| Best Metric | 80.09 |
+| Last Run | 2026-05-15T01:42:56Z |
+| Iteration Count | 53 |
+| Best Metric | 84.33 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | #44 |
+| PR | #49 |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,14 +32,14 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: #44
+**Pull Request**: #49
 **Issue**: #3
 
 ---
 
 ## 🎯 Current Priorities
 
-*(No specific priorities set -- agent is exploring freely. Next candidates: deps/github_downloader.py (1686), integration/mcp_integrator.py (1540), policy/discovery.py (1365), compilation/agents_compiler.py (1273))*
+*(No specific priorities set -- agent is exploring freely. Next candidates: deps/github_downloader (1686), integration/mcp_integrator (1540), compilation/context_optimizer (1293), compilation/agents_compiler (1273), adapters/client/copilot (1261), commands/audit (978), marketplace/publisher (861))*
 
 ---
 
@@ -84,7 +84,12 @@
 - Tracking gap: when migrations span multiple commits or branch resets, migration-status.json may fall behind actual Go code. Always verify Go packages vs tracked modules before proposing new work -- reconcile gaps first for a quick metric boost.
 - drift.py: pure interface-based Go (DependencyRef/LockedDep/LockFile interfaces); DetectConfigDrift uses recursive configsEqual; DetectOrphans/StaleFiles are pure set operations.
 - experimental.py: feature-flag registry as static map; config read/write via ~/.apm/config.json with sync.RWMutex cache + invalidation on write; difflib-like suggestions use contains heuristic.
-- - Periodic audits find Go packages present in internal/ but missing from migration-status.json (Mirrors comment pattern); scan for these at iteration start for quick metric boosts.
+- Periodic audits find Go packages present in internal/ but missing from migration-status.json (Mirrors comment pattern); scan for these at iteration start for quick metric boosts.
+- runtime/manager.py: RuntimeManager maps to Go struct with platform detection (runtime.GOOS), supported runtimes map, exec.LookPath for binary checks; clean separation of concerns.
+- marketplace/resolver.py: MarketplacePluginResolution as plain struct (not dataclass); NormalizeOwnerRepoSlug + NormalizeRepoFieldForMatch handle URL/SSH/bare forms; ClassifyPluginSource determines source type via key presence.
+- install/validation.py: ProbePackageProber uses HTTP context with timeout; IsTLSFailure chains error causes; LocalPathFailureReason checks for apm.yml/.apm markers; ValidatePackageExists is the main entry point.
+- deps/git_reference_resolver.py: IsFullSHA/IsShortSHA regexp matchers; ParseLsRemoteOutput skips ^{} peeled tags; Resolve() tries GitHub API fast path before falling back.
+- conflict_detector.py: MCPConflictDetector uses function callbacks (not embedded adapter) to stay decoupled; UUID-based lookup preferred over canonical name comparison.
 
 ---
 
@@ -96,15 +101,25 @@
 
 ## 🔭 Future Directions
 
-- integration/mcp_integrator.py (1540 lines) -- complex but follows integrator pattern
-- deps/github_downloader.py (1686 lines) -- download logic, HTTP client
-- deps/apm_resolver.py (918 lines) -- dependency resolver
-- core/operations.py -- operations orchestration
-- deps/download_strategies.py -- download strategies
+- deps/github_downloader.py (1686 lines) -- complex HTTP+git download logic, feasible but large
+- integration/mcp_integrator.py (1540 lines) -- MCP lifecycle orchestrator
+- compilation/context_optimizer.py (1293 lines) -- compilation optimization
+- compilation/agents_compiler.py (1273 lines) -- agents compiler
+- adapters/client/copilot.py (1261 lines) -- Copilot adapter
+- commands/audit.py (978 lines) -- audit command
+- marketplace/publisher.py (861 lines) -- marketplace publisher
 
 ---
 
 ## 📊 Iteration History
+
+### Iteration 53 -- 2026-05-15 01:42 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25895613393)
+
+- **Status**: ✅ Accepted
+- **Change**: Migrated 9 new modules (+3040 lines): runtime/manager (403), deps/git_reference_resolver (417), marketplace/resolver (617), install/validation (647), install/phases/targets (445), core/conflict_detector (162), install/service (146), install/gitlab_resolver (41), install/package_resolution (162)
+- **Metric**: 84.33 (previous best: 80.09, delta: +4.24)
+- **Commit**: 9ae5ded
+- **Notes**: All implementations use stdlib-only Go; install/validation adds HTTP probing + TLS failure detection; marketplace/resolver handles URL/SSH/bare host normalization; conflict_detector uses callback injection pattern for testability.
 
 ### Iteration 52 -- 2026-05-15 00:50 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25894051927)
 
@@ -120,34 +135,8 @@
 - **Change**: Registered 6 untracked modules (+5033 lines): download_strategies (1122), apm_resolver (918), core/operations (145), models/depreference (1559), primitives/discovery (612), plugin_parser (677). New Go migrations: deps/host_backends (623) -> hostbackends: HostBackend interface + GitHubBackend/GHECloudBackend/GHESBackend/ADOBackend/GitLabBackend/GenericGitBackend. policy/discovery (1365) -> DiscoverPolicy/DiscoverPolicyWithChain; GitHub Contents API fetch; hash-pin verification; JSON cache with TTL + stale fallback; atomic writes.
 - **Metric**: 75.06 (previous best: 65.26, delta: +9.80)
 - **Commit**: 9f8ab44
-- **Notes**: Many modules were implemented in iterations 49-50 but not registered in migration-status.json due to iteration truncation. This iteration both registered them and added 2 new implementations.
+- **Notes**: Many modules were implemented in iterations 49-50 but not registered in migration-status.json due to iteration truncation.
 
-### Iteration 50 — 2026-05-14 20:58 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25885268645)
+### Iters 40-50 — 2026-05-14 — ✅ (metrics 32.00->75.06): skill/hook/cmd integrators, command_logger, validation, target_detection, apm_package, yml_schema, helptext, outcome_routing, primitives/parser, script_formatters, marketplace utils, windsurf, tokenmanager, primitives/discovery, depreference, plugin_parser, script_runner, formatters, auth, ref_resolver, builder, hostbackends, policy/discovery, audit_report, experimental, drift.
 
-- **Status**: ✅ Accepted
-- **Change**: Registered 10 previously untracked Go modules (+8009 lines) + migrated 3 new modules: security/audit_report (253), core/experimental (278), install/drift (282) = +8822 Python lines total
-- **Metric**: 65.26 (previous best: 52.96, delta: +12.30)
-- **Commit**: 053ab4a
-- **Notes**: Untracked modules already had Go implementations from earlier iterations but were missing from migration-status.json: skill_integrator, hook_integrator, command_integrator, base_integrator, agent_integrator, targets, core/auth, marketplace/builder, ref_resolver, deps/depgraph. New Go code: auditreport (JSON/SARIF/Markdown output), experimental (feature-flag registry with config persistence), drift (pure stateless drift-detection functions with interface-based types).
-
-### Iteration 49 — 2026-05-14 20:08 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25885268645)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: deps/apm_resolver (918), deps/download_strategies (1122), core/operations (145) = +2185 Python lines
-- **Metric**: 52.96 (previous best: 49.91, delta: +3.05)
-- **Commit**: 8f7ba3b
-- **Notes**: apmresolver: BFS resolver with parallel download, cycle detection, NPM-hoisting flatten. downloadstrategies: DownloadDelegate with resilient HTTP GET, GitHub/ADO/GitLab/Artifactory file download, CDN fast-path. operations: lightweight orchestration facade.
-
-### Iteration 48 — 2026-05-14 19:10 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25879951640)
-
-- **Status**: ✅ Accepted
-- **Change**: Migrated 3 modules: core/auth (1005), marketplace/ref_resolver (345), marketplace/builder (1059) = +2409 Python lines
-- **Metric**: 49.91 (previous best: 46.55, delta: +3.36)
-- **Commit**: e0fb689
-- **Notes**: auth: AuthResolver + refresolver: RefResolver+RefCache + builder: MarketplaceBuilder concurrent resolve.
-
-### Iters 40-47 — 2026-05-14 — ✅ (metrics 32.00->49.91): skill/hook/cmd integrators, command_logger, validation, target_detection, apm_package, yml_schema, helptext, outcome_routing, primitives/parser, script_formatters, marketplace utils, windsurf, tokenmanager, primitives/discovery, depreference, plugin_parser, script_runner, formatters.
-
-### Iters 33-39 — 2026-05-14 — ✅ (metrics 18.22->27.32): base/agent/instruction/prompt integrators, update_policy, template, factory, registry, git_stderr, targets, lockfile, local_bundle_handler; 9+ modules.
-
-### Iters 1-32 — 2026-05-12/13 — ✅ (metrics 0.0->16.68): initialized Go module; migrated utils, version, constants, helpers, policy/phases/pipeline, MCP modules, policy_checks, ci_checks; branch resets caused some rebuilds.
+### Iters 1-39 — 2026-05-12/13 — ✅ (metrics 0.0->32.00): initialized Go module; migrated utils, version, constants, helpers, policy/phases/pipeline, MCP modules, policy_checks, ci_checks, base/agent/instruction/prompt integrators, update_policy, template, factory, registry, git_stderr, targets, lockfile, local_bundle_handler; 39+ modules.

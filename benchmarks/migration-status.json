@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 63945,
+  "migrated_python_lines": 70036,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1177,6 +1177,46 @@
       "module": "src/apm_cli/adapters/client/codex.py",
       "go_package": "github.com/githubnext/apm/internal/adapters/client/codex",
       "python_lines": 619
+    },
+    {
+      "module": "deps/github_downloader",
+      "python_file": "src/apm_cli/deps/github_downloader.py",
+      "go_package": "internal/deps/githubdownloader",
+      "python_lines": 1686,
+      "status": "migrated",
+      "notes": "GitHubPackageDownloader: git clone/fetch, ls-remote, raw-file download from GitHub/ADO, resilient HTTP, transport plan, bare-cache helpers"
+    },
+    {
+      "module": "compilation/context_optimizer",
+      "python_file": "src/apm_cli/compilation/context_optimizer.py",
+      "go_package": "internal/compilation/contextoptimizer",
+      "python_lines": 1293,
+      "status": "migrated",
+      "notes": "ContextOptimizer: instruction placement optimization, inheritance analysis, distributed placement, pollution scoring, file pattern matching"
+    },
+    {
+      "module": "compilation/agents_compiler",
+      "python_file": "src/apm_cli/compilation/agents_compiler.py",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_lines": 1273,
+      "status": "migrated",
+      "notes": "AgentsCompiler: multi-target compilation orchestrator, AGENTS.md/CLAUDE.md/GEMINI.md generation, build ID finalization, distributed/single-file output"
+    },
+    {
+      "module": "commands/audit",
+      "python_file": "src/apm_cli/commands/audit.py",
+      "go_package": "internal/commands/audit",
+      "python_lines": 978,
+      "status": "migrated",
+      "notes": "Audit command: hidden Unicode scanner, bidirectional override detection, strip mode, CI policy-discovery audit, JSON/text output"
+    },
+    {
+      "module": "marketplace/publisher",
+      "python_file": "src/apm_cli/marketplace/publisher.py",
+      "go_package": "internal/marketplace/publisher",
+      "python_lines": 861,
+      "status": "migrated",
+      "notes": "MarketplacePublisher: concurrent consumer-repo patching, apm.yml version bump, atomic writes, byte-integrity marketplace.json copy, state file"
     }
   ],
   "last_updated": "2026-05-14T21:46:18Z",

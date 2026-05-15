@@ -18,8 +18,12 @@ on:
     paths:
       - 'docs/src/content/docs/progress/**'
       - 'docs/astro.config.mjs'
+      - 'scripts/benchmark_manifest_ops.py'
   pull_request:
-    paths: ['docs/**']
+    paths:
+      - 'docs/**'
+      - 'scripts/benchmark_manifest_ops.py'
+      - '.github/workflows/docs.yml'
   workflow_dispatch:
 
 permissions:
@@ -48,6 +52,9 @@ jobs:
       - name: Install dependencies
         working-directory: ./docs
         run: npm ci
+
+      - name: Generate manifest benchmark results
+        run: python3 scripts/benchmark_manifest_ops.py --work-dir "$RUNNER_TEMP" --markdown --update-doc docs/src/content/docs/progress/autoloop-go-migration.mdx
 
       - name: Build documentation
         working-directory: ./docs

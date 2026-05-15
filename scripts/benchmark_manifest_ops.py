@@ -8,14 +8,14 @@ Simulates realistic scale to measure the impact of algorithmic optimizations:
 - Optimization 4: Scoped uninstall file set (removed packages only)
 
 Usage:
-    uv run python scripts/benchmark_manifest_ops.py
+    python3 scripts/benchmark_manifest_ops.py
+    python3 scripts/benchmark_manifest_ops.py --work-dir "$RUNNER_TEMP" --markdown --update-doc docs/src/content/docs/progress/autoloop-go-migration.mdx
 """
 
-import os
+import argparse
+import shutil
 import tempfile
 import time
-import sys
-import shutil
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -35,6 +35,13 @@ PREFIXES = [
 PACKAGES = 50
 FILES_PER_PACKAGE = 5
 INTEGRATOR_TYPES = 6  # prompts, agents-gh, agents-cl, commands, skills, hooks
+DOC_START = "{/* benchmark_manifest_ops:start */}"
+DOC_END = "{/* benchmark_manifest_ops:end */}"
+SCALES = [
+    ("Current (10 pkgs x 5 files = 50 paths)", "Current: 10 pkgs, 50 paths", 10, 5),
+    ("Growing (50 pkgs x 5 files = 250 paths)", "Growing: 50 pkgs, 250 paths", 50, 5),
+    ("Large monorepo (100 pkgs x 20 files = 2000 paths)", "Large monorepo: 100 pkgs, 2,000 paths", 100, 20),
+]
 
 
 def build_managed_files(n_packages: int, files_per_pkg: int) -> set:
@@ -53,9 +60,7 @@ def build_managed_files(n_packages: int, files_per_pkg: int) -> set:
 
 def check_collision_OLD(rel_path: str, managed_files: set) -> bool:
     """Original O(M) per call — rebuilds normalized set."""
-    if rel_path.replace("\\", "/") in {p.replace("\\", "/") for p in managed_files}:
-        return False
-    return True
+    return rel_path.replace("\\", "/") not in {p.replace("\\", "/") for p in managed_files}
 
 
 # ---------------------------------------------------------------------------
@@ -68,9 +73,7 @@ def normalize_managed_files(managed_files: set) -> set:
 
 def check_collision_NEW(rel_path: str, managed_files_normalized: set) -> bool:
     """Optimized O(1) lookup against pre-normalized set."""
-    if rel_path.replace("\\", "/") in managed_files_normalized:
-        return False
-    return True
+    return rel_path.replace("\\", "/") not in managed_files_normalized
 
 
 # ---------------------------------------------------------------------------
@@ -125,39 +128,57 @@ def timeit(fn, *args, iterations: int = 1000) -> float:
     return (time.perf_counter() - start) * 1000
 
 
-def run_benchmarks():
-    print("=" * 72)
-    print("APM Manifest Operations Benchmark")
-    print("=" * 72)
+def _make_temp_dir(work_dir: Path | None) -> Path:
+    """Create benchmark scratch space inside a caller-approved directory."""
+    if work_dir is not None:
+        work_dir.mkdir(parents=True, exist_ok=True)
+    return Path(
+        tempfile.mkdtemp(
+            prefix="apm-manifest-ops-",
+            dir=str(work_dir) if work_dir is not None else None,
+        )
+    )
 
-    for scale_label, n_pkgs, n_files in [
-        ("Current (10 pkgs × 5 files = 50 paths)", 10, 5),
-        ("Growing (50 pkgs × 5 files = 250 paths)", 50, 5),
-        ("Large monorepo (100 pkgs × 20 files = 2000 paths)", 100, 20),
-    ]:
+
+def _format_speedup(speedup: float) -> str:
+    if speedup == float("inf"):
+        return "∞x"
+    return f"{speedup:.1f}x"
+
+
+def run_benchmarks(work_dir: Path | None = None, emit_text: bool = True) -> list[dict[str, str]]:
+    results = []
+    if emit_text:
+        print("=" * 72)
+        print("APM Manifest Operations Benchmark")
+        print("=" * 72)
+
+    for scale_label, markdown_label, n_pkgs, n_files in SCALES:
         managed = build_managed_files(n_pkgs, n_files)
         M = len(managed)
-        print(f"\n{'─' * 72}")
-        print(f"Scale: {scale_label}  (M={M})")
-        print(f"{'─' * 72}")
+        if emit_text:
+            print(f"\n{'─' * 72}")
+            print(f"Scale: {scale_label}  (M={M})")
+            print(f"{'─' * 72}")
 
         # -- Benchmark 1: check_collision ----------------------------------
         #
         # Simulate: P=n_pkgs packages × F=n_files files × I=6 integrators
         # Each call does one collision check.
         calls = n_pkgs * n_files * INTEGRATOR_TYPES
-        test_path = f".github/prompts/pkg-0-file-0.md"
+        test_path = ".github/prompts/pkg-0-file-0.md"
 
         old_time = timeit(check_collision_OLD, test_path, managed, iterations=calls)
         normalized = normalize_managed_files(managed)
         norm_time = timeit(normalize_managed_files, managed, iterations=1)
         new_time = norm_time + timeit(check_collision_NEW, test_path, normalized, iterations=calls)
 
-        print(f"\n  check_collision ({calls:,} calls):")
-        print(f"    OLD (set rebuild per call):  {old_time:>8.2f} ms")
-        print(f"    NEW (pre-normalized O(1)):   {new_time:>8.2f} ms")
         speedup = old_time / new_time if new_time > 0 else float("inf")
-        print(f"    Speedup:                     {speedup:>8.1f}×")
+        if emit_text:
+            print(f"\n  check_collision ({calls:,} calls):")
+            print(f"    OLD (set rebuild per call):  {old_time:>8.2f} ms")
+            print(f"    NEW (pre-normalized O(1)):   {new_time:>8.2f} ms")
+            print(f"    Speedup:                     {speedup:>8.1f}x")
 
         # -- Benchmark 2: sync_remove_files --------------------------------
         #
@@ -182,11 +203,12 @@ def run_benchmarks():
                 sync_remove_new(buckets[prefix])
             new_sync += (time.perf_counter() - t0) * 1000
 
-        print(f"\n  sync_remove_files ({iters} uninstall cycles × 6 integrators):")
-        print(f"    OLD (6× full-set scan):      {old_sync:>8.2f} ms")
-        print(f"    NEW (pre-partitioned):       {new_sync:>8.2f} ms")
         speedup2 = old_sync / new_sync if new_sync > 0 else float("inf")
-        print(f"    Speedup:                     {speedup2:>8.1f}×")
+        if emit_text:
+            print(f"\n  sync_remove_files ({iters} uninstall cycles x 6 integrators):")
+            print(f"    OLD (6x full-set scan):      {old_sync:>8.2f} ms")
+            print(f"    NEW (pre-partitioned):       {new_sync:>8.2f} ms")
+            print(f"    Speedup:                     {speedup2:>8.1f}x")
 
         # -- Benchmark 3: empty-parent cleanup ----------------------------
         #
@@ -208,7 +230,7 @@ def run_benchmarks():
             return paths
 
         # OLD: per-file walk-up
-        tmp_old = Path(tempfile.mkdtemp())
+        tmp_old = _make_temp_dir(work_dir)
         try:
             files_old = _make_tree(tmp_old, n_deleted, depth)
             for f in files_old:
@@ -230,7 +252,7 @@ def run_benchmarks():
             shutil.rmtree(tmp_old, ignore_errors=True)
 
         # NEW: batch bottom-up
-        tmp_new = Path(tempfile.mkdtemp())
+        tmp_new = _make_temp_dir(work_dir)
         try:
             files_new = _make_tree(tmp_new, n_deleted, depth)
             for f in files_new:
@@ -253,11 +275,12 @@ def run_benchmarks():
         finally:
             shutil.rmtree(tmp_new, ignore_errors=True)
 
-        print(f"\n  cleanup_empty_parents ({n_deleted} deleted files, depth={depth}):")
-        print(f"    OLD (per-file walk-up):      {old_parent_ms:>8.2f} ms")
-        print(f"    NEW (batch bottom-up):       {new_parent_ms:>8.2f} ms")
         speedup3 = old_parent_ms / new_parent_ms if new_parent_ms > 0 else float("inf")
-        print(f"    Speedup:                     {speedup3:>8.1f}×")
+        if emit_text:
+            print(f"\n  cleanup_empty_parents ({n_deleted} deleted files, depth={depth}):")
+            print(f"    OLD (per-file walk-up):      {old_parent_ms:>8.2f} ms")
+            print(f"    NEW (batch bottom-up):       {new_parent_ms:>8.2f} ms")
+            print(f"    Speedup:                     {speedup3:>8.1f}x")
 
         # -- Benchmark 4: scoped vs. union-all deployed files --------------
         #
@@ -294,15 +317,89 @@ def run_benchmarks():
                 _ = [p for p in removed_files if p.startswith(prefix)]
         new_scope_ms = (time.perf_counter() - t0) * 1000
 
-        print(f"\n  scoped uninstall set (removing {removed_count}/{n_pkgs} pkgs, {iters4} cycles):")
-        print(f"    OLD (union ALL {len(all_files)} paths):     {old_scope_ms:>8.2f} ms")
-        print(f"    NEW (union removed {len(removed_files)} paths): {new_scope_ms:>8.2f} ms")
         speedup4 = old_scope_ms / new_scope_ms if new_scope_ms > 0 else float("inf")
-        print(f"    Speedup:                     {speedup4:>8.1f}×")
+        if emit_text:
+            print(f"\n  scoped uninstall set (removing {removed_count}/{n_pkgs} pkgs, {iters4} cycles):")
+            print(f"    OLD (union ALL {len(all_files)} paths):     {old_scope_ms:>8.2f} ms")
+            print(f"    NEW (union removed {len(removed_files)} paths): {new_scope_ms:>8.2f} ms")
+            print(f"    Speedup:                     {speedup4:>8.1f}x")
 
-    print(f"\n{'=' * 72}")
-    print("Done.")
+        results.append(
+            {
+                "scale": markdown_label,
+                "check_collision": _format_speedup(speedup),
+                "sync_remove_files": _format_speedup(speedup2),
+                "cleanup_empty_parents": _format_speedup(speedup3),
+                "scoped_uninstall": _format_speedup(speedup4),
+            }
+        )
+
+    if emit_text:
+        print(f"\n{'=' * 72}")
+        print("Done.")
+
+    return results
+
+
+def render_markdown(results: list[dict[str, str]]) -> str:
+    lines = [
+        DOC_START,
+        "The table below is generated by `scripts/benchmark_manifest_ops.py` during the docs build.",
+        "",
+        "| Scale | `check_collision` speedup | `sync_remove_files` speedup | `cleanup_empty_parents` speedup | Scoped uninstall speedup |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    for result in results:
+        lines.append(
+            f"| {result['scale']} | {result['check_collision']} | {result['sync_remove_files']} | "
+            f"{result['cleanup_empty_parents']} | {result['scoped_uninstall']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "`cleanup_empty_parents` may show a small regression at low deleted-file counts because the batch bottom-up algorithm has higher constant overhead than the legacy per-file walk-up. This is expected and acceptable given the gains on the other three operations.",
+            DOC_END,
+        ]
+    )
+    return "\n".join(lines)
+
+
+def update_doc(path: Path, markdown: str) -> None:
+    content = path.read_text()
+    start = content.index(DOC_START)
+    end = content.index(DOC_END, start) + len(DOC_END)
+    path.write_text(f"{content[:start]}{markdown}{content[end:]}")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--work-dir",
+        type=Path,
+        default=None,
+        help="Writable directory for temporary benchmark trees (defaults to Python's temp dir).",
+    )
+    parser.add_argument(
+        "--markdown",
+        action="store_true",
+        help="Emit the docs markdown benchmark table instead of the console report.",
+    )
+    parser.add_argument(
+        "--update-doc",
+        type=Path,
+        default=None,
+        help="Replace the generated benchmark block in the given docs page.",
+    )
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    run_benchmarks()
+    args = parse_args()
+    benchmark_results = run_benchmarks(work_dir=args.work_dir, emit_text=not args.markdown)
+    if args.markdown or args.update_doc is not None:
+        benchmark_markdown = render_markdown(benchmark_results)
+        if args.update_doc is not None:
+            update_doc(args.update_doc, benchmark_markdown)
+            print(f"Updated {args.update_doc}")
+        else:
+            print(benchmark_markdown)

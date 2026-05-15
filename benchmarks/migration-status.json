@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 60459,
+  "migrated_python_lines": 63945,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1142,6 +1142,41 @@
       "python_lines": 445,
       "status": "migrated",
       "notes": "Targets phase: ParseTargetsField, ReadYAMLTargets, ValidateTargets, ExpandAllTarget, DetectTargetsFromEnv"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/base.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/base",
+      "python_lines": 198
+    },
+    {
+      "module": "src/apm_cli/adapters/client/copilot.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/copilot",
+      "python_lines": 1261
+    },
+    {
+      "module": "src/apm_cli/adapters/client/vscode.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/vscode",
+      "python_lines": 579
+    },
+    {
+      "module": "src/apm_cli/adapters/client/claude.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/claude",
+      "python_lines": 240
+    },
+    {
+      "module": "src/apm_cli/adapters/client/cursor.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/cursor",
+      "python_lines": 326
+    },
+    {
+      "module": "src/apm_cli/adapters/client/gemini.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/gemini",
+      "python_lines": 263
+    },
+    {
+      "module": "src/apm_cli/adapters/client/codex.py",
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/codex",
+      "python_lines": 619
     }
   ],
   "last_updated": "2026-05-14T21:46:18Z",

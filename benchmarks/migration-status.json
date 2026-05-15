@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 57419,
+  "migrated_python_lines": 60459,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1079,12 +1079,75 @@
       "python_lines": 85,
       "status": "migrated",
       "notes": "Lockfile-driven file scanning for content integrity; hidden Unicode character detection; fail-safe path validation"
+    },
+    {
+      "module": "runtime/manager",
+      "go_package": "internal/runtime/manager",
+      "python_lines": 403,
+      "status": "migrated",
+      "notes": "RuntimeManager: install/remove/list runtimes; setup environment; platform detection"
+    },
+    {
+      "module": "deps/git_reference_resolver",
+      "go_package": "internal/deps/gitrefresolver",
+      "python_lines": 417,
+      "status": "migrated",
+      "notes": "GitReferenceResolver: cheap GitHub API SHA lookup, ls-remote parsing, ref classification"
+    },
+    {
+      "module": "install/service",
+      "go_package": "internal/install/installservice",
+      "python_lines": 146,
+      "status": "migrated",
+      "notes": "InstallService: thin application service facade with typed request/result; FrozenInstallError"
+    },
+    {
+      "module": "install/gitlab_resolver",
+      "go_package": "internal/install/gitlabresolver",
+      "python_lines": 41,
+      "status": "migrated",
+      "notes": "GitLab direct-shorthand resolver: ParseShorthand, BoundaryCandidates iterator"
+    },
+    {
+      "module": "install/package_resolution",
+      "go_package": "internal/install/pkgresolution",
+      "python_lines": 162,
+      "status": "migrated",
+      "notes": "Package reference resolution helpers: DependencyReferenceToYAMLEntry, ResolutionResult, git parent scope validation"
+    },
+    {
+      "module": "core/conflict_detector",
+      "go_package": "internal/core/conflictdetector",
+      "python_lines": 162,
+      "status": "migrated",
+      "notes": "MCPConflictDetector: UUID-based and canonical-name conflict detection for MCP server configs"
+    },
+    {
+      "module": "marketplace/resolver",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_lines": 617,
+      "status": "migrated",
+      "notes": "MarketplaceResolver: parse NAME@MARKETPLACE refs, resolve plugin sources, host-specific normalization"
+    },
+    {
+      "module": "install/validation",
+      "go_package": "internal/install/installvalidation",
+      "python_lines": 647,
+      "status": "migrated",
+      "notes": "Install validation: ProbePackageExists, TLS failure detection, local path hints, ADO auth signal"
+    },
+    {
+      "module": "install/phases/targets",
+      "go_package": "internal/install/phases/installphase",
+      "python_lines": 445,
+      "status": "migrated",
+      "notes": "Targets phase: ParseTargetsField, ReadYAMLTargets, ValidateTargets, ExpandAllTarget, DetectTargetsFromEnv"
     }
   ],
   "last_updated": "2026-05-14T21:46:18Z",
   "iteration": 46,
-  "python_lines_migrated_pct": 75.06,
-  "modules_migrated": 141,
+  "python_lines_migrated_pct": 84.33,
+  "modules_migrated": 163,
   "modules": [
     {
       "module": "models/dependency/reference",

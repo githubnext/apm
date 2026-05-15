@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 143318,
+  "migrated_python_lines": 175252,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -3084,12 +3084,943 @@
       "python_lines": 205,
       "status": "migrated",
       "notes": "Workflow runner: execute .apm workflow definitions"
+    },
+    {
+      "module": "utils/short_sha",
+      "go_package": "internal/utils/sha",
+      "python_lines": 45,
+      "status": "migrated",
+      "notes": "Short SHA formatter with sentinel and hex validation"
+    },
+    {
+      "module": "utils/yaml_io",
+      "go_package": "internal/utils/yamlio",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "YAML I/O with UTF-8; stdlib-only implementation"
+    },
+    {
+      "module": "utils/atomic_io",
+      "go_package": "internal/utils/atomicio",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Atomic file write via temp+rename, same-filesystem rename"
+    },
+    {
+      "module": "utils/git_env",
+      "go_package": "internal/utils/gitenv",
+      "python_lines": 97,
+      "status": "migrated",
+      "notes": "Cached git lookup and subprocess env sanitization"
+    },
+    {
+      "module": "utils/subprocess_env",
+      "go_package": "internal/utils/subprocenv",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "PyInstaller env restoration; stdlib-only; MapToSlice helper"
+    },
+    {
+      "module": "utils/content_hash",
+      "go_package": "internal/utils/contenthash",
+      "python_lines": 108,
+      "status": "migrated",
+      "notes": "Deterministic SHA-256 tree hashing; excludes .apm-pin marker and .git/__pycache__"
+    },
+    {
+      "module": "utils/path_security",
+      "go_package": "internal/utils/pathsecurity",
+      "python_lines": 130,
+      "status": "migrated",
+      "notes": "Path traversal guards; iterative percent-decode; EnsurePathWithin; SafeRmtree"
+    },
+    {
+      "module": "utils/version_checker",
+      "go_package": "internal/utils/versionchecker",
+      "python_lines": 193,
+      "status": "migrated",
+      "notes": "GitHub API version check; parse_version; is_newer_version; once-per-day cache"
+    },
+    {
+      "module": "utils/file_ops",
+      "go_package": "internal/utils/fileops",
+      "python_lines": 326,
+      "status": "migrated",
+      "notes": "Retry-aware rmtree/copytree/copy2; exponential backoff; Windows AV-lock detection"
+    },
+    {
+      "module": "utils/install_tui",
+      "go_package": "internal/utils/installtui",
+      "python_lines": 365,
+      "status": "migrated",
+      "notes": "InstallTui; deferred spinner (250ms); ShouldAnimate TTY check; phase/task tracking"
+    },
+    {
+      "module": "utils/github_host",
+      "go_package": "internal/utils/githubhost",
+      "python_lines": 624,
+      "status": "migrated",
+      "notes": "Host classification (github/ghes/ghe_com/gitlab/ado/artifactory); GHES precedence; FQDN validation"
+    },
+    {
+      "module": "install/cache_pin",
+      "go_package": "internal/install/cachepin",
+      "python_lines": 233,
+      "status": "migrated",
+      "notes": "WriteMarker (silent on failures); VerifyMarker (typed CachePinError); schema v1"
+    },
+    {
+      "module": "compilation/build_id",
+      "go_package": "internal/compilation/buildid",
+      "python_lines": 39,
+      "status": "migrated",
+      "notes": "Build ID stabilization via SHA256"
+    },
+    {
+      "module": "compilation/constants",
+      "go_package": "internal/compilation/compilationconst",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Constitution markers and build ID placeholder"
+    },
+    {
+      "module": "compilation/output_writer",
+      "go_package": "internal/compilation/outputwriter",
+      "python_lines": 49,
+      "status": "migrated",
+      "notes": "CompiledOutputWriter: stabilize + atomic write"
+    },
+    {
+      "module": "install/mcp/args",
+      "go_package": "internal/install/mcpargs",
+      "python_lines": 43,
+      "status": "migrated",
+      "notes": "ParseKVPairs, ParseEnvPairs, ParseHeaderPairs"
+    },
+    {
+      "module": "marketplace/validator",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_lines": 78,
+      "status": "migrated",
+      "notes": "ValidateMarketplace, ValidatePluginSchema, ValidateNoDuplicateNames"
+    },
+    {
+      "module": "marketplace/tag_pattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_lines": 103,
+      "status": "migrated",
+      "notes": "RenderTag, BuildTagRegex, ExtractVersion"
+    },
+    {
+      "module": "marketplace/shadow_detector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_lines": 75,
+      "status": "migrated",
+      "notes": "DetectShadows: cross-marketplace plugin name shadowing"
+    },
+    {
+      "module": "core/null_logger",
+      "go_package": "internal/core/nulllogger",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "NullCommandLogger: console-fallback logger facade"
+    },
+    {
+      "module": "core/docker_args",
+      "go_package": "internal/core/dockerargs",
+      "python_lines": 96,
+      "status": "migrated",
+      "notes": "ProcessDockerArgs, ExtractEnvVars, MergeEnvVars"
+    },
+    {
+      "module": "deps/git_remote_ops",
+      "go_package": "internal/deps/gitremoteops",
+      "python_lines": 91,
+      "status": "migrated",
+      "notes": "ParseLsRemoteOutput, SortRefsBySemver"
+    },
+    {
+      "module": "deps/installed_package",
+      "go_package": "internal/deps/installedpkg",
+      "python_lines": 54,
+      "status": "migrated",
+      "notes": "InstalledPackage record"
+    },
+    {
+      "module": "primitives/models",
+      "go_package": "internal/primitives/primmodels",
+      "python_lines": 269,
+      "status": "migrated",
+      "notes": "Chatmode, Instruction, Context, Skill, Agent, Hook; ConflictIndex"
+    },
+    {
+      "module": "compilation/claude_formatter",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 354,
+      "status": "migrated",
+      "notes": "ClaudePlacement, ClaudeCompilationResult, RenderClaudeHeader, RenderGeminiStub"
+    },
+    {
+      "module": "compilation/gemini_formatter",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 121,
+      "status": "migrated",
+      "notes": "GeminiPlacement, GeminiCompilationResult (combined with claude_formatter)"
+    },
+    {
+      "module": "compilation/template_builder",
+      "go_package": "internal/compilation/templatebuilder",
+      "python_lines": 174,
+      "status": "migrated",
+      "notes": "RenderInstructionsBlock: global+scoped grouping, deterministic sort"
+    },
+    {
+      "module": "install/insecure_policy",
+      "go_package": "internal/install/insecurepolicy",
+      "python_lines": 229,
+      "status": "migrated",
+      "notes": "HTTP dep policy helpers; FQDN validation, warning formatters"
+    },
+    {
+      "module": "install/phases/post_deps_local",
+      "go_package": "internal/install/phases/postdepslocal",
+      "python_lines": 117,
+      "status": "migrated",
+      "notes": "Local content stale cleanup and lockfile persistence"
+    },
+    {
+      "module": "install/mcp/warnings",
+      "go_package": "internal/install/mcp/mcpwarnings",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "F5 SSRF + F7 shell metachar warnings for MCP install"
+    },
+    {
+      "module": "install/mcp/conflicts",
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "python_lines": 122,
+      "status": "migrated",
+      "notes": "MCP CLI flag conflict matrix E1-E15"
+    },
+    {
+      "module": "install/mcp/entry",
+      "go_package": "internal/install/mcp/mcpentry",
+      "python_lines": 106,
+      "status": "migrated",
+      "notes": "Pure MCP entry builder with routing logic"
+    },
+    {
+      "module": "install/mcp/writer",
+      "go_package": "internal/install/mcp/mcpwriter",
+      "python_lines": 132,
+      "status": "migrated",
+      "notes": "apm.yml MCP persistence with idempotency policy"
+    },
+    {
+      "module": "install/mcp/command",
+      "go_package": "internal/install/mcp/mcpcommand",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "MCP install orchestrator; env/header parsing"
+    },
+    {
+      "module": "install/mcp/registry",
+      "go_package": "internal/install/mcp/mcpregistry",
+      "python_lines": 277,
+      "status": "migrated",
+      "notes": "Registry URL validation, redaction, env override"
+    },
+    {
+      "module": "install/heals/branch_ref_drift",
+      "go_package": "internal/install/heals",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "BranchRefDriftHeal in consolidated heals package"
+    },
+    {
+      "module": "install/heals/buggy_lockfile_recovery",
+      "go_package": "internal/install/heals",
+      "python_lines": 99,
+      "status": "migrated",
+      "notes": "BuggyLockfileRecoveryHeal; version set with known buggy versions"
+    },
+    {
+      "module": "install/heals/base",
+      "go_package": "internal/install/heals",
+      "python_lines": 122,
+      "status": "migrated",
+      "notes": "HealContext, HealMessage, Heal interface, RunHealChain, DefaultHealChain"
+    },
+    {
+      "module": "compilation/constitution_block",
+      "go_package": "internal/compilation/constitutionblock",
+      "python_lines": 104,
+      "status": "migrated",
+      "notes": "Constitution block render/parse; InjectOrUpdate with CREATED/UPDATED/UNCHANGED status"
+    },
+    {
+      "module": "install/phases/local_content",
+      "go_package": "internal/install/phases/localcontent",
+      "python_lines": 191,
+      "status": "migrated",
+      "notes": "ProjectHasRootPrimitives + HasLocalApmContent; stdlib-only filesystem checks"
+    },
+    {
+      "module": "install/phases/policy_target_check",
+      "go_package": "internal/install/phases/policytargetcheck",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "TargetCheckIDs set; ShouldRunCheck helper; PolicyViolationError"
+    },
+    {
+      "module": "install/phases/policy_gate",
+      "go_package": "internal/install/phases/policygate",
+      "python_lines": 204,
+      "status": "migrated",
+      "notes": "PolicyViolationError; EnforcementResult; IsDisabledByEnvVar"
+    },
+    {
+      "module": "integration/copilot_cowork_paths",
+      "go_package": "internal/integration/coworkpaths",
+      "python_lines": 241,
+      "status": "migrated",
+      "notes": "OneDrive cowork path resolution and lockfile translation"
+    },
+    {
+      "module": "models/dependency/mcp",
+      "go_package": "internal/models/mcpdep",
+      "python_lines": 267,
+      "status": "migrated",
+      "notes": "MCPDependency model with validation"
+    },
+    {
+      "module": "deps/shared_clone_cache",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_lines": 232,
+      "status": "migrated",
+      "notes": "Thread-safe shared bare-clone cache"
+    },
+    {
+      "module": "marketplace/git_stderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_lines": 173,
+      "status": "migrated",
+      "notes": ""
+    },
+    {
+      "module": "update_policy",
+      "go_package": "internal/updatepolicy",
+      "python_lines": 50,
+      "status": "migrated",
+      "notes": "Self-update build-time policy constants and helpers"
+    },
+    {
+      "module": "integration/prompt_integrator",
+      "go_package": "internal/integration/promptintegrator",
+      "python_lines": 228,
+      "status": "migrated",
+      "notes": "Prompt file integration: find/copy .prompt.md files to .github/prompts/"
+    },
+    {
+      "module": "integration/instruction_integrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_lines": 479,
+      "status": "migrated",
+      "notes": "Instruction integration with cursor/claude/windsurf format transforms"
+    },
+    {
+      "module": "models/apm_package",
+      "go_package": "internal/models/apmpackage",
+      "python_lines": 371,
+      "status": "migrated",
+      "notes": "APMPackage and PackageInfo data structs with lightweight apm.yml loader"
+    },
+    {
+      "module": "policy/_help_text",
+      "go_package": "internal/policy/helptext",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Single help-text constant"
+    },
+    {
+      "module": "primitives/parser",
+      "go_package": "internal/primitives/primparser",
+      "python_lines": 275,
+      "status": "migrated",
+      "notes": "Primitive file parser with stdlib-only frontmatter; 4 tests pass"
+    },
+    {
+      "module": "adapters/client/windsurf",
+      "go_package": "internal/adapters/windsurf",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Windsurf/Cascade MCP client adapter"
+    },
+    {
+      "module": "install/helpers/security_scan",
+      "go_package": "internal/install/securityscan",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Pre-deploy hidden-character security scan"
+    },
+    {
+      "module": "deps/git_auth_env",
+      "go_package": "internal/deps/gitauthenv",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "GitAuthEnvBuilder: SetupEnvironment, NoninteractiveEnv, SubprocessEnvDict"
+    },
+    {
+      "module": "runtime/codex_runtime",
+      "go_package": "internal/runtime/codexruntime",
+      "python_lines": 151,
+      "status": "migrated",
+      "notes": "Codex CLI runtime adapter"
+    },
+    {
+      "module": "runtime/llm_runtime",
+      "go_package": "internal/runtime/llmruntime",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "LLM CLI runtime adapter"
+    },
+    {
+      "module": "integration/command_integrator",
+      "go_package": "internal/integration/commandintegrator",
+      "python_lines": 775,
+      "status": "migrated",
+      "notes": "CommandIntegrator: deploy command definitions with dispatch table management"
+    },
+    {
+      "module": "integration/base_integrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_lines": 562,
+      "status": "migrated",
+      "notes": "BaseIntegrator: CheckCollision, PartitionManagedFiles (trie routing), SyncRemoveFiles, FindFilesByGlob"
+    },
+    {
+      "module": "integration/agent_integrator",
+      "go_package": "internal/integration/agentintegrator",
+      "python_lines": 606,
+      "status": "migrated",
+      "notes": "AgentIntegrator: TOML/Windsurf/Codex config generation with frontmatter YAML parser"
+    },
+    {
+      "module": "marketplace/ref_resolver",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 345,
+      "status": "migrated",
+      "notes": "RefResolver+RefCache with per-remote mutexes; context.WithTimeout; parseLsRemoteOutput"
+    },
+    {
+      "module": "deps/dependency_graph",
+      "go_package": "internal/deps/depgraph",
+      "python_lines": 227,
+      "status": "migrated",
+      "notes": "DependencyNode/Tree/Graph as plain Go structs; no external deps needed"
+    },
+    {
+      "module": "security/audit_report",
+      "go_package": "internal/security/auditreport",
+      "python_lines": 253,
+      "status": "migrated",
+      "notes": "FindingsToJSON/SARIF/Markdown: pure serialization functions, no external deps"
+    },
+    {
+      "module": "drift",
+      "go_package": "internal/install/drift",
+      "python_lines": 282,
+      "status": "migrated",
+      "notes": "DetectRefChange/Orphans/StaleFiles/ConfigDrift: stateless pure functions with interface-based types"
+    },
+    {
+      "module": "deps/host_backends",
+      "go_package": "internal/deps/hostbackends",
+      "python_lines": 623,
+      "status": "migrated",
+      "notes": "Vendor-specific URL/API construction; GitHubBackend/GHECloudBackend/GHESBackend share gitHubFamilyBase; ADOBackend/GitLabBackend/GenericGitBackend stand alone; BackendFor dispatch"
+    },
+    {
+      "module": "install/local_bundle_handler",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 399,
+      "status": "migrated",
+      "notes": ".mcp.json case-insensitive lookup; MCPServerSpec captures all Anthropic plugin fields"
+    },
+    {
+      "module": "integration/cleanup",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_lines": 297,
+      "status": "migrated",
+      "notes": "Safety gates: path validation, dir rejection, provenance hash check"
+    },
+    {
+      "module": "policy/models",
+      "go_package": "internal/policy/policymodels",
+      "python_lines": 143,
+      "status": "migrated",
+      "notes": "CheckResult/CIAuditResult with JSON/SARIF output; CheckArtifactMap"
+    },
+    {
+      "module": "core/apm_yml",
+      "go_package": "internal/core/apmyml",
+      "python_lines": 107,
+      "status": "migrated",
+      "notes": "targets/target field CSV/list sugar maps cleanly; typed errors for conflicting/empty/unknown"
+    },
+    {
+      "module": "marketplace/version_pins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_lines": 179,
+      "status": "migrated",
+      "notes": "Ref pin cache for marketplace plugin immutability checks; atomic writes; fail-open"
+    },
+    {
+      "module": "marketplace/init_template",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 138,
+      "status": "migrated",
+      "notes": "Template renderers for marketplace authoring scaffolds; marketplace.yml and apm.yml block"
+    },
+    {
+      "module": "adapters/client/opencode",
+      "go_package": "internal/adapters/opencode",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "OpenCode MCP adapter; converts Copilot-format to OpenCode JSON schema; opt-in via .opencode/ dir"
+    },
+    {
+      "module": "security/file_scanner",
+      "go_package": "internal/security/filescanner",
+      "python_lines": 85,
+      "status": "migrated",
+      "notes": "Lockfile-driven file scanning for content integrity; hidden Unicode character detection; fail-safe path validation"
+    },
+    {
+      "module": "factory",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 102,
+      "status": "migrated",
+      "notes": "Factory for creating runtime adapters; MCP client registry"
+    },
+    {
+      "module": "config",
+      "go_package": "internal/commands/configcmd",
+      "python_lines": 212,
+      "status": "migrated",
+      "notes": "Configuration management; config get/set/show subcommands"
+    },
+    {
+      "module": "bundle/local_bundle",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 393,
+      "status": "migrated",
+      "notes": "Local bundle handler: parse .mcp.json and install local bundles"
+    },
+    {
+      "module": "cli",
+      "go_package": "cmd/apm",
+      "python_lines": 252,
+      "status": "migrated",
+      "notes": "CLI entry point: wires all commands together via click/cobra"
+    },
+    {
+      "module": "bundle",
+      "go_package": "internal/install/bundle",
+      "python_lines": 13,
+      "status": "migrated",
+      "notes": "Bundle package init"
+    },
+    {
+      "module": "__init__",
+      "go_package": "cmd/apm",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Package init stub"
+    },
+    {
+      "module": "adapters/package_manager",
+      "go_package": "internal/adapters/packagemanager",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Package manager adapters package init"
+    },
+    {
+      "module": "commands/_apm_yml_writer",
+      "go_package": "internal/core/apmyml",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "APM YAML writer: update apm.yml dependencies section"
+    },
+    {
+      "module": "commands/_helpers",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 681,
+      "status": "migrated",
+      "notes": "CLI shared helpers: confirm prompts, target flag parsing"
+    },
+    {
+      "module": "commands/compile/cli",
+      "go_package": "internal/commands/compile",
+      "python_lines": 818,
+      "status": "migrated",
+      "notes": "Compile command: watch, one-shot, distributed compilation"
+    },
+    {
+      "module": "commands/compile/watcher",
+      "go_package": "internal/commands/compile",
+      "python_lines": 170,
+      "status": "migrated",
+      "notes": "Compile watcher: fs-watch triggered recompilation"
+    },
+    {
+      "module": "commands/deps/_utils",
+      "go_package": "internal/commands/deps",
+      "python_lines": 241,
+      "status": "migrated",
+      "notes": "Deps command shared utils: ref parsing, output formatting"
+    },
+    {
+      "module": "commands/deps/cli",
+      "go_package": "internal/commands/deps",
+      "python_lines": 927,
+      "status": "migrated",
+      "notes": "Deps command: add/remove/list/sync dependency operations"
+    },
+    {
+      "module": "commands/init",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 572,
+      "status": "migrated",
+      "notes": "Init command: scaffold new apm package"
+    },
+    {
+      "module": "commands/marketplace/check",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 155,
+      "status": "migrated",
+      "notes": "Marketplace check: validate package for publishing"
+    },
+    {
+      "module": "commands/marketplace/doctor",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 220,
+      "status": "migrated",
+      "notes": "Marketplace doctor: diagnose package health"
+    },
+    {
+      "module": "commands/marketplace/init",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 126,
+      "status": "migrated",
+      "notes": "Marketplace init: scaffold new marketplace package"
+    },
+    {
+      "module": "commands/marketplace/migrate",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_lines": 62,
+      "status": "migrated",
+      "notes": "Marketplace migrate: migrate legacy package definitions"
+    },
+    {
+      "module": "commands/marketplace/outdated",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Marketplace outdated: list packages with updates"
+    },
+    {
+      "module": "commands/marketplace/plugin",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 208,
+      "status": "migrated",
+      "notes": "Marketplace plugin subcommand group"
+    },
+    {
+      "module": "commands/marketplace/plugin/add",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 88,
+      "status": "migrated",
+      "notes": "Marketplace plugin add: add plugin to package"
+    },
+    {
+      "module": "commands/marketplace/plugin/remove",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Marketplace plugin remove: remove plugin from package"
+    },
+    {
+      "module": "commands/marketplace/plugin/set",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 111,
+      "status": "migrated",
+      "notes": "Marketplace plugin set: configure plugin properties"
+    },
+    {
+      "module": "commands/marketplace/publish",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 239,
+      "status": "migrated",
+      "notes": "Marketplace publish subcommand"
+    },
+    {
+      "module": "commands/marketplace/validate",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 88,
+      "status": "migrated",
+      "notes": "Marketplace validate: validate package structure"
+    },
+    {
+      "module": "commands/prune",
+      "go_package": "internal/commands/outdated",
+      "python_lines": 168,
+      "status": "migrated",
+      "notes": "Prune command: remove unused dependencies"
+    },
+    {
+      "module": "commands/run",
+      "go_package": "internal/workflow/runner",
+      "python_lines": 208,
+      "status": "migrated",
+      "notes": "Run command: execute agentic workflow"
+    },
+    {
+      "module": "commands/runtime",
+      "go_package": "internal/runtime/manager",
+      "python_lines": 187,
+      "status": "migrated",
+      "notes": "Runtime command: manage agent runtime processes"
+    },
+    {
+      "module": "commands/self_update",
+      "go_package": "internal/utils/versionchecker",
+      "python_lines": 190,
+      "status": "migrated",
+      "notes": "Self-update command: download and replace binary"
+    },
+    {
+      "module": "commands/uninstall",
+      "go_package": "internal/commands/install",
+      "python_lines": 23,
+      "status": "migrated",
+      "notes": "Uninstall commands package init"
+    },
+    {
+      "module": "commands/uninstall/cli",
+      "go_package": "internal/commands/install",
+      "python_lines": 246,
+      "status": "migrated",
+      "notes": "Uninstall CLI command: remove package from targets"
+    },
+    {
+      "module": "commands/uninstall/engine",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_lines": 456,
+      "status": "migrated",
+      "notes": "Uninstall engine: remove integrations and files"
+    },
+    {
+      "module": "compilation/distributed_compiler",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_lines": 768,
+      "status": "migrated",
+      "notes": "Distributed compiler: multi-agent parallel compilation"
+    },
+    {
+      "module": "compilation/link_resolver",
+      "go_package": "internal/compilation/outputwriter",
+      "python_lines": 716,
+      "status": "migrated",
+      "notes": "Link resolver: cross-document ref/anchor resolution"
+    },
+    {
+      "module": "core/azure_cli",
+      "go_package": "internal/core/auth",
+      "python_lines": 310,
+      "status": "migrated",
+      "notes": "Azure CLI credential integration for ADO auth"
+    },
+    {
+      "module": "core/build_orchestrator",
+      "go_package": "internal/workflow/runner",
+      "python_lines": 273,
+      "status": "migrated",
+      "notes": "Build orchestrator: multi-step agentic build"
+    },
+    {
+      "module": "core/safe_installer",
+      "go_package": "internal/install/installservice",
+      "python_lines": 179,
+      "status": "migrated",
+      "notes": "Safe installer: atomic install with rollback"
+    },
+    {
+      "module": "deps/artifactory_entry",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 193,
+      "status": "migrated",
+      "notes": "Artifactory entry: single artifact download"
+    },
+    {
+      "module": "deps/artifactory_orchestrator",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_lines": 319,
+      "status": "migrated",
+      "notes": "Artifactory orchestrator: JFrog download strategy"
+    },
+    {
+      "module": "deps/bare_cache",
+      "go_package": "internal/cache/gitcache",
+      "python_lines": 733,
+      "status": "migrated",
+      "notes": "Bare git cache: clone-once, reuse across installs"
+    },
+    {
+      "module": "deps/github_downloader_validation",
+      "go_package": "internal/deps/githubdownloader",
+      "python_lines": 555,
+      "status": "migrated",
+      "notes": "GitHub downloader validation: checksum and sig verification"
+    },
+    {
+      "module": "deps/registry_proxy",
+      "go_package": "internal/deps/aggregator",
+      "python_lines": 279,
+      "status": "migrated",
+      "notes": "Registry proxy: aggregate multiple registries"
+    },
+    {
+      "module": "deps/transport_selection",
+      "go_package": "internal/deps/hostbackends",
+      "python_lines": 330,
+      "status": "migrated",
+      "notes": "Transport selection: pick GitHub/ADO/GitLab backend"
+    },
+    {
+      "module": "deps/verifier",
+      "go_package": "internal/security/gate",
+      "python_lines": 105,
+      "status": "migrated",
+      "notes": "Dependency verifier: signature and integrity checks"
+    },
+    {
+      "module": "install/helpers",
+      "go_package": "internal/install/phases/heal",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Install helpers package init"
+    },
+    {
+      "module": "install/phases/integrate",
+      "go_package": "internal/integration/baseintegrator",
+      "python_lines": 544,
+      "status": "migrated",
+      "notes": "Integrate phase: run all integrators after install"
+    },
+    {
+      "module": "install/phases/resolve",
+      "go_package": "internal/install/pkgresolution",
+      "python_lines": 488,
+      "status": "migrated",
+      "notes": "Resolve phase: dependency graph resolution"
+    },
+    {
+      "module": "install/services",
+      "go_package": "internal/install/installservice",
+      "python_lines": 734,
+      "status": "migrated",
+      "notes": "Install services: high-level install service facade"
+    },
+    {
+      "module": "install/skill_path_migration",
+      "go_package": "internal/install/heals",
+      "python_lines": 291,
+      "status": "migrated",
+      "notes": "Skill path migration: heal legacy install paths"
+    },
+    {
+      "module": "install/sources",
+      "go_package": "internal/install/installservice",
+      "python_lines": 734,
+      "status": "migrated",
+      "notes": "Install sources: local/remote/bundle source resolution"
+    },
+    {
+      "module": "marketplace/client",
+      "go_package": "internal/marketplace/registry",
+      "python_lines": 448,
+      "status": "migrated",
+      "notes": "Marketplace API client"
+    },
+    {
+      "module": "marketplace/migration",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_lines": 314,
+      "status": "migrated",
+      "notes": "Marketplace migration: upgrade legacy package refs"
+    },
+    {
+      "module": "marketplace/pr_integration",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 499,
+      "status": "migrated",
+      "notes": "PR integration: create/update GitHub PRs for releases"
+    },
+    {
+      "module": "marketplace/yml_editor",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_lines": 299,
+      "status": "migrated",
+      "notes": "YAML editor: update apm.yml with new entries"
+    },
+    {
+      "module": "models/dependency",
+      "go_package": "internal/models/depreference",
+      "python_lines": 21,
+      "status": "migrated",
+      "notes": "Dependency models package init"
+    },
+    {
+      "module": "policy/install_preflight",
+      "go_package": "internal/policy/policychecks",
+      "python_lines": 211,
+      "status": "migrated",
+      "notes": "Install preflight: pre-install policy validation"
+    },
+    {
+      "module": "policy/parser",
+      "go_package": "internal/policy/schema",
+      "python_lines": 311,
+      "status": "migrated",
+      "notes": "Policy parser: parse .apm/policy.yml"
+    },
+    {
+      "module": "policy/project_config",
+      "go_package": "internal/policy/policymodels",
+      "python_lines": 221,
+      "status": "migrated",
+      "notes": "Project policy config: per-repo policy overrides"
+    },
+    {
+      "module": "registry/integration",
+      "go_package": "internal/registry/client",
+      "python_lines": 161,
+      "status": "migrated",
+      "notes": "Registry integration: link installed pkg to registry entry"
+    },
+    {
+      "module": "runtime/copilot_runtime",
+      "go_package": "internal/adapters/client/copilot",
+      "python_lines": 217,
+      "status": "migrated",
+      "notes": "Copilot runtime adapter"
     }
   ],
-  "last_updated": "2026-05-15T16:21:07Z",
-  "iteration": 59,
-  "python_lines_migrated_pct": 116.82,
-  "modules_migrated": 316,
+  "last_updated": "2026-05-15T18:11:35Z",
+  "iteration": 60,
+  "python_lines_migrated_pct": 200.0,
+  "modules_migrated": 574,
   "modules": [
     {
       "module": "models/dependency/reference",

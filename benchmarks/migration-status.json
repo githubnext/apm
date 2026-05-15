@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 216116,
+  "migrated_python_lines": 374829,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -4240,6 +4240,3438 @@
       "python_lines": 88,
       "notes": "Go tests: ToOpenCodeFormat command/URL/disabled, ConfigPath, IsOptedIn, GetCurrentConfig",
       "status": "test-migrated"
+    },
+    {
+      "module": "test/acceptance/test/logging_acceptance",
+      "go_package": "internal/loggingacceptance",
+      "python_file": "tests/acceptance/test_logging_acceptance.py",
+      "python_lines": 595,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/loggingacceptance"
+    },
+    {
+      "module": "test/basic_workflow_test",
+      "go_package": "internal/basicworkflowtest",
+      "python_file": "tests/basic_workflow_test.py",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/basicworkflowtest"
+    },
+    {
+      "module": "test/benchmarks/run_baseline",
+      "go_package": "internal/runbaseline",
+      "python_file": "tests/benchmarks/run_baseline.py",
+      "python_lines": 254,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runbaseline"
+    },
+    {
+      "module": "test/benchmarks/test/audit_benchmarks",
+      "go_package": "internal/auditbenchmarks",
+      "python_file": "tests/benchmarks/test_audit_benchmarks.py",
+      "python_lines": 377,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditbenchmarks"
+    },
+    {
+      "module": "test/benchmarks/test/compilation_hot_paths",
+      "go_package": "internal/compilationhotpaths",
+      "python_file": "tests/benchmarks/test_compilation_hot_paths.py",
+      "python_lines": 668,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilationhotpaths"
+    },
+    {
+      "module": "test/benchmarks/test/git_and_compiler_benchmarks",
+      "go_package": "internal/gitandcompilerbenchmarks",
+      "python_file": "tests/benchmarks/test_git_and_compiler_benchmarks.py",
+      "python_lines": 612,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/gitandcompilerbenchmarks"
+    },
+    {
+      "module": "test/benchmarks/test/install_hot_paths",
+      "go_package": "internal/installhotpaths",
+      "python_file": "tests/benchmarks/test_install_hot_paths.py",
+      "python_lines": 374,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installhotpaths"
+    },
+    {
+      "module": "test/benchmarks/test/perf_benchmarks",
+      "go_package": "internal/perfbenchmarks",
+      "python_file": "tests/benchmarks/test_perf_benchmarks.py",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/perfbenchmarks"
+    },
+    {
+      "module": "test/benchmarks/test/scaling_guards",
+      "go_package": "internal/scalingguards",
+      "python_file": "tests/benchmarks/test_scaling_guards.py",
+      "python_lines": 342,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/scalingguards"
+    },
+    {
+      "module": "test/benchmarks/test/security_and_resolver_benchmarks",
+      "go_package": "internal/securityandresolverbenchmarks",
+      "python_file": "tests/benchmarks/test_security_and_resolver_benchmarks.py",
+      "python_lines": 776,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/securityandresolverbenchmarks"
+    },
+    {
+      "module": "test/conftest",
+      "go_package": "internal/conftest",
+      "python_file": "tests/conftest.py",
+      "python_lines": 25,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/conftest"
+    },
+    {
+      "module": "test/fixtures/policy/test/fixtures_load",
+      "go_package": "internal/fixturesload",
+      "python_file": "tests/fixtures/policy/test_fixtures_load.py",
+      "python_lines": 288,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/fixturesload"
+    },
+    {
+      "module": "test/fixtures/synthetic_trees",
+      "go_package": "internal/synthetictrees",
+      "python_file": "tests/fixtures/synthetic_trees.py",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/synthetictrees"
+    },
+    {
+      "module": "test/integration/conftest",
+      "go_package": "internal/conftest",
+      "python_file": "tests/integration/conftest.py",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/conftest"
+    },
+    {
+      "module": "test/integration/marketplace/conftest",
+      "go_package": "internal/conftest",
+      "python_file": "tests/integration/marketplace/conftest.py",
+      "python_lines": 351,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/conftest"
+    },
+    {
+      "module": "test/integration/marketplace/test/build_integration",
+      "go_package": "internal/buildintegration",
+      "python_file": "tests/integration/marketplace/test_build_integration.py",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/buildintegration"
+    },
+    {
+      "module": "test/integration/marketplace/test/check_integration",
+      "go_package": "internal/checkintegration",
+      "python_file": "tests/integration/marketplace/test_check_integration.py",
+      "python_lines": 200,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/checkintegration"
+    },
+    {
+      "module": "test/integration/marketplace/test/doctor_integration",
+      "go_package": "internal/doctorintegration",
+      "python_file": "tests/integration/marketplace/test_doctor_integration.py",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/doctorintegration"
+    },
+    {
+      "module": "test/integration/marketplace/test/init_integration",
+      "go_package": "internal/initintegration",
+      "python_file": "tests/integration/marketplace/test_init_integration.py",
+      "python_lines": 139,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/initintegration"
+    },
+    {
+      "module": "test/integration/marketplace/test/live_e2e",
+      "go_package": "internal/livee2e",
+      "python_file": "tests/integration/marketplace/test_live_e2e.py",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/livee2e"
+    },
+    {
+      "module": "test/integration/marketplace/test/outdated_integration",
+      "go_package": "internal/outdatedintegration",
+      "python_file": "tests/integration/marketplace/test_outdated_integration.py",
+      "python_lines": 234,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/outdatedintegration"
+    },
+    {
+      "module": "test/integration/marketplace/test/publish_integration",
+      "go_package": "internal/publishintegration",
+      "python_file": "tests/integration/marketplace/test_publish_integration.py",
+      "python_lines": 419,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/publishintegration"
+    },
+    {
+      "module": "test/integration/test/ado_bearer_e2e",
+      "go_package": "internal/adobearere2e",
+      "python_file": "tests/integration/test_ado_bearer_e2e.py",
+      "python_lines": 459,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/adobearere2e"
+    },
+    {
+      "module": "test/integration/test/ado_e2e",
+      "go_package": "internal/adoe2e",
+      "python_file": "tests/integration/test_ado_e2e.py",
+      "python_lines": 351,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/adoe2e"
+    },
+    {
+      "module": "test/integration/test/ado_preflight_bearer_fallback_e2e",
+      "go_package": "internal/adopreflightbearerfallbacke2e",
+      "python_file": "tests/integration/test_ado_preflight_bearer_fallback_e2e.py",
+      "python_lines": 225,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/adopreflightbearerfallbacke2e"
+    },
+    {
+      "module": "test/integration/test/agent_skills_target",
+      "go_package": "internal/agentskillstarget",
+      "python_file": "tests/integration/test_agent_skills_target.py",
+      "python_lines": 813,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/agentskillstarget"
+    },
+    {
+      "module": "test/integration/test/apm_dependencies",
+      "go_package": "internal/apmdependencies",
+      "python_file": "tests/integration/test_apm_dependencies.py",
+      "python_lines": 560,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/apmdependencies"
+    },
+    {
+      "module": "test/integration/test/audit_silent_skip_e2e",
+      "go_package": "internal/auditsilentskipe2e",
+      "python_file": "tests/integration/test_audit_silent_skip_e2e.py",
+      "python_lines": 199,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditsilentskipe2e"
+    },
+    {
+      "module": "test/integration/test/auth_resolver",
+      "go_package": "internal/authresolver",
+      "python_file": "tests/integration/test_auth_resolver.py",
+      "python_lines": 380,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/authresolver"
+    },
+    {
+      "module": "test/integration/test/auto_install_e2e",
+      "go_package": "internal/autoinstalle2e",
+      "python_file": "tests/integration/test_auto_install_e2e.py",
+      "python_lines": 380,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/autoinstalle2e"
+    },
+    {
+      "module": "test/integration/test/auto_integration",
+      "go_package": "internal/autointegration",
+      "python_file": "tests/integration/test_auto_integration.py",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/autointegration"
+    },
+    {
+      "module": "test/integration/test/azure_skills_marketplace",
+      "go_package": "internal/azureskillsmarketplace",
+      "python_file": "tests/integration/test_azure_skills_marketplace.py",
+      "python_lines": 57,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/azureskillsmarketplace"
+    },
+    {
+      "module": "test/integration/test/cache_lockfile_parity",
+      "go_package": "internal/cachelockfileparity",
+      "python_file": "tests/integration/test_cache_lockfile_parity.py",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cachelockfileparity"
+    },
+    {
+      "module": "test/integration/test/claude_mcp_schema_fidelity",
+      "go_package": "internal/claudemcpschemafidelity",
+      "python_file": "tests/integration/test_claude_mcp_schema_fidelity.py",
+      "python_lines": 224,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/claudemcpschemafidelity"
+    },
+    {
+      "module": "test/integration/test/compile_constitution_injection",
+      "go_package": "internal/compileconstitutioninjection",
+      "python_file": "tests/integration/test_compile_constitution_injection.py",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compileconstitutioninjection"
+    },
+    {
+      "module": "test/integration/test/compile_copilot_root_instructions",
+      "go_package": "internal/compilecopilotrootinstructions",
+      "python_file": "tests/integration/test_compile_copilot_root_instructions.py",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilecopilotrootinstructions"
+    },
+    {
+      "module": "test/integration/test/compile_permission_denied",
+      "go_package": "internal/compilepermissiondenied",
+      "python_file": "tests/integration/test_compile_permission_denied.py",
+      "python_lines": 37,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilepermissiondenied"
+    },
+    {
+      "module": "test/integration/test/config_valid_keys_e2e",
+      "go_package": "internal/configvalidkeyse2e",
+      "python_file": "tests/integration/test_config_valid_keys_e2e.py",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/configvalidkeyse2e"
+    },
+    {
+      "module": "test/integration/test/core_smoke",
+      "go_package": "internal/coresmoke",
+      "python_file": "tests/integration/test_core_smoke.py",
+      "python_lines": 279,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/coresmoke"
+    },
+    {
+      "module": "test/integration/test/credential_fill_disambiguation",
+      "go_package": "internal/credentialfilldisambiguation",
+      "python_file": "tests/integration/test_credential_fill_disambiguation.py",
+      "python_lines": 290,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/credentialfilldisambiguation"
+    },
+    {
+      "module": "test/integration/test/cursor_mcp_schema_fidelity",
+      "go_package": "internal/cursormcpschemafidelity",
+      "python_file": "tests/integration/test_cursor_mcp_schema_fidelity.py",
+      "python_lines": 164,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cursormcpschemafidelity"
+    },
+    {
+      "module": "test/integration/test/default_port_normalisation_e2e",
+      "go_package": "internal/defaultportnormalisatione2e",
+      "python_file": "tests/integration/test_default_port_normalisation_e2e.py",
+      "python_lines": 196,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/defaultportnormalisatione2e"
+    },
+    {
+      "module": "test/integration/test/dep_url_parsing_e2e",
+      "go_package": "internal/depurlparsinge2e",
+      "python_file": "tests/integration/test_dep_url_parsing_e2e.py",
+      "python_lines": 228,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depurlparsinge2e"
+    },
+    {
+      "module": "test/integration/test/deployed_files_e2e",
+      "go_package": "internal/deployedfilese2e",
+      "python_file": "tests/integration/test_deployed_files_e2e.py",
+      "python_lines": 458,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deployedfilese2e"
+    },
+    {
+      "module": "test/integration/test/deps_update_e2e",
+      "go_package": "internal/depsupdatee2e",
+      "python_file": "tests/integration/test_deps_update_e2e.py",
+      "python_lines": 330,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depsupdatee2e"
+    },
+    {
+      "module": "test/integration/test/diff_aware_install_e2e",
+      "go_package": "internal/diffawareinstalle2e",
+      "python_file": "tests/integration/test_diff_aware_install_e2e.py",
+      "python_lines": 642,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/diffawareinstalle2e"
+    },
+    {
+      "module": "test/integration/test/drift_check",
+      "go_package": "internal/driftcheck",
+      "python_file": "tests/integration/test_drift_check.py",
+      "python_lines": 751,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/driftcheck"
+    },
+    {
+      "module": "test/integration/test/drift_check_e2e",
+      "go_package": "internal/driftchecke2e",
+      "python_file": "tests/integration/test_drift_check_e2e.py",
+      "python_lines": 396,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/driftchecke2e"
+    },
+    {
+      "module": "test/integration/test/gemini_integration",
+      "go_package": "internal/geminiintegration",
+      "python_file": "tests/integration/test_gemini_integration.py",
+      "python_lines": 470,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/geminiintegration"
+    },
+    {
+      "module": "test/integration/test/generic_git_url_install",
+      "go_package": "internal/genericgiturlinstall",
+      "python_file": "tests/integration/test_generic_git_url_install.py",
+      "python_lines": 350,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/genericgiturlinstall"
+    },
+    {
+      "module": "test/integration/test/generic_https_credential_env_e2e",
+      "go_package": "internal/generichttpscredentialenve2e",
+      "python_file": "tests/integration/test_generic_https_credential_env_e2e.py",
+      "python_lines": 310,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/generichttpscredentialenve2e"
+    },
+    {
+      "module": "test/integration/test/gitlab_install_e2e",
+      "go_package": "internal/gitlabinstalle2e",
+      "python_file": "tests/integration/test_gitlab_install_e2e.py",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/gitlabinstalle2e"
+    },
+    {
+      "module": "test/integration/test/global_install_e2e",
+      "go_package": "internal/globalinstalle2e",
+      "python_file": "tests/integration/test_global_install_e2e.py",
+      "python_lines": 249,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/globalinstalle2e"
+    },
+    {
+      "module": "test/integration/test/global_mcp_lockfile_e2e",
+      "go_package": "internal/globalmcplockfilee2e",
+      "python_file": "tests/integration/test_global_mcp_lockfile_e2e.py",
+      "python_lines": 262,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/globalmcplockfilee2e"
+    },
+    {
+      "module": "test/integration/test/global_scope_e2e",
+      "go_package": "internal/globalscopee2e",
+      "python_file": "tests/integration/test_global_scope_e2e.py",
+      "python_lines": 510,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/globalscopee2e"
+    },
+    {
+      "module": "test/integration/test/golden_scenario_e2e",
+      "go_package": "internal/goldenscenarioe2e",
+      "python_file": "tests/integration/test_golden_scenario_e2e.py",
+      "python_lines": 981,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/goldenscenarioe2e"
+    },
+    {
+      "module": "test/integration/test/guardrailing_hero_e2e",
+      "go_package": "internal/guardrailingheroe2e",
+      "python_file": "tests/integration/test_guardrailing_hero_e2e.py",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/guardrailingheroe2e"
+    },
+    {
+      "module": "test/integration/test/install_dry_run_e2e",
+      "go_package": "internal/installdryrune2e",
+      "python_file": "tests/integration/test_install_dry_run_e2e.py",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installdryrune2e"
+    },
+    {
+      "module": "test/integration/test/install_invalid_deps_format_e2e",
+      "go_package": "internal/installinvaliddepsformate2e",
+      "python_file": "tests/integration/test_install_invalid_deps_format_e2e.py",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installinvaliddepsformate2e"
+    },
+    {
+      "module": "test/integration/test/install_local_bundle_e2e",
+      "go_package": "internal/installlocalbundlee2e",
+      "python_file": "tests/integration/test_install_local_bundle_e2e.py",
+      "python_lines": 1082,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installlocalbundlee2e"
+    },
+    {
+      "module": "test/integration/test/install_silent_skip_e2e",
+      "go_package": "internal/installsilentskipe2e",
+      "python_file": "tests/integration/test_install_silent_skip_e2e.py",
+      "python_lines": 179,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installsilentskipe2e"
+    },
+    {
+      "module": "test/integration/test/install_subdir_dedup_e2e",
+      "go_package": "internal/installsubdirdedupe2e",
+      "python_file": "tests/integration/test_install_subdir_dedup_e2e.py",
+      "python_lines": 168,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installsubdirdedupe2e"
+    },
+    {
+      "module": "test/integration/test/install_verbose_redaction_e2e",
+      "go_package": "internal/installverboseredactione2e",
+      "python_file": "tests/integration/test_install_verbose_redaction_e2e.py",
+      "python_lines": 139,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installverboseredactione2e"
+    },
+    {
+      "module": "test/integration/test/install_with_links",
+      "go_package": "internal/installwithlinks",
+      "python_file": "tests/integration/test_install_with_links.py",
+      "python_lines": 370,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installwithlinks"
+    },
+    {
+      "module": "test/integration/test/integration",
+      "go_package": "internal/integration",
+      "python_file": "tests/integration/test_integration.py",
+      "python_lines": 95,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration"
+    },
+    {
+      "module": "test/integration/test/intra_package_cleanup",
+      "go_package": "internal/intrapackagecleanup",
+      "python_file": "tests/integration/test_intra_package_cleanup.py",
+      "python_lines": 207,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/intrapackagecleanup"
+    },
+    {
+      "module": "test/integration/test/link_rewrite_e2e",
+      "go_package": "internal/linkrewritee2e",
+      "python_file": "tests/integration/test_link_rewrite_e2e.py",
+      "python_lines": 421,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/linkrewritee2e"
+    },
+    {
+      "module": "test/integration/test/llm_runtime_integration",
+      "go_package": "internal/llmruntimeintegration",
+      "python_file": "tests/integration/test_llm_runtime_integration.py",
+      "python_lines": 136,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/llmruntimeintegration"
+    },
+    {
+      "module": "test/integration/test/local_content_audit",
+      "go_package": "internal/localcontentaudit",
+      "python_file": "tests/integration/test_local_content_audit.py",
+      "python_lines": 281,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/localcontentaudit"
+    },
+    {
+      "module": "test/integration/test/local_install",
+      "go_package": "internal/localinstall",
+      "python_file": "tests/integration/test_local_install.py",
+      "python_lines": 701,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/localinstall"
+    },
+    {
+      "module": "test/integration/test/marker_registry_sync",
+      "go_package": "internal/markerregistrysync",
+      "python_file": "tests/integration/test_marker_registry_sync.py",
+      "python_lines": 232,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/markerregistrysync"
+    },
+    {
+      "module": "test/integration/test/marketplace_e2e",
+      "go_package": "internal/marketplacee2e",
+      "python_file": "tests/integration/test_marketplace_e2e.py",
+      "python_lines": 142,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplacee2e"
+    },
+    {
+      "module": "test/integration/test/marketplace_plugin_integration",
+      "go_package": "internal/marketplacepluginintegration",
+      "python_file": "tests/integration/test_marketplace_plugin_integration.py",
+      "python_lines": 538,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplacepluginintegration"
+    },
+    {
+      "module": "test/integration/test/mcp_env_var_copilot_e2e",
+      "go_package": "internal/mcpenvvarcopilote2e",
+      "python_file": "tests/integration/test_mcp_env_var_copilot_e2e.py",
+      "python_lines": 333,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpenvvarcopilote2e"
+    },
+    {
+      "module": "test/integration/test/mcp_env_var_headers_e2e",
+      "go_package": "internal/mcpenvvarheaderse2e",
+      "python_file": "tests/integration/test_mcp_env_var_headers_e2e.py",
+      "python_lines": 135,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpenvvarheaderse2e"
+    },
+    {
+      "module": "test/integration/test/mcp_registry_e2e",
+      "go_package": "internal/mcpregistrye2e",
+      "python_file": "tests/integration/test_mcp_registry_e2e.py",
+      "python_lines": 723,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpregistrye2e"
+    },
+    {
+      "module": "test/integration/test/mixed_deps",
+      "go_package": "internal/mixeddeps",
+      "python_file": "tests/integration/test_mixed_deps.py",
+      "python_lines": 237,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mixeddeps"
+    },
+    {
+      "module": "test/integration/test/multi_runtime_integration",
+      "go_package": "internal/multiruntimeintegration",
+      "python_file": "tests/integration/test_multi_runtime_integration.py",
+      "python_lines": 105,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/multiruntimeintegration"
+    },
+    {
+      "module": "test/integration/test/pack_unified",
+      "go_package": "internal/packunified",
+      "python_file": "tests/integration/test_pack_unified.py",
+      "python_lines": 244,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/packunified"
+    },
+    {
+      "module": "test/integration/test/pack_unpack_e2e",
+      "go_package": "internal/packunpacke2e",
+      "python_file": "tests/integration/test_pack_unpack_e2e.py",
+      "python_lines": 108,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/packunpacke2e"
+    },
+    {
+      "module": "test/integration/test/plugin_e2e",
+      "go_package": "internal/plugine2e",
+      "python_file": "tests/integration/test_plugin_e2e.py",
+      "python_lines": 815,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/plugine2e"
+    },
+    {
+      "module": "test/integration/test/policy_discovery_e2e",
+      "go_package": "internal/policydiscoverye2e",
+      "python_file": "tests/integration/test_policy_discovery_e2e.py",
+      "python_lines": 300,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policydiscoverye2e"
+    },
+    {
+      "module": "test/integration/test/policy_install_e2e",
+      "go_package": "internal/policyinstalle2e",
+      "python_file": "tests/integration/test_policy_install_e2e.py",
+      "python_lines": 1178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policyinstalle2e"
+    },
+    {
+      "module": "test/integration/test/registry",
+      "go_package": "internal/registry",
+      "python_file": "tests/integration/test_registry.py",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/registry"
+    },
+    {
+      "module": "test/integration/test/registry_client_integration",
+      "go_package": "internal/registryclientintegration",
+      "python_file": "tests/integration/test_registry_client_integration.py",
+      "python_lines": 256,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/registryclientintegration"
+    },
+    {
+      "module": "test/integration/test/runnable_prompts_integration",
+      "go_package": "internal/runnablepromptsintegration",
+      "python_file": "tests/integration/test_runnable_prompts_integration.py",
+      "python_lines": 309,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runnablepromptsintegration"
+    },
+    {
+      "module": "test/integration/test/runtime_smoke",
+      "go_package": "internal/runtimesmoke",
+      "python_file": "tests/integration/test_runtime_smoke.py",
+      "python_lines": 313,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimesmoke"
+    },
+    {
+      "module": "test/integration/test/selective_install_mcp",
+      "go_package": "internal/selectiveinstallmcp",
+      "python_file": "tests/integration/test_selective_install_mcp.py",
+      "python_lines": 591,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/selectiveinstallmcp"
+    },
+    {
+      "module": "test/integration/test/skill_bundle_live",
+      "go_package": "internal/skillbundlelive",
+      "python_file": "tests/integration/test_skill_bundle_live.py",
+      "python_lines": 603,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/skillbundlelive"
+    },
+    {
+      "module": "test/integration/test/skill_install",
+      "go_package": "internal/skillinstall",
+      "python_file": "tests/integration/test_skill_install.py",
+      "python_lines": 294,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/skillinstall"
+    },
+    {
+      "module": "test/integration/test/skill_integration",
+      "go_package": "internal/skillintegration",
+      "python_file": "tests/integration/test_skill_integration.py",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/skillintegration"
+    },
+    {
+      "module": "test/integration/test/target_resolution_e2e",
+      "go_package": "internal/targetresolutione2e",
+      "python_file": "tests/integration/test_target_resolution_e2e.py",
+      "python_lines": 497,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/targetresolutione2e"
+    },
+    {
+      "module": "test/integration/test/transitive_chain_e2e",
+      "go_package": "internal/transitivechaine2e",
+      "python_file": "tests/integration/test_transitive_chain_e2e.py",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/transitivechaine2e"
+    },
+    {
+      "module": "test/integration/test/transport_selection_integration",
+      "go_package": "internal/transportselectionintegration",
+      "python_file": "tests/integration/test_transport_selection_integration.py",
+      "python_lines": 214,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/transportselectionintegration"
+    },
+    {
+      "module": "test/integration/test/uninstall_dry_run_e2e",
+      "go_package": "internal/uninstalldryrune2e",
+      "python_file": "tests/integration/test_uninstall_dry_run_e2e.py",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/uninstalldryrune2e"
+    },
+    {
+      "module": "test/integration/test/uninstall_multi_e2e",
+      "go_package": "internal/uninstallmultie2e",
+      "python_file": "tests/integration/test_uninstall_multi_e2e.py",
+      "python_lines": 185,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/uninstallmultie2e"
+    },
+    {
+      "module": "test/integration/test/update_e2e",
+      "go_package": "internal/updatee2e",
+      "python_file": "tests/integration/test_update_e2e.py",
+      "python_lines": 310,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/updatee2e"
+    },
+    {
+      "module": "test/integration/test/version_notification",
+      "go_package": "internal/versionnotification",
+      "python_file": "tests/integration/test_version_notification.py",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/versionnotification"
+    },
+    {
+      "module": "test/integration/test/virtual_package_orphan_detection",
+      "go_package": "internal/virtualpackageorphandetection",
+      "python_file": "tests/integration/test_virtual_package_orphan_detection.py",
+      "python_lines": 611,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/virtualpackageorphandetection"
+    },
+    {
+      "module": "test/manual_workflow_script",
+      "go_package": "internal/manualworkflowscript",
+      "python_file": "tests/manual_workflow_script.py",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/manualworkflowscript"
+    },
+    {
+      "module": "test/noninteractive_workflow_test",
+      "go_package": "internal/noninteractiveworkflowtest",
+      "python_file": "tests/noninteractive_workflow_test.py",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/noninteractiveworkflowtest"
+    },
+    {
+      "module": "test/test/apm_resolver",
+      "go_package": "internal/apmresolver",
+      "python_file": "tests/test_apm_resolver.py",
+      "python_lines": 609,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/apmresolver"
+    },
+    {
+      "module": "test/test/codex_docker_args_fix",
+      "go_package": "internal/codexdockerargsfix",
+      "python_file": "tests/test_codex_docker_args_fix.py",
+      "python_lines": 517,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/codexdockerargsfix"
+    },
+    {
+      "module": "test/test/codex_empty_string_and_defaults",
+      "go_package": "internal/codexemptystringanddefaults",
+      "python_file": "tests/test_codex_empty_string_and_defaults.py",
+      "python_lines": 223,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/codexemptystringanddefaults"
+    },
+    {
+      "module": "test/test/collision_integration",
+      "go_package": "internal/collisionintegration",
+      "python_file": "tests/test_collision_integration.py",
+      "python_lines": 146,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/collisionintegration"
+    },
+    {
+      "module": "test/test/console",
+      "go_package": "internal/console",
+      "python_file": "tests/test_console.py",
+      "python_lines": 26,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/console"
+    },
+    {
+      "module": "test/test/distributed_compilation",
+      "go_package": "internal/distributedcompilation",
+      "python_file": "tests/test_distributed_compilation.py",
+      "python_lines": 298,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/distributedcompilation"
+    },
+    {
+      "module": "test/test/empty_string_and_defaults",
+      "go_package": "internal/emptystringanddefaults",
+      "python_file": "tests/test_empty_string_and_defaults.py",
+      "python_lines": 349,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/emptystringanddefaults"
+    },
+    {
+      "module": "test/test/enhanced_discovery",
+      "go_package": "internal/enhanceddiscovery",
+      "python_file": "tests/test_enhanced_discovery.py",
+      "python_lines": 624,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/enhanceddiscovery"
+    },
+    {
+      "module": "test/test/github_downloader_token_precedence",
+      "go_package": "internal/githubdownloadertokenprecedence",
+      "python_file": "tests/test_github_downloader_token_precedence.py",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/githubdownloadertokenprecedence"
+    },
+    {
+      "module": "test/test/lockfile",
+      "go_package": "internal/lockfile",
+      "python_file": "tests/test_lockfile.py",
+      "python_lines": 381,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/lockfile"
+    },
+    {
+      "module": "test/test/runnable_prompts",
+      "go_package": "internal/runnableprompts",
+      "python_file": "tests/test_runnable_prompts.py",
+      "python_lines": 483,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runnableprompts"
+    },
+    {
+      "module": "test/test/runtime_manager_token_precedence",
+      "go_package": "internal/runtimemanagertokenprecedence",
+      "python_file": "tests/test_runtime_manager_token_precedence.py",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimemanagertokenprecedence"
+    },
+    {
+      "module": "test/test/token_manager",
+      "go_package": "internal/tokenmanager",
+      "python_file": "tests/test_token_manager.py",
+      "python_lines": 669,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/tokenmanager"
+    },
+    {
+      "module": "test/test/virtual_package_multi_install",
+      "go_package": "internal/virtualpackagemultiinstall",
+      "python_file": "tests/test_virtual_package_multi_install.py",
+      "python_lines": 203,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/virtualpackagemultiinstall"
+    },
+    {
+      "module": "test/bundle/test/local_bundle",
+      "go_package": "internal/bundle/localbundle",
+      "python_file": "tests/unit/bundle/test_local_bundle.py",
+      "python_lines": 469,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/bundle/localbundle"
+    },
+    {
+      "module": "test/bundle/test/plugin_exporter_lockfile",
+      "go_package": "internal/bundle/pluginexporterlockfile",
+      "python_file": "tests/unit/bundle/test_plugin_exporter_lockfile.py",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/bundle/pluginexporterlockfile"
+    },
+    {
+      "module": "test/cache/test/cache_cli",
+      "go_package": "internal/cache/cachecli",
+      "python_file": "tests/unit/cache/test_cache_cli.py",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/cachecli"
+    },
+    {
+      "module": "test/cache/test/git_cache",
+      "go_package": "internal/cache/gitcache",
+      "python_file": "tests/unit/cache/test_git_cache.py",
+      "python_lines": 375,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/gitcache"
+    },
+    {
+      "module": "test/cache/test/git_env",
+      "go_package": "internal/cache/gitenv",
+      "python_file": "tests/unit/cache/test_git_env.py",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/gitenv"
+    },
+    {
+      "module": "test/cache/test/http_cache",
+      "go_package": "internal/cache/httpcache",
+      "python_file": "tests/unit/cache/test_http_cache.py",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/httpcache"
+    },
+    {
+      "module": "test/cache/test/locking",
+      "go_package": "internal/cache/locking",
+      "python_file": "tests/unit/cache/test_locking.py",
+      "python_lines": 150,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/locking"
+    },
+    {
+      "module": "test/cache/test/proxy_compat",
+      "go_package": "internal/cache/proxycompat",
+      "python_file": "tests/unit/cache/test_proxy_compat.py",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/proxycompat"
+    },
+    {
+      "module": "test/cache/test/url_normalize",
+      "go_package": "internal/cache/urlnormalize",
+      "python_file": "tests/unit/cache/test_url_normalize.py",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cache/urlnormalize"
+    },
+    {
+      "module": "test/commands/conftest",
+      "go_package": "internal/commands/conftest",
+      "python_file": "tests/unit/commands/conftest.py",
+      "python_lines": 7,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/conftest"
+    },
+    {
+      "module": "test/commands/test/deps_cli_helpers",
+      "go_package": "internal/commands/depsclihelpers",
+      "python_file": "tests/unit/commands/test_deps_cli_helpers.py",
+      "python_lines": 161,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/depsclihelpers"
+    },
+    {
+      "module": "test/commands/test/experimental_command",
+      "go_package": "internal/commands/experimentalcommand",
+      "python_file": "tests/unit/commands/test_experimental_command.py",
+      "python_lines": 560,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/experimentalcommand"
+    },
+    {
+      "module": "test/commands/test/helpers_version",
+      "go_package": "internal/commands/helpersversion",
+      "python_file": "tests/unit/commands/test_helpers_version.py",
+      "python_lines": 153,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/helpersversion"
+    },
+    {
+      "module": "test/commands/test/install_context",
+      "go_package": "internal/commands/installcontext",
+      "python_file": "tests/unit/commands/test_install_context.py",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/installcontext"
+    },
+    {
+      "module": "test/commands/test/install_resolve_refs",
+      "go_package": "internal/commands/installresolverefs",
+      "python_file": "tests/unit/commands/test_install_resolve_refs.py",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/installresolverefs"
+    },
+    {
+      "module": "test/commands/test/marketplace_check",
+      "go_package": "internal/commands/marketplacecheck",
+      "python_file": "tests/unit/commands/test_marketplace_check.py",
+      "python_lines": 444,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplacecheck"
+    },
+    {
+      "module": "test/commands/test/marketplace_doctor",
+      "go_package": "internal/commands/marketplacedoctor",
+      "python_file": "tests/unit/commands/test_marketplace_doctor.py",
+      "python_lines": 643,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplacedoctor"
+    },
+    {
+      "module": "test/commands/test/marketplace_init",
+      "go_package": "internal/commands/marketplaceinit",
+      "python_file": "tests/unit/commands/test_marketplace_init.py",
+      "python_lines": 224,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplaceinit"
+    },
+    {
+      "module": "test/commands/test/marketplace_migrate",
+      "go_package": "internal/commands/marketplacemigrate",
+      "python_file": "tests/unit/commands/test_marketplace_migrate.py",
+      "python_lines": 124,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplacemigrate"
+    },
+    {
+      "module": "test/commands/test/marketplace_outdated",
+      "go_package": "internal/commands/marketplaceoutdated",
+      "python_file": "tests/unit/commands/test_marketplace_outdated.py",
+      "python_lines": 394,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplaceoutdated"
+    },
+    {
+      "module": "test/commands/test/marketplace_plugin",
+      "go_package": "internal/commands/marketplaceplugin",
+      "python_file": "tests/unit/commands/test_marketplace_plugin.py",
+      "python_lines": 638,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplaceplugin"
+    },
+    {
+      "module": "test/commands/test/marketplace_publish",
+      "go_package": "internal/commands/marketplacepublish",
+      "python_file": "tests/unit/commands/test_marketplace_publish.py",
+      "python_lines": 984,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/marketplacepublish"
+    },
+    {
+      "module": "test/commands/test/policy_status",
+      "go_package": "internal/commands/policystatus",
+      "python_file": "tests/unit/commands/test_policy_status.py",
+      "python_lines": 481,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/policystatus"
+    },
+    {
+      "module": "test/commands/test/unpack_deprecation",
+      "go_package": "internal/commands/unpackdeprecation",
+      "python_file": "tests/unit/commands/test_unpack_deprecation.py",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/unpackdeprecation"
+    },
+    {
+      "module": "test/commands/test/update_command",
+      "go_package": "internal/commands/updatecommand",
+      "python_file": "tests/unit/commands/test_update_command.py",
+      "python_lines": 184,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commands/updatecommand"
+    },
+    {
+      "module": "test/compilation/test/agents_compiler_coverage",
+      "go_package": "internal/compilation/agentscompilercoverage",
+      "python_file": "tests/unit/compilation/test_agents_compiler_coverage.py",
+      "python_lines": 675,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/agentscompilercoverage"
+    },
+    {
+      "module": "test/compilation/test/build_id",
+      "go_package": "internal/compilation/buildid",
+      "python_file": "tests/unit/compilation/test_build_id.py",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/buildid"
+    },
+    {
+      "module": "test/compilation/test/claude_formatter",
+      "go_package": "internal/compilation/claudeformatter",
+      "python_file": "tests/unit/compilation/test_claude_formatter.py",
+      "python_lines": 498,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/claudeformatter"
+    },
+    {
+      "module": "test/compilation/test/compilation",
+      "go_package": "internal/compilation/compilation",
+      "python_file": "tests/unit/compilation/test_compilation.py",
+      "python_lines": 546,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/compilation"
+    },
+    {
+      "module": "test/compilation/test/compile_target_flag",
+      "go_package": "internal/compilation/compiletargetflag",
+      "python_file": "tests/unit/compilation/test_compile_target_flag.py",
+      "python_lines": 1706,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/compiletargetflag"
+    },
+    {
+      "module": "test/compilation/test/constitution_injector",
+      "go_package": "internal/compilation/constitutioninjector",
+      "python_file": "tests/unit/compilation/test_constitution_injector.py",
+      "python_lines": 305,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/constitutioninjector"
+    },
+    {
+      "module": "test/compilation/test/context_optimizer",
+      "go_package": "internal/compilation/contextoptimizer",
+      "python_file": "tests/unit/compilation/test_context_optimizer.py",
+      "python_lines": 902,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/contextoptimizer"
+    },
+    {
+      "module": "test/compilation/test/context_optimizer_cache_and_placement",
+      "go_package": "internal/compilation/contextoptimizercacheandplacement",
+      "python_file": "tests/unit/compilation/test_context_optimizer_cache_and_placement.py",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/contextoptimizercacheandplacement"
+    },
+    {
+      "module": "test/compilation/test/coverage_guarantees",
+      "go_package": "internal/compilation/coverageguarantees",
+      "python_file": "tests/unit/compilation/test_coverage_guarantees.py",
+      "python_lines": 450,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/coverageguarantees"
+    },
+    {
+      "module": "test/compilation/test/gemini_formatter",
+      "go_package": "internal/compilation/geminiformatter",
+      "python_file": "tests/unit/compilation/test_gemini_formatter.py",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/geminiformatter"
+    },
+    {
+      "module": "test/compilation/test/global_instructions_1072",
+      "go_package": "internal/compilation/globalinstructions1072",
+      "python_file": "tests/unit/compilation/test_global_instructions_1072.py",
+      "python_lines": 401,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/globalinstructions1072"
+    },
+    {
+      "module": "test/compilation/test/link_resolver",
+      "go_package": "internal/compilation/linkresolver",
+      "python_file": "tests/unit/compilation/test_link_resolver.py",
+      "python_lines": 818,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/linkresolver"
+    },
+    {
+      "module": "test/compilation/test/mathematical_guarantees",
+      "go_package": "internal/compilation/mathematicalguarantees",
+      "python_file": "tests/unit/compilation/test_mathematical_guarantees.py",
+      "python_lines": 254,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/mathematicalguarantees"
+    },
+    {
+      "module": "test/compilation/test/mathematical_optimization",
+      "go_package": "internal/compilation/mathematicaloptimization",
+      "python_file": "tests/unit/compilation/test_mathematical_optimization.py",
+      "python_lines": 593,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/mathematicaloptimization"
+    },
+    {
+      "module": "test/compilation/test/output_writer",
+      "go_package": "internal/compilation/outputwriter",
+      "python_file": "tests/unit/compilation/test_output_writer.py",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/outputwriter"
+    },
+    {
+      "module": "test/compilation/test/sibling_directory_coverage",
+      "go_package": "internal/compilation/siblingdirectorycoverage",
+      "python_file": "tests/unit/compilation/test_sibling_directory_coverage.py",
+      "python_lines": 153,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilation/siblingdirectorycoverage"
+    },
+    {
+      "module": "test/core/test/build_orchestrator",
+      "go_package": "internal/core/buildorchestrator",
+      "python_file": "tests/unit/core/test_build_orchestrator.py",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/buildorchestrator"
+    },
+    {
+      "module": "test/core/test/error_renderer",
+      "go_package": "internal/core/errorrenderer",
+      "python_file": "tests/unit/core/test_error_renderer.py",
+      "python_lines": 180,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/errorrenderer"
+    },
+    {
+      "module": "test/core/test/experimental",
+      "go_package": "internal/core/experimental",
+      "python_file": "tests/unit/core/test_experimental.py",
+      "python_lines": 569,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/experimental"
+    },
+    {
+      "module": "test/core/test/scope",
+      "go_package": "internal/core/scope",
+      "python_file": "tests/unit/core/test_scope.py",
+      "python_lines": 390,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/scope"
+    },
+    {
+      "module": "test/core/test/target_detection",
+      "go_package": "internal/core/targetdetection",
+      "python_file": "tests/unit/core/test_target_detection.py",
+      "python_lines": 935,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/targetdetection"
+    },
+    {
+      "module": "test/core/test/target_resolution_v2",
+      "go_package": "internal/core/targetresolutionv2",
+      "python_file": "tests/unit/core/test_target_resolution_v2.py",
+      "python_lines": 290,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/core/targetresolutionv2"
+    },
+    {
+      "module": "test/deps/test/apm_resolver_parallel",
+      "go_package": "internal/deps/apmresolverparallel",
+      "python_file": "tests/unit/deps/test_apm_resolver_parallel.py",
+      "python_lines": 286,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/apmresolverparallel"
+    },
+    {
+      "module": "test/deps/test/artifactory_orchestrator",
+      "go_package": "internal/deps/artifactoryorchestrator",
+      "python_file": "tests/unit/deps/test_artifactory_orchestrator.py",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/artifactoryorchestrator"
+    },
+    {
+      "module": "test/deps/test/git_auth_env",
+      "go_package": "internal/deps/gitauthenv",
+      "python_file": "tests/unit/deps/test_git_auth_env.py",
+      "python_lines": 189,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/gitauthenv"
+    },
+    {
+      "module": "test/deps/test/git_reference_resolver",
+      "go_package": "internal/deps/gitreferenceresolver",
+      "python_file": "tests/unit/deps/test_git_reference_resolver.py",
+      "python_lines": 276,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/gitreferenceresolver"
+    },
+    {
+      "module": "test/deps/test/github_downloader_single_file_sha",
+      "go_package": "internal/deps/githubdownloadersinglefilesha",
+      "python_file": "tests/unit/deps/test_github_downloader_single_file_sha.py",
+      "python_lines": 206,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/githubdownloadersinglefilesha"
+    },
+    {
+      "module": "test/deps/test/github_downloader_validation",
+      "go_package": "internal/deps/githubdownloadervalidation",
+      "python_file": "tests/unit/deps/test_github_downloader_validation.py",
+      "python_lines": 758,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/githubdownloadervalidation"
+    },
+    {
+      "module": "test/deps/test/host_backends",
+      "go_package": "internal/deps/hostbackends",
+      "python_file": "tests/unit/deps/test_host_backends.py",
+      "python_lines": 413,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/hostbackends"
+    },
+    {
+      "module": "test/deps/test/shared_clone_cache",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_file": "tests/unit/deps/test_shared_clone_cache.py",
+      "python_lines": 1651,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/sharedclonecache"
+    },
+    {
+      "module": "test/deps/test/stamp_plugin_version",
+      "go_package": "internal/deps/stamppluginversion",
+      "python_file": "tests/unit/deps/test_stamp_plugin_version.py",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps/stamppluginversion"
+    },
+    {
+      "module": "test/install/heals/test/branch_ref_drift_heal",
+      "go_package": "internal/install/heals/branchrefdriftheal",
+      "python_file": "tests/unit/install/heals/test_branch_ref_drift_heal.py",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/heals/branchrefdriftheal"
+    },
+    {
+      "module": "test/install/heals/test/buggy_lockfile_recovery_heal",
+      "go_package": "internal/install/heals/buggylockfilerecoveryheal",
+      "python_file": "tests/unit/install/heals/test_buggy_lockfile_recovery_heal.py",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/heals/buggylockfilerecoveryheal"
+    },
+    {
+      "module": "test/install/heals/test/chain_dispatch",
+      "go_package": "internal/install/heals/chaindispatch",
+      "python_file": "tests/unit/install/heals/test_chain_dispatch.py",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/heals/chaindispatch"
+    },
+    {
+      "module": "test/install/phases/test/integrate_phase",
+      "go_package": "internal/install/phases/integratephase",
+      "python_file": "tests/unit/install/phases/test_integrate_phase.py",
+      "python_lines": 157,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phases/integratephase"
+    },
+    {
+      "module": "test/install/phases/test/read_yaml_targets_list_form",
+      "go_package": "internal/install/phases/readyamltargetslistform",
+      "python_file": "tests/unit/install/phases/test_read_yaml_targets_list_form.py",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phases/readyamltargetslistform"
+    },
+    {
+      "module": "test/install/phases/test/resolve_tui_callbacks",
+      "go_package": "internal/install/phases/resolvetuicallbacks",
+      "python_file": "tests/unit/install/phases/test_resolve_tui_callbacks.py",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phases/resolvetuicallbacks"
+    },
+    {
+      "module": "test/install/phases/test/targets_phase",
+      "go_package": "internal/install/phases/targetsphase",
+      "python_file": "tests/unit/install/phases/test_targets_phase.py",
+      "python_lines": 398,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phases/targetsphase"
+    },
+    {
+      "module": "test/install/phases/test/targets_phase_v2",
+      "go_package": "internal/install/phases/targetsphasev2",
+      "python_file": "tests/unit/install/phases/test_targets_phase_v2.py",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phases/targetsphasev2"
+    },
+    {
+      "module": "test/install/test/architecture_invariants",
+      "go_package": "internal/install/architectureinvariants",
+      "python_file": "tests/unit/install/test_architecture_invariants.py",
+      "python_lines": 197,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/architectureinvariants"
+    },
+    {
+      "module": "test/install/test/branch_ref_drift",
+      "go_package": "internal/install/branchrefdrift",
+      "python_file": "tests/unit/install/test_branch_ref_drift.py",
+      "python_lines": 487,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/branchrefdrift"
+    },
+    {
+      "module": "test/install/test/cache_pin",
+      "go_package": "internal/install/cachepin",
+      "python_file": "tests/unit/install/test_cache_pin.py",
+      "python_lines": 262,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/cachepin"
+    },
+    {
+      "module": "test/install/test/cached_label",
+      "go_package": "internal/install/cachedlabel",
+      "python_file": "tests/unit/install/test_cached_label.py",
+      "python_lines": 87,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/cachedlabel"
+    },
+    {
+      "module": "test/install/test/command_logger_elapsed",
+      "go_package": "internal/install/commandloggerelapsed",
+      "python_file": "tests/unit/install/test_command_logger_elapsed.py",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/commandloggerelapsed"
+    },
+    {
+      "module": "test/install/test/direct_dep_failure",
+      "go_package": "internal/install/directdepfailure",
+      "python_file": "tests/unit/install/test_direct_dep_failure.py",
+      "python_lines": 132,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/directdepfailure"
+    },
+    {
+      "module": "test/install/test/drift",
+      "go_package": "internal/install/drift",
+      "python_file": "tests/unit/install/test_drift.py",
+      "python_lines": 409,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/drift"
+    },
+    {
+      "module": "test/install/test/drift_perf",
+      "go_package": "internal/install/driftperf",
+      "python_file": "tests/unit/install/test_drift_perf.py",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/driftperf"
+    },
+    {
+      "module": "test/install/test/dry_run_policy",
+      "go_package": "internal/install/dryrunpolicy",
+      "python_file": "tests/unit/install/test_dry_run_policy.py",
+      "python_lines": 787,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/dryrunpolicy"
+    },
+    {
+      "module": "test/install/test/errors",
+      "go_package": "internal/install/errors",
+      "python_file": "tests/unit/install/test_errors.py",
+      "python_lines": 36,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/errors"
+    },
+    {
+      "module": "test/install/test/file_scanner",
+      "go_package": "internal/install/filescanner",
+      "python_file": "tests/unit/install/test_file_scanner.py",
+      "python_lines": 190,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/filescanner"
+    },
+    {
+      "module": "test/install/test/frozen",
+      "go_package": "internal/install/frozen",
+      "python_file": "tests/unit/install/test_frozen.py",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/frozen"
+    },
+    {
+      "module": "test/install/test/install_cmd_auth_rendering",
+      "go_package": "internal/install/installcmdauthrendering",
+      "python_file": "tests/unit/install/test_install_cmd_auth_rendering.py",
+      "python_lines": 75,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installcmdauthrendering"
+    },
+    {
+      "module": "test/install/test/install_local_bundle",
+      "go_package": "internal/install/installlocalbundle",
+      "python_file": "tests/unit/install/test_install_local_bundle.py",
+      "python_lines": 517,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installlocalbundle"
+    },
+    {
+      "module": "test/install/test/install_local_bundle_issue1207",
+      "go_package": "internal/install/installlocalbundleissue1207",
+      "python_file": "tests/unit/install/test_install_local_bundle_issue1207.py",
+      "python_lines": 669,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installlocalbundleissue1207"
+    },
+    {
+      "module": "test/install/test/install_logger_policy",
+      "go_package": "internal/install/installloggerpolicy",
+      "python_file": "tests/unit/install/test_install_logger_policy.py",
+      "python_lines": 747,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installloggerpolicy"
+    },
+    {
+      "module": "test/install/test/install_pkg_policy_rollback",
+      "go_package": "internal/install/installpkgpolicyrollback",
+      "python_file": "tests/unit/install/test_install_pkg_policy_rollback.py",
+      "python_lines": 600,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installpkgpolicyrollback"
+    },
+    {
+      "module": "test/install/test/install_target_copilot_cowork_e2e",
+      "go_package": "internal/install/installtargetcopilotcoworke2e",
+      "python_file": "tests/unit/install/test_install_target_copilot_cowork_e2e.py",
+      "python_lines": 543,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/installtargetcopilotcoworke2e"
+    },
+    {
+      "module": "test/install/test/mcp_lookup_heartbeat",
+      "go_package": "internal/install/mcplookupheartbeat",
+      "python_file": "tests/unit/install/test_mcp_lookup_heartbeat.py",
+      "python_lines": 45,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/mcplookupheartbeat"
+    },
+    {
+      "module": "test/install/test/mcp_preflight_policy",
+      "go_package": "internal/install/mcppreflightpolicy",
+      "python_file": "tests/unit/install/test_mcp_preflight_policy.py",
+      "python_lines": 639,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/mcppreflightpolicy"
+    },
+    {
+      "module": "test/install/test/mcp_registry_module",
+      "go_package": "internal/install/mcpregistrymodule",
+      "python_file": "tests/unit/install/test_mcp_registry_module.py",
+      "python_lines": 360,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/mcpregistrymodule"
+    },
+    {
+      "module": "test/install/test/mcp_warnings",
+      "go_package": "internal/install/mcpwarnings",
+      "python_file": "tests/unit/install/test_mcp_warnings.py",
+      "python_lines": 308,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/mcpwarnings"
+    },
+    {
+      "module": "test/install/test/no_policy_flag",
+      "go_package": "internal/install/nopolicyflag",
+      "python_file": "tests/unit/install/test_no_policy_flag.py",
+      "python_lines": 648,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/nopolicyflag"
+    },
+    {
+      "module": "test/install/test/phase_timing",
+      "go_package": "internal/install/phasetiming",
+      "python_file": "tests/unit/install/test_phase_timing.py",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/phasetiming"
+    },
+    {
+      "module": "test/install/test/pipeline_auth_preflight",
+      "go_package": "internal/install/pipelineauthpreflight",
+      "python_file": "tests/unit/install/test_pipeline_auth_preflight.py",
+      "python_lines": 353,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/pipelineauthpreflight"
+    },
+    {
+      "module": "test/install/test/plan",
+      "go_package": "internal/install/plan",
+      "python_file": "tests/unit/install/test_plan.py",
+      "python_lines": 291,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/plan"
+    },
+    {
+      "module": "test/install/test/policy_gate_phase",
+      "go_package": "internal/install/policygatephase",
+      "python_file": "tests/unit/install/test_policy_gate_phase.py",
+      "python_lines": 856,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/policygatephase"
+    },
+    {
+      "module": "test/install/test/policy_target_check_phase",
+      "go_package": "internal/install/policytargetcheckphase",
+      "python_file": "tests/unit/install/test_policy_target_check_phase.py",
+      "python_lines": 493,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/policytargetcheckphase"
+    },
+    {
+      "module": "test/install/test/resolving_heartbeat",
+      "go_package": "internal/install/resolvingheartbeat",
+      "python_file": "tests/unit/install/test_resolving_heartbeat.py",
+      "python_lines": 31,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/resolvingheartbeat"
+    },
+    {
+      "module": "test/install/test/service",
+      "go_package": "internal/install/service",
+      "python_file": "tests/unit/install/test_service.py",
+      "python_lines": 151,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/service"
+    },
+    {
+      "module": "test/install/test/services",
+      "go_package": "internal/install/services",
+      "python_file": "tests/unit/install/test_services.py",
+      "python_lines": 553,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/services"
+    },
+    {
+      "module": "test/install/test/services_rendering",
+      "go_package": "internal/install/servicesrendering",
+      "python_file": "tests/unit/install/test_services_rendering.py",
+      "python_lines": 351,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/servicesrendering"
+    },
+    {
+      "module": "test/install/test/short_sha",
+      "go_package": "internal/install/shortsha",
+      "python_file": "tests/unit/install/test_short_sha.py",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/shortsha"
+    },
+    {
+      "module": "test/install/test/skill_path_migration",
+      "go_package": "internal/install/skillpathmigration",
+      "python_file": "tests/unit/install/test_skill_path_migration.py",
+      "python_lines": 519,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/skillpathmigration"
+    },
+    {
+      "module": "test/install/test/sources_classification",
+      "go_package": "internal/install/sourcesclassification",
+      "python_file": "tests/unit/install/test_sources_classification.py",
+      "python_lines": 38,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/sourcesclassification"
+    },
+    {
+      "module": "test/install/test/transitive_mcp_policy",
+      "go_package": "internal/install/transitivemcppolicy",
+      "python_file": "tests/unit/install/test_transitive_mcp_policy.py",
+      "python_lines": 460,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/transitivemcppolicy"
+    },
+    {
+      "module": "test/install/test/user_scope_rejection_reason",
+      "go_package": "internal/install/userscoperejectionreason",
+      "python_file": "tests/unit/install/test_user_scope_rejection_reason.py",
+      "python_lines": 179,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/userscoperejectionreason"
+    },
+    {
+      "module": "test/install/test/validation_ado_bearer",
+      "go_package": "internal/install/validationadobearer",
+      "python_file": "tests/unit/install/test_validation_ado_bearer.py",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/validationadobearer"
+    },
+    {
+      "module": "test/install/test/validation_credential_env",
+      "go_package": "internal/install/validationcredentialenv",
+      "python_file": "tests/unit/install/test_validation_credential_env.py",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/validationcredentialenv"
+    },
+    {
+      "module": "test/install/test/validation_strict_transport",
+      "go_package": "internal/install/validationstricttransport",
+      "python_file": "tests/unit/install/test_validation_strict_transport.py",
+      "python_lines": 182,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/validationstricttransport"
+    },
+    {
+      "module": "test/install/test/validation_tls",
+      "go_package": "internal/install/validationtls",
+      "python_file": "tests/unit/install/test_validation_tls.py",
+      "python_lines": 249,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/install/validationtls"
+    },
+    {
+      "module": "test/integration/test/agent_integrator",
+      "go_package": "internal/integration/agentintegrator",
+      "python_file": "tests/unit/integration/test_agent_integrator.py",
+      "python_lines": 1396,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/agentintegrator"
+    },
+    {
+      "module": "test/integration/test/base_integrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_file": "tests/unit/integration/test_base_integrator.py",
+      "python_lines": 1160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/baseintegrator"
+    },
+    {
+      "module": "test/integration/test/cleanup_helper",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_file": "tests/unit/integration/test_cleanup_helper.py",
+      "python_lines": 520,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/cleanuphelper"
+    },
+    {
+      "module": "test/integration/test/command_integrator",
+      "go_package": "internal/integration/commandintegrator",
+      "python_file": "tests/unit/integration/test_command_integrator.py",
+      "python_lines": 1702,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/commandintegrator"
+    },
+    {
+      "module": "test/integration/test/copilot_cowork_paths",
+      "go_package": "internal/integration/copilotcoworkpaths",
+      "python_file": "tests/unit/integration/test_copilot_cowork_paths.py",
+      "python_lines": 444,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/copilotcoworkpaths"
+    },
+    {
+      "module": "test/integration/test/copilot_cowork_target",
+      "go_package": "internal/integration/copilotcoworktarget",
+      "python_file": "tests/unit/integration/test_copilot_cowork_target.py",
+      "python_lines": 564,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/copilotcoworktarget"
+    },
+    {
+      "module": "test/integration/test/data_driven_dispatch",
+      "go_package": "internal/integration/datadrivendispatch",
+      "python_file": "tests/unit/integration/test_data_driven_dispatch.py",
+      "python_lines": 977,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/datadrivendispatch"
+    },
+    {
+      "module": "test/integration/test/deployed_files_manifest",
+      "go_package": "internal/integration/deployedfilesmanifest",
+      "python_file": "tests/unit/integration/test_deployed_files_manifest.py",
+      "python_lines": 1146,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/deployedfilesmanifest"
+    },
+    {
+      "module": "test/integration/test/instruction_integrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_file": "tests/unit/integration/test_instruction_integrator.py",
+      "python_lines": 1277,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/instructionintegrator"
+    },
+    {
+      "module": "test/integration/test/mcp_integrator",
+      "go_package": "internal/integration/mcpintegrator",
+      "python_file": "tests/unit/integration/test_mcp_integrator.py",
+      "python_lines": 733,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/mcpintegrator"
+    },
+    {
+      "module": "test/integration/test/mcp_registry_parallel",
+      "go_package": "internal/integration/mcpregistryparallel",
+      "python_file": "tests/unit/integration/test_mcp_registry_parallel.py",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/mcpregistryparallel"
+    },
+    {
+      "module": "test/integration/test/prompt_integrator",
+      "go_package": "internal/integration/promptintegrator",
+      "python_file": "tests/unit/integration/test_prompt_integrator.py",
+      "python_lines": 386,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/promptintegrator"
+    },
+    {
+      "module": "test/integration/test/scope_install_uninstall",
+      "go_package": "internal/integration/scopeinstalluninstall",
+      "python_file": "tests/unit/integration/test_scope_install_uninstall.py",
+      "python_lines": 969,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/scopeinstalluninstall"
+    },
+    {
+      "module": "test/integration/test/scope_integration",
+      "go_package": "internal/integration/scopeintegration",
+      "python_file": "tests/unit/integration/test_scope_integration.py",
+      "python_lines": 501,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/scopeintegration"
+    },
+    {
+      "module": "test/integration/test/skill_integrator_cowork",
+      "go_package": "internal/integration/skillintegratorcowork",
+      "python_file": "tests/unit/integration/test_skill_integrator_cowork.py",
+      "python_lines": 285,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/skillintegratorcowork"
+    },
+    {
+      "module": "test/integration/test/skill_transformer",
+      "go_package": "internal/integration/skilltransformer",
+      "python_file": "tests/unit/integration/test_skill_transformer.py",
+      "python_lines": 195,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/skilltransformer"
+    },
+    {
+      "module": "test/integration/test/sync_integration_url_normalization",
+      "go_package": "internal/integration/syncintegrationurlnormalization",
+      "python_file": "tests/unit/integration/test_sync_integration_url_normalization.py",
+      "python_lines": 133,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/syncintegrationurlnormalization"
+    },
+    {
+      "module": "test/integration/test/targets",
+      "go_package": "internal/integration/targets",
+      "python_file": "tests/unit/integration/test_targets.py",
+      "python_lines": 349,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/targets"
+    },
+    {
+      "module": "test/integration/test/targets_registry_completeness",
+      "go_package": "internal/integration/targetsregistrycompleteness",
+      "python_file": "tests/unit/integration/test_targets_registry_completeness.py",
+      "python_lines": 212,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/targetsregistrycompleteness"
+    },
+    {
+      "module": "test/integration/test/utils",
+      "go_package": "internal/integration/utils",
+      "python_file": "tests/unit/integration/test_utils.py",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/integration/utils"
+    },
+    {
+      "module": "test/marketplace/conftest",
+      "go_package": "internal/marketplace/conftest",
+      "python_file": "tests/unit/marketplace/conftest.py",
+      "python_lines": 7,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/conftest"
+    },
+    {
+      "module": "test/marketplace/test/apm_yml_marketplace_loader",
+      "go_package": "internal/marketplace/apmymlmarketplaceloader",
+      "python_file": "tests/unit/marketplace/test_apm_yml_marketplace_loader.py",
+      "python_lines": 145,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/apmymlmarketplaceloader"
+    },
+    {
+      "module": "test/marketplace/test/builder",
+      "go_package": "internal/marketplace/builder",
+      "python_file": "tests/unit/marketplace/test_builder.py",
+      "python_lines": 2112,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/builder"
+    },
+    {
+      "module": "test/marketplace/test/builder_logging",
+      "go_package": "internal/marketplace/builderlogging",
+      "python_file": "tests/unit/marketplace/test_builder_logging.py",
+      "python_lines": 378,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/builderlogging"
+    },
+    {
+      "module": "test/marketplace/test/builder_security",
+      "go_package": "internal/marketplace/buildersecurity",
+      "python_file": "tests/unit/marketplace/test_builder_security.py",
+      "python_lines": 265,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/buildersecurity"
+    },
+    {
+      "module": "test/marketplace/test/git_stderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_file": "tests/unit/marketplace/test_git_stderr.py",
+      "python_lines": 430,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/gitstderr"
+    },
+    {
+      "module": "test/marketplace/test/git_utils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_file": "tests/unit/marketplace/test_git_utils.py",
+      "python_lines": 59,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/gitutils"
+    },
+    {
+      "module": "test/marketplace/test/init_template",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_file": "tests/unit/marketplace/test_init_template.py",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/inittemplate"
+    },
+    {
+      "module": "test/marketplace/test/io",
+      "go_package": "internal/marketplace/io",
+      "python_file": "tests/unit/marketplace/test_io.py",
+      "python_lines": 40,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/io"
+    },
+    {
+      "module": "test/marketplace/test/local_path_compose",
+      "go_package": "internal/marketplace/localpathcompose",
+      "python_file": "tests/unit/marketplace/test_local_path_compose.py",
+      "python_lines": 264,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/localpathcompose"
+    },
+    {
+      "module": "test/marketplace/test/lockfile_provenance",
+      "go_package": "internal/marketplace/lockfileprovenance",
+      "python_file": "tests/unit/marketplace/test_lockfile_provenance.py",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/lockfileprovenance"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_client",
+      "go_package": "internal/marketplace/marketplaceclient",
+      "python_file": "tests/unit/marketplace/test_marketplace_client.py",
+      "python_lines": 803,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplaceclient"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_commands",
+      "go_package": "internal/marketplace/marketplacecommands",
+      "python_file": "tests/unit/marketplace/test_marketplace_commands.py",
+      "python_lines": 685,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplacecommands"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_errors",
+      "go_package": "internal/marketplace/marketplaceerrors",
+      "python_file": "tests/unit/marketplace/test_marketplace_errors.py",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplaceerrors"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_install_integration",
+      "go_package": "internal/marketplace/marketplaceinstallintegration",
+      "python_file": "tests/unit/marketplace/test_marketplace_install_integration.py",
+      "python_lines": 384,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplaceinstallintegration"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_models",
+      "go_package": "internal/marketplace/marketplacemodels",
+      "python_file": "tests/unit/marketplace/test_marketplace_models.py",
+      "python_lines": 369,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplacemodels"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_registry",
+      "go_package": "internal/marketplace/marketplaceregistry",
+      "python_file": "tests/unit/marketplace/test_marketplace_registry.py",
+      "python_lines": 136,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplaceregistry"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_resolver",
+      "go_package": "internal/marketplace/marketplaceresolver",
+      "python_file": "tests/unit/marketplace/test_marketplace_resolver.py",
+      "python_lines": 816,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplaceresolver"
+    },
+    {
+      "module": "test/marketplace/test/marketplace_validator",
+      "go_package": "internal/marketplace/marketplacevalidator",
+      "python_file": "tests/unit/marketplace/test_marketplace_validator.py",
+      "python_lines": 210,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/marketplacevalidator"
+    },
+    {
+      "module": "test/marketplace/test/migration_detection",
+      "go_package": "internal/marketplace/migrationdetection",
+      "python_file": "tests/unit/marketplace/test_migration_detection.py",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/migrationdetection"
+    },
+    {
+      "module": "test/marketplace/test/pr_integration",
+      "go_package": "internal/marketplace/printegration",
+      "python_file": "tests/unit/marketplace/test_pr_integration.py",
+      "python_lines": 1089,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/printegration"
+    },
+    {
+      "module": "test/marketplace/test/ref_resolver",
+      "go_package": "internal/marketplace/refresolver",
+      "python_file": "tests/unit/marketplace/test_ref_resolver.py",
+      "python_lines": 601,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/refresolver"
+    },
+    {
+      "module": "test/marketplace/test/review_fixes",
+      "go_package": "internal/marketplace/reviewfixes",
+      "python_file": "tests/unit/marketplace/test_review_fixes.py",
+      "python_lines": 155,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/reviewfixes"
+    },
+    {
+      "module": "test/marketplace/test/schema_conformance",
+      "go_package": "internal/marketplace/schemaconformance",
+      "python_file": "tests/unit/marketplace/test_schema_conformance.py",
+      "python_lines": 376,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/schemaconformance"
+    },
+    {
+      "module": "test/marketplace/test/semver",
+      "go_package": "internal/marketplace/semver",
+      "python_file": "tests/unit/marketplace/test_semver.py",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/semver"
+    },
+    {
+      "module": "test/marketplace/test/shadow_detector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_file": "tests/unit/marketplace/test_shadow_detector.py",
+      "python_lines": 296,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/shadowdetector"
+    },
+    {
+      "module": "test/marketplace/test/tag_pattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_file": "tests/unit/marketplace/test_tag_pattern.py",
+      "python_lines": 221,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/tagpattern"
+    },
+    {
+      "module": "test/marketplace/test/version_pins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_file": "tests/unit/marketplace/test_version_pins.py",
+      "python_lines": 268,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/versionpins"
+    },
+    {
+      "module": "test/marketplace/test/versioned_resolver",
+      "go_package": "internal/marketplace/versionedresolver",
+      "python_file": "tests/unit/marketplace/test_versioned_resolver.py",
+      "python_lines": 334,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/versionedresolver"
+    },
+    {
+      "module": "test/marketplace/test/yml_editor",
+      "go_package": "internal/marketplace/ymleditor",
+      "python_file": "tests/unit/marketplace/test_yml_editor.py",
+      "python_lines": 316,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/ymleditor"
+    },
+    {
+      "module": "test/marketplace/test/yml_schema",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_file": "tests/unit/marketplace/test_yml_schema.py",
+      "python_lines": 835,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/marketplace/ymlschema"
+    },
+    {
+      "module": "test/policy/test/cache_atomicity",
+      "go_package": "internal/policy/cacheatomicity",
+      "python_file": "tests/unit/policy/test_cache_atomicity.py",
+      "python_lines": 151,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/cacheatomicity"
+    },
+    {
+      "module": "test/policy/test/cache_merged_effective",
+      "go_package": "internal/policy/cachemergedeffective",
+      "python_file": "tests/unit/policy/test_cache_merged_effective.py",
+      "python_lines": 556,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/cachemergedeffective"
+    },
+    {
+      "module": "test/policy/test/chain_discovery_shared",
+      "go_package": "internal/policy/chaindiscoveryshared",
+      "python_file": "tests/unit/policy/test_chain_discovery_shared.py",
+      "python_lines": 428,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/chaindiscoveryshared"
+    },
+    {
+      "module": "test/policy/test/ci_checks",
+      "go_package": "internal/policy/cichecks",
+      "python_file": "tests/unit/policy/test_ci_checks.py",
+      "python_lines": 1121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/cichecks"
+    },
+    {
+      "module": "test/policy/test/discovery",
+      "go_package": "internal/policy/discovery",
+      "python_file": "tests/unit/policy/test_discovery.py",
+      "python_lines": 705,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/discovery"
+    },
+    {
+      "module": "test/policy/test/extends_host_pin",
+      "go_package": "internal/policy/extendshostpin",
+      "python_file": "tests/unit/policy/test_extends_host_pin.py",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/extendshostpin"
+    },
+    {
+      "module": "test/policy/test/fetch_failure_knob",
+      "go_package": "internal/policy/fetchfailureknob",
+      "python_file": "tests/unit/policy/test_fetch_failure_knob.py",
+      "python_lines": 338,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/fetchfailureknob"
+    },
+    {
+      "module": "test/policy/test/fixtures",
+      "go_package": "internal/policy/fixtures",
+      "python_file": "tests/unit/policy/test_fixtures.py",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/fixtures"
+    },
+    {
+      "module": "test/policy/test/help_consistency",
+      "go_package": "internal/policy/helpconsistency",
+      "python_file": "tests/unit/policy/test_help_consistency.py",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/helpconsistency"
+    },
+    {
+      "module": "test/policy/test/inheritance",
+      "go_package": "internal/policy/inheritance",
+      "python_file": "tests/unit/policy/test_inheritance.py",
+      "python_lines": 624,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/inheritance"
+    },
+    {
+      "module": "test/policy/test/matcher",
+      "go_package": "internal/policy/matcher",
+      "python_file": "tests/unit/policy/test_matcher.py",
+      "python_lines": 144,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/matcher"
+    },
+    {
+      "module": "test/policy/test/parser",
+      "go_package": "internal/policy/parser",
+      "python_file": "tests/unit/policy/test_parser.py",
+      "python_lines": 367,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/parser"
+    },
+    {
+      "module": "test/policy/test/policy_checks",
+      "go_package": "internal/policy/policychecks",
+      "python_file": "tests/unit/policy/test_policy_checks.py",
+      "python_lines": 926,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/policychecks"
+    },
+    {
+      "module": "test/policy/test/policy_hash_pin",
+      "go_package": "internal/policy/policyhashpin",
+      "python_file": "tests/unit/policy/test_policy_hash_pin.py",
+      "python_lines": 387,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/policyhashpin"
+    },
+    {
+      "module": "test/policy/test/pr_832_findings",
+      "go_package": "internal/policy/pr832findings",
+      "python_file": "tests/unit/policy/test_pr_832_findings.py",
+      "python_lines": 315,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/pr832findings"
+    },
+    {
+      "module": "test/policy/test/run_dependency_policy_checks",
+      "go_package": "internal/policy/rundependencypolicychecks",
+      "python_file": "tests/unit/policy/test_run_dependency_policy_checks.py",
+      "python_lines": 544,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/rundependencypolicychecks"
+    },
+    {
+      "module": "test/policy/test/schema",
+      "go_package": "internal/policy/schema",
+      "python_file": "tests/unit/policy/test_schema.py",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/policy/schema"
+    },
+    {
+      "module": "test/primitives/test/discovery_parser",
+      "go_package": "internal/primitives/discoveryparser",
+      "python_file": "tests/unit/primitives/test_discovery_parser.py",
+      "python_lines": 884,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/primitives/discoveryparser"
+    },
+    {
+      "module": "test/primitives/test/discovery_walk",
+      "go_package": "internal/primitives/discoverywalk",
+      "python_file": "tests/unit/primitives/test_discovery_walk.py",
+      "python_lines": 322,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/primitives/discoverywalk"
+    },
+    {
+      "module": "test/primitives/test/primitives",
+      "go_package": "internal/primitives/primitives",
+      "python_file": "tests/unit/primitives/test_primitives.py",
+      "python_lines": 698,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/primitives/primitives"
+    },
+    {
+      "module": "test/test/add_mcp_to_apm_yml",
+      "go_package": "internal/addmcptoapmyml",
+      "python_file": "tests/unit/test_add_mcp_to_apm_yml.py",
+      "python_lines": 203,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/addmcptoapmyml"
+    },
+    {
+      "module": "test/test/ado_path_structure",
+      "go_package": "internal/adopathstructure",
+      "python_file": "tests/unit/test_ado_path_structure.py",
+      "python_lines": 824,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/adopathstructure"
+    },
+    {
+      "module": "test/test/apm_package",
+      "go_package": "internal/apmpackage",
+      "python_file": "tests/unit/test_apm_package.py",
+      "python_lines": 561,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/apmpackage"
+    },
+    {
+      "module": "test/test/artifactory_support",
+      "go_package": "internal/artifactorysupport",
+      "python_file": "tests/unit/test_artifactory_support.py",
+      "python_lines": 1847,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/artifactorysupport"
+    },
+    {
+      "module": "test/test/audit_ci_auto_discovery",
+      "go_package": "internal/auditciautodiscovery",
+      "python_file": "tests/unit/test_audit_ci_auto_discovery.py",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditciautodiscovery"
+    },
+    {
+      "module": "test/test/audit_ci_command",
+      "go_package": "internal/auditcicommand",
+      "python_file": "tests/unit/test_audit_ci_command.py",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditcicommand"
+    },
+    {
+      "module": "test/test/audit_command",
+      "go_package": "internal/auditcommand",
+      "python_file": "tests/unit/test_audit_command.py",
+      "python_lines": 515,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditcommand"
+    },
+    {
+      "module": "test/test/audit_policy_command",
+      "go_package": "internal/auditpolicycommand",
+      "python_file": "tests/unit/test_audit_policy_command.py",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditpolicycommand"
+    },
+    {
+      "module": "test/test/audit_report",
+      "go_package": "internal/auditreport",
+      "python_file": "tests/unit/test_audit_report.py",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/auditreport"
+    },
+    {
+      "module": "test/test/auth_scoping",
+      "go_package": "internal/authscoping",
+      "python_file": "tests/unit/test_auth_scoping.py",
+      "python_lines": 1260,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/authscoping"
+    },
+    {
+      "module": "test/test/azure_cli",
+      "go_package": "internal/azurecli",
+      "python_file": "tests/unit/test_azure_cli.py",
+      "python_lines": 218,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/azurecli"
+    },
+    {
+      "module": "test/test/build_mcp_entry",
+      "go_package": "internal/buildmcpentry",
+      "python_file": "tests/unit/test_build_mcp_entry.py",
+      "python_lines": 181,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/buildmcpentry"
+    },
+    {
+      "module": "test/test/build_sha",
+      "go_package": "internal/buildsha",
+      "python_file": "tests/unit/test_build_sha.py",
+      "python_lines": 56,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/buildsha"
+    },
+    {
+      "module": "test/test/build_spec",
+      "go_package": "internal/buildspec",
+      "python_file": "tests/unit/test_build_spec.py",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/buildspec"
+    },
+    {
+      "module": "test/test/canonicalization",
+      "go_package": "internal/canonicalization",
+      "python_file": "tests/unit/test_canonicalization.py",
+      "python_lines": 646,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/canonicalization"
+    },
+    {
+      "module": "test/test/claude_mcp",
+      "go_package": "internal/claudemcp",
+      "python_file": "tests/unit/test_claude_mcp.py",
+      "python_lines": 301,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/claudemcp"
+    },
+    {
+      "module": "test/test/cli_consistency",
+      "go_package": "internal/cliconsistency",
+      "python_file": "tests/unit/test_cli_consistency.py",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cliconsistency"
+    },
+    {
+      "module": "test/test/cli_encoding",
+      "go_package": "internal/cliencoding",
+      "python_file": "tests/unit/test_cli_encoding.py",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cliencoding"
+    },
+    {
+      "module": "test/test/codex_runtime",
+      "go_package": "internal/codexruntime",
+      "python_file": "tests/unit/test_codex_runtime.py",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/codexruntime"
+    },
+    {
+      "module": "test/test/collection_migration_error",
+      "go_package": "internal/collectionmigrationerror",
+      "python_file": "tests/unit/test_collection_migration_error.py",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/collectionmigrationerror"
+    },
+    {
+      "module": "test/test/command_helpers",
+      "go_package": "internal/commandhelpers",
+      "python_file": "tests/unit/test_command_helpers.py",
+      "python_lines": 677,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commandhelpers"
+    },
+    {
+      "module": "test/test/command_logger",
+      "go_package": "internal/commandlogger",
+      "python_file": "tests/unit/test_command_logger.py",
+      "python_lines": 558,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/commandlogger"
+    },
+    {
+      "module": "test/test/compile_rich_output",
+      "go_package": "internal/compilerichoutput",
+      "python_file": "tests/unit/test_compile_rich_output.py",
+      "python_lines": 19,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/compilerichoutput"
+    },
+    {
+      "module": "test/test/config",
+      "go_package": "internal/config",
+      "python_file": "tests/unit/test_config.py",
+      "python_lines": 53,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/config"
+    },
+    {
+      "module": "test/test/config_command",
+      "go_package": "internal/configcommand",
+      "python_file": "tests/unit/test_config_command.py",
+      "python_lines": 914,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/configcommand"
+    },
+    {
+      "module": "test/test/conflict_detection",
+      "go_package": "internal/conflictdetection",
+      "python_file": "tests/unit/test_conflict_detection.py",
+      "python_lines": 297,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/conflictdetection"
+    },
+    {
+      "module": "test/test/console_utils",
+      "go_package": "internal/consoleutils",
+      "python_file": "tests/unit/test_console_utils.py",
+      "python_lines": 391,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/consoleutils"
+    },
+    {
+      "module": "test/test/constitution_hash",
+      "go_package": "internal/constitutionhash",
+      "python_file": "tests/unit/test_constitution_hash.py",
+      "python_lines": 22,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/constitutionhash"
+    },
+    {
+      "module": "test/test/content_hash",
+      "go_package": "internal/contenthash",
+      "python_file": "tests/unit/test_content_hash.py",
+      "python_lines": 286,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/contenthash"
+    },
+    {
+      "module": "test/test/content_scanner",
+      "go_package": "internal/contentscanner",
+      "python_file": "tests/unit/test_content_scanner.py",
+      "python_lines": 627,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/contentscanner"
+    },
+    {
+      "module": "test/test/copilot_adapter",
+      "go_package": "internal/copilotadapter",
+      "python_file": "tests/unit/test_copilot_adapter.py",
+      "python_lines": 714,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/copilotadapter"
+    },
+    {
+      "module": "test/test/copilot_runtime",
+      "go_package": "internal/copilotruntime",
+      "python_file": "tests/unit/test_copilot_runtime.py",
+      "python_lines": 183,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/copilotruntime"
+    },
+    {
+      "module": "test/test/cursor_mcp",
+      "go_package": "internal/cursormcp",
+      "python_file": "tests/unit/test_cursor_mcp.py",
+      "python_lines": 346,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/cursormcp"
+    },
+    {
+      "module": "test/test/dep_only_package",
+      "go_package": "internal/deponlypackage",
+      "python_file": "tests/unit/test_dep_only_package.py",
+      "python_lines": 225,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deponlypackage"
+    },
+    {
+      "module": "test/test/deps",
+      "go_package": "internal/deps",
+      "python_file": "tests/unit/test_deps.py",
+      "python_lines": 169,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/deps"
+    },
+    {
+      "module": "test/test/deps_clean_command",
+      "go_package": "internal/depscleancommand",
+      "python_file": "tests/unit/test_deps_clean_command.py",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depscleancommand"
+    },
+    {
+      "module": "test/test/deps_list_tree_info",
+      "go_package": "internal/depslisttreeinfo",
+      "python_file": "tests/unit/test_deps_list_tree_info.py",
+      "python_lines": 635,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depslisttreeinfo"
+    },
+    {
+      "module": "test/test/deps_update_command",
+      "go_package": "internal/depsupdatecommand",
+      "python_file": "tests/unit/test_deps_update_command.py",
+      "python_lines": 570,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depsupdatecommand"
+    },
+    {
+      "module": "test/test/deps_utils",
+      "go_package": "internal/depsutils",
+      "python_file": "tests/unit/test_deps_utils.py",
+      "python_lines": 486,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/depsutils"
+    },
+    {
+      "module": "test/test/dev_dependencies",
+      "go_package": "internal/devdependencies",
+      "python_file": "tests/unit/test_dev_dependencies.py",
+      "python_lines": 445,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/devdependencies"
+    },
+    {
+      "module": "test/test/diagnostics",
+      "go_package": "internal/diagnostics",
+      "python_file": "tests/unit/test_diagnostics.py",
+      "python_lines": 585,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/diagnostics"
+    },
+    {
+      "module": "test/test/docker_args",
+      "go_package": "internal/dockerargs",
+      "python_file": "tests/unit/test_docker_args.py",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/dockerargs"
+    },
+    {
+      "module": "test/test/docker_args_and_installer",
+      "go_package": "internal/dockerargsandinstaller",
+      "python_file": "tests/unit/test_docker_args_and_installer.py",
+      "python_lines": 265,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/dockerargsandinstaller"
+    },
+    {
+      "module": "test/test/drift_detection",
+      "go_package": "internal/driftdetection",
+      "python_file": "tests/unit/test_drift_detection.py",
+      "python_lines": 356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/driftdetection"
+    },
+    {
+      "module": "test/test/env_variables",
+      "go_package": "internal/envvariables",
+      "python_file": "tests/unit/test_env_variables.py",
+      "python_lines": 113,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/envvariables"
+    },
+    {
+      "module": "test/test/exclude",
+      "go_package": "internal/exclude",
+      "python_file": "tests/unit/test_exclude.py",
+      "python_lines": 198,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/exclude"
+    },
+    {
+      "module": "test/test/file_ops",
+      "go_package": "internal/fileops",
+      "python_file": "tests/unit/test_file_ops.py",
+      "python_lines": 606,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/fileops"
+    },
+    {
+      "module": "test/test/gemini_mcp",
+      "go_package": "internal/geminimcp",
+      "python_file": "tests/unit/test_gemini_mcp.py",
+      "python_lines": 264,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/geminimcp"
+    },
+    {
+      "module": "test/test/generic_git_urls",
+      "go_package": "internal/genericgiturls",
+      "python_file": "tests/unit/test_generic_git_urls.py",
+      "python_lines": 1156,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/genericgiturls"
+    },
+    {
+      "module": "test/test/generic_host_error_port",
+      "go_package": "internal/generichosterrorport",
+      "python_file": "tests/unit/test_generic_host_error_port.py",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/generichosterrorport"
+    },
+    {
+      "module": "test/test/git_parent_reference",
+      "go_package": "internal/gitparentreference",
+      "python_file": "tests/unit/test_git_parent_reference.py",
+      "python_lines": 120,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/gitparentreference"
+    },
+    {
+      "module": "test/test/git_parent_resolver",
+      "go_package": "internal/gitparentresolver",
+      "python_file": "tests/unit/test_git_parent_resolver.py",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/gitparentresolver"
+    },
+    {
+      "module": "test/test/github_downloader_temp_dir",
+      "go_package": "internal/githubdownloadertempdir",
+      "python_file": "tests/unit/test_github_downloader_temp_dir.py",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/githubdownloadertempdir"
+    },
+    {
+      "module": "test/test/github_host",
+      "go_package": "internal/githubhost",
+      "python_file": "tests/unit/test_github_host.py",
+      "python_lines": 356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/githubhost"
+    },
+    {
+      "module": "test/test/global_mcp_scope",
+      "go_package": "internal/globalmcpscope",
+      "python_file": "tests/unit/test_global_mcp_scope.py",
+      "python_lines": 404,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/globalmcpscope"
+    },
+    {
+      "module": "test/test/helpers",
+      "go_package": "internal/helpers",
+      "python_file": "tests/unit/test_helpers.py",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/helpers"
+    },
+    {
+      "module": "test/test/ignore_non_content",
+      "go_package": "internal/ignorenoncontent",
+      "python_file": "tests/unit/test_ignore_non_content.py",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/ignorenoncontent"
+    },
+    {
+      "module": "test/test/init_command",
+      "go_package": "internal/initcommand",
+      "python_file": "tests/unit/test_init_command.py",
+      "python_lines": 812,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/initcommand"
+    },
+    {
+      "module": "test/test/init_plugin",
+      "go_package": "internal/initplugin",
+      "python_file": "tests/unit/test_init_plugin.py",
+      "python_lines": 311,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/initplugin"
+    },
+    {
+      "module": "test/test/install_output",
+      "go_package": "internal/installoutput",
+      "python_file": "tests/unit/test_install_output.py",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installoutput"
+    },
+    {
+      "module": "test/test/install_path_declaration_invariant",
+      "go_package": "internal/installpathdeclarationinvariant",
+      "python_file": "tests/unit/test_install_path_declaration_invariant.py",
+      "python_lines": 155,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installpathdeclarationinvariant"
+    },
+    {
+      "module": "test/test/install_scanning",
+      "go_package": "internal/installscanning",
+      "python_file": "tests/unit/test_install_scanning.py",
+      "python_lines": 328,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installscanning"
+    },
+    {
+      "module": "test/test/install_tui",
+      "go_package": "internal/installtui",
+      "python_file": "tests/unit/test_install_tui.py",
+      "python_lines": 309,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installtui"
+    },
+    {
+      "module": "test/test/install_update",
+      "go_package": "internal/installupdate",
+      "python_file": "tests/unit/test_install_update.py",
+      "python_lines": 914,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installupdate"
+    },
+    {
+      "module": "test/test/install_update_refs",
+      "go_package": "internal/installupdaterefs",
+      "python_file": "tests/unit/test_install_update_refs.py",
+      "python_lines": 358,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/installupdaterefs"
+    },
+    {
+      "module": "test/test/list_command",
+      "go_package": "internal/listcommand",
+      "python_file": "tests/unit/test_list_command.py",
+      "python_lines": 232,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/listcommand"
+    },
+    {
+      "module": "test/test/list_remote_refs",
+      "go_package": "internal/listremoterefs",
+      "python_file": "tests/unit/test_list_remote_refs.py",
+      "python_lines": 537,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/listremoterefs"
+    },
+    {
+      "module": "test/test/llm_runtime",
+      "go_package": "internal/llmruntime",
+      "python_file": "tests/unit/test_llm_runtime.py",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/llmruntime"
+    },
+    {
+      "module": "test/test/local_content_install",
+      "go_package": "internal/localcontentinstall",
+      "python_file": "tests/unit/test_local_content_install.py",
+      "python_lines": 301,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/localcontentinstall"
+    },
+    {
+      "module": "test/test/local_deps",
+      "go_package": "internal/localdeps",
+      "python_file": "tests/unit/test_local_deps.py",
+      "python_lines": 760,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/localdeps"
+    },
+    {
+      "module": "test/test/lockfile_enrichment",
+      "go_package": "internal/lockfileenrichment",
+      "python_file": "tests/unit/test_lockfile_enrichment.py",
+      "python_lines": 544,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/lockfileenrichment"
+    },
+    {
+      "module": "test/test/lockfile_git_parent_expanded",
+      "go_package": "internal/lockfilegitparentexpanded",
+      "python_file": "tests/unit/test_lockfile_git_parent_expanded.py",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/lockfilegitparentexpanded"
+    },
+    {
+      "module": "test/test/lockfile_self_entry",
+      "go_package": "internal/lockfileselfentry",
+      "python_file": "tests/unit/test_lockfile_self_entry.py",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/lockfileselfentry"
+    },
+    {
+      "module": "test/test/mcp_client_factory",
+      "go_package": "internal/mcpclientfactory",
+      "python_file": "tests/unit/test_mcp_client_factory.py",
+      "python_lines": 279,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpclientfactory"
+    },
+    {
+      "module": "test/test/mcp_command",
+      "go_package": "internal/mcpcommand",
+      "python_file": "tests/unit/test_mcp_command.py",
+      "python_lines": 791,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpcommand"
+    },
+    {
+      "module": "test/test/mcp_integrator_characterisation",
+      "go_package": "internal/mcpintegratorcharacterisation",
+      "python_file": "tests/unit/test_mcp_integrator_characterisation.py",
+      "python_lines": 214,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpintegratorcharacterisation"
+    },
+    {
+      "module": "test/test/mcp_integrator_coverage",
+      "go_package": "internal/mcpintegratorcoverage",
+      "python_file": "tests/unit/test_mcp_integrator_coverage.py",
+      "python_lines": 201,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpintegratorcoverage"
+    },
+    {
+      "module": "test/test/mcp_integrator_remove_stale",
+      "go_package": "internal/mcpintegratorremovestale",
+      "python_file": "tests/unit/test_mcp_integrator_remove_stale.py",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpintegratorremovestale"
+    },
+    {
+      "module": "test/test/mcp_lifecycle_e2e",
+      "go_package": "internal/mcplifecyclee2e",
+      "python_file": "tests/unit/test_mcp_lifecycle_e2e.py",
+      "python_lines": 802,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcplifecyclee2e"
+    },
+    {
+      "module": "test/test/mcp_overlays",
+      "go_package": "internal/mcpoverlays",
+      "python_file": "tests/unit/test_mcp_overlays.py",
+      "python_lines": 878,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/mcpoverlays"
+    },
+    {
+      "module": "test/test/opencode_mcp",
+      "go_package": "internal/opencodemcp",
+      "python_file": "tests/unit/test_opencode_mcp.py",
+      "python_lines": 383,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/opencodemcp"
+    },
+    {
+      "module": "test/test/orphan_announce_parity",
+      "go_package": "internal/orphanannounceparity",
+      "python_file": "tests/unit/test_orphan_announce_parity.py",
+      "python_lines": 160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/orphanannounceparity"
+    },
+    {
+      "module": "test/test/orphan_detection",
+      "go_package": "internal/orphandetection",
+      "python_file": "tests/unit/test_orphan_detection.py",
+      "python_lines": 306,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/orphandetection"
+    },
+    {
+      "module": "test/test/outdated_command",
+      "go_package": "internal/outdatedcommand",
+      "python_file": "tests/unit/test_outdated_command.py",
+      "python_lines": 1087,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/outdatedcommand"
+    },
+    {
+      "module": "test/test/outdated_marketplace",
+      "go_package": "internal/outdatedmarketplace",
+      "python_file": "tests/unit/test_outdated_marketplace.py",
+      "python_lines": 172,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/outdatedmarketplace"
+    },
+    {
+      "module": "test/test/package_identity",
+      "go_package": "internal/packageidentity",
+      "python_file": "tests/unit/test_package_identity.py",
+      "python_lines": 321,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/packageidentity"
+    },
+    {
+      "module": "test/test/package_manager",
+      "go_package": "internal/packagemanager",
+      "python_file": "tests/unit/test_package_manager.py",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/packagemanager"
+    },
+    {
+      "module": "test/test/packer",
+      "go_package": "internal/packer",
+      "python_file": "tests/unit/test_packer.py",
+      "python_lines": 1023,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/packer"
+    },
+    {
+      "module": "test/test/path_security",
+      "go_package": "internal/pathsecurity",
+      "python_file": "tests/unit/test_path_security.py",
+      "python_lines": 392,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pathsecurity"
+    },
+    {
+      "module": "test/test/plugin",
+      "go_package": "internal/plugin",
+      "python_file": "tests/unit/test_plugin.py",
+      "python_lines": 31,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/plugin"
+    },
+    {
+      "module": "test/test/plugin_exporter",
+      "go_package": "internal/pluginexporter",
+      "python_file": "tests/unit/test_plugin_exporter.py",
+      "python_lines": 953,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pluginexporter"
+    },
+    {
+      "module": "test/test/plugin_exporter_schema",
+      "go_package": "internal/pluginexporterschema",
+      "python_file": "tests/unit/test_plugin_exporter_schema.py",
+      "python_lines": 161,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pluginexporterschema"
+    },
+    {
+      "module": "test/test/plugin_parser",
+      "go_package": "internal/pluginparser",
+      "python_file": "tests/unit/test_plugin_parser.py",
+      "python_lines": 969,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pluginparser"
+    },
+    {
+      "module": "test/test/plugin_synthesis",
+      "go_package": "internal/pluginsynthesis",
+      "python_file": "tests/unit/test_plugin_synthesis.py",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pluginsynthesis"
+    },
+    {
+      "module": "test/test/portable_relpath",
+      "go_package": "internal/portablerelpath",
+      "python_file": "tests/unit/test_portable_relpath.py",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/portablerelpath"
+    },
+    {
+      "module": "test/test/protocol_fallback_warning",
+      "go_package": "internal/protocolfallbackwarning",
+      "python_file": "tests/unit/test_protocol_fallback_warning.py",
+      "python_lines": 452,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/protocolfallbackwarning"
+    },
+    {
+      "module": "test/test/prune_command",
+      "go_package": "internal/prunecommand",
+      "python_file": "tests/unit/test_prune_command.py",
+      "python_lines": 468,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/prunecommand"
+    },
+    {
+      "module": "test/test/python_paths",
+      "go_package": "internal/pythonpaths",
+      "python_file": "tests/unit/test_python_paths.py",
+      "python_lines": 51,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/pythonpaths"
+    },
+    {
+      "module": "test/test/reflink",
+      "go_package": "internal/reflink",
+      "python_file": "tests/unit/test_reflink.py",
+      "python_lines": 177,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/reflink"
+    },
+    {
+      "module": "test/test/registry_client",
+      "go_package": "internal/registryclient",
+      "python_file": "tests/unit/test_registry_client.py",
+      "python_lines": 494,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/registryclient"
+    },
+    {
+      "module": "test/test/registry_client_http_cache",
+      "go_package": "internal/registryclienthttpcache",
+      "python_file": "tests/unit/test_registry_client_http_cache.py",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/registryclienthttpcache"
+    },
+    {
+      "module": "test/test/registry_integration",
+      "go_package": "internal/registryintegration",
+      "python_file": "tests/unit/test_registry_integration.py",
+      "python_lines": 383,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/registryintegration"
+    },
+    {
+      "module": "test/test/runtime_args",
+      "go_package": "internal/runtimeargs",
+      "python_file": "tests/unit/test_runtime_args.py",
+      "python_lines": 200,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimeargs"
+    },
+    {
+      "module": "test/test/runtime_detection",
+      "go_package": "internal/runtimedetection",
+      "python_file": "tests/unit/test_runtime_detection.py",
+      "python_lines": 253,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimedetection"
+    },
+    {
+      "module": "test/test/runtime_factory",
+      "go_package": "internal/runtimefactory",
+      "python_file": "tests/unit/test_runtime_factory.py",
+      "python_lines": 98,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimefactory"
+    },
+    {
+      "module": "test/test/runtime_manager",
+      "go_package": "internal/runtimemanager",
+      "python_file": "tests/unit/test_runtime_manager.py",
+      "python_lines": 513,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimemanager"
+    },
+    {
+      "module": "test/test/runtime_windows",
+      "go_package": "internal/runtimewindows",
+      "python_file": "tests/unit/test_runtime_windows.py",
+      "python_lines": 294,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/runtimewindows"
+    },
+    {
+      "module": "test/test/safe_installer",
+      "go_package": "internal/safeinstaller",
+      "python_file": "tests/unit/test_safe_installer.py",
+      "python_lines": 203,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/safeinstaller"
+    },
+    {
+      "module": "test/test/script_formatters",
+      "go_package": "internal/scriptformatters",
+      "python_file": "tests/unit/test_script_formatters.py",
+      "python_lines": 157,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/scriptformatters"
+    },
+    {
+      "module": "test/test/script_runner",
+      "go_package": "internal/scriptrunner",
+      "python_file": "tests/unit/test_script_runner.py",
+      "python_lines": 883,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/scriptrunner"
+    },
+    {
+      "module": "test/test/security_gate",
+      "go_package": "internal/securitygate",
+      "python_file": "tests/unit/test_security_gate.py",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/securitygate"
+    },
+    {
+      "module": "test/test/selective_install",
+      "go_package": "internal/selectiveinstall",
+      "python_file": "tests/unit/test_selective_install.py",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/selectiveinstall"
+    },
+    {
+      "module": "test/test/self_entry_caller_guards",
+      "go_package": "internal/selfentrycallerguards",
+      "python_file": "tests/unit/test_self_entry_caller_guards.py",
+      "python_lines": 125,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/selfentrycallerguards"
+    },
+    {
+      "module": "test/test/skill_bundle",
+      "go_package": "internal/skillbundle",
+      "python_file": "tests/unit/test_skill_bundle.py",
+      "python_lines": 415,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/skillbundle"
+    },
+    {
+      "module": "test/test/skill_subset_persistence",
+      "go_package": "internal/skillsubsetpersistence",
+      "python_file": "tests/unit/test_skill_subset_persistence.py",
+      "python_lines": 417,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/skillsubsetpersistence"
+    },
+    {
+      "module": "test/test/ssl_cert_hook",
+      "go_package": "internal/sslcerthook",
+      "python_file": "tests/unit/test_ssl_cert_hook.py",
+      "python_lines": 152,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/sslcerthook"
+    },
+    {
+      "module": "test/test/stale_file_detection",
+      "go_package": "internal/stalefiledetection",
+      "python_file": "tests/unit/test_stale_file_detection.py",
+      "python_lines": 42,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/stalefiledetection"
+    },
+    {
+      "module": "test/test/subprocess_env",
+      "go_package": "internal/subprocessenv",
+      "python_file": "tests/unit/test_subprocess_env.py",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/subprocessenv"
+    },
+    {
+      "module": "test/test/symlink_containment",
+      "go_package": "internal/symlinkcontainment",
+      "python_file": "tests/unit/test_symlink_containment.py",
+      "python_lines": 324,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/symlinkcontainment"
+    },
+    {
+      "module": "test/test/thread_safety",
+      "go_package": "internal/threadsafety",
+      "python_file": "tests/unit/test_thread_safety.py",
+      "python_lines": 160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/threadsafety"
+    },
+    {
+      "module": "test/test/transitive_deps",
+      "go_package": "internal/transitivedeps",
+      "python_file": "tests/unit/test_transitive_deps.py",
+      "python_lines": 242,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/transitivedeps"
+    },
+    {
+      "module": "test/test/transitive_mcp",
+      "go_package": "internal/transitivemcp",
+      "python_file": "tests/unit/test_transitive_mcp.py",
+      "python_lines": 1356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/transitivemcp"
+    },
+    {
+      "module": "test/test/transport_selection",
+      "go_package": "internal/transportselection",
+      "python_file": "tests/unit/test_transport_selection.py",
+      "python_lines": 379,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/transportselection"
+    },
+    {
+      "module": "test/test/uninstall_engine_helpers",
+      "go_package": "internal/uninstallenginehelpers",
+      "python_file": "tests/unit/test_uninstall_engine_helpers.py",
+      "python_lines": 547,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/uninstallenginehelpers"
+    },
+    {
+      "module": "test/test/uninstall_reintegration",
+      "go_package": "internal/uninstallreintegration",
+      "python_file": "tests/unit/test_uninstall_reintegration.py",
+      "python_lines": 367,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/uninstallreintegration"
+    },
+    {
+      "module": "test/test/uninstall_transitive_cleanup",
+      "go_package": "internal/uninstalltransitivecleanup",
+      "python_file": "tests/unit/test_uninstall_transitive_cleanup.py",
+      "python_lines": 407,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/uninstalltransitivecleanup"
+    },
+    {
+      "module": "test/test/unpack_security",
+      "go_package": "internal/unpacksecurity",
+      "python_file": "tests/unit/test_unpack_security.py",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/unpacksecurity"
+    },
+    {
+      "module": "test/test/unpacker",
+      "go_package": "internal/unpacker",
+      "python_file": "tests/unit/test_unpacker.py",
+      "python_lines": 532,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/unpacker"
+    },
+    {
+      "module": "test/test/update_command",
+      "go_package": "internal/updatecommand",
+      "python_file": "tests/unit/test_update_command.py",
+      "python_lines": 372,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/updatecommand"
+    },
+    {
+      "module": "test/test/version_checker",
+      "go_package": "internal/versionchecker",
+      "python_file": "tests/unit/test_version_checker.py",
+      "python_lines": 308,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/versionchecker"
+    },
+    {
+      "module": "test/test/view_command",
+      "go_package": "internal/viewcommand",
+      "python_file": "tests/unit/test_view_command.py",
+      "python_lines": 692,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/viewcommand"
+    },
+    {
+      "module": "test/test/view_versions",
+      "go_package": "internal/viewversions",
+      "python_file": "tests/unit/test_view_versions.py",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/viewversions"
+    },
+    {
+      "module": "test/test/windsurf_adapter",
+      "go_package": "internal/windsurfadapter",
+      "python_file": "tests/unit/test_windsurf_adapter.py",
+      "python_lines": 34,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/windsurfadapter"
+    },
+    {
+      "module": "test/test/yaml_io",
+      "go_package": "internal/yamlio",
+      "python_file": "tests/unit/test_yaml_io.py",
+      "python_lines": 158,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/yamlio"
+    },
+    {
+      "module": "test/utils/test/github_host_predicate",
+      "go_package": "internal/utils/githubhostpredicate",
+      "python_file": "tests/unit/utils/test_github_host_predicate.py",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/utils/githubhostpredicate"
+    },
+    {
+      "module": "test/utils/test/guards",
+      "go_package": "internal/utils/guards",
+      "python_file": "tests/unit/utils/test_guards.py",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/utils/guards"
+    },
+    {
+      "module": "test/workflow/test/workflow",
+      "go_package": "internal/workflow/workflow",
+      "python_file": "tests/unit/workflow/test_workflow.py",
+      "python_lines": 163,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/workflow/workflow"
+    },
+    {
+      "module": "test/utils/constitution_fixtures",
+      "go_package": "internal/constitutionfixtures",
+      "python_file": "tests/utils/constitution_fixtures.py",
+      "python_lines": 68,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migration entry for internal/constitutionfixtures"
     }
   ],
   "last_updated": "2026-05-15T19:05:00Z",

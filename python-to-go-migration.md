@@ -10,13 +10,13 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T00:00:00Z |
-| Iteration Count | 51 |
-| Best Metric | 75.06 |
+| Last Run | 2026-05-15T00:50:30Z |
+| Iteration Count | 52 |
+| Best Metric | 80.09 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | #43 |
+| PR | #44 |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
@@ -32,7 +32,7 @@
 **Goal**: Incrementally rewrite the APM CLI from Python to Go, one module at a time.
 **Metric**: python_lines_migrated_pct (higher is better)
 **Branch**: [`autoloop/python-to-go-migration`](../../tree/autoloop/python-to-go-migration)
-**Pull Request**: #43
+**Pull Request**: #44
 **Issue**: #3
 
 ---
@@ -84,6 +84,7 @@
 - Tracking gap: when migrations span multiple commits or branch resets, migration-status.json may fall behind actual Go code. Always verify Go packages vs tracked modules before proposing new work -- reconcile gaps first for a quick metric boost.
 - drift.py: pure interface-based Go (DependencyRef/LockedDep/LockFile interfaces); DetectConfigDrift uses recursive configsEqual; DetectOrphans/StaleFiles are pure set operations.
 - experimental.py: feature-flag registry as static map; config read/write via ~/.apm/config.json with sync.RWMutex cache + invalidation on write; difflib-like suggestions use contains heuristic.
+- - Periodic audits find Go packages present in internal/ but missing from migration-status.json (Mirrors comment pattern); scan for these at iteration start for quick metric boosts.
 
 ---
 
@@ -104,6 +105,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 52 -- 2026-05-15 00:50 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25894051927)
+
+- **Status**: Accepted
+- **Change**: Registered 8 untracked modules (+2,854 lines) + migrated 5 new Go modules (errors, versionpins, inittemplate, opencode adapter, filescanner) (+752 lines) = +3,606 total
+- **Metric**: 80.09 (previous best: 75.06, delta: +5.03)
+- **Commit**: 828db68
+- **Notes**: Systematic audit revealed 8 Go packages missing from migration-status.json; new implementations cover error hierarchy, marketplace pin cache, templates, OpenCode adapter, and file scanner.
 
 ### Iteration 51 — 2026-05-15 00:00 UTC — [Run](https://github.com/githubnext/apm/actions/runs/25886940959)
 

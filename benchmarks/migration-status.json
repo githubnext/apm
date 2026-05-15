@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 70036,
+  "migrated_python_lines": 71013,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1217,6 +1217,46 @@
       "python_lines": 861,
       "status": "migrated",
       "notes": "MarketplacePublisher: concurrent consumer-repo patching, apm.yml version bump, atomic writes, byte-integrity marketplace.json copy, state file"
+    },
+    {
+      "module": "cache/locking",
+      "python_file": "src/apm_cli/cache/locking.py",
+      "go_package": "internal/cache/locking",
+      "python_lines": 151,
+      "status": "migrated",
+      "notes": "ShardLock (file-based advisory lock), StagePath, AtomicLand, CleanupIncomplete"
+    },
+    {
+      "module": "workflow/runner",
+      "python_file": "src/apm_cli/workflow/runner.py",
+      "go_package": "internal/workflow/runner",
+      "python_lines": 205,
+      "status": "migrated",
+      "notes": "SubstituteParameters, CollectParameters, FindWorkflowByName, RunWorkflow, PreviewWorkflow"
+    },
+    {
+      "module": "install/presentation/dry_run",
+      "python_file": "src/apm_cli/install/presentation/dry_run.py",
+      "go_package": "internal/install/presentation/dryrun",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "RenderAndExit dry-run preview for apm install --dry-run"
+    },
+    {
+      "module": "security/content_scanner",
+      "python_file": "src/apm_cli/security/content_scanner.py",
+      "go_package": "internal/security/contentscanner",
+      "python_lines": 300,
+      "status": "migrated",
+      "notes": "ScanFinding, ScanText, ScanFile, ContentScanner with Unicode tag/bidi/zero-width detection"
+    },
+    {
+      "module": "security/gate",
+      "python_file": "src/apm_cli/security/gate.py",
+      "go_package": "internal/security/gate",
+      "python_lines": 229,
+      "status": "migrated",
+      "notes": "ScanPolicy, ScanVerdict, Gate.Check - centralized security scanning gate"
     }
   ],
   "last_updated": "2026-05-14T21:46:18Z",

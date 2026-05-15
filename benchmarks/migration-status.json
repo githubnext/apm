@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 80153,
+  "migrated_python_lines": 83747,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1621,6 +1621,62 @@
       "python_lines": 125,
       "status": "migrated",
       "notes": "Default file-copy package manager implementation"
+    },
+    {
+      "module": "registry/client",
+      "go_package": "internal/registry/client",
+      "python_lines": 464,
+      "status": "migrated",
+      "notes": "SimpleRegistryClient: HTTP client for MCP registry server discovery, search, version lookup"
+    },
+    {
+      "module": "registry/operations",
+      "go_package": "internal/registry/operations",
+      "python_lines": 497,
+      "status": "migrated",
+      "notes": "MCPServerOperations: parallel install-status detection and conflict checking across runtimes"
+    },
+    {
+      "module": "commands/outdated",
+      "go_package": "internal/commands/outdated",
+      "python_lines": 538,
+      "status": "migrated",
+      "notes": "apm outdated: check locked deps against remote tips; semver tag comparison"
+    },
+    {
+      "module": "commands/update",
+      "go_package": "internal/commands/update",
+      "python_lines": 319,
+      "status": "migrated",
+      "notes": "apm update: plan-and-confirm dep refresh with interactive gate and --yes/--dry-run"
+    },
+    {
+      "module": "commands/view",
+      "go_package": "internal/commands/view",
+      "python_lines": 486,
+      "status": "migrated",
+      "notes": "apm view / apm info: installed package metadata, field filters, JSON output"
+    },
+    {
+      "module": "commands/mcp",
+      "go_package": "internal/commands/mcp",
+      "python_lines": 501,
+      "status": "migrated",
+      "notes": "apm mcp subcommands: search, list, info, install via registry client"
+    },
+    {
+      "module": "commands/pack",
+      "go_package": "internal/commands/pack",
+      "python_lines": 417,
+      "status": "migrated",
+      "notes": "apm pack/unpack: bundle assembly (plugin/apm format), tar.gz archive, dry-run"
+    },
+    {
+      "module": "commands/policy",
+      "go_package": "internal/commands/policy",
+      "python_lines": 372,
+      "status": "migrated",
+      "notes": "apm policy status/debug: policy file discovery, rule counts, inheritance chain display"
     }
   ],
   "last_updated": "2026-05-15T12:24:22Z",

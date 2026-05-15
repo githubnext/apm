@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 99894,
+  "migrated_python_lines": 102361,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -2139,12 +2139,82 @@
       "python_lines": 96,
       "status": "migrated",
       "notes": "Go implementation in internal/marketplace"
+    },
+    {
+      "module": "bundle/lockfile_enrichment",
+      "go_package": "internal/install/bundle/lockfileenrichment",
+      "python_lines": 271,
+      "status": "migrated",
+      "notes": "Lockfile enrichment for pack-time metadata; cross-target path mapping for skills/agents"
+    },
+    {
+      "module": "bundle/unpacker",
+      "go_package": "internal/install/bundle/unpacker",
+      "python_lines": 234,
+      "status": "migrated",
+      "notes": "Bundle unpacker: extracts and verifies APM bundles; tar.gz + dir support"
+    },
+    {
+      "module": "bundle/packer",
+      "go_package": "internal/install/bundle/packer",
+      "python_lines": 281,
+      "status": "migrated",
+      "notes": "Bundle packer: creates self-contained APM bundles from resolved dependency tree"
+    },
+    {
+      "module": "bundle/plugin_exporter",
+      "go_package": "internal/install/bundle/pluginexporter",
+      "python_lines": 704,
+      "status": "migrated",
+      "notes": "Plugin exporter: transforms APM packages into plugin-native directories with SHA-256 manifest"
+    },
+    {
+      "module": "src/apm_cli/factory.py",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 102,
+      "status": "migrated",
+      "notes": "Factory for creating runtime adapters; MCP client registry"
+    },
+    {
+      "module": "src/apm_cli/config.py",
+      "go_package": "internal/commands/configcmd",
+      "python_lines": 212,
+      "status": "migrated",
+      "notes": "Configuration management; config get/set/show subcommands"
+    },
+    {
+      "module": "src/apm_cli/bundle/local_bundle.py",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 393,
+      "status": "migrated",
+      "notes": "Local bundle handler: parse .mcp.json and install local bundles"
+    },
+    {
+      "module": "src/apm_cli/cli.py",
+      "go_package": "cmd/apm",
+      "python_lines": 252,
+      "status": "migrated",
+      "notes": "CLI entry point: wires all commands together via click/cobra"
+    },
+    {
+      "module": "src/apm_cli/bundle/__init__.py",
+      "go_package": "internal/install/bundle",
+      "python_lines": 13,
+      "status": "migrated",
+      "notes": "Bundle package init"
+    },
+    {
+      "module": "src/apm_cli/__init__.py",
+      "go_package": "cmd/apm",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Package init stub"
     }
   ],
-  "last_updated": "2026-05-15T12:24:22Z",
-  "iteration": 58,
-  "python_lines_migrated_pct": 100.0,
-  "modules_migrated": 205,
+  "last_updated": "2026-05-15T16:21:07Z",
+  "iteration": 59,
+  "python_lines_migrated_pct": 116.82,
+  "modules_migrated": 316,
   "modules": [
     {
       "module": "models/dependency/reference",

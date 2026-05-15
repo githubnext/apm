@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T01:42:56Z |
-| Iteration Count | 53 |
-| Best Metric | 84.33 |
+| Last Run | 2026-05-15T03:26:36Z |
+| Iteration Count | 54 |
+| Best Metric | 89.19 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -50,48 +50,7 @@
 - Branch resets (ahead=0 fast-forward) lose prior commits; each iter must rebuild from branch state.
 - Batching 4-16 modules per iter is efficient; target ~600-1100 Python lines per iteration.
 - Atomic writes: os.CreateTemp + Write + Rename. sync.Once for singletons. sync.Mutex for maps.
-- Python Enum -> Go iota + String(). Python dataclass -> Go struct with New() constructor.
-- Context-manager -> Enter/Exit methods. filepath.WalkDir replaces os.walk. runtime.GOOS for platform.
-- Typed errors: error structs + errors.As; constructor functions for domain errors.
-- Path security: iterative percent-decode (max 8 rounds); filepath.Rel + HasPrefix for containment.
-- Policy/CI check pattern: CheckResult/CIAuditResult + HasFailures() + RenderSummary() + ToSARIF().
-- Heal chain: interface + slice + FiredGroups map for exclusive_group short-circuit.
-- Parallel download: sync.WaitGroup + buffered channel semaphore; swallow per-item errors silently.
-- Dispatch registry: map lookup, no interface -- pure data struct + DefaultDispatchTable() factory.
-- cleanup.py safety gates: (1) path validation, (2) dir rejection, (3) provenance hash check (fails CLOSED).
-- depgraph.py: DependencyNode/Tree/Graph as plain Go structs; no external deps needed.
-- apm_yml.py: targets/target field CSV/list sugar maps cleanly; typed errors for conflicting/empty/unknown.
-- targets.py: TargetProfile with interface{} for UserSupported (bool or "partial"); ForScope handles CLAUDE_CONFIG_DIR env.
-- lockfile.py: minimal line-by-line YAML parser sufficient for known schema; self-entry synthesis from local_deployed_files.
-- local_bundle_handler.py: .mcp.json case-insensitive lookup; MCPServerSpec captures all Anthropic plugin fields.
-- registry.py: sync.Mutex cache + atomic os.Rename for marketplace list; FromDict/ToDict preserve extra fields.
-- git_stderr.py: pure classification + pattern matching; "could not resolve host" beats "could not resolve" for KindTimeout.
-- factory.py: ConstructableAdapter interface with New(model)/NewDefault() enables ordered preference-list selection.
-- template.py: Config struct + function callbacks decouple template from Strategy implementations cleanly.
-- base_integrator.py: CheckCollision, PartitionManagedFiles (trie-based longest-prefix routing), SyncRemoveFiles, FindFilesByGlob all map cleanly to Go static functions; interface{} Diagnostics interface avoids circular deps.
-- agent_integrator.py: TOML/Windsurf transforms use simple string manipulation without external libs; codex_agent uses multiline literal TOML; stdlib-only parseSimpleYAML sufficient for frontmatter.
-- validation.py: PackageType iota + String() works cleanly; DetectPackageType cascade (7 cases) maps to simple Go switch; apmYMLDeclaresDependencies uses line-scanner heuristic (no external YAML needed).
-- command_logger.py: CommandLogger + InstallLogger delegate to console package; nil io.Writer handled by console.Echo; no field for diagnostics needed at this level.
-- token_manager.py: GitHubTokenManager maps to Go struct with per-(host,port) credential cache; subprocess exec with goroutine+timer replaces Python's subprocess.run(timeout=); *string nil pointer for absent credentials.
-- primitives/discovery.py: PrimitiveCollection uses type switch + per-type name-index maps; globMatch with memoized DP handles ** segments; shouldReplace (local>dependency) drives conflict resolution.
-- models/dependency/reference.py: DependencyReference struct + Parse() with 3-phase approach (virtual detect, SSH parse, standard URL); IsSupportedGitHost/IsArtifactoryPath/ParseArtifactoryPath added to githubhost; ValidatePathSegments needs 4-arg form.
-- deps/plugin_parser.py: pure Go with stdlib json; ${CLAUDE_PLUGIN_ROOT} substitution via recursive walk; security: symlinks skipped, path escapes rejected with resolve+HasPrefix.
-- script_runner.py: ScriptRunner+PromptCompiler map cleanly; simple POSIX tokenizer for shlex; minimal YAML parser for apm.yml; runtime detection via regex; env-var extraction from arg prefix; subprocess exec via exec.Command.
-- output/formatters.py: CompilationFormatter plain-text fallback renders all format modes; rich-library formatting is not needed for Go (all formatting is text-based); OptimizationStats/PlacementSummary are clean Go structs.
-- core/auth.py: AuthResolver maps cleanly to Go struct with sync.Mutex cache; tokenmanager.ResolveCredentialFromGit/GhCLI are package-level functions (not methods); HostInfo.DisplayName() suppresses well-known ports 443/80/22.
-- marketplace/ref_resolver.py: RefResolver + RefCache with per-remote mutexes; context.WithTimeout replaces subprocess timeout; parseLsRemoteOutput skips peeled tags (^{}); buildHTTPSCloneURL inlines x-access-token auth.
-- marketplace/builder.py: MarketplaceBuilder with concurrent resolve via goroutines+semaphore; JSON composition uses map[string]interface{}; subtractPluginRoot uses HasPrefix on normalized paths.
-- Tracking gap: when migrations span multiple commits or branch resets, migration-status.json may fall behind actual Go code. Always verify Go packages vs tracked modules before proposing new work -- reconcile gaps first for a quick metric boost.
-- drift.py: pure interface-based Go (DependencyRef/LockedDep/LockFile interfaces); DetectConfigDrift uses recursive configsEqual; DetectOrphans/StaleFiles are pure set operations.
-- experimental.py: feature-flag registry as static map; config read/write via ~/.apm/config.json with sync.RWMutex cache + invalidation on write; difflib-like suggestions use contains heuristic.
-- Periodic audits find Go packages present in internal/ but missing from migration-status.json (Mirrors comment pattern); scan for these at iteration start for quick metric boosts.
-- runtime/manager.py: RuntimeManager maps to Go struct with platform detection (runtime.GOOS), supported runtimes map, exec.LookPath for binary checks; clean separation of concerns.
-- marketplace/resolver.py: MarketplacePluginResolution as plain struct (not dataclass); NormalizeOwnerRepoSlug + NormalizeRepoFieldForMatch handle URL/SSH/bare forms; ClassifyPluginSource determines source type via key presence.
-- install/validation.py: ProbePackageProber uses HTTP context with timeout; IsTLSFailure chains error causes; LocalPathFailureReason checks for apm.yml/.apm markers; ValidatePackageExists is the main entry point.
-- deps/git_reference_resolver.py: IsFullSHA/IsShortSHA regexp matchers; ParseLsRemoteOutput skips ^{} peeled tags; Resolve() tries GitHub API fast path before falling back.
-- conflict_detector.py: MCPConflictDetector uses function callbacks (not embedded adapter) to stay decoupled; UUID-based lookup preferred over canonical name comparison.
-
----
+...(truncated for size)
 
 ## 🚧 Foreclosed Avenues
 
@@ -99,17 +58,6 @@
 
 ---
 
-## 🔭 Future Directions
-
-- deps/github_downloader.py (1686 lines) -- complex HTTP+git download logic, feasible but large
-- integration/mcp_integrator.py (1540 lines) -- MCP lifecycle orchestrator
-- compilation/context_optimizer.py (1293 lines) -- compilation optimization
-- compilation/agents_compiler.py (1273 lines) -- agents compiler
-- adapters/client/copilot.py (1261 lines) -- Copilot adapter
-- commands/audit.py (978 lines) -- audit command
-- marketplace/publisher.py (861 lines) -- marketplace publisher
-
----
 
 ## 📊 Iteration History
 
@@ -140,3 +88,15 @@
 ### Iters 40-50 — 2026-05-14 — ✅ (metrics 32.00->75.06): skill/hook/cmd integrators, command_logger, validation, target_detection, apm_package, yml_schema, helptext, outcome_routing, primitives/parser, script_formatters, marketplace utils, windsurf, tokenmanager, primitives/discovery, depreference, plugin_parser, script_runner, formatters, auth, ref_resolver, builder, hostbackends, policy/discovery, audit_report, experimental, drift.
 
 ### Iters 1-39 — 2026-05-12/13 — ✅ (metrics 0.0->32.00): initialized Go module; migrated utils, version, constants, helpers, policy/phases/pipeline, MCP modules, policy_checks, ci_checks, base/agent/instruction/prompt integrators, update_policy, template, factory, registry, git_stderr, targets, lockfile, local_bundle_handler; 39+ modules.
+
+## Iteration History
+
+### Iteration 54 - 2026-05-15T03:26:36Z
+
+**Status:** accepted
+**Metric:** 89.19% (+4.86pp from 84.33%)
+**Change:** Migrated 7 MCP client adapter modules (+3486 lines)
+
+Modules: base (198), copilot (1261), vscode (579), claude (240), cursor (326), gemini (263), codex (619).
+Go packages in internal/adapters/client/{base,copilot,vscode,claude,cursor,gemini,codex}.
+Also restored migration-status.json baseline lost during main merge.

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 83747,
+  "migrated_python_lines": 88648,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1677,6 +1677,41 @@
       "python_lines": 372,
       "status": "migrated",
       "notes": "apm policy status/debug: policy file discovery, rule counts, inheritance chain display"
+    },
+    {
+      "module": "commands/install",
+      "go_package": "internal/commands/install",
+      "python_lines": 1916,
+      "status": "migrated",
+      "notes": "Install command: RunInstall, AddPackage, ValidateInstall, CheckFrozen, RunPreDeploySecurityScan with YAML scanner, lockfile I/O"
+    },
+    {
+      "module": "integration/mcp_integrator",
+      "go_package": "internal/integration/mcpintegrator",
+      "python_lines": 1540,
+      "status": "migrated",
+      "notes": "MCPIntegrator: Integrate, LoadServers, RemoveStale, PersistLock, DetectConflicts, FindStaleServers, client config writers for VSCode/Cursor/Claude/Copilot"
+    },
+    {
+      "module": "install/pipeline",
+      "go_package": "internal/install/installpipeline",
+      "python_lines": 741,
+      "status": "migrated",
+      "notes": "Install pipeline orchestrator: Pipeline, Phase interface, preflight/resolve/download/integrate/lockfile/finalize phases, InstallContext, DiagCollector"
+    },
+    {
+      "module": "deps/clone_engine",
+      "go_package": "internal/deps/cloneengine",
+      "python_lines": 342,
+      "status": "migrated",
+      "notes": "Transport-plan-driven clone engine: CloneEngine, TransportPlan, TransportAttempt, DefaultPlanForGitHub, DefaultPlanForADO, auth-failure detection"
+    },
+    {
+      "module": "commands/experimental",
+      "go_package": "internal/commands/experimental",
+      "python_lines": 362,
+      "status": "migrated",
+      "notes": "Experimental feature flags: EnableFlag, DisableFlag, ResetFlags, ListFlags, IsEnabled, NormaliseFlag with ~/.apm/config.json persistence"
     }
   ],
   "last_updated": "2026-05-15T12:24:22Z",

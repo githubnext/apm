@@ -1,6 +1,6 @@
 {
   "original_python_lines": 71696,
-  "migrated_python_lines": 53813,
+  "migrated_python_lines": 57419,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -988,6 +988,97 @@
       "python_lines": 1365,
       "status": "migrated",
       "notes": "Auto-discovery from git remote; GitHub Contents API fetch; file load; URL fetch; hash-pin verification; cache with TTL and stale fallback; minimal YAML policy parser"
+    },
+    {
+      "module": "src/apm_cli/install/drift.py",
+      "go_package": "internal/install/drift",
+      "python_lines": 731,
+      "status": "migrated",
+      "notes": "Pure stateless drift-detection functions with interface-based types"
+    },
+    {
+      "module": "src/apm_cli/deps/lockfile.py",
+      "go_package": "internal/deps/lockfile",
+      "python_lines": 530,
+      "status": "migrated",
+      "notes": "Minimal line-by-line YAML parser sufficient for known schema; self-entry synthesis from local_deployed_files"
+    },
+    {
+      "module": "src/apm_cli/core/token_manager.py",
+      "go_package": "internal/core/tokenmanager",
+      "python_lines": 497,
+      "status": "migrated",
+      "notes": "GitHubTokenManager maps to Go struct with per-(host,port) credential cache; subprocess exec with goroutine+timer"
+    },
+    {
+      "module": "src/apm_cli/install/local_bundle_handler.py",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 399,
+      "status": "migrated",
+      "notes": ".mcp.json case-insensitive lookup; MCPServerSpec captures all Anthropic plugin fields"
+    },
+    {
+      "module": "src/apm_cli/integration/cleanup.py",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_lines": 297,
+      "status": "migrated",
+      "notes": "Safety gates: path validation, dir rejection, provenance hash check"
+    },
+    {
+      "module": "src/apm_cli/models/plugin.py",
+      "go_package": "internal/models/plugin",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "Data models for APM plugin management"
+    },
+    {
+      "module": "src/apm_cli/policy/models.py",
+      "go_package": "internal/policy/policymodels",
+      "python_lines": 143,
+      "status": "migrated",
+      "notes": "CheckResult/CIAuditResult with JSON/SARIF output; CheckArtifactMap"
+    },
+    {
+      "module": "src/apm_cli/core/apm_yml.py",
+      "go_package": "internal/core/apmyml",
+      "python_lines": 107,
+      "status": "migrated",
+      "notes": "targets/target field CSV/list sugar maps cleanly; typed errors for conflicting/empty/unknown"
+    },
+    {
+      "module": "src/apm_cli/core/errors.py",
+      "go_package": "internal/core/errors",
+      "python_lines": 182,
+      "status": "migrated",
+      "notes": "Error hierarchy and renderers for target resolution; ASCII-only error messages"
+    },
+    {
+      "module": "src/apm_cli/marketplace/version_pins.py",
+      "go_package": "internal/marketplace/versionpins",
+      "python_lines": 179,
+      "status": "migrated",
+      "notes": "Ref pin cache for marketplace plugin immutability checks; atomic writes; fail-open"
+    },
+    {
+      "module": "src/apm_cli/marketplace/init_template.py",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 138,
+      "status": "migrated",
+      "notes": "Template renderers for marketplace authoring scaffolds; marketplace.yml and apm.yml block"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/opencode.py",
+      "go_package": "internal/adapters/opencode",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "OpenCode MCP adapter; converts Copilot-format to OpenCode JSON schema; opt-in via .opencode/ dir"
+    },
+    {
+      "module": "src/apm_cli/security/file_scanner.py",
+      "go_package": "internal/security/filescanner",
+      "python_lines": 85,
+      "status": "migrated",
+      "notes": "Lockfile-driven file scanning for content integrity; hidden Unicode character detection; fail-safe path validation"
     }
   ],
   "last_updated": "2026-05-14T21:46:18Z",

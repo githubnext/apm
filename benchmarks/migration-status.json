@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 78055,
+  "migrated_python_lines": 80153,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -1558,10 +1558,73 @@
       "python_lines": 1010,
       "status": "migrated",
       "notes": "Core policy check runner: scan, evaluate, enforce"
+    },
+    {
+      "module": "cache/git_cache",
+      "go_package": "internal/cache/gitcache",
+      "python_lines": 580,
+      "status": "migrated",
+      "notes": "Content-addressable git cache with integrity verification, LRU eviction, atomic checkout creation"
+    },
+    {
+      "module": "cache/http_cache",
+      "go_package": "internal/cache/httpcache",
+      "python_lines": 358,
+      "status": "migrated",
+      "notes": "HTTP response cache with ETag revalidation, sha256 integrity, LRU size-cap eviction"
+    },
+    {
+      "module": "commands/cache",
+      "go_package": "internal/commands/cache",
+      "python_lines": 137,
+      "status": "migrated",
+      "notes": "CLI cache management: info|clean|prune subcommands"
+    },
+    {
+      "module": "commands/list_cmd",
+      "go_package": "internal/commands/listcmd",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "List available scripts from apm.yml with table display"
+    },
+    {
+      "module": "commands/targets",
+      "go_package": "internal/commands/targetscmd",
+      "python_lines": 135,
+      "status": "migrated",
+      "notes": "Inspect resolved targets for the current project with JSON/table output"
+    },
+    {
+      "module": "deps/package_validator",
+      "go_package": "internal/deps/packagevalidator",
+      "python_lines": 298,
+      "status": "migrated",
+      "notes": "Validates APM package structure: required files, directory layout"
+    },
+    {
+      "module": "commands/config",
+      "go_package": "internal/commands/configcmd",
+      "python_lines": 337,
+      "status": "migrated",
+      "notes": "Config command group: show/get/set with apm.yml and user config support"
+    },
+    {
+      "module": "adapters/package_manager/base",
+      "go_package": "internal/adapters/packagemanager",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Base package manager interface"
+    },
+    {
+      "module": "adapters/package_manager/default_manager",
+      "go_package": "internal/adapters/packagemanager",
+      "python_lines": 125,
+      "status": "migrated",
+      "notes": "Default file-copy package manager implementation"
     }
   ],
-  "last_updated": "2026-05-15T09:11:32Z",
-  "iteration": 57,
+  "last_updated": "2026-05-15T12:24:22Z",
+  "iteration": 58,
   "python_lines_migrated_pct": 100.0,
   "modules_migrated": 205,
   "modules": [

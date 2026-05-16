@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 422305,
+  "migrated_python_lines": 424229,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -8784,11 +8784,67 @@
       "python_lines": 101,
       "status": "migrated",
       "notes": "Go implementation exists in internal/workflow/discovery"
+    },
+    {
+      "module": "test/marketplace/shadow_detector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_lines": 296,
+      "status": "test-migrated",
+      "notes": "Go shadowdetector tests cover DetectShadows case-insensitive/nil/multi-marketplace"
+    },
+    {
+      "module": "test/marketplace/tag_pattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_lines": 221,
+      "status": "test-migrated",
+      "notes": "Go tagpattern tests cover RenderTag, BuildTagRegex, ExtractVersion"
+    },
+    {
+      "module": "test/marketplace/version_pins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_lines": 268,
+      "status": "test-migrated",
+      "notes": "Go versionpins tests cover LoadRefPins, SaveRefPins, CheckRefPin, RecordRefPin"
+    },
+    {
+      "module": "test/policy/matcher",
+      "go_package": "internal/policy/matcher",
+      "python_lines": 144,
+      "status": "test-migrated",
+      "notes": "Go matcher tests cover MatchesPattern, CheckAllowDeny with wildcards"
+    },
+    {
+      "module": "test/core/scope",
+      "go_package": "internal/core/scope",
+      "python_lines": 390,
+      "status": "test-migrated",
+      "notes": "Go scope tests cover ParseScope, String, GetDeployRoot, GetAPMDir"
+    },
+    {
+      "module": "test/core/conflict_detection",
+      "go_package": "internal/core/conflictdetector",
+      "python_lines": 297,
+      "status": "test-migrated",
+      "notes": "Go conflictdetector tests cover CheckServerExists UUID/name/absent, FindConflicts"
+    },
+    {
+      "module": "test/core/docker_args",
+      "go_package": "internal/core/dockerargs",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Go dockerargs tests cover ProcessDockerArgs, ExtractEnvVars, MergeEnvVars"
+    },
+    {
+      "module": "test/models/mcpdep",
+      "go_package": "internal/models/mcpdep",
+      "python_lines": 187,
+      "status": "test-migrated",
+      "notes": "Go mcpdep tests cover FromString, FromDict, ToDict, IsSelfDefined, IsRegistryResolved"
     }
   ],
-  "last_updated": "2026-05-16T00:47:00Z",
-  "iteration": 73,
-  "python_lines_migrated_pct": 481.94,
+  "last_updated": "2026-05-16T01:46:06Z",
+  "iteration": 74,
+  "python_lines_migrated_pct": 484.14,
   "modules_migrated": 1166,
   "modules": [
     {

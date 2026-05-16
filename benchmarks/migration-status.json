@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 503551,
+  "migrated_python_lines": 505324,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10566,6 +10566,38 @@
       "status": "test-migrated",
       "python_file": "tests/unit/install/test_phase_timing.py",
       "python_lines": 82
+    },
+    {
+      "module": "test/deps/downloadstrategies",
+      "go_package": "github.com/githubnext/apm/internal/deps/downloadstrategies",
+      "python_file": "tests/unit/test_download_strategies.py",
+      "status": "test-migrated",
+      "python_lines": 1122,
+      "notes": "Go tests: buildSSHURL, buildHTTPSCloneURL, buildADOAPIURL, ResilientGet, New"
+    },
+    {
+      "module": "test/bundle/lockfileenrichment",
+      "go_package": "github.com/githubnext/apm/internal/install/bundle/lockfileenrichment",
+      "python_file": "tests/unit/test_lockfile_enrichment_go.py",
+      "status": "test-migrated",
+      "python_lines": 271,
+      "notes": "Go tests: FilterFilesByTarget, EnrichLockfileForPack, CollectMappedFromPrefixes"
+    },
+    {
+      "module": "test/bundle/unpacker_go",
+      "go_package": "github.com/githubnext/apm/internal/install/bundle/unpacker",
+      "python_file": "tests/unit/test_unpacker_go.py",
+      "status": "test-migrated",
+      "python_lines": 234,
+      "notes": "Go tests: ParseBundleLockfile with dependencies, pack metadata, missing file"
+    },
+    {
+      "module": "test/install/installservice",
+      "go_package": "github.com/githubnext/apm/internal/install/installservice",
+      "python_file": "tests/unit/test_install_service.py",
+      "status": "test-migrated",
+      "python_lines": 146,
+      "notes": "Go tests: InstallNotAvailableError, FrozenInstallError, IsFrozenInstallError, InstallService.Run"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

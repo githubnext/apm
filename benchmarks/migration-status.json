@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 498279,
+  "migrated_python_lines": 501411,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10466,6 +10466,48 @@
       "test_file": "internal/compilation/contextoptimizer/optimizer_test.go",
       "python_lines": 2586,
       "python_file": "tests/unit/compilation/test_context_optimizer.py"
+    },
+    {
+      "module": "test/install/phases/policytargetcheck",
+      "go_package": "internal/install/phases/policytargetcheck",
+      "python_lines": 493,
+      "status": "test-migrated",
+      "notes": "Go test suite written for policytargetcheck: ShouldRunCheck, TargetCheckIDs, PolicyViolationError, CheckResult"
+    },
+    {
+      "module": "test/install/phases/postdepslocal",
+      "go_package": "internal/install/phases/postdepslocal",
+      "python_lines": 542,
+      "status": "test-migrated",
+      "notes": "Go test suite written for postdepslocal: HasLocalContentErrors, DetectStaleLocalFiles, SortedLocalDeployedFiles, ShouldRun"
+    },
+    {
+      "module": "test/install/securityscan",
+      "go_package": "internal/install/securityscan",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Go test suite written for securityscan: PreDeploySecurityScan clean/blocked/force/empty/multi-char"
+    },
+    {
+      "module": "test/install/pkgresolution",
+      "go_package": "internal/install/pkgresolution",
+      "python_lines": 411,
+      "status": "test-migrated",
+      "notes": "Go test suite written for pkgresolution: NormalizePackageSpec, IsGitParentAtUserScope, ValidateGitParentScope, DependencyReferenceToYAMLEntry, ResolutionError"
+    },
+    {
+      "module": "test/install/presentation/dryrun",
+      "go_package": "internal/install/presentation/dryrun",
+      "python_lines": 787,
+      "status": "test-migrated",
+      "notes": "Go test suite written for dryrun: RenderAndExit with no-deps, APM deps, update action, MCP deps, orphans, success message"
+    },
+    {
+      "module": "test/install/template",
+      "go_package": "internal/install/template",
+      "python_lines": 612,
+      "status": "test-migrated",
+      "notes": "Go test suite written for install/template: RunIntegrationTemplate nil/no-targets/security-gate-blocked/integrate-error/success"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 430689,
+  "migrated_python_lines": 432426,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -8924,12 +8924,26 @@
       "python_lines": 180,
       "status": "test-migrated",
       "notes": "Go tests for ScanWorkflowsForDependencies MCP frontmatter parsing"
+    },
+    {
+      "module": "test/integration/marketplace/ymlschema",
+      "python_file": "tests/unit/marketplace/test_yml_schema.py",
+      "go_package": "github.com/githubnext/apm/internal/marketplace/ymlschema",
+      "status": "test-migrated",
+      "python_lines": 835
+    },
+    {
+      "module": "test/integration/compilation/contextoptimizer",
+      "python_file": "tests/unit/compilation/test_context_optimizer.py",
+      "go_package": "github.com/githubnext/apm/internal/output/models",
+      "status": "test-migrated",
+      "python_lines": 902
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",
   "iteration": 75,
-  "python_lines_migrated_pct": 491.51,
-  "modules_migrated": 1166,
+  "python_lines_migrated_pct": 493.49,
+  "modules_migrated": 1195,
   "modules": [
     {
       "module": "models/dependency/reference",

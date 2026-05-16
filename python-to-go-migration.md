@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T18:27:11Z|
-| Iteration Count | 90|
-| Best Metric | 574.09|
+| Last Run | 2026-05-16T19:29:12Z|
+| Iteration Count | 91|
+| Best Metric | 574.66|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -80,6 +80,14 @@ Metric at 574.09%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 91 -- 2026-05-16 19:29 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25970824133)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 4 packages (hostbackends, install/phases/heal, install/phases/download, installpipeline); registered 4 new test-migrated entries (+495 py lines)
+- **Metric**: 574.66% (prev: 574.09%, delta: +0.57pp)
+- **Commit**: 7ba29f9
+- **Notes**: BackendFor/BackendForHost dispatch, URL builders (HTTPS/SSH/HTTP), API URL construction for GitHub/ADO/GitLab/Generic; RunHealChain exclusive groups and conditional execution; RunParallelDownload success/failure/progress; Pipeline preflight/resolve/download/finalize phases, DiagCollector. go test ./... pass.
 
 ### Iteration 90 -- 2026-05-16 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25969446421)
 

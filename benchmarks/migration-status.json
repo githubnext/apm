@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 374936,
+  "migrated_python_lines": 422305,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -7688,12 +7688,1108 @@
       "python_lines": 6,
       "status": "test-migrated",
       "notes": "Python marketplace integration init registered as test-migration entry"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/base",
+      "go_package": "internal/adapters/client/base",
+      "python_file": "src/apm_cli/adapters/client/base.py",
+      "python_lines": 198,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/base"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/claude",
+      "go_package": "internal/adapters/client/claude",
+      "python_file": "src/apm_cli/adapters/client/claude.py",
+      "python_lines": 240,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/claude"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/codex",
+      "go_package": "internal/adapters/client/codex",
+      "python_file": "src/apm_cli/adapters/client/codex.py",
+      "python_lines": 619,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/codex"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/copilot",
+      "go_package": "internal/adapters/client/copilot",
+      "python_file": "src/apm_cli/adapters/client/copilot.py",
+      "python_lines": 1261,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/copilot"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/cursor",
+      "go_package": "internal/adapters/client/cursor",
+      "python_file": "src/apm_cli/adapters/client/cursor.py",
+      "python_lines": 326,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/cursor"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/gemini",
+      "go_package": "internal/adapters/client/gemini",
+      "python_file": "src/apm_cli/adapters/client/gemini.py",
+      "python_lines": 263,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/gemini"
+    },
+    {
+      "module": "src/apm_cli/adapters/client/vscode",
+      "go_package": "internal/adapters/client/vscode",
+      "python_file": "src/apm_cli/adapters/client/vscode.py",
+      "python_lines": 579,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/adapters/client/vscode"
+    },
+    {
+      "module": "src/apm_cli/cache/git_cache",
+      "go_package": "internal/cache/gitcache",
+      "python_file": "src/apm_cli/cache/git_cache.py",
+      "python_lines": 580,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/cache/gitcache"
+    },
+    {
+      "module": "src/apm_cli/cache/http_cache",
+      "go_package": "internal/cache/httpcache",
+      "python_file": "src/apm_cli/cache/http_cache.py",
+      "python_lines": 358,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/cache/httpcache"
+    },
+    {
+      "module": "src/apm_cli/cache/integrity",
+      "go_package": "internal/cache/integrity",
+      "python_file": "src/apm_cli/cache/integrity.py",
+      "python_lines": 104,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/cache/integrity"
+    },
+    {
+      "module": "src/apm_cli/cache/url_normalize",
+      "go_package": "internal/cache/urlnormalize",
+      "python_file": "src/apm_cli/cache/url_normalize.py",
+      "python_lines": 133,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/cache/urlnormalize"
+    },
+    {
+      "module": "src/apm_cli/commands/cache",
+      "go_package": "internal/commands/cache",
+      "python_file": "src/apm_cli/commands/cache.py",
+      "python_lines": 137,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/cache"
+    },
+    {
+      "module": "src/apm_cli/commands/experimental",
+      "go_package": "internal/commands/experimental",
+      "python_file": "src/apm_cli/commands/experimental.py",
+      "python_lines": 362,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/experimental"
+    },
+    {
+      "module": "src/apm_cli/commands/install",
+      "go_package": "internal/commands/install",
+      "python_file": "src/apm_cli/commands/install.py",
+      "python_lines": 1916,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/install"
+    },
+    {
+      "module": "src/apm_cli/commands/list_cmd",
+      "go_package": "internal/commands/listcmd",
+      "python_file": "src/apm_cli/commands/list_cmd.py",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/listcmd"
+    },
+    {
+      "module": "src/apm_cli/commands/mcp",
+      "go_package": "internal/commands/mcp",
+      "python_file": "src/apm_cli/commands/mcp.py",
+      "python_lines": 501,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/mcp"
+    },
+    {
+      "module": "src/apm_cli/commands/outdated",
+      "go_package": "internal/commands/outdated",
+      "python_file": "src/apm_cli/commands/outdated.py",
+      "python_lines": 538,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/outdated"
+    },
+    {
+      "module": "src/apm_cli/commands/pack",
+      "go_package": "internal/commands/pack",
+      "python_file": "src/apm_cli/commands/pack.py",
+      "python_lines": 417,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/pack"
+    },
+    {
+      "module": "src/apm_cli/commands/policy",
+      "go_package": "internal/commands/policy",
+      "python_file": "src/apm_cli/commands/policy.py",
+      "python_lines": 372,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/policy"
+    },
+    {
+      "module": "src/apm_cli/commands/update",
+      "go_package": "internal/commands/update",
+      "python_file": "src/apm_cli/commands/update.py",
+      "python_lines": 319,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/update"
+    },
+    {
+      "module": "src/apm_cli/commands/view",
+      "go_package": "internal/commands/view",
+      "python_file": "src/apm_cli/commands/view.py",
+      "python_lines": 486,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/commands/view"
+    },
+    {
+      "module": "src/apm_cli/compilation/build_id",
+      "go_package": "internal/compilation/buildid",
+      "python_file": "src/apm_cli/compilation/build_id.py",
+      "python_lines": 39,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/buildid"
+    },
+    {
+      "module": "src/apm_cli/compilation/constitution",
+      "go_package": "internal/compilation/constitution",
+      "python_file": "src/apm_cli/compilation/constitution.py",
+      "python_lines": 51,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/constitution"
+    },
+    {
+      "module": "src/apm_cli/compilation/constitution_block",
+      "go_package": "internal/compilation/constitutionblock",
+      "python_file": "src/apm_cli/compilation/constitution_block.py",
+      "python_lines": 104,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/constitutionblock"
+    },
+    {
+      "module": "src/apm_cli/compilation/injector",
+      "go_package": "internal/compilation/injector",
+      "python_file": "src/apm_cli/compilation/injector.py",
+      "python_lines": 94,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/injector"
+    },
+    {
+      "module": "src/apm_cli/compilation/output_writer",
+      "go_package": "internal/compilation/outputwriter",
+      "python_file": "src/apm_cli/compilation/output_writer.py",
+      "python_lines": 49,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/outputwriter"
+    },
+    {
+      "module": "src/apm_cli/compilation/template_builder",
+      "go_package": "internal/compilation/templatebuilder",
+      "python_file": "src/apm_cli/compilation/template_builder.py",
+      "python_lines": 174,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/compilation/templatebuilder"
+    },
+    {
+      "module": "src/apm_cli/constants",
+      "go_package": "internal/constants",
+      "python_file": "src/apm_cli/constants.py",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/constants"
+    },
+    {
+      "module": "src/apm_cli/core/apm_yml",
+      "go_package": "internal/core/apmyml",
+      "python_file": "src/apm_cli/core/apm_yml.py",
+      "python_lines": 107,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/apmyml"
+    },
+    {
+      "module": "src/apm_cli/core/auth",
+      "go_package": "internal/core/auth",
+      "python_file": "src/apm_cli/core/auth.py",
+      "python_lines": 1005,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/auth"
+    },
+    {
+      "module": "src/apm_cli/core/command_logger",
+      "go_package": "internal/core/commandlogger",
+      "python_file": "src/apm_cli/core/command_logger.py",
+      "python_lines": 751,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/commandlogger"
+    },
+    {
+      "module": "src/apm_cli/core/conflict_detector",
+      "go_package": "internal/core/conflictdetector",
+      "python_file": "src/apm_cli/core/conflict_detector.py",
+      "python_lines": 162,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/conflictdetector"
+    },
+    {
+      "module": "src/apm_cli/core/docker_args",
+      "go_package": "internal/core/dockerargs",
+      "python_file": "src/apm_cli/core/docker_args.py",
+      "python_lines": 96,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/dockerargs"
+    },
+    {
+      "module": "src/apm_cli/core/errors",
+      "go_package": "internal/core/errors",
+      "python_file": "src/apm_cli/core/errors.py",
+      "python_lines": 182,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/errors"
+    },
+    {
+      "module": "src/apm_cli/core/experimental",
+      "go_package": "internal/core/experimental",
+      "python_file": "src/apm_cli/core/experimental.py",
+      "python_lines": 278,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/experimental"
+    },
+    {
+      "module": "src/apm_cli/core/null_logger",
+      "go_package": "internal/core/nulllogger",
+      "python_file": "src/apm_cli/core/null_logger.py",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/nulllogger"
+    },
+    {
+      "module": "src/apm_cli/core/operations",
+      "go_package": "internal/core/operations",
+      "python_file": "src/apm_cli/core/operations.py",
+      "python_lines": 145,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/operations"
+    },
+    {
+      "module": "src/apm_cli/core/scope",
+      "go_package": "internal/core/scope",
+      "python_file": "src/apm_cli/core/scope.py",
+      "python_lines": 163,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/scope"
+    },
+    {
+      "module": "src/apm_cli/core/script_runner",
+      "go_package": "internal/core/scriptrunner",
+      "python_file": "src/apm_cli/core/script_runner.py",
+      "python_lines": 1138,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/scriptrunner"
+    },
+    {
+      "module": "src/apm_cli/core/target_detection",
+      "go_package": "internal/core/targetdetection",
+      "python_file": "src/apm_cli/core/target_detection.py",
+      "python_lines": 777,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/targetdetection"
+    },
+    {
+      "module": "src/apm_cli/core/token_manager",
+      "go_package": "internal/core/tokenmanager",
+      "python_file": "src/apm_cli/core/token_manager.py",
+      "python_lines": 497,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/core/tokenmanager"
+    },
+    {
+      "module": "src/apm_cli/deps/aggregator",
+      "go_package": "internal/deps/aggregator",
+      "python_file": "src/apm_cli/deps/aggregator.py",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/aggregator"
+    },
+    {
+      "module": "src/apm_cli/deps/apm_resolver",
+      "go_package": "internal/deps/apmresolver",
+      "python_file": "src/apm_cli/deps/apm_resolver.py",
+      "python_lines": 918,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/apmresolver"
+    },
+    {
+      "module": "src/apm_cli/deps/clone_engine",
+      "go_package": "internal/deps/cloneengine",
+      "python_file": "src/apm_cli/deps/clone_engine.py",
+      "python_lines": 342,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/cloneengine"
+    },
+    {
+      "module": "src/apm_cli/deps/download_strategies",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_file": "src/apm_cli/deps/download_strategies.py",
+      "python_lines": 1122,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/downloadstrategies"
+    },
+    {
+      "module": "src/apm_cli/deps/git_auth_env",
+      "go_package": "internal/deps/gitauthenv",
+      "python_file": "src/apm_cli/deps/git_auth_env.py",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/gitauthenv"
+    },
+    {
+      "module": "src/apm_cli/deps/git_remote_ops",
+      "go_package": "internal/deps/gitremoteops",
+      "python_file": "src/apm_cli/deps/git_remote_ops.py",
+      "python_lines": 91,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/gitremoteops"
+    },
+    {
+      "module": "src/apm_cli/deps/host_backends",
+      "go_package": "internal/deps/hostbackends",
+      "python_file": "src/apm_cli/deps/host_backends.py",
+      "python_lines": 623,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/hostbackends"
+    },
+    {
+      "module": "src/apm_cli/deps/lockfile",
+      "go_package": "internal/deps/lockfile",
+      "python_file": "src/apm_cli/deps/lockfile.py",
+      "python_lines": 530,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/lockfile"
+    },
+    {
+      "module": "src/apm_cli/deps/package_validator",
+      "go_package": "internal/deps/packagevalidator",
+      "python_file": "src/apm_cli/deps/package_validator.py",
+      "python_lines": 298,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/packagevalidator"
+    },
+    {
+      "module": "src/apm_cli/deps/plugin_parser",
+      "go_package": "internal/deps/pluginparser",
+      "python_file": "src/apm_cli/deps/plugin_parser.py",
+      "python_lines": 677,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/pluginparser"
+    },
+    {
+      "module": "src/apm_cli/deps/shared_clone_cache",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_file": "src/apm_cli/deps/shared_clone_cache.py",
+      "python_lines": 232,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/deps/sharedclonecache"
+    },
+    {
+      "module": "src/apm_cli/install/cache_pin",
+      "go_package": "internal/install/cachepin",
+      "python_file": "src/apm_cli/install/cache_pin.py",
+      "python_lines": 233,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/cachepin"
+    },
+    {
+      "module": "src/apm_cli/install/drift",
+      "go_package": "internal/install/drift",
+      "python_file": "src/apm_cli/install/drift.py",
+      "python_lines": 731,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/drift"
+    },
+    {
+      "module": "src/apm_cli/install/errors",
+      "go_package": "internal/install/errors",
+      "python_file": "src/apm_cli/install/errors.py",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/errors"
+    },
+    {
+      "module": "src/apm_cli/install/gitlab_resolver",
+      "go_package": "internal/install/gitlabresolver",
+      "python_file": "src/apm_cli/install/gitlab_resolver.py",
+      "python_lines": 41,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/gitlabresolver"
+    },
+    {
+      "module": "src/apm_cli/install/insecure_policy",
+      "go_package": "internal/install/insecurepolicy",
+      "python_file": "src/apm_cli/install/insecure_policy.py",
+      "python_lines": 229,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/insecurepolicy"
+    },
+    {
+      "module": "src/apm_cli/install/phases/cleanup",
+      "go_package": "internal/install/phases/cleanup",
+      "python_file": "src/apm_cli/install/phases/cleanup.py",
+      "python_lines": 158,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/cleanup"
+    },
+    {
+      "module": "src/apm_cli/install/phases/download",
+      "go_package": "internal/install/phases/download",
+      "python_file": "src/apm_cli/install/phases/download.py",
+      "python_lines": 135,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/download"
+    },
+    {
+      "module": "src/apm_cli/install/phases/finalize",
+      "go_package": "internal/install/phases/finalize",
+      "python_file": "src/apm_cli/install/phases/finalize.py",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/finalize"
+    },
+    {
+      "module": "src/apm_cli/install/phases/heal",
+      "go_package": "internal/install/phases/heal",
+      "python_file": "src/apm_cli/install/phases/heal.py",
+      "python_lines": 90,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/heal"
+    },
+    {
+      "module": "src/apm_cli/install/phases/local_content",
+      "go_package": "internal/install/phases/localcontent",
+      "python_file": "src/apm_cli/install/phases/local_content.py",
+      "python_lines": 191,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/localcontent"
+    },
+    {
+      "module": "src/apm_cli/install/phases/lockfile",
+      "go_package": "internal/install/phases/lockfile",
+      "python_file": "src/apm_cli/install/phases/lockfile.py",
+      "python_lines": 260,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/lockfile"
+    },
+    {
+      "module": "src/apm_cli/install/phases/policy_gate",
+      "go_package": "internal/install/phases/policygate",
+      "python_file": "src/apm_cli/install/phases/policy_gate.py",
+      "python_lines": 204,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/policygate"
+    },
+    {
+      "module": "src/apm_cli/install/phases/policy_target_check",
+      "go_package": "internal/install/phases/policytargetcheck",
+      "python_file": "src/apm_cli/install/phases/policy_target_check.py",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/policytargetcheck"
+    },
+    {
+      "module": "src/apm_cli/install/phases/post_deps_local",
+      "go_package": "internal/install/phases/postdepslocal",
+      "python_file": "src/apm_cli/install/phases/post_deps_local.py",
+      "python_lines": 117,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/phases/postdepslocal"
+    },
+    {
+      "module": "src/apm_cli/install/plan",
+      "go_package": "internal/install/plan",
+      "python_file": "src/apm_cli/install/plan.py",
+      "python_lines": 425,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/plan"
+    },
+    {
+      "module": "src/apm_cli/install/request",
+      "go_package": "internal/install/request",
+      "python_file": "src/apm_cli/install/request.py",
+      "python_lines": 60,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/request"
+    },
+    {
+      "module": "src/apm_cli/install/summary",
+      "go_package": "internal/install/summary",
+      "python_file": "src/apm_cli/install/summary.py",
+      "python_lines": 73,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/summary"
+    },
+    {
+      "module": "src/apm_cli/install/template",
+      "go_package": "internal/install/template",
+      "python_file": "src/apm_cli/install/template.py",
+      "python_lines": 140,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/install/template"
+    },
+    {
+      "module": "src/apm_cli/integration/agent_integrator",
+      "go_package": "internal/integration/agentintegrator",
+      "python_file": "src/apm_cli/integration/agent_integrator.py",
+      "python_lines": 606,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/agentintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/base_integrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_file": "src/apm_cli/integration/base_integrator.py",
+      "python_lines": 562,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/baseintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/command_integrator",
+      "go_package": "internal/integration/commandintegrator",
+      "python_file": "src/apm_cli/integration/command_integrator.py",
+      "python_lines": 775,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/commandintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/coverage",
+      "go_package": "internal/integration/coverage",
+      "python_file": "src/apm_cli/integration/coverage.py",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/coverage"
+    },
+    {
+      "module": "src/apm_cli/integration/dispatch",
+      "go_package": "internal/integration/dispatch",
+      "python_file": "src/apm_cli/integration/dispatch.py",
+      "python_lines": 91,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/dispatch"
+    },
+    {
+      "module": "src/apm_cli/integration/hook_integrator",
+      "go_package": "internal/integration/hookintegrator",
+      "python_file": "src/apm_cli/integration/hook_integrator.py",
+      "python_lines": 1071,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/hookintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/instruction_integrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_file": "src/apm_cli/integration/instruction_integrator.py",
+      "python_lines": 479,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/instructionintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/mcp_integrator",
+      "go_package": "internal/integration/mcpintegrator",
+      "python_file": "src/apm_cli/integration/mcp_integrator.py",
+      "python_lines": 1540,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/mcpintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/prompt_integrator",
+      "go_package": "internal/integration/promptintegrator",
+      "python_file": "src/apm_cli/integration/prompt_integrator.py",
+      "python_lines": 228,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/promptintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/skill_integrator",
+      "go_package": "internal/integration/skillintegrator",
+      "python_file": "src/apm_cli/integration/skill_integrator.py",
+      "python_lines": 1513,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/skillintegrator"
+    },
+    {
+      "module": "src/apm_cli/integration/skill_transformer",
+      "go_package": "internal/integration/skilltransformer",
+      "python_file": "src/apm_cli/integration/skill_transformer.py",
+      "python_lines": 113,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/skilltransformer"
+    },
+    {
+      "module": "src/apm_cli/integration/targets",
+      "go_package": "internal/integration/targets",
+      "python_file": "src/apm_cli/integration/targets.py",
+      "python_lines": 846,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/integration/targets"
+    },
+    {
+      "module": "src/apm_cli/marketplace/_git_utils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_file": "src/apm_cli/marketplace/_git_utils.py",
+      "python_lines": 19,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/gitutils"
+    },
+    {
+      "module": "src/apm_cli/marketplace/builder",
+      "go_package": "internal/marketplace/builder",
+      "python_file": "src/apm_cli/marketplace/builder.py",
+      "python_lines": 1059,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/builder"
+    },
+    {
+      "module": "src/apm_cli/marketplace/git_stderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_file": "src/apm_cli/marketplace/git_stderr.py",
+      "python_lines": 173,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/gitstderr"
+    },
+    {
+      "module": "src/apm_cli/marketplace/init_template",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_file": "src/apm_cli/marketplace/init_template.py",
+      "python_lines": 138,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/inittemplate"
+    },
+    {
+      "module": "src/apm_cli/marketplace/ref_resolver",
+      "go_package": "internal/marketplace/refresolver",
+      "python_file": "src/apm_cli/marketplace/ref_resolver.py",
+      "python_lines": 345,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/refresolver"
+    },
+    {
+      "module": "src/apm_cli/marketplace/registry",
+      "go_package": "internal/marketplace/registry",
+      "python_file": "src/apm_cli/marketplace/registry.py",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/registry"
+    },
+    {
+      "module": "src/apm_cli/marketplace/semver",
+      "go_package": "internal/marketplace/semver",
+      "python_file": "src/apm_cli/marketplace/semver.py",
+      "python_lines": 234,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/semver"
+    },
+    {
+      "module": "src/apm_cli/marketplace/shadow_detector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_file": "src/apm_cli/marketplace/shadow_detector.py",
+      "python_lines": 75,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/shadowdetector"
+    },
+    {
+      "module": "src/apm_cli/marketplace/tag_pattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_file": "src/apm_cli/marketplace/tag_pattern.py",
+      "python_lines": 103,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/tagpattern"
+    },
+    {
+      "module": "src/apm_cli/marketplace/version_pins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_file": "src/apm_cli/marketplace/version_pins.py",
+      "python_lines": 179,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/versionpins"
+    },
+    {
+      "module": "src/apm_cli/marketplace/yml_schema",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_file": "src/apm_cli/marketplace/yml_schema.py",
+      "python_lines": 805,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/marketplace/ymlschema"
+    },
+    {
+      "module": "src/apm_cli/models/apm_package",
+      "go_package": "internal/models/apmpackage",
+      "python_file": "src/apm_cli/models/apm_package.py",
+      "python_lines": 371,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/models/apmpackage"
+    },
+    {
+      "module": "src/apm_cli/models/plugin",
+      "go_package": "internal/models/plugin",
+      "python_file": "src/apm_cli/models/plugin.py",
+      "python_lines": 152,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/models/plugin"
+    },
+    {
+      "module": "src/apm_cli/models/results",
+      "go_package": "internal/models/results",
+      "python_file": "src/apm_cli/models/results.py",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/models/results"
+    },
+    {
+      "module": "src/apm_cli/models/validation",
+      "go_package": "internal/models/validation",
+      "python_file": "src/apm_cli/models/validation.py",
+      "python_lines": 800,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/models/validation"
+    },
+    {
+      "module": "src/apm_cli/output/models",
+      "go_package": "internal/output/models",
+      "python_file": "src/apm_cli/output/models.py",
+      "python_lines": 136,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/output/models"
+    },
+    {
+      "module": "src/apm_cli/output/script_formatters",
+      "go_package": "internal/output/scriptformatters",
+      "python_file": "src/apm_cli/output/script_formatters.py",
+      "python_lines": 349,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/output/scriptformatters"
+    },
+    {
+      "module": "src/apm_cli/policy/_help_text",
+      "go_package": "internal/policy/helptext",
+      "python_file": "src/apm_cli/policy/_help_text.py",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/helptext"
+    },
+    {
+      "module": "src/apm_cli/policy/ci_checks",
+      "go_package": "internal/policy/cichecks",
+      "python_file": "src/apm_cli/policy/ci_checks.py",
+      "python_lines": 588,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/cichecks"
+    },
+    {
+      "module": "src/apm_cli/policy/discovery",
+      "go_package": "internal/policy/discovery",
+      "python_file": "src/apm_cli/policy/discovery.py",
+      "python_lines": 1365,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/discovery"
+    },
+    {
+      "module": "src/apm_cli/policy/inheritance",
+      "go_package": "internal/policy/inheritance",
+      "python_file": "src/apm_cli/policy/inheritance.py",
+      "python_lines": 257,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/inheritance"
+    },
+    {
+      "module": "src/apm_cli/policy/matcher",
+      "go_package": "internal/policy/matcher",
+      "python_file": "src/apm_cli/policy/matcher.py",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/matcher"
+    },
+    {
+      "module": "src/apm_cli/policy/outcome_routing",
+      "go_package": "internal/policy/outcomerouting",
+      "python_file": "src/apm_cli/policy/outcome_routing.py",
+      "python_lines": 195,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/outcomerouting"
+    },
+    {
+      "module": "src/apm_cli/policy/policy_checks",
+      "go_package": "internal/policy/policychecks",
+      "python_file": "src/apm_cli/policy/policy_checks.py",
+      "python_lines": 1010,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/policychecks"
+    },
+    {
+      "module": "src/apm_cli/policy/schema",
+      "go_package": "internal/policy/schema",
+      "python_file": "src/apm_cli/policy/schema.py",
+      "python_lines": 117,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/policy/schema"
+    },
+    {
+      "module": "src/apm_cli/primitives/discovery",
+      "go_package": "internal/primitives/discovery",
+      "python_file": "src/apm_cli/primitives/discovery.py",
+      "python_lines": 612,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/primitives/discovery"
+    },
+    {
+      "module": "src/apm_cli/registry/client",
+      "go_package": "internal/registry/client",
+      "python_file": "src/apm_cli/registry/client.py",
+      "python_lines": 464,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/registry/client"
+    },
+    {
+      "module": "src/apm_cli/registry/operations",
+      "go_package": "internal/registry/operations",
+      "python_file": "src/apm_cli/registry/operations.py",
+      "python_lines": 497,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/registry/operations"
+    },
+    {
+      "module": "src/apm_cli/runtime/base",
+      "go_package": "internal/runtime/base",
+      "python_file": "src/apm_cli/runtime/base.py",
+      "python_lines": 63,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/runtime/base"
+    },
+    {
+      "module": "src/apm_cli/runtime/codex_runtime",
+      "go_package": "internal/runtime/codexruntime",
+      "python_file": "src/apm_cli/runtime/codex_runtime.py",
+      "python_lines": 151,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/runtime/codexruntime"
+    },
+    {
+      "module": "src/apm_cli/runtime/factory",
+      "go_package": "internal/runtime/factory",
+      "python_file": "src/apm_cli/runtime/factory.py",
+      "python_lines": 139,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/runtime/factory"
+    },
+    {
+      "module": "src/apm_cli/runtime/llm_runtime",
+      "go_package": "internal/runtime/llmruntime",
+      "python_file": "src/apm_cli/runtime/llm_runtime.py",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/runtime/llmruntime"
+    },
+    {
+      "module": "src/apm_cli/runtime/manager",
+      "go_package": "internal/runtime/manager",
+      "python_file": "src/apm_cli/runtime/manager.py",
+      "python_lines": 403,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/runtime/manager"
+    },
+    {
+      "module": "src/apm_cli/security/audit_report",
+      "go_package": "internal/security/auditreport",
+      "python_file": "src/apm_cli/security/audit_report.py",
+      "python_lines": 253,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/security/auditreport"
+    },
+    {
+      "module": "src/apm_cli/security/file_scanner",
+      "go_package": "internal/security/filescanner",
+      "python_file": "src/apm_cli/security/file_scanner.py",
+      "python_lines": 85,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/security/filescanner"
+    },
+    {
+      "module": "src/apm_cli/update_policy",
+      "go_package": "internal/updatepolicy",
+      "python_file": "src/apm_cli/update_policy.py",
+      "python_lines": 50,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/updatepolicy"
+    },
+    {
+      "module": "src/apm_cli/utils/atomic_io",
+      "go_package": "internal/utils/atomicio",
+      "python_file": "src/apm_cli/utils/atomic_io.py",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/atomicio"
+    },
+    {
+      "module": "src/apm_cli/utils/console",
+      "go_package": "internal/utils/console",
+      "python_file": "src/apm_cli/utils/console.py",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/console"
+    },
+    {
+      "module": "src/apm_cli/utils/content_hash",
+      "go_package": "internal/utils/contenthash",
+      "python_file": "src/apm_cli/utils/content_hash.py",
+      "python_lines": 108,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/contenthash"
+    },
+    {
+      "module": "src/apm_cli/utils/diagnostics",
+      "go_package": "internal/utils/diagnostics",
+      "python_file": "src/apm_cli/utils/diagnostics.py",
+      "python_lines": 486,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/diagnostics"
+    },
+    {
+      "module": "src/apm_cli/utils/exclude",
+      "go_package": "internal/utils/exclude",
+      "python_file": "src/apm_cli/utils/exclude.py",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/exclude"
+    },
+    {
+      "module": "src/apm_cli/utils/file_ops",
+      "go_package": "internal/utils/fileops",
+      "python_file": "src/apm_cli/utils/file_ops.py",
+      "python_lines": 326,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/fileops"
+    },
+    {
+      "module": "src/apm_cli/utils/git_env",
+      "go_package": "internal/utils/gitenv",
+      "python_file": "src/apm_cli/utils/git_env.py",
+      "python_lines": 97,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/gitenv"
+    },
+    {
+      "module": "src/apm_cli/utils/github_host",
+      "go_package": "internal/utils/githubhost",
+      "python_file": "src/apm_cli/utils/github_host.py",
+      "python_lines": 624,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/githubhost"
+    },
+    {
+      "module": "src/apm_cli/utils/guards",
+      "go_package": "internal/utils/guards",
+      "python_file": "src/apm_cli/utils/guards.py",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/guards"
+    },
+    {
+      "module": "src/apm_cli/utils/helpers",
+      "go_package": "internal/utils/helpers",
+      "python_file": "src/apm_cli/utils/helpers.py",
+      "python_lines": 131,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/helpers"
+    },
+    {
+      "module": "src/apm_cli/utils/install_tui",
+      "go_package": "internal/utils/installtui",
+      "python_file": "src/apm_cli/utils/install_tui.py",
+      "python_lines": 365,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/installtui"
+    },
+    {
+      "module": "src/apm_cli/utils/normalization",
+      "go_package": "internal/utils/normalization",
+      "python_file": "src/apm_cli/utils/normalization.py",
+      "python_lines": 57,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/normalization"
+    },
+    {
+      "module": "src/apm_cli/utils/path_security",
+      "go_package": "internal/utils/pathsecurity",
+      "python_file": "src/apm_cli/utils/path_security.py",
+      "python_lines": 130,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/pathsecurity"
+    },
+    {
+      "module": "src/apm_cli/utils/paths",
+      "go_package": "internal/utils/paths",
+      "python_file": "src/apm_cli/utils/paths.py",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/paths"
+    },
+    {
+      "module": "src/apm_cli/utils/reflink",
+      "go_package": "internal/utils/reflink",
+      "python_file": "src/apm_cli/utils/reflink.py",
+      "python_lines": 281,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/reflink"
+    },
+    {
+      "module": "src/apm_cli/utils/version_checker",
+      "go_package": "internal/utils/versionchecker",
+      "python_file": "src/apm_cli/utils/version_checker.py",
+      "python_lines": 193,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/versionchecker"
+    },
+    {
+      "module": "src/apm_cli/utils/yaml_io",
+      "go_package": "internal/utils/yamlio",
+      "python_file": "src/apm_cli/utils/yaml_io.py",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/utils/yamlio"
+    },
+    {
+      "module": "src/apm_cli/version",
+      "go_package": "internal/version",
+      "python_file": "src/apm_cli/version.py",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/version"
+    },
+    {
+      "module": "src/apm_cli/workflow/discovery",
+      "go_package": "internal/workflow/discovery",
+      "python_file": "src/apm_cli/workflow/discovery.py",
+      "python_lines": 101,
+      "status": "migrated",
+      "notes": "Go implementation exists in internal/workflow/discovery"
     }
   ],
-  "last_updated": "2026-05-15T19:05:00Z",
-  "iteration": 67,
-  "python_lines_migrated_pct": 246.63,
-  "modules_migrated": 577,
+  "last_updated": "2026-05-16T00:47:00Z",
+  "iteration": 73,
+  "python_lines_migrated_pct": 481.94,
+  "modules_migrated": 1166,
   "modules": [
     {
       "module": "models/dependency/reference",

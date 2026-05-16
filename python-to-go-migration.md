@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T03:12:00Z |
-| Iteration Count | 75 |
-| Best Metric | 486.78 |
+| Last Run | 2026-05-16T04:48:21Z|
+| Iteration Count | 76|
+| Best Metric | 491.51|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -22,8 +22,8 @@
 | Pause Reason | — |
 | Completed | false |
 | Completed Reason | — |
-| Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Consecutive Errors | 0|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -67,6 +67,7 @@ Metric at 486.78%. Go tests now cover 70 packages total. ~130 Go packages still 
 - Only 2 unregistered Python files remain (init files, 107 lines total); metric gains from test registration are nearly exhausted.
 - After iter 73: 137 Python src/apm_cli files registered as migrated (Go impl exists in internal/); ~144 packages remain untested. Metric at 481.94%.
 - After iter 75: 70 Go packages have tests (up from 64); 6 new suites: locking (5 tests), integrity (6 tests), constitutionblock (6 tests), agentformatter (5 tests), diagnostics (7 tests), cichecks (10 tests). ~130 packages still untested.
+- After iter 76: 76 Go packages have tests (up from 70); 6 new suites: policy/inheritance (7 tests), policy/outcomerouting (8 tests), compilation/templatebuilder (5 tests), models/apmpackage (7 tests), utils/versionchecker (6 tests), deps/aggregator (4 tests). ~124 packages still untested.
 
 ## 🚧 Foreclosed Avenues
 
@@ -77,6 +78,14 @@ Metric at 486.78%. Go tests now cover 70 packages total. ~130 Go packages still 
 
 
 ## 📊 Iteration History
+
+### Iteration 76 -- 2026-05-16 04:40 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25952949923)
+
+- **Status**: [✅ Accepted](https://github.com/githubnext/apm/actions/runs/25952949923)
+- **Change**: Added Go test suites for 6 packages (policy/inheritance, policy/outcomerouting, compilation/templatebuilder, models/apmpackage, utils/versionchecker, deps/aggregator); registered 6 Python test files (+4145 py lines)
+- **Metric**: 491.51% (previous best: 486.78%, delta: +4.73pp)
+- **Commit**: e398858
+- **Notes**: Tests cover MergeDependencyPolicies/MergeMcpPolicies deny union/escalation, RouteDiscoveryOutcome all 9 outcomes, RenderInstructionsBlock global/scoped/sorted, ParseContentType/HasPrimitives, ParseVersion/IsNewerVersion, ScanWorkflowsForDependencies MCP frontmatter. go build ./... and go test ./... pass.
 
 ### Iteration 75 -- 2026-05-16 03:12 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25951270463)
 

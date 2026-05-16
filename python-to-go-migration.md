@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T10:56:00Z|
-| Iteration Count | 82|
-| Best Metric | 515.92|
+| Last Run | 2026-05-16T11:49:00Z|
+| Iteration Count | 83|
+| Best Metric | 516.43|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -79,6 +79,14 @@ Metric at 515.92%. Go tests now cover 122 packages total. ~78 Go packages still 
 
 
 ## 📊 Iteration History
+
+### Iteration 83 -- 2026-05-16 11:49 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25961141958)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 9 packages (policy/helptext, marketplace/refresolver, deps/gitauthenv, install/cachepin, runtime/factory, integration/cleanuphelper, marketplace/inittemplate, security/contentscanner, security/auditreport); registered all as test-migrated (+449 py lines)
+- **Metric**: 516.43% (previous best: 515.92%, delta: +0.51pp)
+- **Commit**: fe98064
+- **Notes**: Tests cover PolicySourceFormsHelp constants, RefCache TTL/expiry/copy-isolation/offline-mode, GitAuthEnv SetupEnvironment/NoninteractiveEnv/SubprocessEnvDict, WriteMarker/VerifyMarker schema/mismatch/malformed, Registry CreateRuntime/GetBestAvailableRuntime, ValidateDeployPath/RemoveStaleDeployedFiles gates, RenderMarketplaceYMLTemplate/RenderMarketplaceBlock defaults, ScanText bidi/zero-width/line-tracking, FindingsToJSON/SARIF/Markdown/DetectFormat. go build ./... and go test ./... pass (131 packages).
 
 ### Iteration 82 -- 2026-05-16 10:56 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25960046833)
 

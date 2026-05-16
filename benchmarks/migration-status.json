@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 503056,
+  "migrated_python_lines": 503551,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10540,6 +10540,32 @@
       "python_file": "src/apm_cli/bundle/packer.py",
       "python_lines": 281,
       "notes": "Tests for detectTarget, filterFilesByTarget, readDeployedFiles, findLockfile"
+    },
+    {
+      "module": "test/deps/test_host_backends",
+      "go_package": "internal/deps/hostbackends",
+      "status": "test-migrated",
+      "python_file": "tests/unit/deps/test_host_backends.py",
+      "python_lines": 413
+    },
+    {
+      "module": "test/install/phases/heal",
+      "go_package": "internal/install/phases/heal",
+      "status": "test-migrated",
+      "python_lines": 0
+    },
+    {
+      "module": "test/install/phases/download",
+      "go_package": "internal/install/phases/download",
+      "status": "test-migrated",
+      "python_lines": 0
+    },
+    {
+      "module": "test/install/installpipeline",
+      "go_package": "internal/install/installpipeline",
+      "status": "test-migrated",
+      "python_file": "tests/unit/install/test_phase_timing.py",
+      "python_lines": 82
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

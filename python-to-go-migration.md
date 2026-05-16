@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T14:32:00Z|
-| Iteration Count | 86|
-| Best Metric | 555.68|
+| Last Run | 2026-05-16T15:26:00Z|
+| Iteration Count | 87|
+| Best Metric | 562.30|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 555.68%. Continue adding Go tests for remaining untested packages:
-- Write Go tests for remaining untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, workflow/runner, workflow/discovery, install/bundle/*, install/phases/*, etc.)
+Metric at 562.30%. Continue adding Go tests for remaining untested packages:
+- Write Go tests for remaining untested packages (commands/*, runtime/*, deps/cloneengine, deps/hostbackends, install/bundle/*, install/phases/policygate, install/phases/heal, install/phases/download, install/installpipeline, install/installservice, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
 
@@ -80,6 +80,14 @@ Metric at 555.68%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 87 -- 2026-05-16 15:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25965647745)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (filescanner, cleanup, finalize, workflow/runner, workflow/discovery, gitrefresolver); registered 6 new test-migrated entries (+5808 py lines)
+- **Metric**: 562.30% (prev: 555.68%, delta: +6.62pp)
+- **Commit**: ab666a7
+- **Notes**: Pure-function tests: isSafeLockfilePath, detectSuspiciousBytes, ScanDeployedFiles, DetectStaleFiles, CollectOrphanKeys, UnpinnedWarning, SubstituteParameters, CollectParameters, DiscoverWorkflows, IsFullSHA/IsShortSHA. go test ./... pass (147 packages).
 
 ### Iteration 86 -- 2026-05-16 14:32 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25964476476)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T20:20:34Z|
-| Iteration Count | 92|
-| Best Metric | 576.68|
+| Last Run | 2026-05-16T21:21:00Z|
+| Iteration Count | 93|
+| Best Metric | 578.77|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -80,6 +80,14 @@ Metric at 576.68%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 93 -- 2026-05-16 21:21 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25973221828)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (adapters/client/base, claude, gemini, gitlabresolver, marketplace/registry, bundle/pluginexporter); registered 6 new test-migrated entries (+1831 py lines)
+- **Metric**: 578.77% (previous best: 576.68%, delta: +2.09pp)
+- **Commit**: 6399410
+- **Notes**: InputVarRE/EnvVarRE regex tests; Claude/Gemini adapter path/config tests; ParseShorthand/BoundaryCandidates tests; FromDict/ToDict/Registry CRUD tests; validateOutputRel/sanitizeBundleName/renamePrompt/ExportPluginBundle tests. go test ./... pass.
 
 ### Iteration 92 -- 2026-05-16 20:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25971908793)
 

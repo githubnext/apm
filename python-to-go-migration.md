@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T00:47:00Z |
-| Iteration Count | 73 |
-| Best Metric | 481.94 |
+| Last Run | 2026-05-16T01:40:00Z |
+| Iteration Count | 74 |
+| Best Metric | 484.14 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,9 +39,9 @@
 
 ## 🎯 Current Priorities
 
-Metric at 481.94%. Go tests added for 9 packages (constants, normalization, deptypes, errors, policymodels, compilationconst, version, results, paths); 137 Python source files registered. ~144 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (cache/httpcache, cache/integrity, adapters/client/*, commands/*, compilation/*, models/mcpdep, etc.)
-- Register remaining unregistered Python source files that have Go implementations
+Metric at 484.14%. Go tests added for 17 packages total (tagpattern, shadowdetector, versionpins, matcher, dockerargs, scope, conflictdetector, mcpdep added this iteration); 137 Python source files registered. ~136 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (cache/httpcache, cache/integrity, adapters/client/*, commands/*, compilation/*, runtime/*, etc.)
+- Register remaining Python test files for newly tested Go packages
 
 ---
 
@@ -77,6 +77,14 @@ Metric at 481.94%. Go tests added for 9 packages (constants, normalization, dept
 
 
 ## 📊 Iteration History
+
+### Iteration 74 -- 2026-05-16 01:40 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25949458424)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 8 packages (tagpattern, shadowdetector, versionpins, matcher, dockerargs, scope, conflictdetector, mcpdep); registered 8 Python test files (+1924 py lines)
+- **Metric**: 484.14% (previous best: 481.94%, delta: +2.20pp)
+- **Commit**: b06300e
+- **Notes**: Tests cover RenderTag/BuildTagRegex/ExtractVersion, DetectShadows case-insensitive, LoadRefPins/CheckRefPin/RecordRefPin, MatchesPattern wildcards/CheckAllowDeny, ParseScope/GetDeployRoot, CheckServerExists UUID/canonical, ProcessDockerArgs/-e injection, FromString/FromDict/ToDict. go build ./... and go test ./... pass.
 
 ### Iteration 73 -- 2026-05-16 00:47 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25948275932)
 

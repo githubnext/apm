@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T21:21:00Z|
-| Iteration Count | 93|
-| Best Metric | 578.77|
+| Last Run | 2026-05-16T22:20:00Z|
+| Iteration Count | 94|
+| Best Metric | 580.77|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -81,6 +81,14 @@ Metric at 576.68%. Continue adding Go tests for remaining untested packages:
 
 ## 📊 Iteration History
 
+### Iteration 94 -- 2026-05-16 22:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25974444137)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (adapters/client/codex, adapters/client/cursor, runtime/codexruntime, runtime/llmruntime, commands/experimental, cache/httpcache); registered 6 new test-migrated entries (+1754 py lines)
+- **Metric**: 580.77% (previous best: 578.77%, delta: +2.00pp)
+- **Commit**: 05c27cf
+- **Notes**: TargetName/MCPServersKey/GetConfigPath for codex+cursor adapters; GetRuntimeName/GetRuntimeInfo/String/ListAvailableModels for codexruntime+llmruntime; KnownFlags/NormaliseFlag/DisplayName/ValidateFlagName/IsEnabled/EnableFlag/DisableFlag for experimental; New/Store/Get/parseTTL/CleanAll for httpcache. go test ./... pass.
+
 ### Iteration 93 -- 2026-05-16 21:21 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25973221828)
 
 - **Status**: ✅ Accepted
@@ -89,77 +97,7 @@ Metric at 576.68%. Continue adding Go tests for remaining untested packages:
 - **Commit**: 6399410
 - **Notes**: InputVarRE/EnvVarRE regex tests; Claude/Gemini adapter path/config tests; ParseShorthand/BoundaryCandidates tests; FromDict/ToDict/Registry CRUD tests; validateOutputRel/sanitizeBundleName/renamePrompt/ExportPluginBundle tests. go test ./... pass.
 
-### Iteration 92 -- 2026-05-16 20:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25971908793)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 4 packages (downloadstrategies, lockfileenrichment, unpacker, installservice); registered 4 new test-migrated entries (+1773 py lines)
-- **Metric**: 576.68% (prev: 574.66%, delta: +2.02pp)
-- **Commit**: 00d8541
-- **Notes**: buildSSHURL/buildHTTPSCloneURL/buildADOAPIURL/ResilientGet; FilterFilesByTarget/EnrichLockfileForPack/CollectMappedFromPrefixes; ParseBundleLockfile with deps/pack-meta/missing-file; InstallNotAvailableError/FrozenInstallError/IsFrozenInstallError/Run. go test ./... pass.
-
-### Iteration 91 -- 2026-05-16 19:29 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25970824133)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 4 packages (hostbackends, install/phases/heal, install/phases/download, installpipeline); registered 4 new test-migrated entries (+495 py lines)
-- **Metric**: 574.66% (prev: 574.09%, delta: +0.57pp)
-- **Commit**: 7ba29f9
-- **Notes**: BackendFor/BackendForHost dispatch, URL builders (HTTPS/SSH/HTTP), API URL construction for GitHub/ADO/GitLab/Generic; RunHealChain exclusive groups and conditional execution; RunParallelDownload success/failure/progress; Pipeline preflight/resolve/download/finalize phases, DiagCollector. go test ./... pass.
-
-### Iteration 90 -- 2026-05-16 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25969446421)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 4 packages (registry/client, registry/operations, runtime/manager, bundle/packer); registered 4 new test-migrated entries (+1645 py lines)
-- **Metric**: 574.09% (prev: 572.22%, delta: +1.87pp)
-- **Commit**: 2964258
-- **Notes**: NewSimpleRegistryClient URL validation, SearchServers/GetServer/ListServers via httptest, mcpConfigPaths/extractServerIDs, ValidateRuntime/SetupEnvironment, detectTarget/filterFilesByTarget all tested. go test ./... pass.
-
-### Iteration 89 -- 2026-05-16 17:25 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25968249645)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 6 packages (policytargetcheck, postdepslocal, securityscan, pkgresolution, dryrun, template); registered 6 new test-migrated entries (+3132 py lines)
-- **Metric**: 572.22% (prev: 568.64%, delta: +3.58pp)
-- **Commit**: 2d04b20
-- **Notes**: ShouldRunCheck, HasLocalContentErrors/DetectStaleLocalFiles/ShouldRun, PreDeploySecurityScan hidden-char detection, NormalizePackageSpec/ValidateGitParentScope, RenderAndExit with mock logger, RunIntegrationTemplate all tested. go test ./... pass.
-
-### Iteration 88 -- 2026-05-16 16:23 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25966901883)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 5 packages (core/operations, policygate, installphase, cloneengine, contextoptimizer); registered 5 new test-migrated entries (+5555 py lines)
-- **Metric**: 568.64% (prev: 562.30%, delta: +6.34pp)
-- **Commit**: 7911b7f
-- **Notes**: ConfigureClient/InstallPackage/UninstallPackage, IsDisabledByEnvVar, ParseTargetsField/ValidateTargets/ExpandAllTarget/FormatProvenance, CloneEngine custom action and fallback tests, DirectoryAnalysis.RelevanceScore and InheritanceAnalysis.EfficiencyRatio tested. go test ./... pass (152 packages).
-
-### Iteration 87 -- 2026-05-16 15:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25965647745)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 6 packages (filescanner, cleanup, finalize, workflow/runner, workflow/discovery, gitrefresolver); registered 6 new test-migrated entries (+5808 py lines)
-- **Metric**: 562.30% (prev: 555.68%, delta: +6.62pp)
-- **Commit**: ab666a7
-- **Notes**: Pure-function tests: isSafeLockfilePath, detectSuspiciousBytes, ScanDeployedFiles, DetectStaleFiles, CollectOrphanKeys, UnpinnedWarning, SubstituteParameters, CollectParameters, DiscoverWorkflows, IsFullSHA/IsShortSHA. go test ./... pass (147 packages).
-
-### Iteration 86 -- 2026-05-16 14:32 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25964476476)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 4 packages (skilltransformer, promptintegrator, commandintegrator, apmresolver); registered 4 new test-migrated entries (+2034 py lines)
-- **Metric**: 555.68% (prev: 553.35%, delta: +2.33pp)
-- **Commit**: c522ef9
-- **Notes**: ToHyphenCase, TransformToAgent, FindPromptFiles, CopyPrompt, extractInputNames, parseFrontmatter, parseApmYMLDeps all tested. go test ./... pass (141 packages).
-
-### Iteration 85 -- 2026-05-16 13:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25963275244)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 3 packages (gitremoteops, sharedclonecache, packagemanager); registered 3 new test-migrated entries (+2012 py lines)
-- **Metric**: 553.35% (prev: 551.06%, delta: +2.29pp)
-- **Commit**: 0a79fc6
-- **Notes**: ParseLsRemoteOutput and SortRefsBySemver tested; SharedCloneCache GetOrClone/Cleanup tested; DefaultManager Install/List/Uninstall tested. go test ./... pass.
-
-### Iteration 84 -- 2026-05-16 12:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25961895174)
-
-- **Status**: ✅ Accepted
-- **Change**: Registered 131 unregistered Python source files (+30345 lines) against existing Go packages; added Go test suites for 3 packages (mcpargs, apmyml, commandlogger)
-- **Metric**: 551.06% (prev: 516.43%, delta: +34.63pp)
-- **Commit**: bc7408f
-- **Notes**: Batch-audit found 131 Python files with existing Go counterparts missing python_file registrations. New tests: ParseKVPairs, ParseTargetsField variants, StripSourcePrefix. go test ./... pass (134 packages).
+### Iters 84-93 -- 2026-05-16 -- ✅ (metrics 551->578%): Batch-registered 131 Python files (+30345 lines); added tests for 40+ packages including gitremoteops, skilltransformer, filescanner, cleanup, contextoptimizer, policygate, registry/client, hostbackends, downloadstrategies, adapters/client/base, marketplace/registry, pluginexporter.
 
 ### Iters 80-83 -- 2026-05-16 -- ✅ (metrics 515->516%): Added tests for 20+ packages; all 437 Python test files registered.
 

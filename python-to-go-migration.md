@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T09:07:00Z|
-| Iteration Count | 80|
-| Best Metric | 512.67|
+| Last Run | 2026-05-16T10:02:00Z|
+| Iteration Count | 81|
+| Best Metric | 515.32|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 512.67%. Go tests now cover 100 packages total. ~91 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, install/mcp/*, install/phases/*, etc.)
+Metric at 515.32%. Go tests now cover 115 packages total. ~85 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, install/phases/*, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 
 ---
@@ -80,6 +80,14 @@ Metric at 512.67%. Go tests now cover 100 packages total. ~91 Go packages still 
 
 ## 📊 Iteration History
 
+### Iteration 81 -- 2026-05-16 10:02 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25959107579)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (mcpentry, mcpconflicts, mcpwarnings, mcpregistry, dispatch, policychecks); registered 4 Python test files (+2318 py lines)
+- **Metric**: 515.32% (previous best: 512.67%, delta: +2.65pp)
+- **Commit**: cc42161
+- **Notes**: Tests cover BuildMCPEntry routing (stdio/remote/registry), ValidateMCPConflicts E1-E15, WarnSSRFURL/WarnShellMetachars/IsInternalOrMetadataHost, ValidateRegistryURL/ResolveRegistryURL/RegistryEnvOverride, DefaultDispatchTable primitives+MultiTarget, CheckResult/CIAuditResult/AllowDenylist/RequiredPackages/CompilationTarget/Extensions. go build ./... and go test ./... pass.
+
 ### Iteration 80 -- 2026-05-16 09:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25958052267)
 
 - **Status**: ✅ Accepted
@@ -112,37 +120,7 @@ Metric at 512.67%. Go tests now cover 100 packages total. ~91 Go packages still 
 - **Commit**: 4d5c3cd
 - **Notes**: Tests cover DependencyRef.ID/DependencyTree.AddGetNode/FlatDependencyMap conflict, ValidateAPMPackage missing dir, SynthesizeApmYMLFromPlugin defaults name, NewMarketplaceSource defaults, ParseMarketplaceJSON plugins field, LoadFromFile owner validation, FormatScriptHeader/FormatExecutionSuccess, CompilationResults/OptimizationStats. go build ./... and go test ./... pass.
 
-### Iteration 76 -- 2026-05-16 04:40 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25952949923)
-
-- **Status**: [✅ Accepted](https://github.com/githubnext/apm/actions/runs/25952949923)
-- **Change**: Added Go test suites for 6 packages (policy/inheritance, policy/outcomerouting, compilation/templatebuilder, models/apmpackage, utils/versionchecker, deps/aggregator); registered 6 Python test files (+4145 py lines)
-- **Metric**: 491.51% (previous best: 486.78%, delta: +4.73pp)
-- **Commit**: e398858
-- **Notes**: Tests cover MergeDependencyPolicies/MergeMcpPolicies deny union/escalation, RouteDiscoveryOutcome all 9 outcomes, RenderInstructionsBlock global/scoped/sorted, ParseContentType/HasPrimitives, ParseVersion/IsNewerVersion, ScanWorkflowsForDependencies MCP frontmatter. go build ./... and go test ./... pass.
-
-### Iteration 75 -- 2026-05-16 03:12 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25951270463)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 6 packages (cache/locking, cache/integrity, compilation/constitutionblock, compilation/agentformatter, utils/diagnostics, policy/cichecks); registered 6 Python test files (+2315 py lines)
-- **Metric**: 486.78% (previous best: 484.14%, delta: +2.64pp)
-- **Commit**: 093ab98
-- **Notes**: Tests cover ShardLock/AtomicLand/CleanupIncomplete, ReadHeadSHA detached/symref/packed-refs, ComputeConstitutionHash/RenderBlock/InjectOrUpdate, RenderGeminiStub/SummarizeClaudeResult, DiagnosticCollector categories, CIAuditResult checks. go build ./... and go test ./... pass.
-
-### Iteration 74 -- 2026-05-16 01:40 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25949458424)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 8 packages (tagpattern, shadowdetector, versionpins, matcher, dockerargs, scope, conflictdetector, mcpdep); registered 8 Python test files (+1924 py lines)
-- **Metric**: 484.14% (previous best: 481.94%, delta: +2.20pp)
-- **Commit**: b06300e
-- **Notes**: Tests cover RenderTag/BuildTagRegex/ExtractVersion, DetectShadows case-insensitive, LoadRefPins/CheckRefPin/RecordRefPin, MatchesPattern wildcards/CheckAllowDeny, ParseScope/GetDeployRoot, CheckServerExists UUID/canonical, ProcessDockerArgs/-e injection, FromString/FromDict/ToDict. go build ./... and go test ./... pass.
-
-### Iteration 73 -- 2026-05-16 00:47 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25948275932)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 9 packages (constants, normalization, deptypes, core/errors, policymodels, compilationconst, version, results, paths); registered 137 Python source files with existing Go implementations (+47369 py lines)
-- **Metric**: 481.94% (previous best: 427.88%, delta: +54.06pp)
-- **Commit**: 516eed5
-- **Notes**: Tests cover InstallMode constants/DefaultSkipDirs, StripBuildID/NormalizeLineEndings/StripBOM/Normalize, ParseGitReference branch/tag/commit, error renderers for no-harness/ambiguous/unknown/conflicting-schema, CIAuditResult methods/ToJSON/ToSARIF/RenderSummary, constitution/BuildID constants, GetVersion/GetBuildSHA with override. go build ./... and go test ./... pass.
+### Iters 73-76 -- 2026-05-16 -- ✅ (metrics 427->491%): Added tests for 31 packages (constants, normalization, deptypes, core/errors, policymodels, tagpattern, shadowdetector, versionpins, matcher, dockerargs, cache/locking, cache/integrity, policy/inheritance, policy/outcomerouting, etc.); batch-registered 137 Python source files.
 
 ### Iters 58-72 -- 2026-05-15 -- ✅ (metrics 89->427%): Recalibrated baseline, registered 125 missing Python files, added tests for 30+ packages including audit, compile, tokenmanager, all 429 Python test files registered.
 

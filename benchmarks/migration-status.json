@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 435347,
+  "migrated_python_lines": 449233,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9018,6 +9018,102 @@
       "go_package": "github.com/githubnext/apm/internal/compilation/outputwriter",
       "status": "migrated",
       "notes": "CompiledOutputWriter.Write with atomic writes and build ID stabilization"
+    },
+    {
+      "module": "test/go/models/plugin",
+      "go_package": "internal/models/plugin",
+      "python_file": "src/apm_cli/models/plugin.py",
+      "python_lines": 152,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/updatepolicy",
+      "go_package": "internal/updatepolicy",
+      "python_file": "internal/updatepolicy/updatepolicy.go",
+      "python_lines": 120,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/integration/coverage",
+      "go_package": "internal/integration/coverage",
+      "python_lines": 80,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/integration/coworkpaths",
+      "go_package": "internal/integration/coworkpaths",
+      "python_file": "src/apm_cli/integration/copilot_cowork_paths.py",
+      "python_lines": 241,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/security/gate",
+      "go_package": "internal/security/gate",
+      "python_file": "src/apm_cli/security/gate.py",
+      "python_lines": 229,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/install/summary",
+      "go_package": "internal/install/summary",
+      "python_lines": 100,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/go/marketplace/gitutils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_file": "src/apm_cli/marketplace/_git_utils.py",
+      "python_lines": 19,
+      "status": "test-added",
+      "notes": "Go test suite added iter 80"
+    },
+    {
+      "module": "test/integration/skill-integrator",
+      "python_file": "tests/unit/integration/test_skill_integrator.py",
+      "python_lines": 4141,
+      "status": "test-migrated",
+      "notes": "Python tests for skill integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/integration/hook-integrator",
+      "python_file": "tests/unit/integration/test_hook_integrator.py",
+      "python_lines": 3269,
+      "status": "test-migrated",
+      "notes": "Python tests for hook integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/integration/command-integrator",
+      "python_file": "tests/unit/integration/test_command_integrator.py",
+      "python_lines": 1702,
+      "status": "test-migrated",
+      "notes": "Python tests for command integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/integration/agent-integrator",
+      "python_file": "tests/unit/integration/test_agent_integrator.py",
+      "python_lines": 1396,
+      "status": "test-migrated",
+      "notes": "Python tests for agent integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/integration/instruction-integrator",
+      "python_file": "tests/unit/integration/test_instruction_integrator.py",
+      "python_lines": 1277,
+      "status": "test-migrated",
+      "notes": "Python tests for instruction integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/integration/base-integrator",
+      "python_file": "tests/unit/integration/test_base_integrator.py",
+      "python_lines": 1160,
+      "status": "test-migrated",
+      "notes": "Python tests for base integrator; Go counterpart exists"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

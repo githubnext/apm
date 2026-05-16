@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 432426,
+  "migrated_python_lines": 435029,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -8938,6 +8938,70 @@
       "go_package": "github.com/githubnext/apm/internal/output/models",
       "status": "test-migrated",
       "python_lines": 902
+    },
+    {
+      "module": "test/integration/intutils",
+      "go_package": "internal/integration/intutils",
+      "python_file": "src/apm_cli/integration/utils.py",
+      "python_lines": 46,
+      "status": "test-migrated",
+      "notes": "Go test suite written for integration/intutils: NormalizeRepoURL with plain, HTTPS, SSH, trailing slash and .git variants"
+    },
+    {
+      "module": "test/marketplace/errors",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_file": "src/apm_cli/marketplace/errors.py",
+      "python_lines": 132,
+      "status": "test-migrated",
+      "notes": "Go test suite written for mkterrors: MarketplaceNotFoundError default/custom host, PluginNotFoundError, MarketplaceYmlError, MarketplaceFetchError"
+    },
+    {
+      "module": "test/marketplace/validator",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_file": "src/apm_cli/marketplace/validator.py",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "notes": "Go test suite written for mktvalidator: ValidatePluginSchema empty name/source, ValidateNoDuplicateNames, ValidateMarketplace all-pass"
+    },
+    {
+      "module": "test/marketplace/io",
+      "go_package": "internal/marketplace/mkio",
+      "python_file": "src/apm_cli/marketplace/_io.py",
+      "python_lines": 30,
+      "status": "test-migrated",
+      "notes": "Go test suite written for mkio: AtomicWrite creates/overwrites, AtomicWriteString, no tmp leftover"
+    },
+    {
+      "module": "test/deps/installedpkg",
+      "go_package": "internal/deps/installedpkg",
+      "python_file": "src/apm_cli/deps/installed_package.py",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Go test suite written for installedpkg: InstalledPackage fields, dev package, registry fields"
+    },
+    {
+      "module": "test/install/installvalidation",
+      "go_package": "internal/install/installvalidation",
+      "python_file": "src/apm_cli/install/validation.py",
+      "python_lines": 647,
+      "status": "test-migrated",
+      "notes": "Go test suite written for installvalidation: AuthenticationError with/without host, TLSError with host/cause/Unwrap, IsTLSFailure, LocalPathFailureReason"
+    },
+    {
+      "module": "test/marketplace/mktresolver",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_file": "src/apm_cli/marketplace/resolver.py",
+      "python_lines": 617,
+      "status": "test-migrated",
+      "notes": "Go test suite written for mktresolver: ParseMarketplaceRef valid/with-ref/invalid, IsMarketplaceRef, IsSemverRange, NormalizeOwnerRepoSlug, MarketplaceProjectSlug, NormalizeRepoFieldForMatch HTTPS/wrong-host"
+    },
+    {
+      "module": "test/output/compilationformatter",
+      "go_package": "internal/output/compilationformatter",
+      "python_file": "src/apm_cli/output/formatters.py",
+      "python_lines": 999,
+      "status": "test-migrated",
+      "notes": "Go test suite written for compilationformatter: OptimizationStats EfficiencyPercentage/EfficiencyImprovement, CompilationResults HasIssues, ProjectAnalysis FileTypesSummary, CompilationFormatter FormatDefault/FormatDryRun"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

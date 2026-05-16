@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 451551,
+  "migrated_python_lines": 452076,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9142,6 +9142,55 @@
       "python_lines": 977,
       "go_package": "internal/integration/dispatch",
       "status": "test-migrated"
+    },
+    {
+      "module": "test/go/internal/install/request",
+      "go_package": "internal/install/request",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/install/installctx",
+      "go_package": "internal/install/installctx",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/core/nulllogger",
+      "go_package": "internal/core/nulllogger",
+      "python_lines": 39,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/core/experimental",
+      "go_package": "internal/core/experimental",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/install/heals",
+      "go_package": "internal/install/heals",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/workflow/wfparser",
+      "go_package": "internal/workflow/wfparser",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/go/internal/utils/reflink",
+      "go_package": "internal/utils/reflink",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "notes": "Go test suite added in iteration 82"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

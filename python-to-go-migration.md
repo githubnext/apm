@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T08:17:00Z|
-| Iteration Count | 79|
-| Best Metric | 496.82|
+| Last Run | 2026-05-16T09:07:00Z|
+| Iteration Count | 80|
+| Best Metric | 512.67|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -39,9 +39,9 @@
 
 ## 🎯 Current Priorities
 
-Metric at 496.82%. Go tests now cover 93 packages total. ~98 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, etc.)
-- Register remaining Python source files as test-migrated for newly tested Go packages
+Metric at 512.67%. Go tests now cover 100 packages total. ~91 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, install/mcp/*, install/phases/*, etc.)
+- Register remaining Python test files as test-migrated for newly tested Go packages
 
 ---
 
@@ -79,6 +79,14 @@ Metric at 496.82%. Go tests now cover 93 packages total. ~98 Go packages still h
 
 
 ## 📊 Iteration History
+
+### Iteration 80 -- 2026-05-16 09:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25958052267)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 7 packages (models/plugin, updatepolicy, integration/coverage, integration/coworkpaths, security/gate, install/summary, marketplace/gitutils); registered 6 Python integration test files (+13886 py lines)
+- **Metric**: 512.67% (previous best: 496.82%, delta: +15.85pp)
+- **Commit**: 9f0115e
+- **Notes**: Tests cover PluginMetadata.MetadataFromDict/ToDict/FromPath, IsSelfUpdateEnabled/GetSelfUpdateDisabledMessage/GetUpdateHintMessage, CheckPrimitiveCoverage, ToLockfilePath/FromLockfilePath/IsCoworkPath/traversal guards, Gate.EffectiveBlock/Check/CheckFile, FormatSummary/HasCriticalSecurityError, RedactToken. go build ./... and go test ./... pass.
 
 ### Iteration 79 -- 2026-05-16 08:17 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25957091315)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T17:25:31Z|
-| Iteration Count | 89|
-| Best Metric | 572.22|
+| Last Run | 2026-05-16T18:27:11Z|
+| Iteration Count | 90|
+| Best Metric | 574.09|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 572.22%. Continue adding Go tests for remaining untested packages:
+Metric at 574.09%. Continue adding Go tests for remaining untested packages:
 - Write Go tests for remaining untested packages (commands/*, runtime/*, deps/hostbackends, install/bundle/*, install/phases/heal, install/phases/download, install/installpipeline, install/installservice, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
@@ -80,6 +80,14 @@ Metric at 572.22%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 90 -- 2026-05-16 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25969446421)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 4 packages (registry/client, registry/operations, runtime/manager, bundle/packer); registered 4 new test-migrated entries (+1645 py lines)
+- **Metric**: 574.09% (prev: 572.22%, delta: +1.87pp)
+- **Commit**: 2964258
+- **Notes**: NewSimpleRegistryClient URL validation, SearchServers/GetServer/ListServers via httptest, mcpConfigPaths/extractServerIDs, ValidateRuntime/SetupEnvironment, detectTarget/filterFilesByTarget all tested. go test ./... pass.
 
 ### Iteration 89 -- 2026-05-16 17:25 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25968249645)
 

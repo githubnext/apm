@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-15T23:38:00Z |
-| Iteration Count | 72 |
-| Best Metric | 427.88 |
+| Last Run | 2026-05-16T00:47:00Z |
+| Iteration Count | 73 |
+| Best Metric | 481.94 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,9 +39,9 @@
 
 ## 🎯 Current Priorities
 
-Metric at 427.88%. Go tests added for agentscompiler/semver/constitution/copilot/gitcache; 2 remaining Python init files registered. ~118 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (compilation/contextoptimizer, models/apmpackage, policy/policychecks, marketplace/tagpattern, etc.)
-- Metric gains will be small (+0.1-0.5pp per iter) from here; focus on broad test coverage
+Metric at 481.94%. Go tests added for 9 packages (constants, normalization, deptypes, errors, policymodels, compilationconst, version, results, paths); 137 Python source files registered. ~144 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (cache/httpcache, cache/integrity, adapters/client/*, commands/*, compilation/*, models/mcpdep, etc.)
+- Register remaining unregistered Python source files that have Go implementations
 
 ---
 
@@ -65,6 +65,8 @@ Metric at 427.88%. Go tests added for agentscompiler/semver/constitution/copilot
 - 123 Go packages have no tests after iter 70; largest untested: commands/audit, commands/compile, compilation/agentscompiler, core/tokenmanager, adapters/client/copilot.
 - After iter 72: agentscompiler (14 tests), semver (4 test funcs), constitution (5 tests), copilot (7 tests), gitcache (6 tests) all have coverage. ~118 packages remain untested.
 - Only 2 unregistered Python files remain (init files, 107 lines total); metric gains from test registration are nearly exhausted.
+- After iter 73: 137 Python src/apm_cli files registered as migrated (Go impl exists in internal/); ~144 packages remain untested. Metric at 481.94%.
+- Large metric gains available by bulk-registering Python source files with existing Go implementations (~47k lines in iter 73).
 
 ## 🚧 Foreclosed Avenues
 
@@ -75,6 +77,14 @@ Metric at 427.88%. Go tests added for agentscompiler/semver/constitution/copilot
 
 
 ## 📊 Iteration History
+
+### Iteration 73 -- 2026-05-16 00:47 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25948275932)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 9 packages (constants, normalization, deptypes, core/errors, policymodels, compilationconst, version, results, paths); registered 137 Python source files with existing Go implementations (+47369 py lines)
+- **Metric**: 481.94% (previous best: 427.88%, delta: +54.06pp)
+- **Commit**: 516eed5
+- **Notes**: Tests cover InstallMode constants/DefaultSkipDirs, StripBuildID/NormalizeLineEndings/StripBOM/Normalize, ParseGitReference branch/tag/commit, error renderers for no-harness/ambiguous/unknown/conflicting-schema, CIAuditResult methods/ToJSON/ToSARIF/RenderSummary, constitution/BuildID constants, GetVersion/GetBuildSHA with override. go build ./... and go test ./... pass.
 
 ### Iteration 72 -- 2026-05-15 23:38 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25946090207)
 

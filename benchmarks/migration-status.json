@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 452525,
+  "migrated_python_lines": 482870,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9254,6 +9254,1078 @@
       "status": "test-migrated",
       "go_package": "internal/security/auditreport",
       "python_lines": 67
+    },
+    {
+      "module": "src/src/apm_cli/models/dependency/reference.py",
+      "go_package": "internal/models/depreference",
+      "python_file": "src/apm_cli/models/dependency/reference.py",
+      "python_lines": 1559,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/__init__.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/__init__.py",
+      "python_lines": 1434,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/deps/cli.py",
+      "go_package": "internal/commands/deps",
+      "python_file": "src/apm_cli/commands/deps/cli.py",
+      "python_lines": 927,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/compile/cli.py",
+      "go_package": "internal/commands/compile",
+      "python_file": "src/apm_cli/commands/compile/cli.py",
+      "python_lines": 818,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/distributed_compiler.py",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_file": "src/apm_cli/compilation/distributed_compiler.py",
+      "python_lines": 768,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/pipeline.py",
+      "go_package": "internal/install/installpipeline",
+      "python_file": "src/apm_cli/install/pipeline.py",
+      "python_lines": 741,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/sources.py",
+      "go_package": "internal/install/installservice",
+      "python_file": "src/apm_cli/install/sources.py",
+      "python_lines": 734,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/services.py",
+      "go_package": "internal/install/installservice",
+      "python_file": "src/apm_cli/install/services.py",
+      "python_lines": 734,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/bare_cache.py",
+      "go_package": "internal/cache/gitcache",
+      "python_file": "src/apm_cli/deps/bare_cache.py",
+      "python_lines": 733,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/link_resolver.py",
+      "go_package": "internal/compilation/outputwriter",
+      "python_file": "src/apm_cli/compilation/link_resolver.py",
+      "python_lines": 716,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/plugin_exporter.py",
+      "go_package": "internal/install/bundle/pluginexporter",
+      "python_file": "src/apm_cli/bundle/plugin_exporter.py",
+      "python_lines": 704,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/_helpers.py",
+      "go_package": "internal/utils/helpers",
+      "python_file": "src/apm_cli/commands/_helpers.py",
+      "python_lines": 681,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/init.py",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_file": "src/apm_cli/commands/init.py",
+      "python_lines": 572,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/github_downloader_validation.py",
+      "go_package": "internal/deps/githubdownloader",
+      "python_file": "src/apm_cli/deps/github_downloader_validation.py",
+      "python_lines": 555,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/phases/integrate.py",
+      "go_package": "internal/integration/baseintegrator",
+      "python_file": "src/apm_cli/install/phases/integrate.py",
+      "python_lines": 544,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/pr_integration.py",
+      "go_package": "internal/marketplace/gitutils",
+      "python_file": "src/apm_cli/marketplace/pr_integration.py",
+      "python_lines": 499,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/phases/resolve.py",
+      "go_package": "internal/install/pkgresolution",
+      "python_file": "src/apm_cli/install/phases/resolve.py",
+      "python_lines": 488,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/uninstall/engine.py",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_file": "src/apm_cli/commands/uninstall/engine.py",
+      "python_lines": 456,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/client.py",
+      "go_package": "internal/marketplace/registry",
+      "python_file": "src/apm_cli/marketplace/client.py",
+      "python_lines": 448,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/phases/targets.py",
+      "go_package": "internal/install/phases/installphase",
+      "python_file": "src/apm_cli/install/phases/targets.py",
+      "python_lines": 445,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/git_reference_resolver.py",
+      "go_package": "internal/deps/gitrefresolver",
+      "python_file": "src/apm_cli/deps/git_reference_resolver.py",
+      "python_lines": 417,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/local_bundle_handler.py",
+      "go_package": "internal/install/localbundle",
+      "python_file": "src/apm_cli/install/local_bundle_handler.py",
+      "python_lines": 399,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/local_bundle.py",
+      "go_package": "internal/install/localbundle",
+      "python_file": "src/apm_cli/bundle/local_bundle.py",
+      "python_lines": 393,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/claude_formatter.py",
+      "go_package": "internal/compilation/agentformatter",
+      "python_file": "src/apm_cli/compilation/claude_formatter.py",
+      "python_lines": 354,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/config.py",
+      "go_package": "internal/commands/configcmd",
+      "python_file": "src/apm_cli/commands/config.py",
+      "python_lines": 337,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/transport_selection.py",
+      "go_package": "internal/deps/hostbackends",
+      "python_file": "src/apm_cli/deps/transport_selection.py",
+      "python_lines": 330,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/artifactory_orchestrator.py",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_file": "src/apm_cli/deps/artifactory_orchestrator.py",
+      "python_lines": 319,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/migration.py",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_file": "src/apm_cli/marketplace/migration.py",
+      "python_lines": 314,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/policy/parser.py",
+      "go_package": "internal/policy/schema",
+      "python_file": "src/apm_cli/policy/parser.py",
+      "python_lines": 311,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/core/azure_cli.py",
+      "go_package": "internal/core/auth",
+      "python_file": "src/apm_cli/core/azure_cli.py",
+      "python_lines": 310,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/yml_editor.py",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_file": "src/apm_cli/marketplace/yml_editor.py",
+      "python_lines": 299,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/integration/cleanup.py",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_file": "src/apm_cli/integration/cleanup.py",
+      "python_lines": 297,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/skill_path_migration.py",
+      "go_package": "internal/install/heals",
+      "python_file": "src/apm_cli/install/skill_path_migration.py",
+      "python_lines": 291,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/drift.py",
+      "go_package": "internal/install/drift",
+      "python_file": "src/apm_cli/drift.py",
+      "python_lines": 282,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/packer.py",
+      "go_package": "internal/install/bundle/packer",
+      "python_file": "src/apm_cli/bundle/packer.py",
+      "python_lines": 281,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/registry_proxy.py",
+      "go_package": "internal/deps/aggregator",
+      "python_file": "src/apm_cli/deps/registry_proxy.py",
+      "python_lines": 279,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/registry.py",
+      "go_package": "internal/install/mcp/mcpregistry",
+      "python_file": "src/apm_cli/install/mcp/registry.py",
+      "python_lines": 277,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/primitives/parser.py",
+      "go_package": "internal/primitives/primparser",
+      "python_file": "src/apm_cli/primitives/parser.py",
+      "python_lines": 275,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/core/build_orchestrator.py",
+      "go_package": "internal/workflow/runner",
+      "python_file": "src/apm_cli/core/build_orchestrator.py",
+      "python_lines": 273,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/lockfile_enrichment.py",
+      "go_package": "internal/install/bundle/lockfileenrichment",
+      "python_file": "src/apm_cli/bundle/lockfile_enrichment.py",
+      "python_lines": 271,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/primitives/models.py",
+      "go_package": "internal/primitives/primmodels",
+      "python_file": "src/apm_cli/primitives/models.py",
+      "python_lines": 269,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/models/dependency/mcp.py",
+      "go_package": "internal/models/mcpdep",
+      "python_file": "src/apm_cli/models/dependency/mcp.py",
+      "python_lines": 267,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/cli.py",
+      "go_package": "cmd/apm",
+      "python_file": "src/apm_cli/cli.py",
+      "python_lines": 252,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/uninstall/cli.py",
+      "go_package": "internal/commands/install",
+      "python_file": "src/apm_cli/commands/uninstall/cli.py",
+      "python_lines": 246,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/deps/_utils.py",
+      "go_package": "internal/commands/deps",
+      "python_file": "src/apm_cli/commands/deps/_utils.py",
+      "python_lines": 241,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/publish.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/publish.py",
+      "python_lines": 239,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/unpacker.py",
+      "go_package": "internal/install/bundle/unpacker",
+      "python_file": "src/apm_cli/bundle/unpacker.py",
+      "python_lines": 234,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/dependency_graph.py",
+      "go_package": "internal/deps/depgraph",
+      "python_file": "src/apm_cli/deps/dependency_graph.py",
+      "python_lines": 227,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/models.py",
+      "go_package": "internal/marketplace/mktmodels",
+      "python_file": "src/apm_cli/marketplace/models.py",
+      "python_lines": 224,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/policy/project_config.py",
+      "go_package": "internal/policy/policymodels",
+      "python_file": "src/apm_cli/policy/project_config.py",
+      "python_lines": 221,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/doctor.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/doctor.py",
+      "python_lines": 220,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/runtime/copilot_runtime.py",
+      "go_package": "internal/adapters/client/copilot",
+      "python_file": "src/apm_cli/runtime/copilot_runtime.py",
+      "python_lines": 217,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/config.py",
+      "go_package": "internal/commands/configcmd",
+      "python_file": "src/apm_cli/config.py",
+      "python_lines": 212,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/policy/install_preflight.py",
+      "go_package": "internal/policy/policychecks",
+      "python_file": "src/apm_cli/policy/install_preflight.py",
+      "python_lines": 211,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/run.py",
+      "go_package": "internal/workflow/runner",
+      "python_file": "src/apm_cli/commands/run.py",
+      "python_lines": 208,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/plugin/__init__.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/plugin/__init__.py",
+      "python_lines": 208,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/artifactory_entry.py",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_file": "src/apm_cli/deps/artifactory_entry.py",
+      "python_lines": 193,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/self_update.py",
+      "go_package": "internal/utils/versionchecker",
+      "python_file": "src/apm_cli/commands/self_update.py",
+      "python_lines": 190,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/runtime.py",
+      "go_package": "internal/runtime/manager",
+      "python_file": "src/apm_cli/commands/runtime.py",
+      "python_lines": 187,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/core/safe_installer.py",
+      "go_package": "internal/install/installservice",
+      "python_file": "src/apm_cli/core/safe_installer.py",
+      "python_lines": 179,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/compile/watcher.py",
+      "go_package": "internal/commands/compile",
+      "python_file": "src/apm_cli/commands/compile/watcher.py",
+      "python_lines": 170,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/cache/paths.py",
+      "go_package": "internal/cache/cachepaths",
+      "python_file": "src/apm_cli/cache/paths.py",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/outdated.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/outdated.py",
+      "python_lines": 169,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/prune.py",
+      "go_package": "internal/commands/outdated",
+      "python_file": "src/apm_cli/commands/prune.py",
+      "python_lines": 168,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/context.py",
+      "go_package": "internal/install/installctx",
+      "python_file": "src/apm_cli/install/context.py",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/client/opencode.py",
+      "go_package": "internal/adapters/opencode",
+      "python_file": "src/apm_cli/adapters/client/opencode.py",
+      "python_lines": 166,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/package_resolution.py",
+      "go_package": "internal/install/pkgresolution",
+      "python_file": "src/apm_cli/install/package_resolution.py",
+      "python_lines": 162,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/registry/integration.py",
+      "go_package": "internal/registry/client",
+      "python_file": "src/apm_cli/registry/integration.py",
+      "python_lines": 161,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/command.py",
+      "go_package": "internal/install/mcp/mcpcommand",
+      "python_file": "src/apm_cli/install/mcp/command.py",
+      "python_lines": 160,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/check.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/check.py",
+      "python_lines": 155,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/service.py",
+      "go_package": "internal/install/installservice",
+      "python_file": "src/apm_cli/install/service.py",
+      "python_lines": 146,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/policy/models.py",
+      "go_package": "internal/policy/policymodels",
+      "python_file": "src/apm_cli/policy/models.py",
+      "python_lines": 143,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/targets.py",
+      "go_package": "internal/commands/targetscmd",
+      "python_file": "src/apm_cli/commands/targets.py",
+      "python_lines": 135,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/writer.py",
+      "go_package": "internal/install/mcp/mcpwriter",
+      "python_file": "src/apm_cli/install/mcp/writer.py",
+      "python_lines": 132,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/init.py",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_file": "src/apm_cli/commands/marketplace/init.py",
+      "python_lines": 126,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/package_manager/default_manager.py",
+      "go_package": "internal/adapters/packagemanager",
+      "python_file": "src/apm_cli/adapters/package_manager/default_manager.py",
+      "python_lines": 125,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/warnings.py",
+      "go_package": "internal/install/mcp/mcpwarnings",
+      "python_file": "src/apm_cli/install/mcp/warnings.py",
+      "python_lines": 123,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/heals/base.py",
+      "go_package": "internal/install/heals",
+      "python_file": "src/apm_cli/install/heals/base.py",
+      "python_lines": 122,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/conflicts.py",
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "python_file": "src/apm_cli/install/mcp/conflicts.py",
+      "python_lines": 122,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/gemini_formatter.py",
+      "go_package": "internal/compilation/agentformatter",
+      "python_file": "src/apm_cli/compilation/gemini_formatter.py",
+      "python_lines": 121,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/plugin/set.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/plugin/set.py",
+      "python_lines": 111,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/entry.py",
+      "go_package": "internal/install/mcp/mcpentry",
+      "python_file": "src/apm_cli/install/mcp/entry.py",
+      "python_lines": 106,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/verifier.py",
+      "go_package": "internal/security/gate",
+      "python_file": "src/apm_cli/deps/verifier.py",
+      "python_lines": 105,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/factory.py",
+      "go_package": "internal/runtime/factory",
+      "python_file": "src/apm_cli/factory.py",
+      "python_lines": 102,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/heals/buggy_lockfile_recovery.py",
+      "go_package": "internal/install/heals",
+      "python_file": "src/apm_cli/install/heals/buggy_lockfile_recovery.py",
+      "python_lines": 99,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/marketplace/__init__.py",
+      "go_package": "internal/marketplace",
+      "python_file": "src/apm_cli/marketplace/__init__.py",
+      "python_lines": 96,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/_apm_yml_writer.py",
+      "go_package": "internal/core/apmyml",
+      "python_file": "src/apm_cli/commands/_apm_yml_writer.py",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/workflow/parser.py",
+      "go_package": "internal/workflow/wfparser",
+      "python_file": "src/apm_cli/workflow/parser.py",
+      "python_lines": 92,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/validate.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/validate.py",
+      "python_lines": 88,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/plugin/add.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/plugin/add.py",
+      "python_lines": 88,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/utils/subprocess_env.py",
+      "go_package": "internal/utils/subprocenv",
+      "python_file": "src/apm_cli/utils/subprocess_env.py",
+      "python_lines": 84,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/models/dependency/types.py",
+      "go_package": "internal/models/deptypes",
+      "python_file": "src/apm_cli/models/dependency/types.py",
+      "python_lines": 74,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/heals/branch_ref_drift.py",
+      "go_package": "internal/install/heals",
+      "python_file": "src/apm_cli/install/heals/branch_ref_drift.py",
+      "python_lines": 66,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/migrate.py",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_file": "src/apm_cli/commands/marketplace/migrate.py",
+      "python_lines": 62,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/integration/__init__.py",
+      "go_package": "internal/integration",
+      "python_file": "src/apm_cli/integration/__init__.py",
+      "python_lines": 55,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/marketplace/plugin/remove.py",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/plugin/remove.py",
+      "python_lines": 52,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/policy/__init__.py",
+      "go_package": "internal/policy",
+      "python_file": "src/apm_cli/policy/__init__.py",
+      "python_lines": 49,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/client/windsurf.py",
+      "go_package": "internal/adapters/windsurf",
+      "python_file": "src/apm_cli/adapters/client/windsurf.py",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/helpers/security_scan.py",
+      "go_package": "internal/install/securityscan",
+      "python_file": "src/apm_cli/install/helpers/security_scan.py",
+      "python_lines": 48,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/utils/short_sha.py",
+      "go_package": "internal/utils/sha",
+      "python_file": "src/apm_cli/utils/short_sha.py",
+      "python_lines": 45,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/models/__init__.py",
+      "go_package": "internal/models",
+      "python_file": "src/apm_cli/models/__init__.py",
+      "python_lines": 44,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/args.py",
+      "go_package": "internal/install/mcpargs",
+      "python_file": "src/apm_cli/install/mcp/args.py",
+      "python_lines": 43,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/utils/__init__.py",
+      "go_package": "internal/utils",
+      "python_file": "src/apm_cli/utils/__init__.py",
+      "python_lines": 41,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/deps/__init__.py",
+      "go_package": "internal/deps",
+      "python_file": "src/apm_cli/deps/__init__.py",
+      "python_lines": 36,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/heals/__init__.py",
+      "go_package": "internal/install/heals",
+      "python_file": "src/apm_cli/install/heals/__init__.py",
+      "python_lines": 33,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/deps/__init__.py",
+      "go_package": "internal/commands/deps",
+      "python_file": "src/apm_cli/commands/deps/__init__.py",
+      "python_lines": 30,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/package_manager/base.py",
+      "go_package": "internal/adapters/packagemanager",
+      "python_file": "src/apm_cli/adapters/package_manager/base.py",
+      "python_lines": 27,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/__init__.py",
+      "go_package": "internal/compilation",
+      "python_file": "src/apm_cli/compilation/__init__.py",
+      "python_lines": 26,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/security/__init__.py",
+      "go_package": "internal/security",
+      "python_file": "src/apm_cli/security/__init__.py",
+      "python_lines": 26,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/primitives/__init__.py",
+      "go_package": "internal/primitives",
+      "python_file": "src/apm_cli/primitives/__init__.py",
+      "python_lines": 24,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/__init__.py",
+      "go_package": "internal/install",
+      "python_file": "src/apm_cli/install/__init__.py",
+      "python_lines": 24,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/uninstall/__init__.py",
+      "go_package": "internal/commands/install",
+      "python_file": "src/apm_cli/commands/uninstall/__init__.py",
+      "python_lines": 23,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/models/dependency/__init__.py",
+      "go_package": "internal/models/depreference",
+      "python_file": "src/apm_cli/models/dependency/__init__.py",
+      "python_lines": 21,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/compilation/constants.py",
+      "go_package": "internal/compilation/compilationconst",
+      "python_file": "src/apm_cli/compilation/constants.py",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/mcp/__init__.py",
+      "go_package": "internal/install/mcp",
+      "python_file": "src/apm_cli/install/mcp/__init__.py",
+      "python_lines": 18,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/runtime/__init__.py",
+      "go_package": "internal/runtime",
+      "python_file": "src/apm_cli/runtime/__init__.py",
+      "python_lines": 17,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/cache/__init__.py",
+      "go_package": "internal/cache",
+      "python_file": "src/apm_cli/cache/__init__.py",
+      "python_lines": 16,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/bundle/__init__.py",
+      "go_package": "internal/install/bundle",
+      "python_file": "src/apm_cli/bundle/__init__.py",
+      "python_lines": 13,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/output/__init__.py",
+      "go_package": "internal/output",
+      "python_file": "src/apm_cli/output/__init__.py",
+      "python_lines": 12,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/compile/__init__.py",
+      "go_package": "internal/commands/compile",
+      "python_file": "src/apm_cli/commands/compile/__init__.py",
+      "python_lines": 11,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/registry/__init__.py",
+      "go_package": "internal/registry",
+      "python_file": "src/apm_cli/registry/__init__.py",
+      "python_lines": 7,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/__init__.py",
+      "go_package": "cmd/apm",
+      "python_file": "src/apm_cli/__init__.py",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/commands/__init__.py",
+      "go_package": "internal/commands",
+      "python_file": "src/apm_cli/commands/__init__.py",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/core/__init__.py",
+      "go_package": "internal/core",
+      "python_file": "src/apm_cli/core/__init__.py",
+      "python_lines": 5,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/workflow/__init__.py",
+      "go_package": "internal/workflow",
+      "python_file": "src/apm_cli/workflow/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/__init__.py",
+      "go_package": "internal/adapters",
+      "python_file": "src/apm_cli/adapters/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/client/__init__.py",
+      "go_package": "internal/adapters/client",
+      "python_file": "src/apm_cli/adapters/client/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/adapters/package_manager/__init__.py",
+      "go_package": "internal/adapters/packagemanager",
+      "python_file": "src/apm_cli/adapters/package_manager/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/helpers/__init__.py",
+      "go_package": "internal/install/phases/heal",
+      "python_file": "src/apm_cli/install/helpers/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/presentation/__init__.py",
+      "go_package": "internal/install/presentation",
+      "python_file": "src/apm_cli/install/presentation/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "src/src/apm_cli/install/phases/__init__.py",
+      "go_package": "internal/install/phases",
+      "python_file": "src/apm_cli/install/phases/__init__.py",
+      "python_lines": 1,
+      "status": "migrated",
+      "notes": "Python source file registered against existing Go implementation"
+    },
+    {
+      "module": "test/install/mcpargs",
+      "go_package": "internal/install/mcpargs",
+      "python_file": "src/apm_cli/install/mcp_args.py",
+      "python_lines": 0,
+      "status": "test-migrated",
+      "notes": "Go test suite: ParseKVPairs, ParseEnvPairs, ParseHeaderPairs"
+    },
+    {
+      "module": "test/core/apmyml",
+      "go_package": "internal/core/apmyml",
+      "python_file": "src/apm_cli/core/apm_yml.py",
+      "python_lines": 0,
+      "status": "test-migrated",
+      "notes": "Go test suite: ParseTargetsField plural/singular/csv/conflict/empty/unknown"
+    },
+    {
+      "module": "test/core/commandlogger",
+      "go_package": "internal/core/commandlogger",
+      "python_file": "src/apm_cli/core/command_logger.py",
+      "python_lines": 0,
+      "status": "test-migrated",
+      "notes": "Go test suite: StripSourcePrefix, NewCommandLogger, ShouldExecute, NewInstallLogger"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

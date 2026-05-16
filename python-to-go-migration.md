@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T10:02:00Z|
-| Iteration Count | 81|
-| Best Metric | 515.32|
+| Last Run | 2026-05-16T10:56:00Z|
+| Iteration Count | 82|
+| Best Metric | 515.92|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 515.32%. Go tests now cover 115 packages total. ~85 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, install/phases/*, etc.)
+Metric at 515.92%. Go tests now cover 122 packages total. ~78 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/runner, workflow/discovery, install/bundle/*, install/phases/*, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 
 ---
@@ -79,6 +79,14 @@ Metric at 515.32%. Go tests now cover 115 packages total. ~85 Go packages still 
 
 
 ## 📊 Iteration History
+
+### Iteration 82 -- 2026-05-16 10:56 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25960046833)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 7 packages (install/request, install/installctx, core/nulllogger, core/experimental, install/heals, workflow/wfparser, utils/reflink); registered all as test-migrated (+525 py lines)
+- **Metric**: 515.92% (previous best: 515.32%, delta: +0.60pp)
+- **Commit**: f4eb83e
+- **Notes**: Tests cover DefaultInstallRequest defaults, InstallContext constructors/accessors, NullCommandLogger no-panic, Flags/DisplayName for experimental feature flags, HealContext/RunHealChain exclusive groups, WorkflowDefinition parse/validate, CloneFile env-disable path. go build ./... and go test ./... pass.
 
 ### Iteration 81 -- 2026-05-16 10:02 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25959107579)
 

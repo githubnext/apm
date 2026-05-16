@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 484882,
+  "migrated_python_lines": 486916,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10350,6 +10350,34 @@
       "python_lines": 85,
       "status": "test-migrated",
       "notes": "Go test suite for DefaultManager and BaseManager"
+    },
+    {
+      "module": "integration/skilltransformer",
+      "python_file": "src/apm_cli/integration/skill_transformer.py",
+      "python_lines": 113,
+      "go_package": "internal/integration/skilltransformer",
+      "status": "test-migrated"
+    },
+    {
+      "module": "integration/promptintegrator",
+      "python_file": "src/apm_cli/integration/prompt_integrator.py",
+      "python_lines": 228,
+      "go_package": "internal/integration/promptintegrator",
+      "status": "test-migrated"
+    },
+    {
+      "module": "integration/commandintegrator",
+      "python_file": "src/apm_cli/integration/command_integrator.py",
+      "python_lines": 775,
+      "go_package": "internal/integration/commandintegrator",
+      "status": "test-migrated"
+    },
+    {
+      "module": "deps/apmresolver",
+      "python_file": "src/apm_cli/deps/apm_resolver.py",
+      "python_lines": 918,
+      "go_package": "internal/deps/apmresolver",
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

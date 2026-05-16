@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T01:40:00Z |
-| Iteration Count | 74 |
-| Best Metric | 484.14 |
+| Last Run | 2026-05-16T03:12:00Z |
+| Iteration Count | 75 |
+| Best Metric | 486.78 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 484.14%. Go tests added for 17 packages total (tagpattern, shadowdetector, versionpins, matcher, dockerargs, scope, conflictdetector, mcpdep added this iteration); 137 Python source files registered. ~136 Go packages still have no tests. Future iterations can:
-- Write Go tests for more untested packages (cache/httpcache, cache/integrity, adapters/client/*, commands/*, compilation/*, runtime/*, etc.)
+Metric at 486.78%. Go tests now cover 70 packages total. ~130 Go packages still have no tests. Future iterations can:
+- Write Go tests for more untested packages (cache/httpcache, compilation/injector, compilation/templatebuilder, utils/versionchecker, policy/inheritance, workflow/*, runtime/*, etc.)
 - Register remaining Python test files for newly tested Go packages
 
 ---
@@ -66,7 +66,7 @@ Metric at 484.14%. Go tests added for 17 packages total (tagpattern, shadowdetec
 - After iter 72: agentscompiler (14 tests), semver (4 test funcs), constitution (5 tests), copilot (7 tests), gitcache (6 tests) all have coverage. ~118 packages remain untested.
 - Only 2 unregistered Python files remain (init files, 107 lines total); metric gains from test registration are nearly exhausted.
 - After iter 73: 137 Python src/apm_cli files registered as migrated (Go impl exists in internal/); ~144 packages remain untested. Metric at 481.94%.
-- Large metric gains available by bulk-registering Python source files with existing Go implementations (~47k lines in iter 73).
+- After iter 75: 70 Go packages have tests (up from 64); 6 new suites: locking (5 tests), integrity (6 tests), constitutionblock (6 tests), agentformatter (5 tests), diagnostics (7 tests), cichecks (10 tests). ~130 packages still untested.
 
 ## 🚧 Foreclosed Avenues
 
@@ -77,6 +77,14 @@ Metric at 484.14%. Go tests added for 17 packages total (tagpattern, shadowdetec
 
 
 ## 📊 Iteration History
+
+### Iteration 75 -- 2026-05-16 03:12 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25951270463)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (cache/locking, cache/integrity, compilation/constitutionblock, compilation/agentformatter, utils/diagnostics, policy/cichecks); registered 6 Python test files (+2315 py lines)
+- **Metric**: 486.78% (previous best: 484.14%, delta: +2.64pp)
+- **Commit**: 093ab98
+- **Notes**: Tests cover ShardLock/AtomicLand/CleanupIncomplete, ReadHeadSHA detached/symref/packed-refs, ComputeConstitutionHash/RenderBlock/InjectOrUpdate, RenderGeminiStub/SummarizeClaudeResult, DiagnosticCollector categories, CIAuditResult checks. go build ./... and go test ./... pass.
 
 ### Iteration 74 -- 2026-05-16 01:40 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25949458424)
 

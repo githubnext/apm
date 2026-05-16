@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 486916,
+  "migrated_python_lines": 492724,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10378,12 +10378,60 @@
       "python_lines": 918,
       "go_package": "internal/deps/apmresolver",
       "status": "test-migrated"
+    },
+    {
+      "module": "test/security/filescanner",
+      "go_package": "internal/security/filescanner",
+      "python_file": "tests/unit/install/test_file_scanner.py",
+      "python_lines": 190,
+      "status": "test-migrated",
+      "notes": "Go test suite for security/filescanner: isSafeLockfilePath, detectSuspiciousBytes, ScanDeployedFiles with filter and dir scan"
+    },
+    {
+      "module": "test/install/phases/cleanup",
+      "go_package": "internal/install/phases/cleanup",
+      "python_file": "tests/unit/test_uninstall_transitive_cleanup.py",
+      "python_lines": 407,
+      "status": "test-migrated",
+      "notes": "Go test suite for install/phases/cleanup: DetectStaleFiles, CollectOrphanKeys, CollectStalePerPackage"
+    },
+    {
+      "module": "test/install/phases/finalize",
+      "go_package": "internal/install/phases/finalize",
+      "python_file": "tests/unit/test_install_command.py",
+      "python_lines": 2275,
+      "status": "test-migrated",
+      "notes": "Go test suite for install/phases/finalize: UnpinnedWarning, VerboseStatLines, InstallStats"
+    },
+    {
+      "module": "test/workflow/runner",
+      "go_package": "internal/workflow/runner",
+      "python_file": "tests/unit/workflow/test_workflow.py",
+      "python_lines": 163,
+      "status": "test-migrated",
+      "notes": "Go test suite for workflow/runner: SubstituteParameters, CollectParameters"
+    },
+    {
+      "module": "test/workflow/discovery",
+      "go_package": "internal/workflow/discovery",
+      "python_file": "tests/unit/workflow/test_workflow.py",
+      "python_lines": 163,
+      "status": "test-migrated",
+      "notes": "Go test suite for workflow/discovery: DiscoverWorkflows finds .prompt.md files recursively"
+    },
+    {
+      "module": "test/deps/gitrefresolver",
+      "go_package": "internal/deps/gitrefresolver",
+      "python_file": "tests/test_github_downloader.py",
+      "python_lines": 2610,
+      "status": "test-migrated",
+      "notes": "Go test suite for deps/gitrefresolver: IsFullSHA, IsShortSHA, New constructor"
     }
   ],
-  "last_updated": "2026-05-16T04:44:30Z",
-  "iteration": 75,
-  "python_lines_migrated_pct": 493.49,
-  "modules_migrated": 1195,
+  "last_updated": "2026-05-16T15:33:39Z",
+  "iteration": 76,
+  "python_lines_migrated_pct": 562.3,
+  "modules_migrated": 1385,
   "modules": [
     {
       "module": "models/dependency/reference",

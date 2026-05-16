@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T19:29:12Z|
-| Iteration Count | 91|
-| Best Metric | 574.66|
+| Last Run | 2026-05-16T20:20:34Z|
+| Iteration Count | 92|
+| Best Metric | 576.68|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 574.09%. Continue adding Go tests for remaining untested packages:
-- Write Go tests for remaining untested packages (commands/*, runtime/*, deps/hostbackends, install/bundle/*, install/phases/heal, install/phases/download, install/installpipeline, install/installservice, etc.)
+Metric at 576.68%. Continue adding Go tests for remaining untested packages:
+- Write Go tests for remaining untested packages (commands/*, runtime/*, install/bundle/pluginexporter, deps/downloadstrategies deeper coverage, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
 
@@ -80,6 +80,14 @@ Metric at 574.09%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 92 -- 2026-05-16 20:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25971908793)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 4 packages (downloadstrategies, lockfileenrichment, unpacker, installservice); registered 4 new test-migrated entries (+1773 py lines)
+- **Metric**: 576.68% (prev: 574.66%, delta: +2.02pp)
+- **Commit**: 00d8541
+- **Notes**: buildSSHURL/buildHTTPSCloneURL/buildADOAPIURL/ResilientGet; FilterFilesByTarget/EnrichLockfileForPack/CollectMappedFromPrefixes; ParseBundleLockfile with deps/pack-meta/missing-file; InstallNotAvailableError/FrozenInstallError/IsFrozenInstallError/Run. go test ./... pass.
 
 ### Iteration 91 -- 2026-05-16 19:29 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25970824133)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T07:19:00Z|
-| Iteration Count | 78|
-| Best Metric | 496.46|
+| Last Run | 2026-05-16T08:17:00Z|
+| Iteration Count | 79|
+| Best Metric | 496.82|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 496.46%. Go tests now cover 85 packages total. ~115 Go packages still have no tests. Future iterations can:
+Metric at 496.82%. Go tests now cover 93 packages total. ~98 Go packages still have no tests. Future iterations can:
 - Write Go tests for more untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, security/*, workflow/*, install/bundle/*, etc.)
 - Register remaining Python source files as test-migrated for newly tested Go packages
 
@@ -79,6 +79,14 @@ Metric at 496.46%. Go tests now cover 85 packages total. ~115 Go packages still 
 
 
 ## 📊 Iteration History
+
+### Iteration 79 -- 2026-05-16 08:17 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25957091315)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 8 packages (primmodels, discovery, injector, outputwriter, install/plan, install/phases/lockfile, install/phases/localcontent, policy/schema); registered 2 additional Python source files (+318 py lines)
+- **Metric**: 496.82% (previous best: 496.46%, delta: +0.36pp)
+- **Commit**: ff9d9a6
+- **Notes**: Tests cover Chatmode/Instruction/Context/Skill.Validate(), PrimitiveCollection.AddPrimitive with conflict detection and glob matching, ConstitutionInjector.Inject (all 5 statuses), CompiledOutputWriter.Write atomic write, PlanEntry.HasChanges/ShortCommit/depRefKey/LockfileSatisfiesManifest, DeployedFileHash/ComputeDeployedHashes/WriteIfChanged/SortedDeployedFiles, ProjectHasRootPrimitives/HasLocalApmContent, DefaultDependencyPolicy. go build ./... and go test ./... pass.
 
 ### Iteration 78 -- 2026-05-16 07:19 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25955961521)
 

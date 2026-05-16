@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 426544,
+  "migrated_python_lines": 430689,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -8882,11 +8882,53 @@
       "python_lines": 521,
       "status": "test-migrated",
       "notes": "Go test suite: CheckManifestParse, CheckLockfileExists/Sync, CheckRefConsistency, CIAuditResult, DriftFindings"
+    },
+    {
+      "module": "test/policy/inheritance",
+      "go_package": "internal/policy/inheritance",
+      "python_lines": 624,
+      "status": "test-migrated",
+      "notes": "Go tests for MergeDependencyPolicies, MergeMcpPolicies, deny/require union, escalation"
+    },
+    {
+      "module": "test/utils/versionchecker",
+      "go_package": "internal/utils/versionchecker",
+      "python_lines": 308,
+      "status": "test-migrated",
+      "notes": "Go tests for ParseVersion, IsNewerVersion"
+    },
+    {
+      "module": "test/models/apmpackage",
+      "go_package": "internal/models/apmpackage",
+      "python_lines": 1987,
+      "status": "test-migrated",
+      "notes": "Go tests for ParseContentType, PackageContentType.String, HasPrimitives"
+    },
+    {
+      "module": "test/compilation/templatebuilder",
+      "go_package": "internal/compilation/templatebuilder",
+      "python_lines": 546,
+      "status": "test-migrated",
+      "notes": "Go tests for RenderInstructionsBlock global/scoped/sorted/empty"
+    },
+    {
+      "module": "test/policy/outcomerouting",
+      "go_package": "internal/policy/outcomerouting",
+      "python_lines": 500,
+      "status": "test-migrated",
+      "notes": "Go tests for RouteDiscoveryOutcome all 9 outcomes including disabled/found/hash_mismatch/absent/cached_stale"
+    },
+    {
+      "module": "test/deps/aggregator",
+      "go_package": "internal/deps/aggregator",
+      "python_lines": 180,
+      "status": "test-migrated",
+      "notes": "Go tests for ScanWorkflowsForDependencies MCP frontmatter parsing"
     }
   ],
-  "last_updated": "2026-05-16T01:46:06Z",
-  "iteration": 74,
-  "python_lines_migrated_pct": 484.14,
+  "last_updated": "2026-05-16T04:44:30Z",
+  "iteration": 75,
+  "python_lines_migrated_pct": 491.51,
   "modules_migrated": 1166,
   "modules": [
     {

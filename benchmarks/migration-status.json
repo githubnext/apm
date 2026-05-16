@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 482870,
+  "migrated_python_lines": 484882,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10326,6 +10326,30 @@
       "python_lines": 0,
       "status": "test-migrated",
       "notes": "Go test suite: StripSourcePrefix, NewCommandLogger, ShouldExecute, NewInstallLogger"
+    },
+    {
+      "module": "test/deps/gitremoteops",
+      "go_package": "github.com/githubnext/apm/internal/deps/gitremoteops",
+      "python_file": "tests/unit/deps/test_git_reference_resolver.py",
+      "python_lines": 276,
+      "status": "test-migrated",
+      "notes": "Go test suite for gitremoteops ParseLsRemoteOutput and SortRefsBySemver"
+    },
+    {
+      "module": "test/deps/sharedclonecache_gotests",
+      "go_package": "github.com/githubnext/apm/internal/deps/sharedclonecache",
+      "python_file": "tests/unit/deps/test_shared_clone_cache.py",
+      "python_lines": 1651,
+      "status": "test-migrated",
+      "notes": "Go test suite for SharedCloneCache GetOrClone and Cleanup"
+    },
+    {
+      "module": "test/adapters/packagemanager_gotests",
+      "go_package": "github.com/githubnext/apm/internal/adapters/packagemanager",
+      "python_file": "tests/unit/test_package_manager.py",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "notes": "Go test suite for DefaultManager and BaseManager"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

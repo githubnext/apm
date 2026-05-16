@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T22:20:00Z|
-| Iteration Count | 94|
-| Best Metric | 580.77|
+| Last Run | 2026-05-16T23:22:00Z|
+| Iteration Count | 95|
+| Best Metric | 585.33|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -39,8 +39,8 @@
 
 ## 🎯 Current Priorities
 
-Metric at 576.68%. Continue adding Go tests for remaining untested packages:
-- Write Go tests for remaining untested packages (commands/*, runtime/*, install/bundle/pluginexporter, deps/downloadstrategies deeper coverage, etc.)
+Metric at 585.33%. Continue adding Go tests for remaining untested packages:
+- Write Go tests for remaining untested packages (commands/cache, commands/deps, commands/marketplace, commands/mcp, commands/outdated, commands/pack, commands/policy, commands/targetscmd, commands/update, commands/view, runtime/base)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
 
@@ -80,6 +80,14 @@ Metric at 576.68%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 95 -- 2026-05-16 23:22 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25975638638)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (commands/listcmd, commands/configcmd, install/mcp/mcpcommand, utils/installtui, integration/mcpintegrator, install/mcp/mcpwriter); registered 6 new test-migrated entries (+3993 py lines)
+- **Metric**: 585.33% (previous best: 580.77%, delta: +4.56pp)
+- **Commit**: d87c74d
+- **Notes**: parseScripts/ListScripts/Run for listcmd; ParseBoolValue/parseAPMYML/ValidConfigKeys for configcmd; ParseEnvPair/ParseHeaderPair/TransportDefault for mcpcommand; ShouldAnimate/Open/Close/TaskStarted/buildSpinnerLine for installtui; NormaliseServerName/DetectConflicts/LoadServers for mcpintegrator; DiffEntry/FindExistingMCPEntry/MCPListSection for mcpwriter. go test ./... pass.
 
 ### Iteration 94 -- 2026-05-16 22:20 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25974444137)
 

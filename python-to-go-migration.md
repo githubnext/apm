@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T12:28:00Z|
-| Iteration Count | 84|
-| Best Metric | 551.06|
+| Last Run | 2026-05-16T13:35:00Z|
+| Iteration Count | 85|
+| Best Metric | 553.35|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 551.06%. All 131 previously unregistered Python source files now registered (+30345 lines). Future iterations can:
+Metric at 553.35%. Continue adding Go tests for remaining untested packages:
 - Write Go tests for remaining untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, workflow/runner, workflow/discovery, install/bundle/*, install/phases/*, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
@@ -79,6 +79,14 @@ Metric at 551.06%. All 131 previously unregistered Python source files now regis
 
 
 ## 📊 Iteration History
+
+### Iteration 85 -- 2026-05-16 13:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25963275244)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 3 packages (gitremoteops, sharedclonecache, packagemanager); registered 3 new test-migrated entries (+2012 py lines)
+- **Metric**: 553.35% (prev: 551.06%, delta: +2.29pp)
+- **Commit**: 0a79fc6
+- **Notes**: ParseLsRemoteOutput and SortRefsBySemver tested; SharedCloneCache GetOrClone/Cleanup tested; DefaultManager Install/List/Uninstall tested. go test ./... pass.
 
 ### Iteration 84 -- 2026-05-16 12:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25961895174)
 

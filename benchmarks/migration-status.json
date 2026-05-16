@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 435029,
+  "migrated_python_lines": 435347,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9002,6 +9002,22 @@
       "python_lines": 999,
       "status": "test-migrated",
       "notes": "Go test suite written for compilationformatter: OptimizationStats EfficiencyPercentage/EfficiencyImprovement, CompilationResults HasIssues, ProjectAnalysis FileTypesSummary, CompilationFormatter FormatDefault/FormatDryRun"
+    },
+    {
+      "module": "primitives/primmodels",
+      "python_source": "src/apm_cli/primitives/models.py",
+      "python_lines": 269,
+      "go_package": "github.com/githubnext/apm/internal/primitives/primmodels",
+      "status": "migrated",
+      "notes": "Primitive interface and model types with Validate() methods"
+    },
+    {
+      "module": "compilation/outputwriter",
+      "python_source": "src/apm_cli/compilation/output_writer.py",
+      "python_lines": 49,
+      "go_package": "github.com/githubnext/apm/internal/compilation/outputwriter",
+      "status": "migrated",
+      "notes": "CompiledOutputWriter.Write with atomic writes and build ID stabilization"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

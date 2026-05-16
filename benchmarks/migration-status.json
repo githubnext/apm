@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 505324,
+  "migrated_python_lines": 507155,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10598,6 +10598,54 @@
       "status": "test-migrated",
       "python_lines": 146,
       "notes": "Go tests: InstallNotAvailableError, FrozenInstallError, IsFrozenInstallError, InstallService.Run"
+    },
+    {
+      "module": "test/adapters/client/base_gotests",
+      "python_file": "src/apm_cli/adapters/client/base.py",
+      "python_lines": 198,
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/base",
+      "status": "test-migrated",
+      "notes": "Tests for InputVarRE and EnvVarRE regex patterns"
+    },
+    {
+      "module": "test/adapters/client/claude_gotests",
+      "python_file": "src/apm_cli/adapters/client/claude.py",
+      "python_lines": 240,
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/claude",
+      "status": "test-migrated",
+      "notes": "Tests for Claude adapter TargetName/GetConfigPath/UpdateConfig/GetCurrentConfig"
+    },
+    {
+      "module": "test/adapters/client/gemini_gotests",
+      "python_file": "src/apm_cli/adapters/client/gemini.py",
+      "python_lines": 263,
+      "go_package": "github.com/githubnext/apm/internal/adapters/client/gemini",
+      "status": "test-migrated",
+      "notes": "Tests for Gemini adapter TargetName/GetConfigPath/GetCurrentConfig"
+    },
+    {
+      "module": "test/install/gitlabresolver_gotests",
+      "python_file": "src/apm_cli/install/gitlab_resolver.py",
+      "python_lines": 41,
+      "go_package": "github.com/githubnext/apm/internal/install/gitlabresolver",
+      "status": "test-migrated",
+      "notes": "Tests for ParseShorthand and BoundaryCandidates"
+    },
+    {
+      "module": "test/marketplace/registry_gotests",
+      "python_file": "src/apm_cli/marketplace/registry.py",
+      "python_lines": 136,
+      "go_package": "github.com/githubnext/apm/internal/marketplace/registry",
+      "status": "test-migrated",
+      "notes": "Tests for FromDict, ToDict, Registry Add/Remove/GetAll"
+    },
+    {
+      "module": "test/install/bundle/pluginexporter_gotests",
+      "python_file": "tests/unit/test_plugin_exporter.py",
+      "python_lines": 953,
+      "go_package": "github.com/githubnext/apm/internal/install/bundle/pluginexporter",
+      "status": "test-migrated",
+      "notes": "Tests for validateOutputRel/sanitizeBundleName/renamePrompt/ExportPluginBundle"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 424229,
+  "migrated_python_lines": 426544,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -8840,6 +8840,48 @@
       "python_lines": 187,
       "status": "test-migrated",
       "notes": "Go mcpdep tests cover FromString, FromDict, ToDict, IsSelfDefined, IsRegistryResolved"
+    },
+    {
+      "module": "test/unit/cache/locking",
+      "go_package": "internal/cache/locking",
+      "python_lines": 312,
+      "status": "test-migrated",
+      "notes": "Go test suite: ShardLock, AtomicLand, CleanupIncomplete, StagePath"
+    },
+    {
+      "module": "test/unit/cache/integrity",
+      "go_package": "internal/cache/integrity",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Go test suite: ReadHeadSHA detached/symbolic/packed-refs, VerifyCheckout"
+    },
+    {
+      "module": "test/unit/compilation/constitutionblock",
+      "go_package": "internal/compilation/constitutionblock",
+      "python_lines": 456,
+      "status": "test-migrated",
+      "notes": "Go test suite: ComputeConstitutionHash, RenderBlock, FindExistingBlock, InjectOrUpdate all statuses"
+    },
+    {
+      "module": "test/unit/compilation/agentformatter",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 341,
+      "status": "test-migrated",
+      "notes": "Go test suite: RenderGeminiStub, RenderClaudeHeader, SummarizeClaudeResult success/failure"
+    },
+    {
+      "module": "test/unit/utils/diagnostics",
+      "go_package": "internal/utils/diagnostics",
+      "python_lines": 398,
+      "status": "test-migrated",
+      "notes": "Go test suite: DiagnosticCollector Warn/Error/Security/Policy/Auth/Info"
+    },
+    {
+      "module": "test/unit/policy/cichecks",
+      "go_package": "internal/policy/cichecks",
+      "python_lines": 521,
+      "status": "test-migrated",
+      "notes": "Go test suite: CheckManifestParse, CheckLockfileExists/Sync, CheckRefConsistency, CIAuditResult, DriftFindings"
     }
   ],
   "last_updated": "2026-05-16T01:46:06Z",

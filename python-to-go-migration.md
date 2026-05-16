@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T16:23:34Z|
-| Iteration Count | 88|
-| Best Metric | 568.64|
+| Last Run | 2026-05-16T17:25:31Z|
+| Iteration Count | 89|
+| Best Metric | 572.22|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 568.64%. Continue adding Go tests for remaining untested packages:
+Metric at 572.22%. Continue adding Go tests for remaining untested packages:
 - Write Go tests for remaining untested packages (commands/*, runtime/*, deps/hostbackends, install/bundle/*, install/phases/heal, install/phases/download, install/installpipeline, install/installservice, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
@@ -80,6 +80,14 @@ Metric at 568.64%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 89 -- 2026-05-16 17:25 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25968249645)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 6 packages (policytargetcheck, postdepslocal, securityscan, pkgresolution, dryrun, template); registered 6 new test-migrated entries (+3132 py lines)
+- **Metric**: 572.22% (prev: 568.64%, delta: +3.58pp)
+- **Commit**: 2d04b20
+- **Notes**: ShouldRunCheck, HasLocalContentErrors/DetectStaleLocalFiles/ShouldRun, PreDeploySecurityScan hidden-char detection, NormalizePackageSpec/ValidateGitParentScope, RenderAndExit with mock logger, RunIntegrationTemplate all tested. go test ./... pass.
 
 ### Iteration 88 -- 2026-05-16 16:23 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25966901883)
 

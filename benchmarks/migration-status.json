@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 492724,
+  "migrated_python_lines": 498279,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10426,6 +10426,46 @@
       "python_lines": 2610,
       "status": "test-migrated",
       "notes": "Go test suite for deps/gitrefresolver: IsFullSHA, IsShortSHA, New constructor"
+    },
+    {
+      "module": "test/core/operations",
+      "status": "test-migrated",
+      "go_package": "internal/core/operations",
+      "test_file": "internal/core/operations/operations_test.go",
+      "python_lines": 440,
+      "python_file": "tests/unit/core/test_operations.py"
+    },
+    {
+      "module": "test/install/phases/policygate",
+      "status": "test-migrated",
+      "go_package": "internal/install/phases/policygate",
+      "test_file": "internal/install/phases/policygate/policygate_test.go",
+      "python_lines": 612,
+      "python_file": "tests/unit/install/phases/test_policy_gate.py"
+    },
+    {
+      "module": "test/install/phases/installphase",
+      "status": "test-migrated",
+      "go_package": "internal/install/phases/installphase",
+      "test_file": "internal/install/phases/installphase/installphase_test.go",
+      "python_lines": 891,
+      "python_file": "tests/unit/install/phases/test_targets.py"
+    },
+    {
+      "module": "test/deps/cloneengine",
+      "status": "test-migrated",
+      "go_package": "internal/deps/cloneengine",
+      "test_file": "internal/deps/cloneengine/cloneengine_test.go",
+      "python_lines": 1026,
+      "python_file": "tests/unit/deps/test_clone_engine.py"
+    },
+    {
+      "module": "test/compilation/contextoptimizer",
+      "status": "test-migrated",
+      "go_package": "internal/compilation/contextoptimizer",
+      "test_file": "internal/compilation/contextoptimizer/optimizer_test.go",
+      "python_lines": 2586,
+      "python_file": "tests/unit/compilation/test_context_optimizer.py"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

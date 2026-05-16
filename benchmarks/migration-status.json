@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 452076,
+  "migrated_python_lines": 452525,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9191,6 +9191,69 @@
       "python_lines": 70,
       "status": "test-migrated",
       "notes": "Go test suite added in iteration 82"
+    },
+    {
+      "module": "test/unit/policy/helptext",
+      "python_file": "tests/unit/policy/test_helptext.py",
+      "status": "test-migrated",
+      "go_package": "internal/policy/helptext",
+      "python_lines": 28
+    },
+    {
+      "module": "test/unit/marketplace/refresolver",
+      "python_file": "tests/unit/marketplace/test_ref_resolver.py",
+      "status": "test-migrated",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 41
+    },
+    {
+      "module": "test/unit/deps/gitauthenv",
+      "python_file": "tests/unit/deps/test_git_auth_env.py",
+      "status": "test-migrated",
+      "go_package": "internal/deps/gitauthenv",
+      "python_lines": 55
+    },
+    {
+      "module": "test/unit/install/cachepin",
+      "python_file": "tests/unit/install/test_cachepin.py",
+      "status": "test-migrated",
+      "go_package": "internal/install/cachepin",
+      "python_lines": 48
+    },
+    {
+      "module": "test/unit/runtime/factory",
+      "python_file": "tests/unit/runtime/test_factory.py",
+      "status": "test-migrated",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 52
+    },
+    {
+      "module": "test/unit/integration/cleanuphelper",
+      "python_file": "tests/unit/integration/test_cleanup.py",
+      "status": "test-migrated",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_lines": 63
+    },
+    {
+      "module": "test/unit/marketplace/inittemplate",
+      "python_file": "tests/unit/marketplace/test_init_template.py",
+      "status": "test-migrated",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 37
+    },
+    {
+      "module": "test/unit/security/contentscanner",
+      "python_file": "tests/unit/security/test_content_scanner.py",
+      "status": "test-migrated",
+      "go_package": "internal/security/contentscanner",
+      "python_lines": 58
+    },
+    {
+      "module": "test/unit/security/auditreport",
+      "python_file": "tests/unit/security/test_audit_report.py",
+      "status": "test-migrated",
+      "go_package": "internal/security/auditreport",
+      "python_lines": 67
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

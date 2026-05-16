@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 501411,
+  "migrated_python_lines": 503056,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10508,6 +10508,38 @@
       "python_lines": 612,
       "status": "test-migrated",
       "notes": "Go test suite written for install/template: RunIntegrationTemplate nil/no-targets/security-gate-blocked/integrate-error/success"
+    },
+    {
+      "module": "test/registry/test/registry_client",
+      "status": "test-migrated",
+      "go_package": "github.com/githubnext/apm/internal/registry/client",
+      "python_file": "src/apm_cli/registry/client.py",
+      "python_lines": 464,
+      "notes": "Tests for NewSimpleRegistryClient, SearchServers, GetServer, ListServers, resolveTimeout"
+    },
+    {
+      "module": "test/registry/test/registry_operations",
+      "status": "test-migrated",
+      "go_package": "github.com/githubnext/apm/internal/registry/operations",
+      "python_file": "src/apm_cli/registry/operations.py",
+      "python_lines": 497,
+      "notes": "Tests for mcpConfigPaths, extractServerIDs, getInstalledServerIDs"
+    },
+    {
+      "module": "test/runtime/test/runtime_manager",
+      "status": "test-migrated",
+      "go_package": "github.com/githubnext/apm/internal/runtime/manager",
+      "python_file": "src/apm_cli/runtime/manager.py",
+      "python_lines": 403,
+      "notes": "Tests for ValidateRuntime, ListRuntimes, SetupEnvironment, GetScriptPath"
+    },
+    {
+      "module": "test/bundle/test/bundle_packer",
+      "status": "test-migrated",
+      "go_package": "github.com/githubnext/apm/internal/install/bundle/packer",
+      "python_file": "src/apm_cli/bundle/packer.py",
+      "python_lines": 281,
+      "notes": "Tests for detectTarget, filterFilesByTarget, readDeployedFiles, findLockfile"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

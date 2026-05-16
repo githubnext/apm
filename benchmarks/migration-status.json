@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 449233,
+  "migrated_python_lines": 451551,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -9114,6 +9114,34 @@
       "python_lines": 1160,
       "status": "test-migrated",
       "notes": "Python tests for base integrator; Go counterpart exists"
+    },
+    {
+      "module": "test/install/mcp/mcpentry",
+      "python_file": "tests/unit/test_mcp_integrator_coverage.py",
+      "python_lines": 201,
+      "go_package": "internal/install/mcp/mcpentry",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/mcp/mcpconflicts",
+      "python_file": "tests/unit/test_mcp_integrator_characterisation.py",
+      "python_lines": 214,
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/unit/policy/test_policy_checks",
+      "python_file": "tests/unit/policy/test_policy_checks.py",
+      "python_lines": 926,
+      "go_package": "internal/policy/policychecks",
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/unit/integration/test_data_driven_dispatch",
+      "python_file": "tests/unit/integration/test_data_driven_dispatch.py",
+      "python_lines": 977,
+      "go_package": "internal/integration/dispatch",
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-16T04:44:30Z",

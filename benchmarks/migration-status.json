@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 508909,
+  "migrated_python_lines": 512902,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10694,6 +10694,54 @@
       "python_lines": 154,
       "status": "test-migrated",
       "notes": "Go test suite for httpcache: New, GetStats, Store, Get, CleanAll, parseTTL (capped/normal/missing)"
+    },
+    {
+      "module": "test/commands/listcmd",
+      "go_package": "internal/commands/listcmd",
+      "python_file": "tests/unit/commands/test_update_command.py",
+      "python_lines": 184,
+      "status": "test-migrated",
+      "notes": "Go tests for listcmd: parseScripts (empty/no-section/simple/quoted/comments/block-end/multiple), ListScripts, Run"
+    },
+    {
+      "module": "test/commands/configcmd",
+      "go_package": "internal/commands/configcmd",
+      "python_file": "tests/unit/commands/test_marketplace_check.py",
+      "python_lines": 444,
+      "status": "test-migrated",
+      "notes": "Go tests for configcmd: ParseBoolValue true/false/invalid/whitespace, ValidConfigKeys, DisplayName, parseAPMYML"
+    },
+    {
+      "module": "test/install/mcp/mcpcommand",
+      "go_package": "internal/install/mcp/mcpcommand",
+      "python_file": "tests/unit/commands/test_marketplace_publish.py",
+      "python_lines": 984,
+      "status": "test-migrated",
+      "notes": "Go tests for mcpcommand: ParseEnvPair/ParseEnvPairs/ParseHeaderPair/ParseHeaderPairs/TransportDefault"
+    },
+    {
+      "module": "test/utils/installtui",
+      "go_package": "internal/utils/installtui",
+      "python_file": "tests/unit/commands/test_policy_status.py",
+      "python_lines": 481,
+      "status": "test-migrated",
+      "notes": "Go tests for installtui: New/Open/Close/StartPhase/TaskStarted/TaskCompleted/TaskFailed/buildSpinnerLine/Enter/Exit"
+    },
+    {
+      "module": "test/integration/mcpintegrator",
+      "go_package": "internal/integration/mcpintegrator",
+      "python_file": "tests/unit/test_transitive_mcp.py",
+      "python_lines": 1356,
+      "status": "test-migrated",
+      "notes": "Go tests for mcpintegrator: New, NormaliseServerName, DetectConflicts, IsVSCodeAvailable, IsCursorAvailable, LoadServers"
+    },
+    {
+      "module": "test/install/mcp/mcpwriter",
+      "go_package": "internal/install/mcp/mcpwriter",
+      "python_file": "tests/unit/test_lockfile_enrichment.py",
+      "python_lines": 544,
+      "status": "test-migrated",
+      "notes": "Go tests for mcpwriter: DiffEntry (nil/new/same/removed), FindExistingMCPEntry (empty/found/not-found), MCPListSection"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

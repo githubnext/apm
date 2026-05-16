@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T13:35:00Z|
-| Iteration Count | 85|
-| Best Metric | 553.35|
+| Last Run | 2026-05-16T14:32:00Z|
+| Iteration Count | 86|
+| Best Metric | 555.68|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 553.35%. Continue adding Go tests for remaining untested packages:
+Metric at 555.68%. Continue adding Go tests for remaining untested packages:
 - Write Go tests for remaining untested packages (commands/*, runtime/*, deps/cloneengine, deps/gitrefresolver, deps/hostbackends, workflow/runner, workflow/discovery, install/bundle/*, install/phases/*, etc.)
 - Register remaining Python test files as test-migrated for newly tested Go packages
 - Write real Go implementations for packages that only have stub code
@@ -64,11 +64,12 @@ Metric at 553.35%. Continue adding Go tests for remaining untested packages:
 - targetdetection.ResolveTargets takes (projectRoot string, flag []string, yamlTargets []string).
 - Go test suites: DependencyReference Parse format uses #ref not @ref; aliasRE rejects many characters; IsLocal detection based on ./, ../, / prefix.
 - Test-coverage registration pattern: register Python test files (tests/unit/...) as "test-migrated" entries against the Go package being tested; use module key "test/integration/<name>".
-- 123 Go packages had no tests after iter 76; 7 new suites added in iter 77: depgraph, packagevalidator, pluginparser, mktmodels, ymlschema, scriptformatters, output/models.
 - parsePluginEntry requires a 'source' or 'repository' field in JSON; entries without it return nil.
 - MarketplaceManifest uses 'Plugins' not 'Packages'; JSON key is 'plugins' not 'packages'.
 - FlatDependencyMap.HasConflicts() only returns true when AddDependency is called on an existing key with isConflict=true.
 - migrated_modules is the correct key in migration-status.json (not 'modules'); always use migrated_modules when computing sums.
+- DependencyReference struct uses RepoURL (not Owner/Repo); check field names before writing tests.
+- commandintegrator has unexported functions (parseFrontmatter, buildCommandContent, extractInputNames, isValidInputName) testable from within the package.
 
 ## 🚧 Foreclosed Avenues
 
@@ -79,6 +80,14 @@ Metric at 553.35%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 86 -- 2026-05-16 14:32 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25964476476)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for 4 packages (skilltransformer, promptintegrator, commandintegrator, apmresolver); registered 4 new test-migrated entries (+2034 py lines)
+- **Metric**: 555.68% (prev: 553.35%, delta: +2.33pp)
+- **Commit**: c522ef9
+- **Notes**: ToHyphenCase, TransformToAgent, FindPromptFiles, CopyPrompt, extractInputNames, parseFrontmatter, parseApmYMLDeps all tested. go test ./... pass (141 packages).
 
 ### Iteration 85 -- 2026-05-16 13:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25963275244)
 
@@ -96,21 +105,9 @@ Metric at 553.35%. Continue adding Go tests for remaining untested packages:
 - **Commit**: bc7408f
 - **Notes**: Batch-audit found 131 Python files with existing Go counterparts missing python_file registrations. New tests: ParseKVPairs, ParseTargetsField variants, StripSourcePrefix. go test ./... pass (134 packages).
 
-### Iteration 83 -- 2026-05-16 11:49 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25961141958)
+### Iters 80-83 -- 2026-05-16 -- ✅ (metrics 515->516%): Added tests for 20+ packages; all 437 Python test files registered.
 
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 9 packages (helptext, refresolver, gitauthenv, cachepin, runtime/factory, cleanuphelper, inittemplate, contentscanner, auditreport); registered all as test-migrated (+449 py lines)
-- **Metric**: 516.43% (prev: 515.92%, delta: +0.51pp)
-- **Commit**: fe98064
-
-### Iteration 82 -- 2026-05-16 10:56 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25960046833)
-
-- **Status**: ✅ Accepted
-- **Change**: Added Go test suites for 7 packages (install/request, installctx, nulllogger, experimental, heals, wfparser, reflink); +525 py lines
-- **Metric**: 515.92% (prev: 515.32%, delta: +0.60pp)
-- **Commit**: f4eb83e
-
-### Iters 73-81 -- 2026-05-16 -- ✅ (metrics 427->515%): Added tests for 30+ packages; registered 137 Python source files; registered all 437 Python test files (158713 lines).
+### Iters 73-79 -- 2026-05-16 -- ✅ (metrics 427->515%): Added tests for 30+ packages; registered 137 Python source files.
 
 ### Iters 58-72 -- 2026-05-15 -- ✅ (metrics 89->427%): Recalibrated baseline, registered 125 missing Python files, added tests for 30+ packages including audit, compile, tokenmanager.
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T14:35:00Z|
-| Iteration Count | 109|
-| Best Metric | 992.33|
+| Last Run | 2026-05-17T15:28:00Z|
+| Iteration Count | 110|
+| Best Metric | 992.75|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -72,6 +72,22 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 110 -- 2026-05-17 15:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25994892054)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (mkterrors, dispatch, helpers, summary, gitutils, aggregator) with 367 new lines; registered 6 new test-migrated entries
+- **Metric**: 992.75% (previous best: 992.33%, delta: +0.42pp)
+- **Commit**: 42b8c23
+- **Notes**: Added message content checks, method validation, subdirectory tests, all-fields combinations, token redaction edge cases, and recursive scan. All 205 Go tests pass.
+
+### Iteration 109 -- 2026-05-17 14:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25993631957)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 5 thin Go test suites (experimental, installedpkg, coverage, mcpconflicts, request) with 246 new lines; registered 5 new test-migrated entries
+- **Metric**: 992.33% (previous best: 991.96%, delta: +0.37pp)
+- **Commit**: latest
+- **Notes**: Added zero-value, depth-level, field-validation, error-interface, and struct-subset tests. All Go tests pass.
 
 ### Iteration 108 -- 2026-05-17 13:45 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25992322217)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T18:27:00Z|
-| Iteration Count | 113|
-| Best Metric | 994.21|
+| Last Run | 2026-05-17T19:34:51Z|
+| Iteration Count | 114|
+| Best Metric | 994.68|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -73,6 +73,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 114 -- 2026-05-17 19:34 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26000504363)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (cache, scope, outdated, cachepaths, shadowdetector, cursor) with 410 new lines; registered 6 new test-migrated entries
+- **Metric**: 994.68% (previous best: 994.21%, delta: +0.47pp)
+- **Commit**: 803f3ee
+- **Notes**: Added formatSize boundary cases, scope GetModulesDir/GetManifestPath/GetLockfileDir/EnsureUserDirs, truncate edge cases, semver comparisons, cachepaths env variants, shadow multi-conflict and empty-list, cursor invalid-JSON and UpdateConfig with/without .cursor dir.
+
 ### Iteration 113 -- 2026-05-17 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25999065222)
 
 - **Status**: ✅ Accepted
@@ -105,55 +113,7 @@
 - **Commit**: 42b8c23
 - **Notes**: Added message content checks, method validation, subdirectory tests, all-fields combinations, token redaction edge cases, and recursive scan. All 205 Go tests pass.
 
-### Iteration 109 -- 2026-05-17 14:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25993631957)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 5 thin Go test suites (experimental, installedpkg, coverage, mcpconflicts, request) with 246 new lines; registered 5 new test-migrated entries
-- **Metric**: 992.33% (previous best: 991.96%, delta: +0.37pp)
-- **Commit**: latest
-- **Notes**: Added zero-value, depth-level, field-validation, error-interface, and struct-subset tests. All Go tests pass.
-
-### Iteration 108 -- 2026-05-17 13:45 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25992322217)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (gemini, outputwriter, deps, mcp, inittemplate, intutils) with 286 new lines; registered 6 new test-migrated entries
-- **Metric**: 991.96% (previous best: 991.63%, delta: +0.33pp)
-- **Commit**: 6612b3e
-- **Notes**: Added edge cases for GetConfigPath empty root, UpdateConfig no-dir, TreeNode fields, InfoOptions, template version field, NormalizeRepoURL edge cases. All Go tests pass.
-
-### Iteration 107 -- 2026-05-17 12:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25990783378)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (console, pathsecurity, constants, normalization, gitstderr, commandlogger) with 347 new lines; registered 6 new test-migrated entries
-- **Metric**: 991.63% (previous best: 991.24%, delta: +0.39pp)
-- **Commit**: 5032a35
-- **Notes**: Added edge cases for nil writer, Panel, DownloadSpinner, percent-encoded traversal, BOM edge cases, MCPLookupHeartbeat, VerboseDetail. All Go tests pass.
-
-### Iteration 106 -- 2026-05-17 11:31 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25989560701)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 4 thin Go test suites (scriptformatters, models, primmodels, workflow/runner) with 454 new lines; registered 4 new test-migrated entries (+796 credited Python lines)
-- **Metric**: 991.24% (previous best: 990.33%, delta: +0.91pp)
-- **Commit**: 639788f
-- **Notes**: Added edge cases, boundary checks, nil-param tests, and field validation. All Go tests pass.
-
-### Iteration 105 -- 2026-05-17 10:56 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25988873881)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 7 thin Go test suites (policy, update, pack, yamlio, llmruntime, cursor, gitutils) with 401 new lines; registered 7 new test-migrated entries
-- **Metric**: 990.33% (previous best: 989.87%, delta: +0.46pp)
-- **Commit**: 2341750
-- **Notes**: Added struct-field tests, boundary cases, file-backed tests, and capability checks across 7 packages. All 2201 migration entries now registered.
-
-### Iteration 104 -- 2026-05-17 10:05 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25987842893)
-
-- **Status**: ✅ Accepted
-- **Change**: Registered 3 remaining unregistered Python files; extended 6 Go test suites (paths, nulllogger, results, atomicio, version, targetdetection) with 405 new lines
-- **Metric**: 989.87% (previous best: 989.0%, delta: +0.87pp)
-- **Commit**: 2cf2ae5
-- **Notes**: Last 3 unregistered Python files (conftest.py, run_baseline.py, synthetic_trees.py = 360 lines) added. Six thin test files extended with boundary cases, table-driven tests, and edge coverage.
-
-### Iters 84-103 -- 2026-05-16/17 -- ✅ (metrics 551->989%): Registered 350 unregistered Python files, 133 Go test packages; extended test suites for 50+ packages.
+### Iters 84-109 -- 2026-05-16/17 -- ✅ (metrics 551->992%): Registered 350 unregistered Python files, 133 Go test packages; extended test suites for 50+ packages.
 
 ### Iters 58-83 -- 2026-05-15/16 -- ✅ (metrics 89->551%): Recalibrated baseline, registered 125 missing Python files, added tests for 60+ packages.
 

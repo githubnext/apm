@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 719644,
+  "migrated_python_lines": 866620,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -13694,12 +13694,2462 @@
       "python_lines": 117,
       "status": "test-migrated",
       "notes": "Go test suite for internal/workflow/wfparser (117 go lines)"
+    },
+    {
+      "module": "tests/test_codex_empty_string_and_defaults",
+      "go_package": "test/registered",
+      "python_lines": 223,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_github_downloader_token_precedence",
+      "go_package": "test/registered",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_lockfile",
+      "go_package": "test/registered",
+      "python_lines": 381,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_token_manager",
+      "go_package": "test/registered",
+      "python_lines": 669,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_runnable_prompts",
+      "go_package": "test/registered",
+      "python_lines": 483,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_codex_docker_args_fix",
+      "go_package": "test/registered",
+      "python_lines": 517,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_console",
+      "go_package": "test/registered",
+      "python_lines": 26,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_enhanced_discovery",
+      "go_package": "test/registered",
+      "python_lines": 624,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_apm_resolver",
+      "go_package": "test/registered",
+      "python_lines": 609,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_runtime_manager_token_precedence",
+      "go_package": "test/registered",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_github_downloader",
+      "go_package": "test/registered",
+      "python_lines": 2610,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/test_empty_string_and_defaults",
+      "go_package": "test/registered",
+      "python_lines": 349,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_install_hot_paths",
+      "go_package": "test/registered",
+      "python_lines": 374,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_perf_benchmarks",
+      "go_package": "test/registered",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_scaling_guards",
+      "go_package": "test/registered",
+      "python_lines": 342,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_audit_benchmarks",
+      "go_package": "test/registered",
+      "python_lines": 377,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_git_and_compiler_benchmarks",
+      "go_package": "test/registered",
+      "python_lines": 612,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_security_and_resolver_benchmarks",
+      "go_package": "test/registered",
+      "python_lines": 776,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/test_compilation_hot_paths",
+      "go_package": "test/registered",
+      "python_lines": 668,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_lockfile_self_entry",
+      "go_package": "test/registered",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_lockfile_enrichment",
+      "go_package": "test/registered",
+      "python_lines": 544,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_audit_ci_command",
+      "go_package": "test/registered",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_dev_dependencies",
+      "go_package": "test/registered",
+      "python_lines": 445,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_generic_git_urls",
+      "go_package": "test/registered",
+      "python_lines": 1156,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_runtime_windows",
+      "go_package": "test/registered",
+      "python_lines": 294,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_init_plugin",
+      "go_package": "test/registered",
+      "python_lines": 311,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_unpacker",
+      "go_package": "test/registered",
+      "python_lines": 532,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_plugin_exporter_schema",
+      "go_package": "test/registered",
+      "python_lines": 161,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_canonicalization",
+      "go_package": "test/registered",
+      "python_lines": 646,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_auth",
+      "go_package": "test/registered",
+      "python_lines": 1347,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_integrator_coverage",
+      "go_package": "test/registered",
+      "python_lines": 201,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_plugin_parser",
+      "go_package": "test/registered",
+      "python_lines": 969,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_claude_mcp",
+      "go_package": "test/registered",
+      "python_lines": 301,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_gemini_mcp",
+      "go_package": "test/registered",
+      "python_lines": 264,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_integrator_characterisation",
+      "go_package": "test/registered",
+      "python_lines": 214,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_windsurf_adapter",
+      "go_package": "test/registered",
+      "python_lines": 34,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_overlays",
+      "go_package": "test/registered",
+      "python_lines": 878,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_view_versions",
+      "go_package": "test/registered",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_command",
+      "go_package": "test/registered",
+      "python_lines": 2275,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_global_mcp_scope",
+      "go_package": "test/registered",
+      "python_lines": 404,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_outdated_command",
+      "go_package": "test/registered",
+      "python_lines": 1087,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_docker_args",
+      "go_package": "test/registered",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_skill_subset_persistence",
+      "go_package": "test/registered",
+      "python_lines": 417,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_runtime_detection",
+      "go_package": "test/registered",
+      "python_lines": 253,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_version_checker",
+      "go_package": "test/registered",
+      "python_lines": 308,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_constitution_hash",
+      "go_package": "test/registered",
+      "python_lines": 22,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_build_sha",
+      "go_package": "test/registered",
+      "python_lines": 56,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_helpers",
+      "go_package": "test/registered",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_dep_only_package",
+      "go_package": "test/registered",
+      "python_lines": 225,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_opencode_mcp",
+      "go_package": "test/registered",
+      "python_lines": 383,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_uninstall_transitive_cleanup",
+      "go_package": "test/registered",
+      "python_lines": 407,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_deps_clean_command",
+      "go_package": "test/registered",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_path_declaration_invariant",
+      "go_package": "test/registered",
+      "python_lines": 155,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_protocol_fallback_warning",
+      "go_package": "test/registered",
+      "python_lines": 452,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_drift_detection",
+      "go_package": "test/registered",
+      "python_lines": 356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_update",
+      "go_package": "test/registered",
+      "python_lines": 914,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_list_command",
+      "go_package": "test/registered",
+      "python_lines": 232,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_transport_selection",
+      "go_package": "test/registered",
+      "python_lines": 379,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_git_parent_reference",
+      "go_package": "test/registered",
+      "python_lines": 120,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_update_command",
+      "go_package": "test/registered",
+      "python_lines": 372,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_generic_host_error_port",
+      "go_package": "test/registered",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_command",
+      "go_package": "test/registered",
+      "python_lines": 791,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_package_identity",
+      "go_package": "test/registered",
+      "python_lines": 321,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_python_paths",
+      "go_package": "test/registered",
+      "python_lines": 51,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_audit_ci_auto_discovery",
+      "go_package": "test/registered",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_uninstall_engine_helpers",
+      "go_package": "test/registered",
+      "python_lines": 547,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_portable_relpath",
+      "go_package": "test/registered",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_cli_encoding",
+      "go_package": "test/registered",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_add_mcp_to_apm_yml",
+      "go_package": "test/registered",
+      "python_lines": 203,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_deps_update_command",
+      "go_package": "test/registered",
+      "python_lines": 570,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_docker_args_and_installer",
+      "go_package": "test/registered",
+      "python_lines": 265,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_scanning",
+      "go_package": "test/registered",
+      "python_lines": 328,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_prune_command",
+      "go_package": "test/registered",
+      "python_lines": 468,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_init_command",
+      "go_package": "test/registered",
+      "python_lines": 812,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_security_gate",
+      "go_package": "test/registered",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_reflink",
+      "go_package": "test/registered",
+      "python_lines": 177,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_cli_consistency",
+      "go_package": "test/registered",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_file_ops",
+      "go_package": "test/registered",
+      "python_lines": 606,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_build_spec",
+      "go_package": "test/registered",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_vscode_adapter",
+      "go_package": "test/registered",
+      "python_lines": 1285,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_git_parent_resolver",
+      "go_package": "test/registered",
+      "python_lines": 287,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_command_logger",
+      "go_package": "test/registered",
+      "python_lines": 558,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_orphan_detection",
+      "go_package": "test/registered",
+      "python_lines": 306,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_script_formatters",
+      "go_package": "test/registered",
+      "python_lines": 157,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_github_host",
+      "go_package": "test/registered",
+      "python_lines": 356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_ssl_cert_hook",
+      "go_package": "test/registered",
+      "python_lines": 152,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_lifecycle_e2e",
+      "go_package": "test/registered",
+      "python_lines": 802,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_view_command",
+      "go_package": "test/registered",
+      "python_lines": 692,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_conflict_detection",
+      "go_package": "test/registered",
+      "python_lines": 297,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_command_helpers",
+      "go_package": "test/registered",
+      "python_lines": 677,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_lockfile_git_parent_expanded",
+      "go_package": "test/registered",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_config_command",
+      "go_package": "test/registered",
+      "python_lines": 914,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_packer",
+      "go_package": "test/registered",
+      "python_lines": 1023,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_registry_client",
+      "go_package": "test/registered",
+      "python_lines": 494,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_cursor_mcp",
+      "go_package": "test/registered",
+      "python_lines": 346,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_plugin",
+      "go_package": "test/registered",
+      "python_lines": 31,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_tui",
+      "go_package": "test/registered",
+      "python_lines": 309,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_env_variables",
+      "go_package": "test/registered",
+      "python_lines": 113,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_audit_policy_command",
+      "go_package": "test/registered",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_transitive_mcp",
+      "go_package": "test/registered",
+      "python_lines": 1356,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_audit_report",
+      "go_package": "test/registered",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_ado_path_structure",
+      "go_package": "test/registered",
+      "python_lines": 824,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_runtime_args",
+      "go_package": "test/registered",
+      "python_lines": 200,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_collection_migration_error",
+      "go_package": "test/registered",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_list_remote_refs",
+      "go_package": "test/registered",
+      "python_lines": 537,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_self_entry_caller_guards",
+      "go_package": "test/registered",
+      "python_lines": 125,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_yaml_io",
+      "go_package": "test/registered",
+      "python_lines": 158,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_audit_command",
+      "go_package": "test/registered",
+      "python_lines": 515,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_deps_list_tree_info",
+      "go_package": "test/registered",
+      "python_lines": 635,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_install_update_refs",
+      "go_package": "test/registered",
+      "python_lines": 358,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_copilot_adapter",
+      "go_package": "test/registered",
+      "python_lines": 714,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_safe_installer",
+      "go_package": "test/registered",
+      "python_lines": 203,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_ignore_non_content",
+      "go_package": "test/registered",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_content_scanner",
+      "go_package": "test/registered",
+      "python_lines": 627,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_auth_scoping",
+      "go_package": "test/registered",
+      "python_lines": 1260,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_subprocess_env",
+      "go_package": "test/registered",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_orphan_announce_parity",
+      "go_package": "test/registered",
+      "python_lines": 160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_apm_package",
+      "go_package": "test/registered",
+      "python_lines": 561,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_package_manager",
+      "go_package": "test/registered",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_plugin_exporter",
+      "go_package": "test/registered",
+      "python_lines": 953,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_script_runner",
+      "go_package": "test/registered",
+      "python_lines": 883,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_github_downloader_temp_dir",
+      "go_package": "test/registered",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_runtime_manager",
+      "go_package": "test/registered",
+      "python_lines": 513,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_mcp_integrator_remove_stale",
+      "go_package": "test/registered",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_artifactory_support",
+      "go_package": "test/registered",
+      "python_lines": 1847,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_content_hash",
+      "go_package": "test/registered",
+      "python_lines": 286,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_symlink_containment",
+      "go_package": "test/registered",
+      "python_lines": 324,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_plugin_synthesis",
+      "go_package": "test/registered",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_stale_file_detection",
+      "go_package": "test/registered",
+      "python_lines": 42,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_exclude",
+      "go_package": "test/registered",
+      "python_lines": 198,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_thread_safety",
+      "go_package": "test/registered",
+      "python_lines": 160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_diagnostics",
+      "go_package": "test/registered",
+      "python_lines": 585,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/test_build_mcp_entry",
+      "go_package": "test/registered",
+      "python_lines": 181,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/acceptance/test_logging_acceptance",
+      "go_package": "test/registered",
+      "python_lines": 595,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_selective_install_mcp",
+      "go_package": "test/registered",
+      "python_lines": 591,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_silent_skip_e2e",
+      "go_package": "test/registered",
+      "python_lines": 179,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_plugin_e2e",
+      "go_package": "test/registered",
+      "python_lines": 815,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_mcp_env_var_headers_e2e",
+      "go_package": "test/registered",
+      "python_lines": 135,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_core_smoke",
+      "go_package": "test/registered",
+      "python_lines": 279,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_auth_resolver",
+      "go_package": "test/registered",
+      "python_lines": 380,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_target_resolution_e2e",
+      "go_package": "test/registered",
+      "python_lines": 497,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_uninstall_dry_run_e2e",
+      "go_package": "test/registered",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_local_content_audit",
+      "go_package": "test/registered",
+      "python_lines": 281,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_ado_e2e",
+      "go_package": "test/registered",
+      "python_lines": 351,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_pack_unified",
+      "go_package": "test/registered",
+      "python_lines": 244,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_policy_discovery_e2e",
+      "go_package": "test/registered",
+      "python_lines": 300,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_compile_permission_denied",
+      "go_package": "test/registered",
+      "python_lines": 37,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_claude_mcp_schema_fidelity",
+      "go_package": "test/registered",
+      "python_lines": 224,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_diff_aware_install_e2e",
+      "go_package": "test/registered",
+      "python_lines": 642,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_dep_url_parsing_e2e",
+      "go_package": "test/registered",
+      "python_lines": 228,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_global_install_e2e",
+      "go_package": "test/registered",
+      "python_lines": 249,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_apm_dependencies",
+      "go_package": "test/registered",
+      "python_lines": 560,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_compile_constitution_injection",
+      "go_package": "test/registered",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_audit_silent_skip_e2e",
+      "go_package": "test/registered",
+      "python_lines": 199,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_mcp_env_var_copilot_e2e",
+      "go_package": "test/registered",
+      "python_lines": 333,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_update_e2e",
+      "go_package": "test/registered",
+      "python_lines": 310,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_pack_unpack_e2e",
+      "go_package": "test/registered",
+      "python_lines": 108,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_subdir_dedup_e2e",
+      "go_package": "test/registered",
+      "python_lines": 168,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_intra_package_cleanup",
+      "go_package": "test/registered",
+      "python_lines": 207,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_global_scope_e2e",
+      "go_package": "test/registered",
+      "python_lines": 510,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_invalid_deps_format_e2e",
+      "go_package": "test/registered",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_transitive_chain_e2e",
+      "go_package": "test/registered",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_ado_bearer_e2e",
+      "go_package": "test/registered",
+      "python_lines": 459,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_gitlab_install_e2e",
+      "go_package": "test/registered",
+      "python_lines": 178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_marker_registry_sync",
+      "go_package": "test/registered",
+      "python_lines": 232,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_default_port_normalisation_e2e",
+      "go_package": "test/registered",
+      "python_lines": 196,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_cache_lockfile_parity",
+      "go_package": "test/registered",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_link_rewrite_e2e",
+      "go_package": "test/registered",
+      "python_lines": 421,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_cursor_mcp_schema_fidelity",
+      "go_package": "test/registered",
+      "python_lines": 164,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_config_valid_keys_e2e",
+      "go_package": "test/registered",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_auto_install_e2e",
+      "go_package": "test/registered",
+      "python_lines": 380,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_guardrailing_hero_e2e",
+      "go_package": "test/registered",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_skill_bundle_live",
+      "go_package": "test/registered",
+      "python_lines": 603,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_verbose_redaction_e2e",
+      "go_package": "test/registered",
+      "python_lines": 139,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_global_mcp_lockfile_e2e",
+      "go_package": "test/registered",
+      "python_lines": 262,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_deployed_files_e2e",
+      "go_package": "test/registered",
+      "python_lines": 458,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_dry_run_e2e",
+      "go_package": "test/registered",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_with_links",
+      "go_package": "test/registered",
+      "python_lines": 370,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_drift_check",
+      "go_package": "test/registered",
+      "python_lines": 751,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_version_notification",
+      "go_package": "test/registered",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_agent_skills_target",
+      "go_package": "test/registered",
+      "python_lines": 813,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_runtime_smoke",
+      "go_package": "test/registered",
+      "python_lines": 313,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_mcp_registry_e2e",
+      "go_package": "test/registered",
+      "python_lines": 723,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_generic_https_credential_env_e2e",
+      "go_package": "test/registered",
+      "python_lines": 310,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_drift_check_e2e",
+      "go_package": "test/registered",
+      "python_lines": 396,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_deps_update_e2e",
+      "go_package": "test/registered",
+      "python_lines": 330,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_credential_fill_disambiguation",
+      "go_package": "test/registered",
+      "python_lines": 290,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_policy_install_e2e",
+      "go_package": "test/registered",
+      "python_lines": 1178,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_marketplace_e2e",
+      "go_package": "test/registered",
+      "python_lines": 142,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_virtual_package_orphan_detection",
+      "go_package": "test/registered",
+      "python_lines": 611,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_golden_scenario_e2e",
+      "go_package": "test/registered",
+      "python_lines": 981,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_uninstall_multi_e2e",
+      "go_package": "test/registered",
+      "python_lines": 185,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_compile_copilot_root_instructions",
+      "go_package": "test/registered",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_ado_preflight_bearer_fallback_e2e",
+      "go_package": "test/registered",
+      "python_lines": 225,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/test_install_local_bundle_e2e",
+      "go_package": "test/registered",
+      "python_lines": 1082,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/fixtures/policy/test_fixtures_load",
+      "go_package": "test/registered",
+      "python_lines": 288,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/integration/marketplace/test_live_e2e",
+      "go_package": "test/registered",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_apm_resolver_parallel",
+      "go_package": "test/registered",
+      "python_lines": 286,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_github_downloader_single_file_sha",
+      "go_package": "test/registered",
+      "python_lines": 206,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_git_reference_resolver",
+      "go_package": "test/registered",
+      "python_lines": 276,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_github_downloader_validation",
+      "go_package": "test/registered",
+      "python_lines": 758,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_artifactory_orchestrator",
+      "go_package": "test/registered",
+      "python_lines": 248,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_git_auth_env",
+      "go_package": "test/registered",
+      "python_lines": 189,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/deps/test_host_backends",
+      "go_package": "test/registered",
+      "python_lines": 413,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_install_resolve_refs",
+      "go_package": "test/registered",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_doctor",
+      "go_package": "test/registered",
+      "python_lines": 643,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_install_context",
+      "go_package": "test/registered",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_outdated",
+      "go_package": "test/registered",
+      "python_lines": 394,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_plugin",
+      "go_package": "test/registered",
+      "python_lines": 638,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_check",
+      "go_package": "test/registered",
+      "python_lines": 444,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_update_command",
+      "go_package": "test/registered",
+      "python_lines": 184,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_experimental_command",
+      "go_package": "test/registered",
+      "python_lines": 560,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_migrate",
+      "go_package": "test/registered",
+      "python_lines": 124,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_unpack_deprecation",
+      "go_package": "test/registered",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_publish",
+      "go_package": "test/registered",
+      "python_lines": 984,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_deps_cli_helpers",
+      "go_package": "test/registered",
+      "python_lines": 161,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_marketplace_init",
+      "go_package": "test/registered",
+      "python_lines": 224,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/test_policy_status",
+      "go_package": "test/registered",
+      "python_lines": 481,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/commands/conftest",
+      "go_package": "test/registered",
+      "python_lines": 7,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/primitives/test_discovery_walk",
+      "go_package": "test/registered",
+      "python_lines": 322,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/primitives/test_discovery_parser",
+      "go_package": "test/registered",
+      "python_lines": 884,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_build_id",
+      "go_package": "test/registered",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_output_writer",
+      "go_package": "test/registered",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_agents_compiler_coverage",
+      "go_package": "test/registered",
+      "python_lines": 675,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_claude_formatter",
+      "go_package": "test/registered",
+      "python_lines": 498,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_sibling_directory_coverage",
+      "go_package": "test/registered",
+      "python_lines": 153,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_mathematical_optimization",
+      "go_package": "test/registered",
+      "python_lines": 593,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_context_optimizer",
+      "go_package": "test/registered",
+      "python_lines": 902,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_gemini_formatter",
+      "go_package": "test/registered",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_mathematical_guarantees",
+      "go_package": "test/registered",
+      "python_lines": 254,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_constitution_injector",
+      "go_package": "test/registered",
+      "python_lines": 305,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_context_optimizer_cache_and_placement",
+      "go_package": "test/registered",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_coverage_guarantees",
+      "go_package": "test/registered",
+      "python_lines": 450,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_compile_target_flag",
+      "go_package": "test/registered",
+      "python_lines": 1706,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_global_instructions_1072",
+      "go_package": "test/registered",
+      "python_lines": 401,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/compilation/test_link_resolver",
+      "go_package": "test/registered",
+      "python_lines": 818,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_schema",
+      "go_package": "test/registered",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_discovery",
+      "go_package": "test/registered",
+      "python_lines": 705,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_fixtures",
+      "go_package": "test/registered",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_parser",
+      "go_package": "test/registered",
+      "python_lines": 367,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_matcher",
+      "go_package": "test/registered",
+      "python_lines": 144,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_cache_merged_effective",
+      "go_package": "test/registered",
+      "python_lines": 556,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_run_dependency_policy_checks",
+      "go_package": "test/registered",
+      "python_lines": 544,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_policy_hash_pin",
+      "go_package": "test/registered",
+      "python_lines": 387,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_ci_checks",
+      "go_package": "test/registered",
+      "python_lines": 1121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_inheritance",
+      "go_package": "test/registered",
+      "python_lines": 624,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_help_consistency",
+      "go_package": "test/registered",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_extends_host_pin",
+      "go_package": "test/registered",
+      "python_lines": 270,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_fetch_failure_knob",
+      "go_package": "test/registered",
+      "python_lines": 338,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_pr_832_findings",
+      "go_package": "test/registered",
+      "python_lines": 315,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_chain_discovery_shared",
+      "go_package": "test/registered",
+      "python_lines": 428,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/policy/test_cache_atomicity",
+      "go_package": "test/registered",
+      "python_lines": 151,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/cache/test_url_normalize",
+      "go_package": "test/registered",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/cache/test_proxy_compat",
+      "go_package": "test/registered",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/cache/test_locking",
+      "go_package": "test/registered",
+      "python_lines": 150,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/cache/test_git_env",
+      "go_package": "test/registered",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_policy_target_check_phase",
+      "go_package": "test/registered",
+      "python_lines": 493,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_install_pkg_policy_rollback",
+      "go_package": "test/registered",
+      "python_lines": 600,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_services",
+      "go_package": "test/registered",
+      "python_lines": 553,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_mcp_warnings",
+      "go_package": "test/registered",
+      "python_lines": 308,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_direct_dep_failure",
+      "go_package": "test/registered",
+      "python_lines": 132,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_validation_ado_bearer",
+      "go_package": "test/registered",
+      "python_lines": 230,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_errors",
+      "go_package": "test/registered",
+      "python_lines": 36,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_resolving_heartbeat",
+      "go_package": "test/registered",
+      "python_lines": 31,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_frozen",
+      "go_package": "test/registered",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_short_sha",
+      "go_package": "test/registered",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_drift_perf",
+      "go_package": "test/registered",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_architecture_invariants",
+      "go_package": "test/registered",
+      "python_lines": 197,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_service",
+      "go_package": "test/registered",
+      "python_lines": 151,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_file_scanner",
+      "go_package": "test/registered",
+      "python_lines": 190,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_user_scope_rejection_reason",
+      "go_package": "test/registered",
+      "python_lines": 179,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_mcp_lookup_heartbeat",
+      "go_package": "test/registered",
+      "python_lines": 45,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_cached_label",
+      "go_package": "test/registered",
+      "python_lines": 87,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_policy_gate_phase",
+      "go_package": "test/registered",
+      "python_lines": 856,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_validation_strict_transport",
+      "go_package": "test/registered",
+      "python_lines": 182,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_pipeline_auth_preflight",
+      "go_package": "test/registered",
+      "python_lines": 353,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_skill_path_migration",
+      "go_package": "test/registered",
+      "python_lines": 519,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_command_logger_elapsed",
+      "go_package": "test/registered",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_validation_tls",
+      "go_package": "test/registered",
+      "python_lines": 249,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_plan",
+      "go_package": "test/registered",
+      "python_lines": 291,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_mcp_registry_module",
+      "go_package": "test/registered",
+      "python_lines": 360,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_install_target_copilot_cowork_e2e",
+      "go_package": "test/registered",
+      "python_lines": 543,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_phase_timing",
+      "go_package": "test/registered",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_install_cmd_auth_rendering",
+      "go_package": "test/registered",
+      "python_lines": 75,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_install_local_bundle_issue1207",
+      "go_package": "test/registered",
+      "python_lines": 669,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_validation_credential_env",
+      "go_package": "test/registered",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_cache_pin",
+      "go_package": "test/registered",
+      "python_lines": 262,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_no_policy_flag",
+      "go_package": "test/registered",
+      "python_lines": 648,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_services_rendering",
+      "go_package": "test/registered",
+      "python_lines": 351,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/test_sources_classification",
+      "go_package": "test/registered",
+      "python_lines": 38,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_build_orchestrator",
+      "go_package": "test/registered",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_error_renderer",
+      "go_package": "test/registered",
+      "python_lines": 180,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_experimental",
+      "go_package": "test/registered",
+      "python_lines": 569,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_target_detection",
+      "go_package": "test/registered",
+      "python_lines": 935,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_target_resolution_v2",
+      "go_package": "test/registered",
+      "python_lines": 290,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/core/test_scope",
+      "go_package": "test/registered",
+      "python_lines": 390,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_base_integrator",
+      "go_package": "test/registered",
+      "python_lines": 1160,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_targets_registry_completeness",
+      "go_package": "test/registered",
+      "python_lines": 212,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_skill_integrator",
+      "go_package": "test/registered",
+      "python_lines": 4141,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_mcp_integrator",
+      "go_package": "test/registered",
+      "python_lines": 733,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_agent_integrator",
+      "go_package": "test/registered",
+      "python_lines": 1396,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_cleanup_helper",
+      "go_package": "test/registered",
+      "python_lines": 520,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_prompt_integrator",
+      "go_package": "test/registered",
+      "python_lines": 386,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_instruction_integrator",
+      "go_package": "test/registered",
+      "python_lines": 1277,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_sync_integration_url_normalization",
+      "go_package": "test/registered",
+      "python_lines": 133,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_hook_integrator",
+      "go_package": "test/registered",
+      "python_lines": 3269,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_copilot_cowork_target",
+      "go_package": "test/registered",
+      "python_lines": 564,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_mcp_registry_parallel",
+      "go_package": "test/registered",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_deployed_files_manifest",
+      "go_package": "test/registered",
+      "python_lines": 1146,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_command_integrator",
+      "go_package": "test/registered",
+      "python_lines": 1702,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_targets",
+      "go_package": "test/registered",
+      "python_lines": 349,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_copilot_cowork_paths",
+      "go_package": "test/registered",
+      "python_lines": 444,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_skill_integrator_cowork",
+      "go_package": "test/registered",
+      "python_lines": 285,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/integration/test_skill_transformer",
+      "go_package": "test/registered",
+      "python_lines": 195,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/bundle/test_plugin_exporter_lockfile",
+      "go_package": "test/registered",
+      "python_lines": 229,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/utils/test_github_host_predicate",
+      "go_package": "test/registered",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/utils/test_guards",
+      "go_package": "test/registered",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_init_template",
+      "go_package": "test/registered",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_migration_detection",
+      "go_package": "test/registered",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_review_fixes",
+      "go_package": "test/registered",
+      "python_lines": 155,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_lockfile_provenance",
+      "go_package": "test/registered",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_builder",
+      "go_package": "test/registered",
+      "python_lines": 2112,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_version_pins",
+      "go_package": "test/registered",
+      "python_lines": 268,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_yml_editor",
+      "go_package": "test/registered",
+      "python_lines": 316,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_marketplace_client",
+      "go_package": "test/registered",
+      "python_lines": 803,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_marketplace_errors",
+      "go_package": "test/registered",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_tag_pattern",
+      "go_package": "test/registered",
+      "python_lines": 221,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_shadow_detector",
+      "go_package": "test/registered",
+      "python_lines": 296,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_schema_conformance",
+      "go_package": "test/registered",
+      "python_lines": 376,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_ref_resolver",
+      "go_package": "test/registered",
+      "python_lines": 601,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_versioned_resolver",
+      "go_package": "test/registered",
+      "python_lines": 334,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_marketplace_validator",
+      "go_package": "test/registered",
+      "python_lines": 210,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_semver",
+      "go_package": "test/registered",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_marketplace_resolver",
+      "go_package": "test/registered",
+      "python_lines": 816,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_local_path_compose",
+      "go_package": "test/registered",
+      "python_lines": 264,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_yml_schema",
+      "go_package": "test/registered",
+      "python_lines": 835,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_builder_logging",
+      "go_package": "test/registered",
+      "python_lines": 378,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_io",
+      "go_package": "test/registered",
+      "python_lines": 40,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_publisher",
+      "go_package": "test/registered",
+      "python_lines": 1433,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_git_stderr",
+      "go_package": "test/registered",
+      "python_lines": 430,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/conftest",
+      "go_package": "test/registered",
+      "python_lines": 7,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/marketplace/test_apm_yml_marketplace_loader",
+      "go_package": "test/registered",
+      "python_lines": 145,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/heals/test_buggy_lockfile_recovery_heal",
+      "go_package": "test/registered",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/heals/test_branch_ref_drift_heal",
+      "go_package": "test/registered",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/heals/test_chain_dispatch",
+      "go_package": "test/registered",
+      "python_lines": 216,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/phases/test_integrate_phase",
+      "go_package": "test/registered",
+      "python_lines": 157,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/phases/test_resolve_tui_callbacks",
+      "go_package": "test/registered",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/phases/test_read_yaml_targets_list_form",
+      "go_package": "test/registered",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/phases/test_targets_phase",
+      "go_package": "test/registered",
+      "python_lines": 398,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/unit/install/phases/test_targets_phase_v2",
+      "go_package": "test/registered",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",
   "iteration": 77,
-  "python_lines_migrated_pct": 821.27,
-  "modules_migrated": 1835,
+  "python_lines_migrated_pct": 989.0,
+  "modules_migrated": 2185,
   "modules": [
     {
       "module": "models/dependency/reference",

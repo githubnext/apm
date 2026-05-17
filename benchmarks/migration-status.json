@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 599138,
+  "migrated_python_lines": 599925,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10972,7 +10972,7 @@
       "module": "test/integration/commands/cache",
       "go_package": "internal/commands/cache",
       "python_file": "tests/unit/commands/cache",
-      "python_lines": 25,
+      "python_lines": 97,
       "status": "test-migrated",
       "go_test_file": "internal/commands/cache/cache_test.go"
     },
@@ -11069,7 +11069,7 @@
       "module": "test/integration/commands/targetscmd",
       "go_package": "internal/commands/targetscmd",
       "python_file": "tests/unit/commands/targetscmd",
-      "python_lines": 18,
+      "python_lines": 207,
       "status": "test-migrated",
       "go_test_file": "internal/commands/targetscmd/targetscmd_test.go"
     },
@@ -11117,7 +11117,7 @@
       "module": "test/integration/compilation/compilationconst",
       "go_package": "internal/compilation/compilationconst",
       "python_file": "tests/unit/compilation/compilationconst",
-      "python_lines": 30,
+      "python_lines": 106,
       "status": "test-migrated",
       "go_test_file": "internal/compilation/compilationconst/compilationconst_test.go"
     },
@@ -12053,7 +12053,7 @@
       "module": "test/integration/policy/helptext",
       "go_package": "internal/policy/helptext",
       "python_file": "tests/unit/policy/helptext",
-      "python_lines": 23,
+      "python_lines": 93,
       "status": "test-migrated",
       "go_test_file": "internal/policy/helptext/helptext_test.go"
     },
@@ -12149,7 +12149,7 @@
       "module": "test/integration/runtime/base",
       "go_package": "internal/runtime/base",
       "python_file": "tests/unit/runtime/base",
-      "python_lines": 26,
+      "python_lines": 124,
       "status": "test-migrated",
       "go_test_file": "internal/runtime/base/base_test.go"
     },
@@ -12277,7 +12277,7 @@
       "module": "test/integration/utils/gitenv",
       "go_package": "internal/utils/gitenv",
       "python_file": "tests/unit/utils/gitenv",
-      "python_lines": 34,
+      "python_lines": 121,
       "status": "test-migrated",
       "go_test_file": "internal/utils/gitenv/gitenv_test.go"
     },
@@ -12349,7 +12349,7 @@
       "module": "test/integration/utils/sha",
       "go_package": "internal/utils/sha",
       "python_file": "tests/unit/utils/sha",
-      "python_lines": 31,
+      "python_lines": 135,
       "status": "test-migrated",
       "go_test_file": "internal/utils/sha/sha_test.go"
     },
@@ -12357,7 +12357,7 @@
       "module": "test/integration/utils/subprocenv",
       "go_package": "internal/utils/subprocenv",
       "python_file": "tests/unit/utils/subprocenv",
-      "python_lines": 44,
+      "python_lines": 135,
       "status": "test-migrated",
       "go_test_file": "internal/utils/subprocenv/subprocenv_test.go"
     },

@@ -78,3 +78,59 @@ if _, ok := servers["my-server"]; !ok {
 t.Error("my-server not found in config")
 }
 }
+
+func TestTargetNameConstant(t *testing.T) {
+a1 := claude.New("/tmp/a", false)
+a2 := claude.New("/tmp/b", true)
+if a1.TargetName() != a2.TargetName() {
+t.Error("TargetName should be consistent regardless of dir/scope")
+}
+}
+
+func TestMCPServersKeyConstant(t *testing.T) {
+a := claude.New("/tmp", false)
+if a.MCPServersKey() == "" {
+t.Error("MCPServersKey should not be empty")
+}
+}
+
+func TestGetCurrentConfig_EmptyDir(t *testing.T) {
+a := claude.New(t.TempDir(), false)
+cfg := a.GetCurrentConfig()
+if cfg == nil {
+t.Error("expected non-nil map for missing config")
+}
+}
+
+func TestUpdateConfig_EmptyServers(t *testing.T) {
+dir := t.TempDir()
+a := claude.New(dir, false)
+err := a.UpdateConfig(map[string]interface{}{})
+if err != nil {
+t.Fatalf("UpdateConfig with empty map: %v", err)
+}
+cfg := a.GetCurrentConfig()
+if cfg == nil {
+t.Error("GetCurrentConfig after empty UpdateConfig returned nil")
+}
+}
+
+func TestUpdateConfig_MultipleServers(t *testing.T) {
+dir := t.TempDir()
+a := claude.New(dir, false)
+err := a.UpdateConfig(map[string]interface{}{
+"server-a": map[string]interface{}{"command": "a"},
+"server-b": map[string]interface{}{"command": "b"},
+})
+if err != nil {
+t.Fatalf("UpdateConfig: %v", err)
+}
+cfg := a.GetCurrentConfig()
+servers, ok := cfg["mcpServers"].(map[string]interface{})
+if !ok {
+t.Fatalf("mcpServers not a map: %T", cfg["mcpServers"])
+}
+if len(servers) < 2 {
+t.Errorf("expected at least 2 servers, got %d", len(servers))
+}
+}

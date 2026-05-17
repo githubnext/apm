@@ -1,6 +1,7 @@
 package targetdetection
 
 import (
+	"os"
 	"testing"
 )
 
@@ -69,5 +70,58 @@ func TestResolveTargets_Flag(t *testing.T) {
 	}
 	if r.Source != "--target flag" {
 		t.Errorf("unexpected source: %q", r.Source)
+	}
+}
+
+func TestResolveTargets_InvalidFlag(t *testing.T) {
+	dir := t.TempDir()
+	_, err := ResolveTargets(dir, []string{"unknown-target"}, nil)
+	if err == nil {
+		t.Error("expected error for unknown target flag")
+	}
+}
+
+func TestResolveTargets_FlagDeduplicated(t *testing.T) {
+	dir := t.TempDir()
+	r, err := ResolveTargets(dir, []string{"claude", "claude"}, nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(r.Targets) != 1 {
+		t.Errorf("expected deduplication, got %v", r.Targets)
+	}
+}
+
+func TestResolveTargets_AutoDetectNoSignals(t *testing.T) {
+	dir := t.TempDir()
+	_, err := ResolveTargets(dir, nil, nil)
+	if err == nil {
+		t.Error("expected error when no harness signals found")
+	}
+}
+
+func TestResolveTargets_AutoDetectClaudeDir(t *testing.T) {
+	dir := t.TempDir()
+	if err := os.MkdirAll(dir+"/.claude", 0o755); err != nil {
+		t.Fatalf("MkdirAll: %v", err)
+	}
+	r, err := ResolveTargets(dir, nil, nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(r.Targets) != 1 || r.Targets[0] != "claude" {
+		t.Errorf("expected [claude], got %v", r.Targets)
+	}
+}
+
+func TestNormalizeTarget_AgentsAlias(t *testing.T) {
+	if got := NormalizeTarget("agents"); got != "vscode" {
+		t.Errorf("agents alias: want vscode, got %s", got)
+	}
+}
+
+func TestNormalizeTarget_Unknown(t *testing.T) {
+	if got := NormalizeTarget("something-else"); got != "something-else" {
+		t.Errorf("unknown target should pass through, got %s", got)
 	}
 }

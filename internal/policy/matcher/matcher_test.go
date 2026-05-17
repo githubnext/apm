@@ -79,3 +79,61 @@ func TestCheckAllowDeny_DenyTakesPrecedence(t *testing.T) {
 		t.Error("deny list should take precedence over allow")
 	}
 }
+
+func TestMatchesPattern_DoubleStarOnly(t *testing.T) {
+if !matcher.MatchesPattern("anything/nested/deep", "**") {
+t.Error("** should match any path")
+}
+}
+
+func TestMatchesPattern_TrailingStar(t *testing.T) {
+if !matcher.MatchesPattern("github.com/owner/repo", "github.com/**") {
+t.Error("trailing ** should match")
+}
+if !matcher.MatchesPattern("github.com/owner/repo/sub", "github.com/**") {
+t.Error("trailing ** should match deep path")
+}
+}
+
+func TestMatchesPattern_ExactNoWildcard(t *testing.T) {
+if matcher.MatchesPattern("github.com/owner/other", "github.com/owner/repo") {
+t.Error("exact pattern should not match different path")
+}
+}
+
+func TestCheckAllowDeny_DenyThenAllow(t *testing.T) {
+// Deny overrides allow
+ok, reason := matcher.CheckAllowDeny("bad/pkg", []string{"bad/**"}, []string{"bad/*"})
+if ok {
+t.Error("deny should override allow")
+}
+if reason == "" {
+t.Error("expected non-empty denial reason")
+}
+}
+
+func TestCheckAllowDeny_NilDeny(t *testing.T) {
+ok, _ := matcher.CheckAllowDeny("github.com/ok/repo", []string{"github.com/**"}, nil)
+if !ok {
+t.Error("should be allowed when deny list is nil")
+}
+}
+
+func TestCheckAllowDeny_NotInAllowList(t *testing.T) {
+ok, reason := matcher.CheckAllowDeny("other.com/owner/repo", []string{"github.com/**"}, nil)
+if ok {
+t.Error("should be blocked when not in allow list")
+}
+if reason == "" {
+t.Error("expected reason for rejection")
+}
+}
+
+func TestMatchesPattern_SingleStarInMiddle(t *testing.T) {
+if !matcher.MatchesPattern("github.com/owner/repo", "github.com/*/repo") {
+t.Error("single wildcard in middle should match")
+}
+if matcher.MatchesPattern("github.com/a/b/repo", "github.com/*/repo") {
+t.Error("single wildcard should not cross /")
+}
+}

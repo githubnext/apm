@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 871973,
+  "migrated_python_lines": 872324,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16628,6 +16628,48 @@
       "python_lines": 65,
       "status": "test-migrated",
       "notes": "Extended cursor_test.go: empty root, UpdateConfig with/without .cursor dir, invalid JSON config iter114"
+    },
+    {
+      "module": "go-test/targetdetection-iter116",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Extended targetdetection test suite: ResolveTargets YAML/invalid-flag/deduplicate/no-signals/auto-detect-claude-dir, NormalizeTarget aliases"
+    },
+    {
+      "module": "go-test/mktvalidator-iter116",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "notes": "Extended mktvalidator test suite: multiple errors, duplicate names, empty list, check count/names, ValidationResult fields"
+    },
+    {
+      "module": "go-test/tagpattern-iter116",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_lines": 55,
+      "status": "test-migrated",
+      "notes": "Extended tagpattern test suite: empty placeholders, no-placeholder pattern, empty pattern, version at end, OnlyVersion"
+    },
+    {
+      "module": "go-test/adapter-base-iter116",
+      "go_package": "internal/adapters/client/base",
+      "python_lines": 56,
+      "status": "test-migrated",
+      "notes": "Extended base adapter test suite: InputVarRE multiple matches and non-matching, EnvVarRE edge cases and digit-start"
+    },
+    {
+      "module": "go-test/adapter-claude-iter116",
+      "go_package": "internal/adapters/client/claude",
+      "python_lines": 56,
+      "status": "test-migrated",
+      "notes": "Extended claude adapter test suite: TargetName/MCPServersKey consistency, GetCurrentConfig empty dir, UpdateConfig empty/multiple servers"
+    },
+    {
+      "module": "go-test/policy-matcher-iter116",
+      "go_package": "internal/policy/matcher",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Extended policy matcher test suite: DoubleStarOnly, TrailingStar, ExactNoWildcard, DenyThenAllow, NilDeny, NotInAllowList, SingleStarInMiddle"
     }
   ],
   "last_updated": "2026-05-17T20:26:02Z",

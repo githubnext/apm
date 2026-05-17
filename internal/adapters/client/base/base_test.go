@@ -77,3 +77,59 @@ if matches[1][1] != "BAR" {
 t.Errorf("second match: want BAR, got %s", matches[1][1])
 }
 }
+
+func TestInputVarRE_MultipleMatches(t *testing.T) {
+input := "${input:FOO} and ${input:BAR}"
+matches := base.InputVarRE.FindAllStringSubmatch(input, -1)
+if len(matches) != 2 {
+t.Fatalf("expected 2 matches, got %d", len(matches))
+}
+if matches[0][1] != "FOO" {
+t.Errorf("first match: want FOO, got %s", matches[0][1])
+}
+if matches[1][1] != "BAR" {
+t.Errorf("second match: want BAR, got %s", matches[1][1])
+}
+}
+
+func TestInputVarRE_EnvNotMatched(t *testing.T) {
+cases := []string{"${MY_VAR}", "${env:MY_VAR}", "${{ secrets.TOKEN }}"}
+for _, c := range cases {
+if base.InputVarRE.MatchString(c) {
+t.Errorf("InputVarRE should not match %q", c)
+}
+}
+}
+
+func TestEnvVarRE_NoMatchGitHubActions(t *testing.T) {
+cases := []string{"${{ secrets.TOKEN }}", "${{ env.VAR }}", "literal"}
+for _, c := range cases {
+if base.EnvVarRE.MatchString(c) {
+t.Errorf("EnvVarRE should not match %q", c)
+}
+}
+}
+
+func TestEnvVarRE_CaseSensitive(t *testing.T) {
+// Variable names are case-sensitive in the regex
+if !base.EnvVarRE.MatchString("${MY_VAR}") {
+t.Error("expected match for ${MY_VAR}")
+}
+}
+
+func TestEnvVarRE_WithPrefix(t *testing.T) {
+m := base.EnvVarRE.FindStringSubmatch("${env:SECRET_KEY}")
+if m == nil {
+t.Fatal("expected match for ${env:SECRET_KEY}")
+}
+if m[1] != "SECRET_KEY" {
+t.Errorf("expected SECRET_KEY, got %q", m[1])
+}
+}
+
+func TestEnvVarRE_DigitStartNotMatched(t *testing.T) {
+// Variable names cannot start with a digit
+if base.EnvVarRE.MatchString("${1VAR}") {
+t.Error("EnvVarRE should not match variable starting with digit")
+}
+}

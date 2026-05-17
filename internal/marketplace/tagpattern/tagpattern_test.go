@@ -76,3 +76,58 @@ func TestExtractVersion_NoMatch(t *testing.T) {
 		t.Error("expected no match")
 	}
 }
+
+func TestRenderTag_EmptyPlaceholders(t *testing.T) {
+got := tagpattern.RenderTag("{name}-{version}", "", "")
+if got != "-" {
+t.Errorf("expected '-', got %q", got)
+}
+}
+
+func TestRenderTag_NoPlaceholders(t *testing.T) {
+got := tagpattern.RenderTag("release", "anything", "1.0")
+if got != "release" {
+t.Errorf("expected 'release', got %q", got)
+}
+}
+
+func TestBuildTagRegex_EmptyPattern(t *testing.T) {
+re, err := tagpattern.BuildTagRegex("")
+if err != nil {
+t.Fatalf("unexpected error: %v", err)
+}
+if !re.MatchString("") {
+t.Error("empty pattern should match empty string")
+}
+}
+
+func TestBuildTagRegex_MultipleVersionTokens(t *testing.T) {
+// Only the first {version} is treated as the capture group; the second
+// is included literally after QuoteMeta (after the first split on {version}).
+re, err := tagpattern.BuildTagRegex("v{version}-end")
+if err != nil {
+t.Fatalf("unexpected error: %v", err)
+}
+ver, ok := tagpattern.ExtractVersion(re, "v3.0.1-end")
+if !ok {
+t.Fatal("expected match")
+}
+if ver != "3.0.1" {
+t.Errorf("expected '3.0.1', got %q", ver)
+}
+}
+
+func TestExtractVersion_EmptyTag(t *testing.T) {
+re, _ := tagpattern.BuildTagRegex("v{version}")
+_, ok := tagpattern.ExtractVersion(re, "")
+if ok {
+t.Error("expected no match for empty tag")
+}
+}
+
+func TestRenderTag_OnlyVersion(t *testing.T) {
+got := tagpattern.RenderTag("{version}", "ignore", "9.9.9")
+if got != "9.9.9" {
+t.Errorf("expected '9.9.9', got %q", got)
+}
+}

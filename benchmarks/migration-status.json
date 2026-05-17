@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 519244,
+  "migrated_python_lines": 538660,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10830,6 +10830,1582 @@
       "python_lines": 17,
       "status": "test-migrated",
       "notes": "Go tests for RuntimeAdapter interface (mock implementation)"
+    },
+    {
+      "module": "test/integration/adapters/client/base",
+      "go_package": "internal/adapters/client/base",
+      "python_file": "tests/unit/adapters/client/base",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/base/base_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/claude",
+      "go_package": "internal/adapters/client/claude",
+      "python_file": "tests/unit/adapters/client/claude",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/claude/claude_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/codex",
+      "go_package": "internal/adapters/client/codex",
+      "python_file": "tests/unit/adapters/client/codex",
+      "python_lines": 49,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/codex/codex_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/copilot",
+      "go_package": "internal/adapters/client/copilot",
+      "python_file": "tests/unit/adapters/client/copilot",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/copilot/copilot_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/cursor",
+      "go_package": "internal/adapters/client/cursor",
+      "python_file": "tests/unit/adapters/client/cursor",
+      "python_lines": 43,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/cursor/cursor_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/gemini",
+      "go_package": "internal/adapters/client/gemini",
+      "python_file": "tests/unit/adapters/client/gemini",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/gemini/gemini_test.go"
+    },
+    {
+      "module": "test/integration/adapters/client/vscode",
+      "go_package": "internal/adapters/client/vscode",
+      "python_file": "tests/unit/adapters/client/vscode",
+      "python_lines": 143,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/client/vscode/vscode_test.go"
+    },
+    {
+      "module": "test/integration/adapters/opencode",
+      "go_package": "internal/adapters/opencode",
+      "python_file": "tests/unit/adapters/opencode",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/opencode/opencode_test.go"
+    },
+    {
+      "module": "test/integration/adapters/packagemanager",
+      "go_package": "internal/adapters/packagemanager",
+      "python_file": "tests/unit/adapters/packagemanager",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/packagemanager/packagemanager_test.go"
+    },
+    {
+      "module": "test/integration/adapters/windsurf",
+      "go_package": "internal/adapters/windsurf",
+      "python_file": "tests/unit/adapters/windsurf",
+      "python_lines": 60,
+      "status": "test-migrated",
+      "go_test_file": "internal/adapters/windsurf/windsurf_test.go"
+    },
+    {
+      "module": "test/integration/cache/cachepaths",
+      "go_package": "internal/cache/cachepaths",
+      "python_file": "tests/unit/cache/cachepaths",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/cachepaths/cachepaths_test.go"
+    },
+    {
+      "module": "test/integration/cache/gitcache",
+      "go_package": "internal/cache/gitcache",
+      "python_file": "tests/unit/cache/gitcache",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/gitcache/gitcache_test.go"
+    },
+    {
+      "module": "test/integration/cache/httpcache",
+      "go_package": "internal/cache/httpcache",
+      "python_file": "tests/unit/cache/httpcache",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/httpcache/httpcache_test.go"
+    },
+    {
+      "module": "test/integration/cache/integrity",
+      "go_package": "internal/cache/integrity",
+      "python_file": "tests/unit/cache/integrity",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/integrity/integrity_test.go"
+    },
+    {
+      "module": "test/integration/cache/locking",
+      "go_package": "internal/cache/locking",
+      "python_file": "tests/unit/cache/locking",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/locking/locking_test.go"
+    },
+    {
+      "module": "test/integration/cache/urlnormalize",
+      "go_package": "internal/cache/urlnormalize",
+      "python_file": "tests/unit/cache/urlnormalize",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/urlnormalize/urlnormalize_test.go"
+    },
+    {
+      "module": "test/integration/commands/audit",
+      "go_package": "internal/commands/audit",
+      "python_file": "tests/unit/commands/audit",
+      "python_lines": 272,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/audit/audit_test.go"
+    },
+    {
+      "module": "test/integration/commands/cache",
+      "go_package": "internal/commands/cache",
+      "python_file": "tests/unit/commands/cache",
+      "python_lines": 25,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/cache/cache_test.go"
+    },
+    {
+      "module": "test/integration/commands/compile",
+      "go_package": "internal/commands/compile",
+      "python_file": "tests/unit/commands/compile",
+      "python_lines": 176,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/compile/compile_test.go"
+    },
+    {
+      "module": "test/integration/commands/configcmd",
+      "go_package": "internal/commands/configcmd",
+      "python_file": "tests/unit/commands/configcmd",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/configcmd/configcmd_test.go"
+    },
+    {
+      "module": "test/integration/commands/deps",
+      "go_package": "internal/commands/deps",
+      "python_file": "tests/unit/commands/deps",
+      "python_lines": 55,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/deps/deps_test.go"
+    },
+    {
+      "module": "test/integration/commands/experimental",
+      "go_package": "internal/commands/experimental",
+      "python_file": "tests/unit/commands/experimental",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/experimental/experimental_test.go"
+    },
+    {
+      "module": "test/integration/commands/install",
+      "go_package": "internal/commands/install",
+      "python_file": "tests/unit/commands/install",
+      "python_lines": 125,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/install/install_test.go"
+    },
+    {
+      "module": "test/integration/commands/listcmd",
+      "go_package": "internal/commands/listcmd",
+      "python_file": "tests/unit/commands/listcmd",
+      "python_lines": 86,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/listcmd/listcmd_test.go"
+    },
+    {
+      "module": "test/integration/commands/marketplace",
+      "go_package": "internal/commands/marketplace",
+      "python_file": "tests/unit/commands/marketplace",
+      "python_lines": 32,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/marketplace/marketplace_test.go"
+    },
+    {
+      "module": "test/integration/commands/mcp",
+      "go_package": "internal/commands/mcp",
+      "python_file": "tests/unit/commands/mcp",
+      "python_lines": 57,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/mcp/mcp_test.go"
+    },
+    {
+      "module": "test/integration/commands/outdated",
+      "go_package": "internal/commands/outdated",
+      "python_file": "tests/unit/commands/outdated",
+      "python_lines": 73,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/outdated/outdated_test.go"
+    },
+    {
+      "module": "test/integration/commands/pack",
+      "go_package": "internal/commands/pack",
+      "python_file": "tests/unit/commands/pack",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/pack/pack_test.go"
+    },
+    {
+      "module": "test/integration/commands/policy",
+      "go_package": "internal/commands/policy",
+      "python_file": "tests/unit/commands/policy",
+      "python_lines": 42,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/policy/policy_test.go"
+    },
+    {
+      "module": "test/integration/commands/targetscmd",
+      "go_package": "internal/commands/targetscmd",
+      "python_file": "tests/unit/commands/targetscmd",
+      "python_lines": 18,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/targetscmd/targetscmd_test.go"
+    },
+    {
+      "module": "test/integration/commands/update",
+      "go_package": "internal/commands/update",
+      "python_file": "tests/unit/commands/update",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/update/update_test.go"
+    },
+    {
+      "module": "test/integration/commands/view",
+      "go_package": "internal/commands/view",
+      "python_file": "tests/unit/commands/view",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "go_test_file": "internal/commands/view/view_test.go"
+    },
+    {
+      "module": "test/integration/compilation/agentformatter",
+      "go_package": "internal/compilation/agentformatter",
+      "python_file": "tests/unit/compilation/agentformatter",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/agentformatter/agentformatter_test.go"
+    },
+    {
+      "module": "test/integration/compilation/agentscompiler",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_file": "tests/unit/compilation/agentscompiler",
+      "python_lines": 283,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/agentscompiler/agentscompiler_test.go"
+    },
+    {
+      "module": "test/integration/compilation/buildid",
+      "go_package": "internal/compilation/buildid",
+      "python_file": "tests/unit/compilation/buildid",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/buildid/buildid_test.go"
+    },
+    {
+      "module": "test/integration/compilation/compilationconst",
+      "go_package": "internal/compilation/compilationconst",
+      "python_file": "tests/unit/compilation/compilationconst",
+      "python_lines": 30,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/compilationconst/compilationconst_test.go"
+    },
+    {
+      "module": "test/integration/compilation/constitution",
+      "go_package": "internal/compilation/constitution",
+      "python_file": "tests/unit/compilation/constitution",
+      "python_lines": 102,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/constitution/constitution_test.go"
+    },
+    {
+      "module": "test/integration/compilation/constitutionblock",
+      "go_package": "internal/compilation/constitutionblock",
+      "python_file": "tests/unit/compilation/constitutionblock",
+      "python_lines": 127,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/constitutionblock/constitutionblock_test.go"
+    },
+    {
+      "module": "test/integration/compilation/injector",
+      "go_package": "internal/compilation/injector",
+      "python_file": "tests/unit/compilation/injector",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/injector/injector_test.go"
+    },
+    {
+      "module": "test/integration/compilation/outputwriter",
+      "go_package": "internal/compilation/outputwriter",
+      "python_file": "tests/unit/compilation/outputwriter",
+      "python_lines": 52,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/outputwriter/outputwriter_test.go"
+    },
+    {
+      "module": "test/integration/compilation/templatebuilder",
+      "go_package": "internal/compilation/templatebuilder",
+      "python_file": "tests/unit/compilation/templatebuilder",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/templatebuilder/templatebuilder_test.go"
+    },
+    {
+      "module": "test/integration/constants",
+      "go_package": "internal/constants",
+      "python_file": "tests/unit/constants",
+      "python_lines": 49,
+      "status": "test-migrated",
+      "go_test_file": "internal/constants/constants_test.go"
+    },
+    {
+      "module": "test/integration/core/apmyml",
+      "go_package": "internal/core/apmyml",
+      "python_file": "tests/unit/core/apmyml",
+      "python_lines": 69,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/apmyml/apmyml_test.go"
+    },
+    {
+      "module": "test/integration/core/auth",
+      "go_package": "internal/core/auth",
+      "python_file": "tests/unit/core/auth",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/auth/auth_test.go"
+    },
+    {
+      "module": "test/integration/core/commandlogger",
+      "go_package": "internal/core/commandlogger",
+      "python_file": "tests/unit/core/commandlogger",
+      "python_lines": 59,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/commandlogger/commandlogger_test.go"
+    },
+    {
+      "module": "test/integration/core/conflictdetector",
+      "go_package": "internal/core/conflictdetector",
+      "python_file": "tests/unit/core/conflictdetector",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/conflictdetector/conflictdetector_test.go"
+    },
+    {
+      "module": "test/integration/core/dockerargs",
+      "go_package": "internal/core/dockerargs",
+      "python_file": "tests/unit/core/dockerargs",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/dockerargs/dockerargs_test.go"
+    },
+    {
+      "module": "test/integration/core/errors",
+      "go_package": "internal/core/errors",
+      "python_file": "tests/unit/core/errors",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/errors/errors_test.go"
+    },
+    {
+      "module": "test/integration/core/experimental",
+      "go_package": "internal/core/experimental",
+      "python_file": "tests/unit/core/experimental",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/experimental/experimental_test.go"
+    },
+    {
+      "module": "test/integration/core/nulllogger",
+      "go_package": "internal/core/nulllogger",
+      "python_file": "tests/unit/core/nulllogger",
+      "python_lines": 39,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/nulllogger/nulllogger_test.go"
+    },
+    {
+      "module": "test/integration/core/operations",
+      "go_package": "internal/core/operations",
+      "python_file": "tests/unit/core/operations",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/operations/operations_test.go"
+    },
+    {
+      "module": "test/integration/core/scope",
+      "go_package": "internal/core/scope",
+      "python_file": "tests/unit/core/scope",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/scope/scope_test.go"
+    },
+    {
+      "module": "test/integration/core/scriptrunner",
+      "go_package": "internal/core/scriptrunner",
+      "python_file": "tests/unit/core/scriptrunner",
+      "python_lines": 368,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/scriptrunner/scriptrunner_test.go"
+    },
+    {
+      "module": "test/integration/core/targetdetection",
+      "go_package": "internal/core/targetdetection",
+      "python_file": "tests/unit/core/targetdetection",
+      "python_lines": 38,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/targetdetection/targetdetection_test.go"
+    },
+    {
+      "module": "test/integration/core/tokenmanager",
+      "go_package": "internal/core/tokenmanager",
+      "python_file": "tests/unit/core/tokenmanager",
+      "python_lines": 190,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/tokenmanager/tokenmanager_test.go"
+    },
+    {
+      "module": "test/integration/deps/aggregator",
+      "go_package": "internal/deps/aggregator",
+      "python_file": "tests/unit/deps/aggregator",
+      "python_lines": 68,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/aggregator/aggregator_test.go"
+    },
+    {
+      "module": "test/integration/deps/apmresolver",
+      "go_package": "internal/deps/apmresolver",
+      "python_file": "tests/unit/deps/apmresolver",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/apmresolver/apmresolver_test.go"
+    },
+    {
+      "module": "test/integration/deps/cloneengine",
+      "go_package": "internal/deps/cloneengine",
+      "python_file": "tests/unit/deps/cloneengine",
+      "python_lines": 108,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/cloneengine/cloneengine_test.go"
+    },
+    {
+      "module": "test/integration/deps/depgraph",
+      "go_package": "internal/deps/depgraph",
+      "python_file": "tests/unit/deps/depgraph",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/depgraph/depgraph_test.go"
+    },
+    {
+      "module": "test/integration/deps/downloadstrategies",
+      "go_package": "internal/deps/downloadstrategies",
+      "python_file": "tests/unit/deps/downloadstrategies",
+      "python_lines": 105,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/downloadstrategies/downloadstrategies_test.go"
+    },
+    {
+      "module": "test/integration/deps/gitauthenv",
+      "go_package": "internal/deps/gitauthenv",
+      "python_file": "tests/unit/deps/gitauthenv",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/gitauthenv/gitauthenv_test.go"
+    },
+    {
+      "module": "test/integration/deps/githubdownloader",
+      "go_package": "internal/deps/githubdownloader",
+      "python_file": "tests/unit/deps/githubdownloader",
+      "python_lines": 152,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/githubdownloader/githubdownloader_test.go"
+    },
+    {
+      "module": "test/integration/deps/gitrefresolver",
+      "go_package": "internal/deps/gitrefresolver",
+      "python_file": "tests/unit/deps/gitrefresolver",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/gitrefresolver/gitrefresolver_test.go"
+    },
+    {
+      "module": "test/integration/deps/gitremoteops",
+      "go_package": "internal/deps/gitremoteops",
+      "python_file": "tests/unit/deps/gitremoteops",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/gitremoteops/gitremoteops_test.go"
+    },
+    {
+      "module": "test/integration/deps/hostbackends",
+      "go_package": "internal/deps/hostbackends",
+      "python_file": "tests/unit/deps/hostbackends",
+      "python_lines": 241,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/hostbackends/hostbackends_test.go"
+    },
+    {
+      "module": "test/integration/deps/installedpkg",
+      "go_package": "internal/deps/installedpkg",
+      "python_file": "tests/unit/deps/installedpkg",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/installedpkg/installedpkg_test.go"
+    },
+    {
+      "module": "test/integration/deps/lockfile",
+      "go_package": "internal/deps/lockfile",
+      "python_file": "tests/unit/deps/lockfile",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/lockfile/lockfile_test.go"
+    },
+    {
+      "module": "test/integration/deps/packagevalidator",
+      "go_package": "internal/deps/packagevalidator",
+      "python_file": "tests/unit/deps/packagevalidator",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/packagevalidator/packagevalidator_test.go"
+    },
+    {
+      "module": "test/integration/deps/pluginparser",
+      "go_package": "internal/deps/pluginparser",
+      "python_file": "tests/unit/deps/pluginparser",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/pluginparser/pluginparser_test.go"
+    },
+    {
+      "module": "test/integration/deps/sharedclonecache",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_file": "tests/unit/deps/sharedclonecache",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/sharedclonecache/sharedclonecache_test.go"
+    },
+    {
+      "module": "test/integration/install/bundle/lockfileenrichment",
+      "go_package": "internal/install/bundle/lockfileenrichment",
+      "python_file": "tests/unit/install/bundle/lockfileenrichment",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/bundle/lockfileenrichment/lockfileenrichment_test.go"
+    },
+    {
+      "module": "test/integration/install/bundle/packer",
+      "go_package": "internal/install/bundle/packer",
+      "python_file": "tests/unit/install/bundle/packer",
+      "python_lines": 132,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/bundle/packer/packer_test.go"
+    },
+    {
+      "module": "test/integration/install/bundle/pluginexporter",
+      "go_package": "internal/install/bundle/pluginexporter",
+      "python_file": "tests/unit/install/bundle/pluginexporter",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/bundle/pluginexporter/pluginexporter_test.go"
+    },
+    {
+      "module": "test/integration/install/bundle/unpacker",
+      "go_package": "internal/install/bundle/unpacker",
+      "python_file": "tests/unit/install/bundle/unpacker",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/bundle/unpacker/unpacker_test.go"
+    },
+    {
+      "module": "test/integration/install/cachepin",
+      "go_package": "internal/install/cachepin",
+      "python_file": "tests/unit/install/cachepin",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/cachepin/cachepin_test.go"
+    },
+    {
+      "module": "test/integration/install/drift",
+      "go_package": "internal/install/drift",
+      "python_file": "tests/unit/install/drift",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/drift/drift_test.go"
+    },
+    {
+      "module": "test/integration/install/errors",
+      "go_package": "internal/install/errors",
+      "python_file": "tests/unit/install/errors",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/errors/errors_test.go"
+    },
+    {
+      "module": "test/integration/install/gitlabresolver",
+      "go_package": "internal/install/gitlabresolver",
+      "python_file": "tests/unit/install/gitlabresolver",
+      "python_lines": 102,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/gitlabresolver/gitlabresolver_test.go"
+    },
+    {
+      "module": "test/integration/install/heals",
+      "go_package": "internal/install/heals",
+      "python_file": "tests/unit/install/heals",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/heals/heals_test.go"
+    },
+    {
+      "module": "test/integration/install/insecurepolicy",
+      "go_package": "internal/install/insecurepolicy",
+      "python_file": "tests/unit/install/insecurepolicy",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/insecurepolicy/insecurepolicy_test.go"
+    },
+    {
+      "module": "test/integration/install/installctx",
+      "go_package": "internal/install/installctx",
+      "python_file": "tests/unit/install/installctx",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/installctx/installctx_test.go"
+    },
+    {
+      "module": "test/integration/install/installpipeline",
+      "go_package": "internal/install/installpipeline",
+      "python_file": "tests/unit/install/installpipeline",
+      "python_lines": 171,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/installpipeline/installpipeline_test.go"
+    },
+    {
+      "module": "test/integration/install/installservice",
+      "go_package": "internal/install/installservice",
+      "python_file": "tests/unit/install/installservice",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/installservice/installservice_test.go"
+    },
+    {
+      "module": "test/integration/install/installvalidation",
+      "go_package": "internal/install/installvalidation",
+      "python_file": "tests/unit/install/installvalidation",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/installvalidation/installvalidation_test.go"
+    },
+    {
+      "module": "test/integration/install/localbundle",
+      "go_package": "internal/install/localbundle",
+      "python_file": "tests/unit/install/localbundle",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/localbundle/localbundle_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpcommand",
+      "go_package": "internal/install/mcp/mcpcommand",
+      "python_file": "tests/unit/install/mcp/mcpcommand",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpcommand/mcpcommand_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpconflicts",
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "python_file": "tests/unit/install/mcp/mcpconflicts",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpconflicts/mcpconflicts_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpentry",
+      "go_package": "internal/install/mcp/mcpentry",
+      "python_file": "tests/unit/install/mcp/mcpentry",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpentry/mcpentry_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpregistry",
+      "go_package": "internal/install/mcp/mcpregistry",
+      "python_file": "tests/unit/install/mcp/mcpregistry",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpregistry/mcpregistry_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpwarnings",
+      "go_package": "internal/install/mcp/mcpwarnings",
+      "python_file": "tests/unit/install/mcp/mcpwarnings",
+      "python_lines": 86,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpwarnings/mcpwarnings_test.go"
+    },
+    {
+      "module": "test/integration/install/mcp/mcpwriter",
+      "go_package": "internal/install/mcp/mcpwriter",
+      "python_file": "tests/unit/install/mcp/mcpwriter",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcp/mcpwriter/mcpwriter_test.go"
+    },
+    {
+      "module": "test/integration/install/mcpargs",
+      "go_package": "internal/install/mcpargs",
+      "python_file": "tests/unit/install/mcpargs",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/mcpargs/mcpargs_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/cleanup",
+      "go_package": "internal/install/phases/cleanup",
+      "python_file": "tests/unit/install/phases/cleanup",
+      "python_lines": 148,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/cleanup/cleanup_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/download",
+      "go_package": "internal/install/phases/download",
+      "python_file": "tests/unit/install/phases/download",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/download/download_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/finalize",
+      "go_package": "internal/install/phases/finalize",
+      "python_file": "tests/unit/install/phases/finalize",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/finalize/finalize_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/heal",
+      "go_package": "internal/install/phases/heal",
+      "python_file": "tests/unit/install/phases/heal",
+      "python_lines": 144,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/heal/heal_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/installphase",
+      "go_package": "internal/install/phases/installphase",
+      "python_file": "tests/unit/install/phases/installphase",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/installphase/installphase_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/localcontent",
+      "go_package": "internal/install/phases/localcontent",
+      "python_file": "tests/unit/install/phases/localcontent",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/localcontent/localcontent_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/lockfile",
+      "go_package": "internal/install/phases/lockfile",
+      "python_file": "tests/unit/install/phases/lockfile",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/lockfile/lockfile_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/policygate",
+      "go_package": "internal/install/phases/policygate",
+      "python_file": "tests/unit/install/phases/policygate",
+      "python_lines": 65,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/policygate/policygate_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/policytargetcheck",
+      "go_package": "internal/install/phases/policytargetcheck",
+      "python_file": "tests/unit/install/phases/policytargetcheck",
+      "python_lines": 60,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/policytargetcheck/policytargetcheck_test.go"
+    },
+    {
+      "module": "test/integration/install/phases/postdepslocal",
+      "go_package": "internal/install/phases/postdepslocal",
+      "python_file": "tests/unit/install/phases/postdepslocal",
+      "python_lines": 143,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/postdepslocal/postdepslocal_test.go"
+    },
+    {
+      "module": "test/integration/install/pkgresolution",
+      "go_package": "internal/install/pkgresolution",
+      "python_file": "tests/unit/install/pkgresolution",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/pkgresolution/pkgresolution_test.go"
+    },
+    {
+      "module": "test/integration/install/plan",
+      "go_package": "internal/install/plan",
+      "python_file": "tests/unit/install/plan",
+      "python_lines": 89,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/plan/plan_test.go"
+    },
+    {
+      "module": "test/integration/install/presentation/dryrun",
+      "go_package": "internal/install/presentation/dryrun",
+      "python_file": "tests/unit/install/presentation/dryrun",
+      "python_lines": 151,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/presentation/dryrun/dryrun_test.go"
+    },
+    {
+      "module": "test/integration/install/request",
+      "go_package": "internal/install/request",
+      "python_file": "tests/unit/install/request",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/request/request_test.go"
+    },
+    {
+      "module": "test/integration/install/securityscan",
+      "go_package": "internal/install/securityscan",
+      "python_file": "tests/unit/install/securityscan",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/securityscan/securityscan_test.go"
+    },
+    {
+      "module": "test/integration/install/summary",
+      "go_package": "internal/install/summary",
+      "python_file": "tests/unit/install/summary",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/summary/summary_test.go"
+    },
+    {
+      "module": "test/integration/install/template",
+      "go_package": "internal/install/template",
+      "python_file": "tests/unit/install/template",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/template/template_test.go"
+    },
+    {
+      "module": "test/integration/integration/agentintegrator",
+      "go_package": "internal/integration/agentintegrator",
+      "python_file": "tests/unit/integration/agentintegrator",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/agentintegrator/agentintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/baseintegrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_file": "tests/unit/integration/baseintegrator",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/baseintegrator/baseintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/cleanuphelper",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_file": "tests/unit/integration/cleanuphelper",
+      "python_lines": 138,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/cleanuphelper/cleanuphelper_test.go"
+    },
+    {
+      "module": "test/integration/integration/commandintegrator",
+      "go_package": "internal/integration/commandintegrator",
+      "python_file": "tests/unit/integration/commandintegrator",
+      "python_lines": 124,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/commandintegrator/commandintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/coverage",
+      "go_package": "internal/integration/coverage",
+      "python_file": "tests/unit/integration/coverage",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/coverage/coverage_test.go"
+    },
+    {
+      "module": "test/integration/integration/coworkpaths",
+      "go_package": "internal/integration/coworkpaths",
+      "python_file": "tests/unit/integration/coworkpaths",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/coworkpaths/coworkpaths_test.go"
+    },
+    {
+      "module": "test/integration/integration/dispatch",
+      "go_package": "internal/integration/dispatch",
+      "python_file": "tests/unit/integration/dispatch",
+      "python_lines": 59,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/dispatch/dispatch_test.go"
+    },
+    {
+      "module": "test/integration/integration/hookintegrator",
+      "go_package": "internal/integration/hookintegrator",
+      "python_file": "tests/unit/integration/hookintegrator",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/hookintegrator/hookintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/instructionintegrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_file": "tests/unit/integration/instructionintegrator",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/instructionintegrator/instructionintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/intutils",
+      "go_package": "internal/integration/intutils",
+      "python_file": "tests/unit/integration/intutils",
+      "python_lines": 57,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/intutils/intutils_test.go"
+    },
+    {
+      "module": "test/integration/integration/mcpintegrator",
+      "go_package": "internal/integration/mcpintegrator",
+      "python_file": "tests/unit/integration/mcpintegrator",
+      "python_lines": 102,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/mcpintegrator/mcpintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/promptintegrator",
+      "go_package": "internal/integration/promptintegrator",
+      "python_file": "tests/unit/integration/promptintegrator",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/promptintegrator/promptintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/skillintegrator",
+      "go_package": "internal/integration/skillintegrator",
+      "python_file": "tests/unit/integration/skillintegrator",
+      "python_lines": 281,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/skillintegrator/skillintegrator_test.go"
+    },
+    {
+      "module": "test/integration/integration/skilltransformer",
+      "go_package": "internal/integration/skilltransformer",
+      "python_file": "tests/unit/integration/skilltransformer",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/skilltransformer/skilltransformer_test.go"
+    },
+    {
+      "module": "test/integration/integration/targets",
+      "go_package": "internal/integration/targets",
+      "python_file": "tests/unit/integration/targets",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/targets/targets_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/builder",
+      "go_package": "internal/marketplace/builder",
+      "python_file": "tests/unit/marketplace/builder",
+      "python_lines": 158,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/builder/builder_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/gitstderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_file": "tests/unit/marketplace/gitstderr",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/gitstderr/gitstderr_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/gitutils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_file": "tests/unit/marketplace/gitutils",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/gitutils/gitutils_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/inittemplate",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_file": "tests/unit/marketplace/inittemplate",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/inittemplate/inittemplate_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/mkio",
+      "go_package": "internal/marketplace/mkio",
+      "python_file": "tests/unit/marketplace/mkio",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/mkio/mkio_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/mkterrors",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_file": "tests/unit/marketplace/mkterrors",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/mkterrors/mkterrors_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/mktmodels",
+      "go_package": "internal/marketplace/mktmodels",
+      "python_file": "tests/unit/marketplace/mktmodels",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/mktmodels/mktmodels_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/mktresolver",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_file": "tests/unit/marketplace/mktresolver",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/mktresolver/mktresolver_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/mktvalidator",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_file": "tests/unit/marketplace/mktvalidator",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/mktvalidator/mktvalidator_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/publisher",
+      "go_package": "internal/marketplace/publisher",
+      "python_file": "tests/unit/marketplace/publisher",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/publisher/publisher_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/refresolver",
+      "go_package": "internal/marketplace/refresolver",
+      "python_file": "tests/unit/marketplace/refresolver",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/refresolver/refresolver_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/registry",
+      "go_package": "internal/marketplace/registry",
+      "python_file": "tests/unit/marketplace/registry",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/registry/registry_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/semver",
+      "go_package": "internal/marketplace/semver",
+      "python_file": "tests/unit/marketplace/semver",
+      "python_lines": 133,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/semver/semver_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/shadowdetector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_file": "tests/unit/marketplace/shadowdetector",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/shadowdetector/shadowdetector_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/tagpattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_file": "tests/unit/marketplace/tagpattern",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/tagpattern/tagpattern_test.go"
+    },
+    {
+      "module": "test/integration/marketplace/versionpins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_file": "tests/unit/marketplace/versionpins",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "go_test_file": "internal/marketplace/versionpins/versionpins_test.go"
+    },
+    {
+      "module": "test/integration/models/apmpackage",
+      "go_package": "internal/models/apmpackage",
+      "python_file": "tests/unit/models/apmpackage",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/apmpackage/apmpackage_test.go"
+    },
+    {
+      "module": "test/integration/models/depreference",
+      "go_package": "internal/models/depreference",
+      "python_file": "tests/unit/models/depreference",
+      "python_lines": 296,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/depreference/depreference_test.go"
+    },
+    {
+      "module": "test/integration/models/deptypes",
+      "go_package": "internal/models/deptypes",
+      "python_file": "tests/unit/models/deptypes",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/deptypes/deptypes_test.go"
+    },
+    {
+      "module": "test/integration/models/mcpdep",
+      "go_package": "internal/models/mcpdep",
+      "python_file": "tests/unit/models/mcpdep",
+      "python_lines": 136,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/mcpdep/mcpdep_test.go"
+    },
+    {
+      "module": "test/integration/models/plugin",
+      "go_package": "internal/models/plugin",
+      "python_file": "tests/unit/models/plugin",
+      "python_lines": 153,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/plugin/plugin_test.go"
+    },
+    {
+      "module": "test/integration/models/results",
+      "go_package": "internal/models/results",
+      "python_file": "tests/unit/models/results",
+      "python_lines": 39,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/results/results_test.go"
+    },
+    {
+      "module": "test/integration/models/validation",
+      "go_package": "internal/models/validation",
+      "python_file": "tests/unit/models/validation",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "go_test_file": "internal/models/validation/validation_test.go"
+    },
+    {
+      "module": "test/integration/output/compilationformatter",
+      "go_package": "internal/output/compilationformatter",
+      "python_file": "tests/unit/output/compilationformatter",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "go_test_file": "internal/output/compilationformatter/compilationformatter_test.go"
+    },
+    {
+      "module": "test/integration/output/models",
+      "go_package": "internal/output/models",
+      "python_file": "tests/unit/output/models",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "go_test_file": "internal/output/models/models_test.go"
+    },
+    {
+      "module": "test/integration/output/scriptformatters",
+      "go_package": "internal/output/scriptformatters",
+      "python_file": "tests/unit/output/scriptformatters",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "go_test_file": "internal/output/scriptformatters/scriptformatters_test.go"
+    },
+    {
+      "module": "test/integration/policy/cichecks",
+      "go_package": "internal/policy/cichecks",
+      "python_file": "tests/unit/policy/cichecks",
+      "python_lines": 129,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/cichecks/cichecks_test.go"
+    },
+    {
+      "module": "test/integration/policy/discovery",
+      "go_package": "internal/policy/discovery",
+      "python_file": "tests/unit/policy/discovery",
+      "python_lines": 243,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/discovery/discovery_test.go"
+    },
+    {
+      "module": "test/integration/policy/helptext",
+      "go_package": "internal/policy/helptext",
+      "python_file": "tests/unit/policy/helptext",
+      "python_lines": 23,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/helptext/helptext_test.go"
+    },
+    {
+      "module": "test/integration/policy/inheritance",
+      "go_package": "internal/policy/inheritance",
+      "python_file": "tests/unit/policy/inheritance",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/inheritance/inheritance_test.go"
+    },
+    {
+      "module": "test/integration/policy/matcher",
+      "go_package": "internal/policy/matcher",
+      "python_file": "tests/unit/policy/matcher",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/matcher/matcher_test.go"
+    },
+    {
+      "module": "test/integration/policy/outcomerouting",
+      "go_package": "internal/policy/outcomerouting",
+      "python_file": "tests/unit/policy/outcomerouting",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/outcomerouting/outcomerouting_test.go"
+    },
+    {
+      "module": "test/integration/policy/policychecks",
+      "go_package": "internal/policy/policychecks",
+      "python_file": "tests/unit/policy/policychecks",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/policychecks/policychecks_test.go"
+    },
+    {
+      "module": "test/integration/policy/policymodels",
+      "go_package": "internal/policy/policymodels",
+      "python_file": "tests/unit/policy/policymodels",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/policymodels/policymodels_test.go"
+    },
+    {
+      "module": "test/integration/policy/schema",
+      "go_package": "internal/policy/schema",
+      "python_file": "tests/unit/policy/schema",
+      "python_lines": 64,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/schema/schema_test.go"
+    },
+    {
+      "module": "test/integration/primitives/discovery",
+      "go_package": "internal/primitives/discovery",
+      "python_file": "tests/unit/primitives/discovery",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "go_test_file": "internal/primitives/discovery/discovery_test.go"
+    },
+    {
+      "module": "test/integration/primitives/primmodels",
+      "go_package": "internal/primitives/primmodels",
+      "python_file": "tests/unit/primitives/primmodels",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "go_test_file": "internal/primitives/primmodels/primmodels_test.go"
+    },
+    {
+      "module": "test/integration/primitives/primparser",
+      "go_package": "internal/primitives/primparser",
+      "python_file": "tests/unit/primitives/primparser",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "go_test_file": "internal/primitives/primparser/primparser_test.go"
+    },
+    {
+      "module": "test/integration/registry/client",
+      "go_package": "internal/registry/client",
+      "python_file": "tests/unit/registry/client",
+      "python_lines": 212,
+      "status": "test-migrated",
+      "go_test_file": "internal/registry/client/client_test.go"
+    },
+    {
+      "module": "test/integration/registry/operations",
+      "go_package": "internal/registry/operations",
+      "python_file": "tests/unit/registry/operations",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "go_test_file": "internal/registry/operations/operations_test.go"
+    },
+    {
+      "module": "test/integration/runtime/base",
+      "go_package": "internal/runtime/base",
+      "python_file": "tests/unit/runtime/base",
+      "python_lines": 26,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/base/base_test.go"
+    },
+    {
+      "module": "test/integration/runtime/codexruntime",
+      "go_package": "internal/runtime/codexruntime",
+      "python_file": "tests/unit/runtime/codexruntime",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/codexruntime/codexruntime_test.go"
+    },
+    {
+      "module": "test/integration/runtime/factory",
+      "go_package": "internal/runtime/factory",
+      "python_file": "tests/unit/runtime/factory",
+      "python_lines": 136,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/factory/factory_test.go"
+    },
+    {
+      "module": "test/integration/runtime/llmruntime",
+      "go_package": "internal/runtime/llmruntime",
+      "python_file": "tests/unit/runtime/llmruntime",
+      "python_lines": 53,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/llmruntime/llmruntime_test.go"
+    },
+    {
+      "module": "test/integration/runtime/manager",
+      "go_package": "internal/runtime/manager",
+      "python_file": "tests/unit/runtime/manager",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/manager/manager_test.go"
+    },
+    {
+      "module": "test/integration/security/auditreport",
+      "go_package": "internal/security/auditreport",
+      "python_file": "tests/unit/security/auditreport",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "go_test_file": "internal/security/auditreport/auditreport_test.go"
+    },
+    {
+      "module": "test/integration/security/contentscanner",
+      "go_package": "internal/security/contentscanner",
+      "python_file": "tests/unit/security/contentscanner",
+      "python_lines": 105,
+      "status": "test-migrated",
+      "go_test_file": "internal/security/contentscanner/contentscanner_test.go"
+    },
+    {
+      "module": "test/integration/security/filescanner",
+      "go_package": "internal/security/filescanner",
+      "python_file": "tests/unit/security/filescanner",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "go_test_file": "internal/security/filescanner/filescanner_test.go"
+    },
+    {
+      "module": "test/integration/security/gate",
+      "go_package": "internal/security/gate",
+      "python_file": "tests/unit/security/gate",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "go_test_file": "internal/security/gate/gate_test.go"
+    },
+    {
+      "module": "test/integration/updatepolicy",
+      "go_package": "internal/updatepolicy",
+      "python_file": "tests/unit/updatepolicy",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "go_test_file": "internal/updatepolicy/updatepolicy_test.go"
+    },
+    {
+      "module": "test/integration/utils/atomicio",
+      "go_package": "internal/utils/atomicio",
+      "python_file": "tests/unit/utils/atomicio",
+      "python_lines": 41,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/atomicio/atomicio_test.go"
+    },
+    {
+      "module": "test/integration/utils/console",
+      "go_package": "internal/utils/console",
+      "python_file": "tests/unit/utils/console",
+      "python_lines": 47,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/console/console_test.go"
+    },
+    {
+      "module": "test/integration/utils/contenthash",
+      "go_package": "internal/utils/contenthash",
+      "python_file": "tests/unit/utils/contenthash",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/contenthash/contenthash_test.go"
+    },
+    {
+      "module": "test/integration/utils/diagnostics",
+      "go_package": "internal/utils/diagnostics",
+      "python_file": "tests/unit/utils/diagnostics",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/diagnostics/diagnostics_test.go"
+    },
+    {
+      "module": "test/integration/utils/exclude",
+      "go_package": "internal/utils/exclude",
+      "python_file": "tests/unit/utils/exclude",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/exclude/exclude_test.go"
+    },
+    {
+      "module": "test/integration/utils/fileops",
+      "go_package": "internal/utils/fileops",
+      "python_file": "tests/unit/utils/fileops",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/fileops/fileops_test.go"
+    },
+    {
+      "module": "test/integration/utils/gitenv",
+      "go_package": "internal/utils/gitenv",
+      "python_file": "tests/unit/utils/gitenv",
+      "python_lines": 34,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/gitenv/gitenv_test.go"
+    },
+    {
+      "module": "test/integration/utils/githubhost",
+      "go_package": "internal/utils/githubhost",
+      "python_file": "tests/unit/utils/githubhost",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/githubhost/githubhost_test.go"
+    },
+    {
+      "module": "test/integration/utils/guards",
+      "go_package": "internal/utils/guards",
+      "python_file": "tests/unit/utils/guards",
+      "python_lines": 126,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/guards/guards_test.go"
+    },
+    {
+      "module": "test/integration/utils/helpers",
+      "go_package": "internal/utils/helpers",
+      "python_file": "tests/unit/utils/helpers",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/helpers/helpers_test.go"
+    },
+    {
+      "module": "test/integration/utils/installtui",
+      "go_package": "internal/utils/installtui",
+      "python_file": "tests/unit/utils/installtui",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/installtui/installtui_test.go"
+    },
+    {
+      "module": "test/integration/utils/normalization",
+      "go_package": "internal/utils/normalization",
+      "python_file": "tests/unit/utils/normalization",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/normalization/normalization_test.go"
+    },
+    {
+      "module": "test/integration/utils/paths",
+      "go_package": "internal/utils/paths",
+      "python_file": "tests/unit/utils/paths",
+      "python_lines": 37,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/paths/paths_test.go"
+    },
+    {
+      "module": "test/integration/utils/pathsecurity",
+      "go_package": "internal/utils/pathsecurity",
+      "python_file": "tests/unit/utils/pathsecurity",
+      "python_lines": 48,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/pathsecurity/pathsecurity_test.go"
+    },
+    {
+      "module": "test/integration/utils/reflink",
+      "go_package": "internal/utils/reflink",
+      "python_file": "tests/unit/utils/reflink",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/reflink/reflink_test.go"
+    },
+    {
+      "module": "test/integration/utils/sha",
+      "go_package": "internal/utils/sha",
+      "python_file": "tests/unit/utils/sha",
+      "python_lines": 31,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/sha/sha_test.go"
+    },
+    {
+      "module": "test/integration/utils/subprocenv",
+      "go_package": "internal/utils/subprocenv",
+      "python_file": "tests/unit/utils/subprocenv",
+      "python_lines": 44,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/subprocenv/subprocenv_test.go"
+    },
+    {
+      "module": "test/integration/utils/versionchecker",
+      "go_package": "internal/utils/versionchecker",
+      "python_file": "tests/unit/utils/versionchecker",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/versionchecker/versionchecker_test.go"
+    },
+    {
+      "module": "test/integration/utils/yamlio",
+      "go_package": "internal/utils/yamlio",
+      "python_file": "tests/unit/utils/yamlio",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/yamlio/yamlio_test.go"
+    },
+    {
+      "module": "test/integration/version",
+      "go_package": "internal/version",
+      "python_file": "tests/unit/version",
+      "python_lines": 44,
+      "status": "test-migrated",
+      "go_test_file": "internal/version/version_test.go"
+    },
+    {
+      "module": "test/integration/workflow/discovery",
+      "go_package": "internal/workflow/discovery",
+      "python_file": "tests/unit/workflow/discovery",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "go_test_file": "internal/workflow/discovery/discovery_test.go"
+    },
+    {
+      "module": "test/integration/workflow/runner",
+      "go_package": "internal/workflow/runner",
+      "python_file": "tests/unit/workflow/runner",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "go_test_file": "internal/workflow/runner/runner_test.go"
+    },
+    {
+      "module": "test/integration/workflow/wfparser",
+      "go_package": "internal/workflow/wfparser",
+      "python_file": "tests/unit/workflow/wfparser",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "go_test_file": "internal/workflow/wfparser/wfparser_test.go"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

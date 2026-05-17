@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T01:41:00Z|
-| Iteration Count | 97|
-| Best Metric | 614.73|
+| Last Run | 2026-05-17T03:13:00Z|
+| Iteration Count | 98|
+| Best Metric | 620.55|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 614.73%. All 197 previously-unregistered Go test packages are now tracked. Next: check if any new Go source packages lack test coverage, or find any newly-added Python files not yet registered.
+Metric at 620.55%. All Go test packages registered and covered. Next: expand test depth for existing packages whose Python test files are large but registered only once. Focus on packages with small test files relative to their Python counterparts.
 
 ---
 ## 📚 Lessons Learned
@@ -79,6 +79,14 @@ Metric at 614.73%. All 197 previously-unregistered Go test packages are now trac
 
 
 ## 📊 Iteration History
+
+### Iteration 98 -- 2026-05-17 03:13 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25979935691)
+
+- **Status**: ✅ Accepted
+- **Change**: Added extended Go test suites for publisher (22 tests), depreference (28 tests), githubdownloader (15 tests); registered 3 new test-migrated entries (+5106 lines)
+- **Metric**: 620.55% (previous best: 614.73%, delta: +5.82pp)
+- **Commit**: 34ec567
+- **Notes**: Extended coverage for publisher (redactToken, LoadPublishState, SavePublishState round-trip, BumpPatch/RenderTag edge cases), depreference (VirtualType, GetVirtualPackageName, GetIdentity, ToCloneURL, GetDisplayName), and githubdownloader (DefaultOptions, SemverSortKey/SortRemoteRefs edge cases, ProtocolPreference constants). go build ./... and go test ./... pass.
 
 ### Iteration 97 -- 2026-05-17 01:41 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25978218146)
 

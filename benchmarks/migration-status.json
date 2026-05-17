@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 599925,
+  "migrated_python_lines": 719644,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -12763,12 +12763,943 @@
       "python_lines": 321,
       "status": "migrated",
       "notes": "Alias: extended codex adapter Go test suite (alias key)"
+    },
+    {
+      "module": "test/adapters/client/base",
+      "go_package": "internal/adapters/client/base",
+      "python_lines": 1414,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/client/base (79 go lines)"
+    },
+    {
+      "module": "test/adapters/client/claude",
+      "go_package": "internal/adapters/client/claude",
+      "python_lines": 1023,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/client/claude (80 go lines)"
+    },
+    {
+      "module": "test/adapters/client/copilot",
+      "go_package": "internal/adapters/client/copilot",
+      "python_lines": 2844,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/client/copilot (107 go lines)"
+    },
+    {
+      "module": "test/adapters/client/gemini",
+      "go_package": "internal/adapters/client/gemini",
+      "python_lines": 828,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/client/gemini (50 go lines)"
+    },
+    {
+      "module": "test/adapters/client/vscode",
+      "go_package": "internal/adapters/client/vscode",
+      "python_lines": 1285,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/client/vscode (143 go lines)"
+    },
+    {
+      "module": "test/adapters/packagemanager",
+      "go_package": "internal/adapters/packagemanager",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/adapters/packagemanager (141 go lines)"
+    },
+    {
+      "module": "test/cache/gitcache",
+      "go_package": "internal/cache/gitcache",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/cache/gitcache (97 go lines)"
+    },
+    {
+      "module": "test/cache/integrity",
+      "go_package": "internal/cache/integrity",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/cache/integrity (84 go lines)"
+    },
+    {
+      "module": "test/cache/locking",
+      "go_package": "internal/cache/locking",
+      "python_lines": 150,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/cache/locking (115 go lines)"
+    },
+    {
+      "module": "test/commands/audit",
+      "go_package": "internal/commands/audit",
+      "python_lines": 2284,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/audit (272 go lines)"
+    },
+    {
+      "module": "test/commands/cache",
+      "go_package": "internal/commands/cache",
+      "python_lines": 3736,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/cache (161 go lines)"
+    },
+    {
+      "module": "test/commands/compile",
+      "go_package": "internal/commands/compile",
+      "python_lines": 3246,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/compile (176 go lines)"
+    },
+    {
+      "module": "test/commands/deps",
+      "go_package": "internal/commands/deps",
+      "python_lines": 3810,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/deps (55 go lines)"
+    },
+    {
+      "module": "test/commands/marketplace",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 7969,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/marketplace (651 go lines)"
+    },
+    {
+      "module": "test/commands/mcp",
+      "go_package": "internal/commands/mcp",
+      "python_lines": 11785,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/mcp (57 go lines)"
+    },
+    {
+      "module": "test/commands/pack",
+      "go_package": "internal/commands/pack",
+      "python_lines": 6391,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/pack (50 go lines)"
+    },
+    {
+      "module": "test/commands/policy",
+      "go_package": "internal/commands/policy",
+      "python_lines": 9294,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/policy (42 go lines)"
+    },
+    {
+      "module": "test/commands/targetscmd",
+      "go_package": "internal/commands/targetscmd",
+      "python_lines": 207,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/targetscmd (207 go lines)"
+    },
+    {
+      "module": "test/commands/update",
+      "go_package": "internal/commands/update",
+      "python_lines": 3038,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/update (50 go lines)"
+    },
+    {
+      "module": "test/commands/view",
+      "go_package": "internal/commands/view",
+      "python_lines": 965,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/commands/view (54 go lines)"
+    },
+    {
+      "module": "test/compilation/agentformatter",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/agentformatter (63 go lines)"
+    },
+    {
+      "module": "test/compilation/agentscompiler",
+      "go_package": "internal/compilation/agentscompiler",
+      "python_lines": 283,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/agentscompiler (283 go lines)"
+    },
+    {
+      "module": "test/compilation/compilationconst",
+      "go_package": "internal/compilation/compilationconst",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/compilationconst (106 go lines)"
+    },
+    {
+      "module": "test/compilation/constitution",
+      "go_package": "internal/compilation/constitution",
+      "python_lines": 529,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/constitution (102 go lines)"
+    },
+    {
+      "module": "test/compilation/constitutionblock",
+      "go_package": "internal/compilation/constitutionblock",
+      "python_lines": 127,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/constitutionblock (127 go lines)"
+    },
+    {
+      "module": "test/compilation/injector",
+      "go_package": "internal/compilation/injector",
+      "python_lines": 305,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/injector (128 go lines)"
+    },
+    {
+      "module": "test/compilation/outputwriter",
+      "go_package": "internal/compilation/outputwriter",
+      "python_lines": 52,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/compilation/outputwriter (52 go lines)"
+    },
+    {
+      "module": "test/constants",
+      "go_package": "internal/constants",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/constants (49 go lines)"
+    },
+    {
+      "module": "test/core/conflictdetector",
+      "go_package": "internal/core/conflictdetector",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/conflictdetector (91 go lines)"
+    },
+    {
+      "module": "test/core/dockerargs",
+      "go_package": "internal/core/dockerargs",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/dockerargs (107 go lines)"
+    },
+    {
+      "module": "test/core/errors",
+      "go_package": "internal/core/errors",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/errors (78 go lines)"
+    },
+    {
+      "module": "test/core/nulllogger",
+      "go_package": "internal/core/nulllogger",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/nulllogger (39 go lines)"
+    },
+    {
+      "module": "test/core/scriptrunner",
+      "go_package": "internal/core/scriptrunner",
+      "python_lines": 368,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/scriptrunner (368 go lines)"
+    },
+    {
+      "module": "test/core/targetdetection",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 339,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/targetdetection (339 go lines)"
+    },
+    {
+      "module": "test/core/tokenmanager",
+      "go_package": "internal/core/tokenmanager",
+      "python_lines": 190,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/core/tokenmanager (190 go lines)"
+    },
+    {
+      "module": "test/deps/apmresolver",
+      "go_package": "internal/deps/apmresolver",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/apmresolver (114 go lines)"
+    },
+    {
+      "module": "test/deps/depgraph",
+      "go_package": "internal/deps/depgraph",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/depgraph (140 go lines)"
+    },
+    {
+      "module": "test/deps/gitauthenv",
+      "go_package": "internal/deps/gitauthenv",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/gitauthenv (94 go lines)"
+    },
+    {
+      "module": "test/deps/githubdownloader",
+      "go_package": "internal/deps/githubdownloader",
+      "python_lines": 306,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/githubdownloader (306 go lines)"
+    },
+    {
+      "module": "test/deps/hostbackends",
+      "go_package": "internal/deps/hostbackends",
+      "python_lines": 241,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/hostbackends (241 go lines)"
+    },
+    {
+      "module": "test/deps/lockfile",
+      "go_package": "internal/deps/lockfile",
+      "python_lines": 2279,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/lockfile (119 go lines)"
+    },
+    {
+      "module": "test/deps/packagevalidator",
+      "go_package": "internal/deps/packagevalidator",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/packagevalidator (70 go lines)"
+    },
+    {
+      "module": "test/deps/pluginparser",
+      "go_package": "internal/deps/pluginparser",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/pluginparser (93 go lines)"
+    },
+    {
+      "module": "test/deps/sharedclonecache",
+      "go_package": "internal/deps/sharedclonecache",
+      "python_lines": 134,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/deps/sharedclonecache (134 go lines)"
+    },
+    {
+      "module": "test/install/bundle/lockfileenrichment",
+      "go_package": "internal/install/bundle/lockfileenrichment",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/bundle/lockfileenrichment (101 go lines)"
+    },
+    {
+      "module": "test/install/bundle/packer",
+      "go_package": "internal/install/bundle/packer",
+      "python_lines": 1555,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/bundle/packer (132 go lines)"
+    },
+    {
+      "module": "test/install/bundle/pluginexporter",
+      "go_package": "internal/install/bundle/pluginexporter",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/bundle/pluginexporter (93 go lines)"
+    },
+    {
+      "module": "test/install/bundle/unpacker",
+      "go_package": "internal/install/bundle/unpacker",
+      "python_lines": 532,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/bundle/unpacker (88 go lines)"
+    },
+    {
+      "module": "test/install/cachepin",
+      "go_package": "internal/install/cachepin",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/cachepin (83 go lines)"
+    },
+    {
+      "module": "test/install/drift",
+      "go_package": "internal/install/drift",
+      "python_lines": 2629,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/drift (173 go lines)"
+    },
+    {
+      "module": "test/install/errors",
+      "go_package": "internal/install/errors",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/errors (94 go lines)"
+    },
+    {
+      "module": "test/install/gitlabresolver",
+      "go_package": "internal/install/gitlabresolver",
+      "python_lines": 102,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/gitlabresolver (102 go lines)"
+    },
+    {
+      "module": "test/install/heals",
+      "go_package": "internal/install/heals",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/heals (115 go lines)"
+    },
+    {
+      "module": "test/install/insecurepolicy",
+      "go_package": "internal/install/insecurepolicy",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/insecurepolicy (141 go lines)"
+    },
+    {
+      "module": "test/install/installctx",
+      "go_package": "internal/install/installctx",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/installctx (72 go lines)"
+    },
+    {
+      "module": "test/install/localbundle",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/localbundle (62 go lines)"
+    },
+    {
+      "module": "test/install/mcp/mcpregistry",
+      "go_package": "internal/install/mcp/mcpregistry",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/mcp/mcpregistry (119 go lines)"
+    },
+    {
+      "module": "test/install/mcp/mcpwarnings",
+      "go_package": "internal/install/mcp/mcpwarnings",
+      "python_lines": 86,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/mcp/mcpwarnings (86 go lines)"
+    },
+    {
+      "module": "test/install/phases/localcontent",
+      "go_package": "internal/install/phases/localcontent",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/phases/localcontent (88 go lines)"
+    },
+    {
+      "module": "test/install/phases/lockfile",
+      "go_package": "internal/install/phases/lockfile",
+      "python_lines": 2279,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/phases/lockfile (110 go lines)"
+    },
+    {
+      "module": "test/install/plan",
+      "go_package": "internal/install/plan",
+      "python_lines": 291,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/plan (89 go lines)"
+    },
+    {
+      "module": "test/install/request",
+      "go_package": "internal/install/request",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/request (58 go lines)"
+    },
+    {
+      "module": "test/install/summary",
+      "go_package": "internal/install/summary",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/install/summary (67 go lines)"
+    },
+    {
+      "module": "test/integration/agentintegrator",
+      "go_package": "internal/integration/agentintegrator",
+      "python_lines": 111,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/agentintegrator (111 go lines)"
+    },
+    {
+      "module": "test/integration/baseintegrator",
+      "go_package": "internal/integration/baseintegrator",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/baseintegrator (119 go lines)"
+    },
+    {
+      "module": "test/integration/cleanuphelper",
+      "go_package": "internal/integration/cleanuphelper",
+      "python_lines": 138,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/cleanuphelper (138 go lines)"
+    },
+    {
+      "module": "test/integration/commandintegrator",
+      "go_package": "internal/integration/commandintegrator",
+      "python_lines": 124,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/commandintegrator (124 go lines)"
+    },
+    {
+      "module": "test/integration/coverage",
+      "go_package": "internal/integration/coverage",
+      "python_lines": 1479,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/coverage (54 go lines)"
+    },
+    {
+      "module": "test/integration/coworkpaths",
+      "go_package": "internal/integration/coworkpaths",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/coworkpaths (107 go lines)"
+    },
+    {
+      "module": "test/integration/dispatch",
+      "go_package": "internal/integration/dispatch",
+      "python_lines": 1193,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/dispatch (59 go lines)"
+    },
+    {
+      "module": "test/integration/hookintegrator",
+      "go_package": "internal/integration/hookintegrator",
+      "python_lines": 170,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/hookintegrator (170 go lines)"
+    },
+    {
+      "module": "test/integration/instructionintegrator",
+      "go_package": "internal/integration/instructionintegrator",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/instructionintegrator (80 go lines)"
+    },
+    {
+      "module": "test/integration/promptintegrator",
+      "go_package": "internal/integration/promptintegrator",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/promptintegrator (90 go lines)"
+    },
+    {
+      "module": "test/integration/skillintegrator",
+      "go_package": "internal/integration/skillintegrator",
+      "python_lines": 281,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/skillintegrator (281 go lines)"
+    },
+    {
+      "module": "test/integration/skilltransformer",
+      "go_package": "internal/integration/skilltransformer",
+      "python_lines": 118,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/skilltransformer (118 go lines)"
+    },
+    {
+      "module": "test/integration/targets",
+      "go_package": "internal/integration/targets",
+      "python_lines": 1198,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/integration/targets (109 go lines)"
+    },
+    {
+      "module": "test/marketplace/gitstderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/gitstderr (58 go lines)"
+    },
+    {
+      "module": "test/marketplace/gitutils",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/gitutils (50 go lines)"
+    },
+    {
+      "module": "test/marketplace/inittemplate",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/inittemplate (54 go lines)"
+    },
+    {
+      "module": "test/marketplace/mkio",
+      "go_package": "internal/marketplace/mkio",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/mkio (62 go lines)"
+    },
+    {
+      "module": "test/marketplace/mkterrors",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/mkterrors (58 go lines)"
+    },
+    {
+      "module": "test/marketplace/mktmodels",
+      "go_package": "internal/marketplace/mktmodels",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/mktmodels (110 go lines)"
+    },
+    {
+      "module": "test/marketplace/mktvalidator",
+      "go_package": "internal/marketplace/mktvalidator",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/mktvalidator (78 go lines)"
+    },
+    {
+      "module": "test/marketplace/refresolver",
+      "go_package": "internal/marketplace/refresolver",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/refresolver (110 go lines)"
+    },
+    {
+      "module": "test/marketplace/registry",
+      "go_package": "internal/marketplace/registry",
+      "python_lines": 3105,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/registry (116 go lines)"
+    },
+    {
+      "module": "test/marketplace/semver",
+      "go_package": "internal/marketplace/semver",
+      "python_lines": 282,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/semver (133 go lines)"
+    },
+    {
+      "module": "test/marketplace/shadowdetector",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/shadowdetector (77 go lines)"
+    },
+    {
+      "module": "test/marketplace/tagpattern",
+      "go_package": "internal/marketplace/tagpattern",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/tagpattern (78 go lines)"
+    },
+    {
+      "module": "test/marketplace/versionpins",
+      "go_package": "internal/marketplace/versionpins",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/versionpins (100 go lines)"
+    },
+    {
+      "module": "test/marketplace/ymlschema",
+      "go_package": "internal/marketplace/ymlschema",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/marketplace/ymlschema (104 go lines)"
+    },
+    {
+      "module": "test/models/depreference",
+      "go_package": "internal/models/depreference",
+      "python_lines": 597,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/models/depreference (597 go lines)"
+    },
+    {
+      "module": "test/models/deptypes",
+      "go_package": "internal/models/deptypes",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/models/deptypes (71 go lines)"
+    },
+    {
+      "module": "test/models/plugin",
+      "go_package": "internal/models/plugin",
+      "python_lines": 4937,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/models/plugin (153 go lines)"
+    },
+    {
+      "module": "test/models/results",
+      "go_package": "internal/models/results",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/models/results (39 go lines)"
+    },
+    {
+      "module": "test/models/validation",
+      "go_package": "internal/models/validation",
+      "python_lines": 1592,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/models/validation (111 go lines)"
+    },
+    {
+      "module": "test/output/models",
+      "go_package": "internal/output/models",
+      "python_lines": 2356,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/output/models (94 go lines)"
+    },
+    {
+      "module": "test/output/scriptformatters",
+      "go_package": "internal/output/scriptformatters",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/output/scriptformatters (91 go lines)"
+    },
+    {
+      "module": "test/policy/cichecks",
+      "go_package": "internal/policy/cichecks",
+      "python_lines": 129,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/policy/cichecks (129 go lines)"
+    },
+    {
+      "module": "test/policy/helptext",
+      "go_package": "internal/policy/helptext",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/policy/helptext (93 go lines)"
+    },
+    {
+      "module": "test/policy/policychecks",
+      "go_package": "internal/policy/policychecks",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/policy/policychecks (165 go lines)"
+    },
+    {
+      "module": "test/policy/policymodels",
+      "go_package": "internal/policy/policymodels",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/policy/policymodels (104 go lines)"
+    },
+    {
+      "module": "test/policy/schema",
+      "go_package": "internal/policy/schema",
+      "python_lines": 1901,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/policy/schema (64 go lines)"
+    },
+    {
+      "module": "test/primitives/discovery",
+      "go_package": "internal/primitives/discovery",
+      "python_lines": 3533,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/primitives/discovery (128 go lines)"
+    },
+    {
+      "module": "test/primitives/primmodels",
+      "go_package": "internal/primitives/primmodels",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/primitives/primmodels (83 go lines)"
+    },
+    {
+      "module": "test/primitives/primparser",
+      "go_package": "internal/primitives/primparser",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/primitives/primparser (92 go lines)"
+    },
+    {
+      "module": "test/registry/client",
+      "go_package": "internal/registry/client",
+      "python_lines": 1909,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/registry/client (212 go lines)"
+    },
+    {
+      "module": "test/registry/operations",
+      "go_package": "internal/registry/operations",
+      "python_lines": 188,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/registry/operations (188 go lines)"
+    },
+    {
+      "module": "test/runtime/base",
+      "go_package": "internal/runtime/base",
+      "python_lines": 1414,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/runtime/base (124 go lines)"
+    },
+    {
+      "module": "test/runtime/factory",
+      "go_package": "internal/runtime/factory",
+      "python_lines": 2472,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/runtime/factory (136 go lines)"
+    },
+    {
+      "module": "test/runtime/manager",
+      "go_package": "internal/runtime/manager",
+      "python_lines": 1437,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/runtime/manager (128 go lines)"
+    },
+    {
+      "module": "test/security/auditreport",
+      "go_package": "internal/security/auditreport",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/security/auditreport (109 go lines)"
+    },
+    {
+      "module": "test/security/contentscanner",
+      "go_package": "internal/security/contentscanner",
+      "python_lines": 105,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/security/contentscanner (105 go lines)"
+    },
+    {
+      "module": "test/security/gate",
+      "go_package": "internal/security/gate",
+      "python_lines": 1143,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/security/gate (84 go lines)"
+    },
+    {
+      "module": "test/updatepolicy",
+      "go_package": "internal/updatepolicy",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/updatepolicy (71 go lines)"
+    },
+    {
+      "module": "test/utils/atomicio",
+      "go_package": "internal/utils/atomicio",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/atomicio (41 go lines)"
+    },
+    {
+      "module": "test/utils/console",
+      "go_package": "internal/utils/console",
+      "python_lines": 417,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/console (47 go lines)"
+    },
+    {
+      "module": "test/utils/contenthash",
+      "go_package": "internal/utils/contenthash",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/contenthash (107 go lines)"
+    },
+    {
+      "module": "test/utils/diagnostics",
+      "go_package": "internal/utils/diagnostics",
+      "python_lines": 585,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/diagnostics (90 go lines)"
+    },
+    {
+      "module": "test/utils/exclude",
+      "go_package": "internal/utils/exclude",
+      "python_lines": 198,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/exclude (72 go lines)"
+    },
+    {
+      "module": "test/utils/fileops",
+      "go_package": "internal/utils/fileops",
+      "python_lines": 67,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/fileops (67 go lines)"
+    },
+    {
+      "module": "test/utils/gitenv",
+      "go_package": "internal/utils/gitenv",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/gitenv (121 go lines)"
+    },
+    {
+      "module": "test/utils/githubhost",
+      "go_package": "internal/utils/githubhost",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/githubhost (71 go lines)"
+    },
+    {
+      "module": "test/utils/guards",
+      "go_package": "internal/utils/guards",
+      "python_lines": 551,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/guards (126 go lines)"
+    },
+    {
+      "module": "test/utils/helpers",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 1692,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/helpers (70 go lines)"
+    },
+    {
+      "module": "test/utils/normalization",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 133,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/normalization (61 go lines)"
+    },
+    {
+      "module": "test/utils/paths",
+      "go_package": "internal/utils/paths",
+      "python_lines": 1537,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/paths (37 go lines)"
+    },
+    {
+      "module": "test/utils/pathsecurity",
+      "go_package": "internal/utils/pathsecurity",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/pathsecurity (48 go lines)"
+    },
+    {
+      "module": "test/utils/reflink",
+      "go_package": "internal/utils/reflink",
+      "python_lines": 177,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/reflink (70 go lines)"
+    },
+    {
+      "module": "test/utils/sha",
+      "go_package": "internal/utils/sha",
+      "python_lines": 2695,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/sha (135 go lines)"
+    },
+    {
+      "module": "test/utils/subprocenv",
+      "go_package": "internal/utils/subprocenv",
+      "python_lines": 135,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/subprocenv (135 go lines)"
+    },
+    {
+      "module": "test/utils/yamlio",
+      "go_package": "internal/utils/yamlio",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/utils/yamlio (50 go lines)"
+    },
+    {
+      "module": "test/version",
+      "go_package": "internal/version",
+      "python_lines": 1401,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/version (44 go lines)"
+    },
+    {
+      "module": "test/workflow/wfparser",
+      "go_package": "internal/workflow/wfparser",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "notes": "Go test suite for internal/workflow/wfparser (117 go lines)"
     }
   ],
-  "last_updated": "2026-05-16T15:33:39Z",
-  "iteration": 76,
-  "python_lines_migrated_pct": 683.74,
-  "modules_migrated": 1385,
+  "last_updated": "2026-05-17T08:23:58Z",
+  "iteration": 77,
+  "python_lines_migrated_pct": 821.27,
+  "modules_migrated": 1835,
   "modules": [
     {
       "module": "models/dependency/reference",

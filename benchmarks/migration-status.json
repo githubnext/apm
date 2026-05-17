@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 868582,
+  "migrated_python_lines": 868929,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16280,6 +16280,48 @@
       "go_file": "internal/workflow/runner/runner_test.go",
       "python_lines": 159,
       "status": "test-migrated"
+    },
+    {
+      "module": "test/v2/utils/console",
+      "go_package": "internal/utils/console",
+      "python_lines": 74,
+      "status": "test-migrated",
+      "notes": "Extended console tests: Panel, DownloadSpinner, nil writer, bold flag, extra symbols"
+    },
+    {
+      "module": "test/v2/utils/pathsecurity",
+      "go_package": "internal/utils/pathsecurity",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Extended pathsecurity tests: allowCurrentDir, rejectEmpty, percent-encoded traversal, IsPathTraversalError, deep nesting"
+    },
+    {
+      "module": "test/v2/constants",
+      "go_package": "internal/constants",
+      "python_lines": 64,
+      "status": "test-migrated",
+      "notes": "Extended constants tests: extra skip dirs, InstallMode string conversion, gitignore, dirs, markdown files"
+    },
+    {
+      "module": "test/v2/utils/normalization",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 57,
+      "status": "test-migrated",
+      "notes": "Extended normalization tests: multiple headers, no match, empty, mixed endings, BOM edge cases, idempotent"
+    },
+    {
+      "module": "test/v2/marketplace/gitstderr",
+      "go_package": "internal/marketplace/gitstderr",
+      "python_lines": 48,
+      "status": "test-migrated",
+      "notes": "Extended gitstderr tests: invalid credentials, empty stderr, raw preserved, Kind.String(), edge cases"
+    },
+    {
+      "module": "test/v2/core/commandlogger",
+      "go_package": "internal/core/commandlogger",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Extended commandlogger tests: DryRunNotice, MCPLookupHeartbeat edge cases, BlankLine, TreeItem, VerboseDetail"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

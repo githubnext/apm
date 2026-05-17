@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 871597,
+  "migrated_python_lines": 871973,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16630,9 +16630,9 @@
       "notes": "Extended cursor_test.go: empty root, UpdateConfig with/without .cursor dir, invalid JSON config iter114"
     }
   ],
-  "last_updated": "2026-05-17T19:34:22Z",
-  "iteration": 80,
-  "python_lines_migrated_pct": 994.68,
+  "last_updated": "2026-05-17T20:26:02Z",
+  "iteration": 81,
+  "python_lines_migrated_pct": 995.11,
   "modules_migrated": 2253,
   "modules": [
     {
@@ -16665,6 +16665,31 @@
       "go_package": "internal/marketplace/builder",
       "python_lines": 1059,
       "status": "migrated"
+    },
+    {
+      "module": "deps/packagevalidator-test-ext",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "module": "utils/reflink-test-ext",
+      "status": "test-migrated",
+      "python_lines": 85
+    },
+    {
+      "module": "install/installctx-test-ext",
+      "status": "test-migrated",
+      "python_lines": 77
+    },
+    {
+      "module": "workflow/discovery-test-ext",
+      "status": "test-migrated",
+      "python_lines": 48
+    },
+    {
+      "module": "core/errors-test-ext",
+      "status": "test-migrated",
+      "python_lines": 67
     }
   ]
 }

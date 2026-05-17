@@ -62,3 +62,66 @@ func TestCompilationPolicy(t *testing.T) {
 		t.Errorf("strategy enforce: want 'distributed', got %q", p.Strategy.Enforce)
 	}
 }
+
+func TestDependencyPolicyFields(t *testing.T) {
+p := DefaultDependencyPolicy()
+if p.RequireResolution == "" {
+t.Error("RequireResolution should not be empty")
+}
+if p.MaxDepth <= 0 {
+t.Error("MaxDepth should be positive")
+}
+}
+
+func TestApmPolicyWithEnforcement(t *testing.T) {
+p := ApmPolicy{Enforcement: "block"}
+if p.Enforcement != "block" {
+t.Errorf("expected Enforcement=block, got %q", p.Enforcement)
+}
+}
+
+func TestMcpTransportPolicyFields(t *testing.T) {
+tp := McpTransportPolicy{
+Allow: []string{"stdio", "sse"},
+}
+if len(tp.Allow) != 2 {
+t.Errorf("unexpected Allow len: %d", len(tp.Allow))
+}
+if tp.Allow[0] != "stdio" {
+t.Errorf("unexpected Allow[0]: %q", tp.Allow[0])
+}
+}
+
+func TestMcpPolicyZeroValue(t *testing.T) {
+var p McpPolicy
+if len(p.Allow) != 0 || len(p.Deny) != 0 {
+t.Error("zero value McpPolicy should have empty Allow/Deny")
+}
+if p.TrustTransitive {
+t.Error("TrustTransitive should default to false")
+}
+}
+
+func TestCompilationTargetPolicy(t *testing.T) {
+p := CompilationTargetPolicy{Allow: []string{"all", "specific"}, Enforce: "warn"}
+if len(p.Allow) != 2 {
+t.Errorf("expected 2 allows, got %d", len(p.Allow))
+}
+if p.Enforce != "warn" {
+t.Errorf("expected Enforce=warn, got %q", p.Enforce)
+}
+}
+
+func TestCompilationStrategyPolicy(t *testing.T) {
+p := CompilationStrategyPolicy{Enforce: "local"}
+if p.Enforce != "local" {
+t.Errorf("expected Enforce=local, got %q", p.Enforce)
+}
+}
+
+func TestPolicyCacheWithTTL(t *testing.T) {
+pc := PolicyCache{TTL: 3600}
+if pc.TTL != 3600 {
+t.Errorf("expected TTL=3600, got %d", pc.TTL)
+}
+}

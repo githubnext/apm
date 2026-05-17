@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 870277,
+  "migrated_python_lines": 870762,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16490,11 +16490,53 @@
       "python_lines": 52,
       "status": "test-migrated",
       "notes": "Extended codexruntime tests: zero value, info keys, non-empty models, string model name, NewDefault unavailable"
+    },
+    {
+      "module": "test/utils/versionchecker-ext",
+      "go_package": "internal/utils/versionchecker",
+      "python_lines": 73,
+      "status": "test-migrated",
+      "notes": "Extended versionchecker tests: prerelease comparisons, invalid inputs, beta/rc versions, zero values."
+    },
+    {
+      "module": "test/utils/fileops-ext",
+      "go_package": "internal/utils/fileops",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "notes": "Extended fileops tests: nonexistent path removal, ignoreErrors, nested subdirs copy, multi-file copy, overwrite."
+    },
+    {
+      "module": "test/policy/schema-ext",
+      "go_package": "internal/policy/schema",
+      "python_lines": 63,
+      "status": "test-migrated",
+      "notes": "Extended schema tests: DependencyPolicy fields, ApmPolicy enforcement, McpTransportPolicy, McpPolicy zero value, CompilationTargetPolicy, CompilationStrategyPolicy, PolicyCache TTL."
+    },
+    {
+      "module": "test/install/policygate-ext",
+      "go_package": "internal/install/phases/policygate",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Extended policygate tests: empty env, non-1 truthy value, empty PolicyViolationError, PolicySource-only error, zero-value EnforcementResult."
+    },
+    {
+      "module": "test/install/installvalidation-ext",
+      "go_package": "internal/install/installvalidation",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Extended installvalidation tests: LocalPathNoMarkersHint, LocalPathFailureReason valid/no-markers, NewPackageProber fields, ProbeResult variants, IsADOAuthFailureSignal, ValidatePackageExists local path."
+    },
+    {
+      "module": "test/deps/gitrefresolver-ext",
+      "go_package": "internal/deps/gitrefresolver",
+      "python_lines": 87,
+      "status": "test-migrated",
+      "notes": "Extended gitrefresolver tests: GitReferenceType constants, RemoteRef fields, ResolvedReference fields, GitHubAPIResult, New default timeout, SHA boundary cases."
     }
   ],
-  "last_updated": "2026-05-17T16:29:52Z",
-  "iteration": 78,
-  "python_lines_migrated_pct": 989.0,
+  "last_updated": "2026-05-17T17:31:11Z",
+  "iteration": 79,
+  "python_lines_migrated_pct": 993.73,
   "modules_migrated": 2185,
   "modules": [
     {

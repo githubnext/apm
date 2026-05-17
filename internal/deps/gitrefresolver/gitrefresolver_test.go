@@ -68,3 +68,90 @@ func TestNew(t *testing.T) {
 		t.Error("expected non-zero timeout")
 	}
 }
+
+func TestGitReferenceTypeConstants(t *testing.T) {
+if ReferenceTypeBranch != 0 {
+t.Errorf("ReferenceTypeBranch should be 0, got %d", ReferenceTypeBranch)
+}
+if ReferenceTypeTag == ReferenceTypeBranch {
+t.Error("ReferenceTypeTag and ReferenceTypeBranch should differ")
+}
+if ReferenceTypeCommit == ReferenceTypeTag {
+t.Error("ReferenceTypeCommit and ReferenceTypeTag should differ")
+}
+if ReferenceTypeUnknown == ReferenceTypeCommit {
+t.Error("ReferenceTypeUnknown and ReferenceTypeCommit should differ")
+}
+}
+
+func TestRemoteRef_Fields(t *testing.T) {
+r := RemoteRef{
+Name:     "refs/heads/main",
+SHA:      "abcdef1234567890abcdef1234567890abcdef12",
+IsTag:    false,
+IsBranch: true,
+}
+if r.Name != "refs/heads/main" {
+t.Errorf("unexpected Name: %q", r.Name)
+}
+if !r.IsBranch {
+t.Error("IsBranch should be true")
+}
+if r.IsTag {
+t.Error("IsTag should be false")
+}
+if !IsFullSHA(r.SHA) {
+t.Error("SHA should be a valid full SHA")
+}
+}
+
+func TestResolvedReference_Fields(t *testing.T) {
+rr := ResolvedReference{
+SHA:     "abcdef1234567890abcdef1234567890abcdef12",
+RefType: ReferenceTypeBranch,
+Ref:     "main",
+}
+if rr.Ref != "main" {
+t.Errorf("unexpected Ref: %q", rr.Ref)
+}
+if rr.RefType != ReferenceTypeBranch {
+t.Errorf("unexpected RefType: %d", rr.RefType)
+}
+}
+
+func TestGitHubAPIResult_Fields(t *testing.T) {
+r := GitHubAPIResult{SHA: "abcdef1234567890abcdef1234567890abcdef12"}
+if r.SHA == "" {
+t.Error("SHA should not be empty")
+}
+if !IsFullSHA(r.SHA) {
+t.Error("SHA should be a valid full SHA")
+}
+}
+
+func TestNew_DefaultTimeout(t *testing.T) {
+r := New("ghe.example.com", "token")
+if r.Timeout <= 0 {
+t.Error("expected positive default timeout")
+}
+if r.Host != "ghe.example.com" {
+t.Errorf("expected Host=ghe.example.com, got %q", r.Host)
+}
+}
+
+func TestIsFullSHA_AllHexChars(t *testing.T) {
+// All valid hex chars
+sha := "0123456789abcdef01234567890123456789abcd"
+if !IsFullSHA(sha) {
+t.Errorf("expected true for valid hex SHA, got false")
+}
+}
+
+func TestIsShortSHA_ExactlySevenChars(t *testing.T) {
+if !IsShortSHA("abcdef1") {
+t.Error("7-char hex string should be short SHA")
+}
+if IsShortSHA("abcde1") {
+t.Error("6-char string should not be short SHA")
+}
+}

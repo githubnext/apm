@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T15:28:00Z|
-| Iteration Count | 110|
-| Best Metric | 992.75|
+| Last Run | 2026-05-17T16:35:00Z|
+| Iteration Count | 111|
+| Best Metric | 993.17|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -72,6 +72,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 111 -- 2026-05-17 16:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25996269878)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (windsurf, policytargetcheck, localbundle, mkio, agentformatter, codexruntime) with 373 new lines; registered 6 new test-migrated entries
+- **Metric**: 993.17% (previous best: 992.75%, delta: +0.42pp)
+- **Commit**: edb602c
+- **Notes**: Added adapter field checks, path assertions, MCPServersKey format, map immutability, SSE transport, large/empty content, idempotent write, GeminiStub BuildID, ClaudePlacement fields, CodexRuntime zero-value and const-runtime tests. All Go tests pass.
 
 ### Iteration 110 -- 2026-05-17 15:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25994892054)
 

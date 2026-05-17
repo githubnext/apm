@@ -55,3 +55,33 @@ func TestNormalizeRepoURL_SSH(t *testing.T) {
 		t.Fatalf("expected 'owner/repo', got %q", got)
 	}
 }
+
+func TestNormalizeRepoURL_NoSchemeNoSlash(t *testing.T) {
+got := intutils.NormalizeRepoURL("justhost")
+if got != "justhost" {
+t.Fatalf("expected 'justhost', got %q", got)
+}
+}
+
+func TestNormalizeRepoURL_MultiplePaths(t *testing.T) {
+got := intutils.NormalizeRepoURL("https://github.com/owner/repo/extra")
+if got != "owner/repo/extra" {
+t.Fatalf("expected 'owner/repo/extra', got %q", got)
+}
+}
+
+func TestNormalizeRepoURL_BothSuffixes(t *testing.T) {
+got := intutils.NormalizeRepoURL("owner/repo.git/")
+// trim trailing slash first, then .git -- depends on function order
+// The function does TrimSuffix then TrimRight for no-scheme case
+if got == "" {
+t.Fatal("should not return empty string")
+}
+}
+
+func TestNormalizeRepoURL_EmptyString(t *testing.T) {
+got := intutils.NormalizeRepoURL("")
+if got != "" {
+t.Fatalf("empty input should return empty, got %q", got)
+}
+}

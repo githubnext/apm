@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 868929,
+  "migrated_python_lines": 869215,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16322,6 +16322,48 @@
       "python_lines": 50,
       "status": "test-migrated",
       "notes": "Extended commandlogger tests: DryRunNotice, MCPLookupHeartbeat edge cases, BlankLine, TreeItem, VerboseDetail"
+    },
+    {
+      "module": "test/adapters/client/gemini/extended-iter108",
+      "go_package": "internal/adapters/client/gemini",
+      "python_lines": 47,
+      "status": "test-migrated",
+      "notes": "Extended gemini_test.go: GetConfigPath empty root, UpdateConfig no-dir, TargetName stability, GetConfigPath abs"
+    },
+    {
+      "module": "test/compilation/outputwriter/extended-iter108",
+      "go_package": "internal/compilation/outputwriter",
+      "python_lines": 41,
+      "status": "test-migrated",
+      "notes": "Extended outputwriter_test.go: overwrite, empty content, deep nested path"
+    },
+    {
+      "module": "test/commands/deps/extended-iter108",
+      "go_package": "internal/commands/deps",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Extended deps_test.go: TreeNode fields, InsecureFlag, Primitives, sanitizeMermaid, sourceLabel edge cases"
+    },
+    {
+      "module": "test/commands/mcp/extended-iter108",
+      "go_package": "internal/commands/mcp",
+      "python_lines": 56,
+      "status": "test-migrated",
+      "notes": "Extended mcp_test.go: InfoOptions, InstallOptions force/runtime, truncate edge cases, SearchOptions default"
+    },
+    {
+      "module": "test/marketplace/inittemplate/extended-iter108",
+      "go_package": "internal/marketplace/inittemplate",
+      "python_lines": 41,
+      "status": "test-migrated",
+      "notes": "Extended inittemplate_test.go: version field, packages block, owner URL, non-empty, build section"
+    },
+    {
+      "module": "test/integration/intutils/extended-iter108",
+      "go_package": "internal/integration/intutils",
+      "python_lines": 30,
+      "status": "test-migrated",
+      "notes": "Extended intutils_test.go: no-scheme-no-slash, multi-path HTTPS, both suffixes, empty string"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

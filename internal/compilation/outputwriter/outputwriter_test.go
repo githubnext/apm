@@ -50,3 +50,44 @@ func TestWrite_Idempotent(t *testing.T) {
 		t.Error("file should not be empty after idempotent write")
 	}
 }
+
+func TestWrite_Overwrite(t *testing.T) {
+dir := t.TempDir()
+path := filepath.Join(dir, "AGENTS.md")
+w := &CompiledOutputWriter{}
+if err := w.Write(path, "# first\n"); err != nil {
+t.Fatalf("first write: %v", err)
+}
+if err := w.Write(path, "# second\n"); err != nil {
+t.Fatalf("second write: %v", err)
+}
+data, _ := os.ReadFile(path)
+if string(data) != "# second\n" {
+t.Errorf("overwrite failed: got %q", string(data))
+}
+}
+
+func TestWrite_EmptyContent(t *testing.T) {
+dir := t.TempDir()
+path := filepath.Join(dir, "AGENTS.md")
+w := &CompiledOutputWriter{}
+if err := w.Write(path, ""); err != nil {
+t.Fatalf("write empty: %v", err)
+}
+data, _ := os.ReadFile(path)
+if string(data) != "" {
+t.Errorf("expected empty file, got %q", string(data))
+}
+}
+
+func TestWrite_DeepNestedPath(t *testing.T) {
+dir := t.TempDir()
+path := filepath.Join(dir, "a", "b", "c", "AGENTS.md")
+w := &CompiledOutputWriter{}
+if err := w.Write(path, "nested"); err != nil {
+t.Fatalf("deep nested write: %v", err)
+}
+if _, err := os.Stat(path); err != nil {
+t.Errorf("nested file not found: %v", err)
+}
+}

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T16:35:00Z|
-| Iteration Count | 111|
-| Best Metric | 993.17|
+| Last Run | 2026-05-17T17:26:00Z|
+| Iteration Count | 112|
+| Best Metric | 993.73|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -72,6 +72,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 112 -- 2026-05-17 17:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25997665218)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (versionchecker, fileops, schema, policygate, installvalidation, gitrefresolver) with 485 new lines; registered 6 new test-migrated entries
+- **Metric**: 993.73% (previous best: 993.17%, delta: +0.56pp)
+- **Commit**: c5012ab
+- **Notes**: Added prerelease comparisons, invalid-input guards, nested copy, multi-file ops, transport policy fields, ADO auth signal, LocalPathNoMarkersHint, ProbeResult variants, SHA boundary cases. All Go tests pass.
 
 ### Iteration 111 -- 2026-05-17 16:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25996269878)
 

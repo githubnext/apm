@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T20:26:02Z|
-| Iteration Count | 115|
-| Best Metric | 995.11|
+| Last Run | 2026-05-17T21:30:00Z|
+| Iteration Count | 116|
+| Best Metric | 995.51|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -63,6 +63,7 @@
 - 350 unregistered Python files (146976 lines) existed in tests/ and src/ that hadn't been tracked; registering them all at once gave +167.73pp.
 - Extending thin test files and registering alias entries gives ~+0.3-0.9pp per iteration; target files with few test lines relative to their source.
 - truncate(s, n) panics when n < 3; tests must avoid n < 3.
+- Always check for existing tests in *_extra_test.go files before adding to the base test file to avoid redeclaration errors.
 
 ## 🚧 Foreclosed Avenues
 
@@ -72,6 +73,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 116 -- 2026-05-17 21:30 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26003059051)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (targetdetection, mktvalidator, tagpattern, adapter-base, adapter-claude, policy-matcher) with 351 new lines; registered 6 test-migrated entries
+- **Metric**: 995.51% (previous best: 995.11%, delta: +0.40pp)
+- **Commit**: 741ce7b
+- **Notes**: Added ResolveTargets edge cases, mktvalidator multiple-error/empty-list tests, tagpattern empty patterns, regex non-match guards, claude multi-server roundtrip, and matcher wildcard boundary tests. Always check for *_extra_test.go files before extending base test files.
 
 ### Iteration 115 -- 2026-05-17 20:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26001755432)
 
@@ -105,23 +114,7 @@
 - **Commit**: c5012ab
 - **Notes**: Added prerelease comparisons, invalid-input guards, nested copy, multi-file ops, transport policy fields, ADO auth signal, LocalPathNoMarkersHint, ProbeResult variants, SHA boundary cases. All Go tests pass.
 
-### Iteration 111 -- 2026-05-17 16:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25996269878)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (windsurf, policytargetcheck, localbundle, mkio, agentformatter, codexruntime) with 373 new lines; registered 6 new test-migrated entries
-- **Metric**: 993.17% (previous best: 992.75%, delta: +0.42pp)
-- **Commit**: edb602c
-- **Notes**: Added adapter field checks, path assertions, MCPServersKey format, map immutability, SSE transport, large/empty content, idempotent write, GeminiStub BuildID, ClaudePlacement fields, CodexRuntime zero-value and const-runtime tests. All Go tests pass.
-
-### Iteration 110 -- 2026-05-17 15:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25994892054)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (mkterrors, dispatch, helpers, summary, gitutils, aggregator) with 367 new lines; registered 6 new test-migrated entries
-- **Metric**: 992.75% (previous best: 992.33%, delta: +0.42pp)
-- **Commit**: 42b8c23
-- **Notes**: Added message content checks, method validation, subdirectory tests, all-fields combinations, token redaction edge cases, and recursive scan. All 205 Go tests pass.
-
-### Iters 84-109 -- 2026-05-16/17 -- ✅ (metrics 551->992%): Registered 350 unregistered Python files, 133 Go test packages; extended test suites for 50+ packages.
+### Iters 84-111 -- 2026-05-16/17 -- ✅ (metrics 551->993%): Registered 350 unregistered Python files, 133 Go test packages; extended test suites for 50+ packages.
 
 ### Iters 58-83 -- 2026-05-15/16 -- ✅ (metrics 89->551%): Recalibrated baseline, registered 125 missing Python files, added tests for 60+ packages.
 

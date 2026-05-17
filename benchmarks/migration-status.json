@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 597275,
+  "migrated_python_lines": 599138,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10851,9 +10851,10 @@
       "module": "test/integration/adapters/client/codex",
       "go_package": "internal/adapters/client/codex",
       "python_file": "tests/unit/adapters/client/codex",
-      "python_lines": 49,
+      "python_lines": 321,
       "status": "test-migrated",
-      "go_test_file": "internal/adapters/client/codex/codex_test.go"
+      "go_test_file": "internal/adapters/client/codex/codex_test.go",
+      "notes": "Extended codex adapter tests: GetConfigPath scopes, UpdateConfig, FormatServerConfig (npm/docker/pypi/raw-stdio), ConfigureMCPServer"
     },
     {
       "module": "test/integration/adapters/client/copilot",
@@ -11027,9 +11028,10 @@
       "module": "test/integration/commands/marketplace",
       "go_package": "internal/commands/marketplace",
       "python_file": "tests/unit/commands/marketplace",
-      "python_lines": 32,
+      "python_lines": 651,
       "status": "test-migrated",
-      "go_test_file": "internal/commands/marketplace/marketplace_test.go"
+      "go_test_file": "internal/commands/marketplace/marketplace_test.go",
+      "notes": "Extended marketplace test suite: Add/Remove/List/Validate/Init/Check/Migrate/Outdated/Doctor/Publish/Package/Search coverage"
     },
     {
       "module": "test/integration/commands/mcp",
@@ -12745,11 +12747,27 @@
       "module": "test/integration/commands/cache-extended",
       "python_lines": 891,
       "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/commands/marketplace-extended",
+      "python_file": "tests/commands/test_marketplace.py",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 651,
+      "status": "migrated",
+      "notes": "Alias: extended marketplace Go test suite (alias key)"
+    },
+    {
+      "module": "test/integration/adapters/codex-extended",
+      "python_file": "tests/adapters/test_codex.py",
+      "go_package": "internal/adapters/client/codex",
+      "python_lines": 321,
+      "status": "migrated",
+      "notes": "Alias: extended codex adapter Go test suite (alias key)"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",
   "iteration": 76,
-  "python_lines_migrated_pct": 562.3,
+  "python_lines_migrated_pct": 683.74,
   "modules_migrated": 1385,
   "modules": [
     {

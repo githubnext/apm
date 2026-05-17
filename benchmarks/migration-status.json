@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 869537,
+  "migrated_python_lines": 869904,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16406,6 +16406,48 @@
       "python_lines": 52,
       "status": "test-migrated",
       "notes": "Extended request_test.go with zero value, skill subset, frozen, OnlyPackages tests"
+    },
+    {
+      "module": "test/marketplace/mkterrors/extended-iter110",
+      "go_package": "internal/marketplace/mkterrors",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "notes": "Extended mkterrors_test.go with message content, empty input, multi-name, error inheritance tests"
+    },
+    {
+      "module": "test/integration/dispatch/extended-iter110",
+      "go_package": "internal/integration/dispatch",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Extended dispatch_test.go with integrate methods, sync methods, all integrator classes validation"
+    },
+    {
+      "module": "test/utils/helpers/extended-iter110",
+      "go_package": "internal/utils/helpers",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "notes": "Extended helpers_test.go with FindPluginJSON subdirs, ClaudePlugin, CursorPlugin, precedence tests"
+    },
+    {
+      "module": "test/install/summary/extended-iter110",
+      "go_package": "internal/install/summary",
+      "python_lines": 60,
+      "status": "test-migrated",
+      "notes": "Extended summary_test.go with zero values, all fields, no-errors, no-stales, period ending"
+    },
+    {
+      "module": "test/marketplace/gitutils/extended-iter110",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 35,
+      "status": "test-migrated",
+      "notes": "Extended gitutils_test.go with complex URL, git clone URL, multi-query tokens, path preservation"
+    },
+    {
+      "module": "test/deps/aggregator/extended-iter110",
+      "go_package": "internal/deps/aggregator",
+      "python_lines": 65,
+      "status": "test-migrated",
+      "notes": "Extended aggregator_test.go with single MCP, deduplication across files, recursive scan"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

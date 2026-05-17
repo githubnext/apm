@@ -57,3 +57,75 @@ func TestDefaultDispatchTable_IntegratorClasses(t *testing.T) {
 		t.Errorf("unexpected: %q", table["skills"].IntegratorClass)
 	}
 }
+
+func TestDefaultDispatchTable_IntegrateMethods(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	cases := map[string]string{
+		"prompts":      "integrate_prompts_for_target",
+		"agents":       "integrate_agents_for_target",
+		"commands":     "integrate_commands_for_target",
+		"instructions": "integrate_instructions_for_target",
+		"hooks":        "integrate_hooks_for_target",
+		"skills":       "integrate_package_skill",
+	}
+	for key, want := range cases {
+		if got := table[key].IntegrateMethod; got != want {
+			t.Errorf("table[%q].IntegrateMethod=%q, want %q", key, got, want)
+		}
+	}
+}
+
+func TestDefaultDispatchTable_SyncMethods(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	perTarget := map[string]bool{"prompts": true, "agents": true, "commands": true, "instructions": true}
+	for key, entry := range table {
+		if perTarget[key] {
+			if entry.SyncMethod != "sync_for_target" {
+				t.Errorf("table[%q].SyncMethod=%q, want sync_for_target", key, entry.SyncMethod)
+			}
+		} else {
+			if entry.SyncMethod != "sync_integration" {
+				t.Errorf("table[%q].SyncMethod=%q, want sync_integration", key, entry.SyncMethod)
+			}
+		}
+	}
+}
+
+func TestDefaultDispatchTable_AllIntegratorClassesSet(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	for key, entry := range table {
+		if entry.IntegratorClass == "" {
+			t.Errorf("table[%q].IntegratorClass is empty", key)
+		}
+	}
+}
+
+func TestDefaultDispatchTable_AllIntegrateMethodsSet(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	for key, entry := range table {
+		if entry.IntegrateMethod == "" {
+			t.Errorf("table[%q].IntegrateMethod is empty", key)
+		}
+	}
+}
+
+func TestDefaultDispatchTable_AgentsIntegratorClass(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	if table["agents"].IntegratorClass != "AgentIntegrator" {
+		t.Errorf("agents IntegratorClass=%q, want AgentIntegrator", table["agents"].IntegratorClass)
+	}
+}
+
+func TestDefaultDispatchTable_HooksIntegratorClass(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	if table["hooks"].IntegratorClass != "HookIntegrator" {
+		t.Errorf("hooks IntegratorClass=%q, want HookIntegrator", table["hooks"].IntegratorClass)
+	}
+}
+
+func TestDefaultDispatchTable_InstructionsIntegratorClass(t *testing.T) {
+	table := dispatch.DefaultDispatchTable()
+	if table["instructions"].IntegratorClass != "InstructionIntegrator" {
+		t.Errorf("instructions IntegratorClass=%q, want InstructionIntegrator", table["instructions"].IntegratorClass)
+	}
+}

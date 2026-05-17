@@ -67,3 +67,38 @@ func TestRedactToken_empty(t *testing.T) {
 		t.Errorf("expected empty, got %q", got)
 	}
 }
+
+func TestRedactToken_ComplexURL(t *testing.T) {
+	input := "https://ghp_tokenABC123@github.com/org/repo.git"
+	got := RedactToken(input)
+	if strings.Contains(got, "ghp_tokenABC123") {
+		t.Errorf("token still visible: %q", got)
+	}
+	if !strings.Contains(got, "***@github.com") {
+		t.Errorf("expected redacted form: %q", got)
+	}
+}
+
+func TestRedactToken_GitCloneURL(t *testing.T) {
+	input := "git clone https://user:pat@ghe.example.com/repo.git"
+	got := RedactToken(input)
+	if strings.Contains(got, "pat") {
+		t.Errorf("token still visible: %q", got)
+	}
+}
+
+func TestRedactToken_MultipleQueryTokens(t *testing.T) {
+	input := "https://example.com/a?token=tok1 and https://other.com/b?token=tok2"
+	got := RedactToken(input)
+	if strings.Contains(got, "tok1") || strings.Contains(got, "tok2") {
+		t.Errorf("tokens still visible: %q", got)
+	}
+}
+
+func TestRedactToken_PreservesPath(t *testing.T) {
+	input := "https://token123@github.com/owner/repo/path/to/file"
+	got := RedactToken(input)
+	if !strings.Contains(got, "github.com/owner/repo/path/to/file") {
+		t.Errorf("path should be preserved: %q", got)
+	}
+}

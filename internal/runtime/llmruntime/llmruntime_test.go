@@ -5,6 +5,50 @@ import (
 	"testing"
 )
 
+func TestGetRuntimeInfo_Capabilities(t *testing.T) {
+	r := &LLMRuntime{ModelName: "gpt-4"}
+	info := r.GetRuntimeInfo()
+	caps, ok := info["capabilities"].(map[string]interface{})
+	if !ok {
+		t.Fatalf("capabilities field not a map: %T", info["capabilities"])
+	}
+	if caps["model_execution"] != true {
+		t.Error("model_execution capability should be true")
+	}
+}
+
+func TestGetRuntimeInfo_Type(t *testing.T) {
+	r := &LLMRuntime{ModelName: "claude"}
+	info := r.GetRuntimeInfo()
+	if info["type"] != "llm_library" {
+		t.Errorf("type = %v, want llm_library", info["type"])
+	}
+}
+
+func TestGetRuntimeInfo_Description(t *testing.T) {
+	r := &LLMRuntime{}
+	info := r.GetRuntimeInfo()
+	desc, ok := info["description"].(string)
+	if !ok || desc == "" {
+		t.Error("description should be non-empty string")
+	}
+}
+
+func TestString_EmptyModel(t *testing.T) {
+	r := &LLMRuntime{ModelName: ""}
+	s := r.String()
+	if !strings.Contains(s, "LLMRuntime") {
+		t.Errorf("String() = %q, want to contain LLMRuntime", s)
+	}
+}
+
+func TestLLMRuntimeStruct_Fields(t *testing.T) {
+	r := &LLMRuntime{ModelName: "gemini-pro"}
+	if r.ModelName != "gemini-pro" {
+		t.Errorf("ModelName = %q, want gemini-pro", r.ModelName)
+	}
+}
+
 func TestGetRuntimeName(t *testing.T) {
 	r := &LLMRuntime{ModelName: "gpt-4"}
 	if got := r.GetRuntimeName(); got != "llm" {

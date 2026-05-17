@@ -1,6 +1,25 @@
 package gitutils
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
+
+func TestRedactToken_multipleTokensInLine(t *testing.T) {
+	input := "https://tok1@github.com clone && https://tok2@gitlab.com"
+	got := RedactToken(input)
+	if strings.Contains(got, "tok1") || strings.Contains(got, "tok2") {
+		t.Errorf("tokens still visible: %q", got)
+	}
+}
+
+func TestRedactToken_plainText(t *testing.T) {
+	input := "no tokens here, just plain text"
+	got := RedactToken(input)
+	if got != input {
+		t.Errorf("plain text modified unexpectedly: %q", got)
+	}
+}
 
 func TestRedactToken_httpsAt(t *testing.T) {
 	input := "https://mytoken@github.com/owner/repo.git"

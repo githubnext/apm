@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 867385,
+  "migrated_python_lines": 867786,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16207,6 +16207,55 @@
       "python_lines": 34,
       "status": "test-migrated",
       "notes": "Extended Go test coverage for targetdetection package"
+    },
+    {
+      "module": "test/commands/policy/extended-iter105",
+      "go_package": "internal/commands/policy",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "notes": "Extended policy_test.go: added PolicySource/PolicyStatus field tests, discoverPolicyFile, countRules, StatusOptions coverage (+97 lines)"
+    },
+    {
+      "module": "test/commands/update/extended-iter105",
+      "go_package": "internal/commands/update",
+      "python_lines": 64,
+      "status": "test-migrated",
+      "notes": "Extended update_test.go: added UpdateOptions, UpdateResult, PlanEntry field coverage (+64 lines)"
+    },
+    {
+      "module": "test/commands/pack/extended-iter105",
+      "go_package": "internal/commands/pack",
+      "python_lines": 64,
+      "status": "test-migrated",
+      "notes": "Extended pack_test.go: added PackResult, PackOptions all-fields, UnpackOptions coverage (+64 lines)"
+    },
+    {
+      "module": "test/utils/yamlio/extended-iter105",
+      "go_package": "internal/utils/yamlio",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "notes": "Extended yamlio_test.go: added empty file, comments, non-map YAMLToStr, multi-key round-trip tests (+78 lines)"
+    },
+    {
+      "module": "test/runtime/llmruntime/extended-iter105",
+      "go_package": "internal/runtime/llmruntime",
+      "python_lines": 44,
+      "status": "test-migrated",
+      "notes": "Extended llmruntime_test.go: added GetRuntimeInfo capabilities, type, description, String empty model, struct fields (+44 lines)"
+    },
+    {
+      "module": "test/adapters/client/cursor/extended-iter105",
+      "go_package": "internal/adapters/client/cursor",
+      "python_lines": 35,
+      "status": "test-migrated",
+      "notes": "Extended cursor_test.go: added GetCurrentConfig missing/with-file JSON tests (+35 lines)"
+    },
+    {
+      "module": "test/marketplace/gitutils/extended-iter105",
+      "go_package": "internal/marketplace/gitutils",
+      "python_lines": 19,
+      "status": "test-migrated",
+      "notes": "Extended gitutils_test.go: added multiple-tokens and plain-text RedactToken tests (+19 lines)"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

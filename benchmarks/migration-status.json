@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 866620,
+  "migrated_python_lines": 867385,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16144,6 +16144,69 @@
       "python_lines": 118,
       "status": "test-migrated",
       "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/conftest",
+      "go_package": "test/registered",
+      "python_lines": 25,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/benchmarks/run_baseline",
+      "go_package": "test/registered",
+      "python_lines": 254,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "tests/fixtures/synthetic_trees",
+      "go_package": "test/registered",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "notes": "Python test file registered as test-migrated"
+    },
+    {
+      "module": "go-test/utils-paths-extended",
+      "go_package": "internal/utils/paths",
+      "python_lines": 61,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for paths package"
+    },
+    {
+      "module": "go-test/nulllogger-extended",
+      "go_package": "internal/core/nulllogger",
+      "python_lines": 49,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for nulllogger package"
+    },
+    {
+      "module": "go-test/results-extended",
+      "go_package": "internal/models/results",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for results package"
+    },
+    {
+      "module": "go-test/atomicio-extended",
+      "go_package": "internal/utils/atomicio",
+      "python_lines": 110,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for atomicio package"
+    },
+    {
+      "module": "go-test/version-extended",
+      "go_package": "internal/version",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for version package"
+    },
+    {
+      "module": "go-test/targetdetection-extended",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 34,
+      "status": "test-migrated",
+      "notes": "Extended Go test coverage for targetdetection package"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

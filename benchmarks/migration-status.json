@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 872793,
+  "migrated_python_lines": 872814,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16670,10 +16670,59 @@
       "python_lines": 58,
       "status": "test-migrated",
       "notes": "Extended policy matcher test suite: DoubleStarOnly, TrailingStar, ExactNoWildcard, DenyThenAllow, NilDeny, NotInAllowList, SingleStarInMiddle"
+    },
+    {
+      "module": "instructionintegrator-extra-tests",
+      "go_package": "internal/integration/instructionintegrator/instructionintegrator_extra_test.go",
+      "python_lines": 183,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "primparser-extra-tests",
+      "go_package": "internal/primitives/primparser/primparser_extra_test.go",
+      "python_lines": 128,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "templatebuilder-extra-tests",
+      "go_package": "internal/compilation/templatebuilder/templatebuilder_extra_test.go",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "diagnostics-extra-tests",
+      "go_package": "internal/utils/diagnostics/diagnostics_extra_test.go",
+      "python_lines": 119,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "conflictdetector-extra-tests",
+      "go_package": "internal/core/conflictdetector/conflictdetector_extra_test.go",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "inheritance-extra-tests",
+      "go_package": "internal/policy/inheritance/inheritance_extra_test.go",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "notes": "Extended Go test file with additional edge-case coverage"
+    },
+    {
+      "module": "localcontent-extra-tests",
+      "go_package": "internal/install/phases/localcontent/localcontent_extra_test.go",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "notes": "Extended localcontent test suite with multi-subdir, nested file, and edge-case coverage"
     }
   ],
-  "last_updated": "2026-05-17T20:26:02Z",
-  "iteration": 81,
+  "last_updated": "2026-05-17T23:24:00Z",
+  "iteration": 82,
   "python_lines_migrated_pct": 995.11,
   "modules_migrated": 2253,
   "modules": [

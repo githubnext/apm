@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 543766,
+  "migrated_python_lines": 597275,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -12430,6 +12430,321 @@
       "python_lines": 1686,
       "status": "test-migrated",
       "notes": "Extended test suite: DefaultOptions, ParseLsRemoteOutput edge cases, SemverSortKey edge cases, SortRemoteRefs stability, RemoteRef struct, ProtocolPreference constants"
+    },
+    {
+      "module": "test/integration/contextoptimizer",
+      "python_lines": 2586,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/commands/marketplace-gotests",
+      "python_lines": 2493,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/builder",
+      "python_lines": 2112,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/auth",
+      "python_lines": 1347,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/vscode",
+      "python_lines": 1285,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/policy/test/ci-checks",
+      "python_lines": 1121,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/install-local-bundle-e2e",
+      "python_lines": 1082,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/cloneengine",
+      "python_lines": 1026,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/golden-scenario-e2e",
+      "python_lines": 981,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/core/test/target-detection",
+      "python_lines": 935,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/installphase",
+      "python_lines": 891,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/primitives/test/discovery-parser",
+      "python_lines": 884,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/mcp-overlays",
+      "python_lines": 878,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/policy-gate-phase",
+      "python_lines": 856,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/ado-path-structure",
+      "python_lines": 824,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/marketplace/test/marketplace-resolver",
+      "python_lines": 816,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/plugin-e2e",
+      "python_lines": 815,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/agent-skills-target",
+      "python_lines": 813,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/init-command",
+      "python_lines": 812,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/marketplace/test/marketplace-client",
+      "python_lines": 803,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/mcp-lifecycle-e2e",
+      "python_lines": 802,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/mcp-command",
+      "python_lines": 791,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/benchmarks/test/security-and-resolver-benchmarks",
+      "python_lines": 776,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/local-deps",
+      "python_lines": 760,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/deps/test/github-downloader-validation",
+      "python_lines": 758,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/install-logger-policy",
+      "python_lines": 747,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/mcp-registry-e2e",
+      "python_lines": 723,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/copilot-adapter",
+      "python_lines": 714,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/policy/discovery",
+      "python_lines": 705,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/local-install",
+      "python_lines": 701,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/primitives/primitives",
+      "python_lines": 698,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/view-command",
+      "python_lines": 692,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/compilation/test/agents-compiler-coverage",
+      "python_lines": 675,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/benchmarks/test/compilation-hot-paths",
+      "python_lines": 668,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/no-policy-flag",
+      "python_lines": 648,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/canonicalization",
+      "python_lines": 646,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/commands/test/marketplace-doctor",
+      "python_lines": 643,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/diff-aware-install-e2e",
+      "python_lines": 642,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/mcp-preflight-policy",
+      "python_lines": 639,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/commands/test/marketplace-plugin",
+      "python_lines": 638,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/deps-list-tree-info",
+      "python_lines": 635,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/content-scanner",
+      "python_lines": 627,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/virtual-package-orphan-detection",
+      "python_lines": 611,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/apm-resolver",
+      "python_lines": 609,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/skill-bundle-live",
+      "python_lines": 603,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/marketplace/test/ref-resolver",
+      "python_lines": 601,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/install-pkg-policy-rollback",
+      "python_lines": 600,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/acceptance/test/logging-acceptance",
+      "python_lines": 595,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/compilation/test/mathematical-optimization",
+      "python_lines": 593,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/selective-install-mcp",
+      "python_lines": 591,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/diagnostics",
+      "python_lines": 585,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/deps-update-command",
+      "python_lines": 570,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/core/experimental",
+      "python_lines": 569,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/test/copilot-cowork-target",
+      "python_lines": 564,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/apm-package",
+      "python_lines": 561,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/command-logger",
+      "python_lines": 558,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/policy/test/cache-merged-effective",
+      "python_lines": 556,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/services",
+      "python_lines": 553,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/test/uninstall-engine-helpers",
+      "python_lines": 547,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/install/test/install-target-copilot-cowork-e2e",
+      "python_lines": 543,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/core/targetdetection-extended",
+      "python_lines": 935,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/compilation/contextoptimizer-extended",
+      "python_lines": 2586,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/integration/commands/cache-extended",
+      "python_lines": 891,
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

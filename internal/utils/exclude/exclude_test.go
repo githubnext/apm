@@ -1,6 +1,7 @@
 package exclude_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/githubnext/apm/internal/utils/exclude"
@@ -69,4 +70,63 @@ func TestShouldExclude_noPatterns(t *testing.T) {
 	if exclude.ShouldExclude("/base/file.go", "/base", nil) {
 		t.Error("nil patterns should never exclude")
 	}
+}
+
+func TestValidateExcludePatterns_exactlyMaxStars(t *testing.T) {
+// 5 ** segments should be valid (at max limit)
+pattern := "a/**/b/**/c/**/d/**/e/**"
+out, err := exclude.ValidateExcludePatterns([]string{pattern})
+if err != nil {
+t.Errorf("expected no error for exactly max ** segments, got %v", err)
+}
+if len(out) != 1 {
+t.Errorf("expected 1 output, got %d", len(out))
+}
+}
+
+func TestValidateExcludePatterns_backslashNormalized(t *testing.T) {
+// Windows-style backslashes should be normalized to forward slashes
+pattern := `docs\**\*.md`
+out, err := exclude.ValidateExcludePatterns([]string{pattern})
+if err != nil {
+t.Fatalf("unexpected error: %v", err)
+}
+if len(out) != 1 || !strings.Contains(out[0], "/") {
+t.Errorf("expected normalized pattern with forward slashes, got %q", out[0])
+}
+}
+
+func TestShouldExclude_multiplePatternsFirstMatch(t *testing.T) {
+patterns := []string{"build/**", "dist/**"}
+if !exclude.ShouldExclude("/base/build/out.bin", "/base", patterns) {
+t.Error("build/out.bin should be excluded by build/**")
+}
+if !exclude.ShouldExclude("/base/dist/bundle.js", "/base", patterns) {
+t.Error("dist/bundle.js should be excluded by dist/**")
+}
+if exclude.ShouldExclude("/base/src/main.go", "/base", patterns) {
+t.Error("src/main.go should not be excluded")
+}
+}
+
+func TestShouldExclude_exactFilePattern(t *testing.T) {
+patterns := []string{"README.md"}
+if !exclude.ShouldExclude("/base/README.md", "/base", patterns) {
+t.Error("README.md should be excluded by README.md pattern")
+}
+if exclude.ShouldExclude("/base/docs/README.md", "/base", patterns) {
+t.Error("docs/README.md should not be excluded by top-level pattern")
+}
+}
+
+func TestShouldExclude_emptyPatterns(t *testing.T) {
+if exclude.ShouldExclude("/base/anything", "/base", []string{}) {
+t.Error("empty patterns should not exclude")
+}
+}
+
+func TestMaxDoubleStarSegments_value(t *testing.T) {
+if exclude.MaxDoubleStarSegments <= 0 {
+t.Errorf("MaxDoubleStarSegments should be positive, got %d", exclude.MaxDoubleStarSegments)
+}
 }

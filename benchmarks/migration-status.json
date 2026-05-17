@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 870762,
+  "migrated_python_lines": 871187,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16532,12 +16532,60 @@
       "python_lines": 87,
       "status": "test-migrated",
       "notes": "Extended gitrefresolver tests: GitReferenceType constants, RemoteRef fields, ResolvedReference fields, GitHubAPIResult, New default timeout, SHA boundary cases."
+    },
+    {
+      "name": "test/core/apmyml/extended-iter113",
+      "module": "test/core/apmyml/extended-iter113",
+      "go_package": "internal/core/apmyml",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "notes": "Extended apmyml test: list-under-singular, whitespace-csv, all-canonical, error types, empty-list iter113"
+    },
+    {
+      "name": "test/install/mcpargs/extended-iter113",
+      "module": "test/install/mcpargs/extended-iter113",
+      "go_package": "internal/install/mcpargs",
+      "python_lines": 74,
+      "status": "test-migrated",
+      "notes": "Extended mcpargs test: multipleEquals, duplicateKey, emptyInput, multipleVars, multipleHeaders iter113"
+    },
+    {
+      "name": "test/models/deptypes/extended-iter113",
+      "module": "test/models/deptypes/extended-iter113",
+      "go_package": "internal/models/deptypes",
+      "python_lines": 64,
+      "status": "test-migrated",
+      "notes": "Extended deptypes test: constant distinctness, shortHex, 40charHex, semverVariants, zero-value iter113"
+    },
+    {
+      "name": "test/utils/githubhost/extended-iter113",
+      "module": "test/utils/githubhost/extended-iter113",
+      "go_package": "internal/utils/githubhost",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "notes": "Extended githubhost test: IsGHEHostname, IsGitHubHostname, AzureDevOpsOrg, ParseHostFromURL, IsVisualStudioLegacy iter113"
+    },
+    {
+      "name": "test/utils/exclude/extended-iter113",
+      "module": "test/utils/exclude/extended-iter113",
+      "go_package": "internal/utils/exclude",
+      "python_lines": 60,
+      "status": "test-migrated",
+      "notes": "Extended exclude test: exactlyMaxStars, backslashNormalized, multiplePatternsFirstMatch, exactFilePattern iter113"
+    },
+    {
+      "name": "test/updatepolicy/extended-iter113",
+      "module": "test/updatepolicy/extended-iter113",
+      "go_package": "internal/updatepolicy",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "notes": "Extended updatepolicy test: whitespace-only, toggle, disabledWithEmptyMessage, tab char fallback iter113"
     }
   ],
-  "last_updated": "2026-05-17T17:31:11Z",
-  "iteration": 79,
-  "python_lines_migrated_pct": 993.73,
-  "modules_migrated": 2185,
+  "last_updated": "2026-05-17T18:32:08Z",
+  "iteration": 80,
+  "python_lines_migrated_pct": 994.21,
+  "modules_migrated": 2247,
   "modules": [
     {
       "module": "models/dependency/reference",

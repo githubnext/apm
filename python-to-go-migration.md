@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T21:30:00Z|
-| Iteration Count | 116|
-| Best Metric | 995.51|
+| Last Run | 2026-05-17T22:22:00Z|
+| Iteration Count | 117|
+| Best Metric | 996.04|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -73,6 +73,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 117 -- 2026-05-17 22:22 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26004392245)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 6 thin Go packages (buildid, cachepin, integrity, apmpackage, gate, mcpwriter) with 469 new lines total; registered 6 test-migrated entries
+- **Metric**: 996.04% (previous best: 995.51%, delta: +0.53pp)
+- **Commit**: b05e971
+- **Notes**: Added edge-case coverage: empty/no-trailing-newline for buildid, overwrite/empty-commit for cachepin, dangling-ref/empty-expected for integrity, case-variants/unknown-type for apmpackage, ReportPolicy/WarnPolicy never block + multiple files for gate, modified-value-diff/dev-MCPListSection for mcpwriter.
 
 ### Iteration 116 -- 2026-05-17 21:30 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26003059051)
 

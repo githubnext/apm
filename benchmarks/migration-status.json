@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 872324,
+  "migrated_python_lines": 872793,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16732,6 +16732,42 @@
       "module": "core/errors-test-ext",
       "status": "test-migrated",
       "python_lines": 67
+    },
+    {
+      "module": "buildid-extra-tests",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "notes": "buildid_extra_test.go: empty string, no trailing newline, large content, determinism edge cases"
+    },
+    {
+      "module": "cachepin-extra-tests",
+      "python_lines": 74,
+      "status": "test-migrated",
+      "notes": "cachepin_extra_test.go: read-back, overwrite, empty commit, IsCachePinError with stdlib error"
+    },
+    {
+      "module": "integrity-extra-tests",
+      "python_lines": 69,
+      "status": "test-migrated",
+      "notes": "integrity_extra_test.go: empty dir, direct SHA, dangling ref, empty expected SHA, packed-refs with comment"
+    },
+    {
+      "module": "apmpackage-extra-tests",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "notes": "apmpackage_extra_test.go: case variants, empty string, unknown type, GetPrimitivesPath, round-trip"
+    },
+    {
+      "module": "gate-extra-tests",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "notes": "gate_extra_test.go: ReportPolicy/WarnPolicy never block, BlockPolicy force, HasFindings, empty/nil paths, multiple files"
+    },
+    {
+      "module": "mcpwriter-extra-tests",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "notes": "mcpwriter_extra_test.go: modified value diff, multiple entries find, dev/prod MCPListSection, outcome constants"
     }
   ]
 }

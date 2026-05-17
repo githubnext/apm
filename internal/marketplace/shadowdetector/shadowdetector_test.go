@@ -75,3 +75,56 @@ func TestDetectShadows_NilLister(t *testing.T) {
 		t.Error("nil lister should return empty slice")
 	}
 }
+
+func TestDetectShadows_MultipleConflicts(t *testing.T) {
+	lister := &mockLister{
+		plugins: map[string][]string{
+			"mp-a": {"my-plugin"},
+			"mp-b": {"MY-PLUGIN"},
+		},
+		marketplaces: []string{"primary", "mp-a", "mp-b"},
+	}
+	results := shadowdetector.DetectShadows("my-plugin", "primary", lister)
+	if len(results) != 2 {
+		t.Fatalf("expected 2 shadows, got %d", len(results))
+	}
+}
+
+func TestDetectShadows_EmptyMarketplaces(t *testing.T) {
+	lister := &mockLister{
+		plugins:      map[string][]string{},
+		marketplaces: []string{},
+	}
+	results := shadowdetector.DetectShadows("any-plugin", "primary", lister)
+	if len(results) != 0 {
+		t.Errorf("expected empty results, got %d", len(results))
+	}
+}
+
+func TestDetectShadows_OnlyPrimary(t *testing.T) {
+	lister := &mockLister{
+		plugins:      map[string][]string{"primary": {"my-plugin"}},
+		marketplaces: []string{"primary"},
+	}
+	results := shadowdetector.DetectShadows("my-plugin", "primary", lister)
+	if len(results) != 0 {
+		t.Error("primary marketplace should not be checked for shadows")
+	}
+}
+
+func TestShadowMatchFields(t *testing.T) {
+	lister := &mockLister{
+		plugins:      map[string][]string{"other": {"TargetPlugin"}},
+		marketplaces: []string{"main", "other"},
+	}
+	results := shadowdetector.DetectShadows("targetplugin", "main", lister)
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if results[0].MarketplaceName != "other" {
+		t.Errorf("MarketplaceName: got %q, want %q", results[0].MarketplaceName, "other")
+	}
+	if results[0].PluginName != "TargetPlugin" {
+		t.Errorf("PluginName: got %q, want %q", results[0].PluginName, "TargetPlugin")
+	}
+}

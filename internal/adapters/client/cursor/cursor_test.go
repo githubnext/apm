@@ -76,3 +76,53 @@ func TestSupportsRuntimeEnvSubstitution(t *testing.T) {
 		t.Error("SupportsRuntimeEnvSubstitution should be false for cursor")
 	}
 }
+
+func TestGetConfigPath_EmptyRoot(t *testing.T) {
+	a := New("", false)
+	got := a.GetConfigPath()
+	if got == "" {
+		t.Error("GetConfigPath with empty root should return non-empty path")
+	}
+}
+
+func TestUpdateConfig_NoCursorDir(t *testing.T) {
+	dir := t.TempDir()
+	a := New(dir, false)
+	err := a.UpdateConfig(map[string]interface{}{"key": "val"})
+	if err != nil {
+		t.Errorf("UpdateConfig with no .cursor dir should not error: %v", err)
+	}
+}
+
+func TestUpdateConfig_WithCursorDir(t *testing.T) {
+	dir := t.TempDir()
+	cursorDir := filepath.Join(dir, ".cursor")
+	if err := os.MkdirAll(cursorDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	a := New(dir, false)
+	err := a.UpdateConfig(map[string]interface{}{})
+	if err != nil {
+		t.Errorf("UpdateConfig with .cursor dir: %v", err)
+	}
+}
+
+func TestGetCurrentConfig_InvalidJSON(t *testing.T) {
+	dir := t.TempDir()
+	cursorDir := filepath.Join(dir, ".cursor")
+	if err := os.MkdirAll(cursorDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	cfgPath := filepath.Join(cursorDir, "mcp.json")
+	if err := os.WriteFile(cfgPath, []byte("not json"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	a := New(dir, false)
+	cfg := a.GetCurrentConfig()
+	if cfg == nil {
+		t.Error("expected empty map for invalid JSON, not nil")
+	}
+	if len(cfg) != 0 {
+		t.Errorf("expected empty map for invalid JSON, got %v", cfg)
+	}
+}

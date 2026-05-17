@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 871187,
+  "migrated_python_lines": 871597,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16580,12 +16580,60 @@
       "python_lines": 66,
       "status": "test-migrated",
       "notes": "Extended updatepolicy test: whitespace-only, toggle, disabledWithEmptyMessage, tab char fallback iter113"
+    },
+    {
+      "name": "test/commands/cache/extended-iter114",
+      "module": "test/commands/cache/extended-iter114",
+      "go_package": "internal/commands/cache",
+      "python_lines": 55,
+      "status": "test-migrated",
+      "notes": "Extended cache_extra_test.go: KB boundary, MB boundary, multi-GB formatSize cases iter114"
+    },
+    {
+      "name": "test/core/scope/extended-iter114",
+      "module": "test/core/scope/extended-iter114",
+      "go_package": "internal/core/scope",
+      "python_lines": 75,
+      "status": "test-migrated",
+      "notes": "Extended scope_test.go: GetModulesDir, GetManifestPath, GetLockfileDir, EnsureUserDirs, ScopeString distinctness iter114"
+    },
+    {
+      "name": "test/commands/outdated/extended-iter114",
+      "module": "test/commands/outdated/extended-iter114",
+      "go_package": "internal/commands/outdated",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "notes": "Extended outdated_test.go: patch/minor comparisons, semver variants, stripV, truncate, OutdatedRow, RemoteRef iter114"
+    },
+    {
+      "name": "test/cache/cachepaths/extended-iter114",
+      "module": "test/cache/cachepaths/extended-iter114",
+      "go_package": "internal/cache/cachepaths",
+      "python_lines": 65,
+      "status": "test-migrated",
+      "notes": "Extended cachepaths_test.go: APM_NO_CACHE=true/yes, constant values, XDG override iter114"
+    },
+    {
+      "name": "test/marketplace/shadowdetector/extended-iter114",
+      "module": "test/marketplace/shadowdetector/extended-iter114",
+      "go_package": "internal/marketplace/shadowdetector",
+      "python_lines": 60,
+      "status": "test-migrated",
+      "notes": "Extended shadowdetector_test.go: multiple conflicts, empty marketplaces, only-primary, ShadowMatch fields iter114"
+    },
+    {
+      "name": "test/adapters/cursor/extended-iter114",
+      "module": "test/adapters/cursor/extended-iter114",
+      "go_package": "internal/adapters/client/cursor",
+      "python_lines": 65,
+      "status": "test-migrated",
+      "notes": "Extended cursor_test.go: empty root, UpdateConfig with/without .cursor dir, invalid JSON config iter114"
     }
   ],
-  "last_updated": "2026-05-17T18:32:08Z",
+  "last_updated": "2026-05-17T19:34:22Z",
   "iteration": 80,
-  "python_lines_migrated_pct": 994.21,
-  "modules_migrated": 2247,
+  "python_lines_migrated_pct": 994.68,
+  "modules_migrated": 2253,
   "modules": [
     {
       "module": "models/dependency/reference",

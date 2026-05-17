@@ -68,3 +68,71 @@ func TestGetAPMDir_Project(t *testing.T) {
 		t.Error("expected non-empty APM dir")
 	}
 }
+
+func TestGetModulesDir_Project(t *testing.T) {
+	dir, err := scope.GetModulesDir(scope.ScopeProject)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if dir == "" {
+		t.Error("expected non-empty modules dir")
+	}
+}
+
+func TestGetModulesDir_User(t *testing.T) {
+	dir, err := scope.GetModulesDir(scope.ScopeUser)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if dir == "" {
+		t.Error("expected non-empty user modules dir")
+	}
+}
+
+func TestGetManifestPath_Project(t *testing.T) {
+	path, err := scope.GetManifestPath(scope.ScopeProject)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if path == "" {
+		t.Error("expected non-empty manifest path")
+	}
+}
+
+func TestGetManifestPath_User(t *testing.T) {
+	path, err := scope.GetManifestPath(scope.ScopeUser)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if path == "" {
+		t.Error("expected non-empty user manifest path")
+	}
+}
+
+func TestGetLockfileDir_Both(t *testing.T) {
+	for _, s := range []scope.InstallScope{scope.ScopeProject, scope.ScopeUser} {
+		dir, err := scope.GetLockfileDir(s)
+		if err != nil {
+			t.Errorf("GetLockfileDir(%v) error: %v", s, err)
+		}
+		if dir == "" {
+			t.Errorf("GetLockfileDir(%v) returned empty string", s)
+		}
+	}
+}
+
+func TestEnsureUserDirs(t *testing.T) {
+	root, err := scope.EnsureUserDirs()
+	if err != nil {
+		t.Fatalf("EnsureUserDirs error: %v", err)
+	}
+	if root == "" {
+		t.Error("EnsureUserDirs returned empty root")
+	}
+}
+
+func TestScopeScopeString_AllValues(t *testing.T) {
+	if scope.ScopeProject.String() == scope.ScopeUser.String() {
+		t.Error("ScopeProject and ScopeUser should have different String() values")
+	}
+}

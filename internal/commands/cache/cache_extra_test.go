@@ -62,3 +62,54 @@ if got != want {
 t.Errorf("formatSize(%d) = %q, want %q", in, got, want)
 }
 }
+
+func TestFormatSize_BoundaryKB(t *testing.T) {
+// 1024*1024 - 1 is still MB boundary
+cases := []struct {
+in   int64
+want string
+}{
+{1024*1024 - 1, "1024.0 KB"},
+{1024 * 512, "512.0 KB"},
+{1024 * 100, "100.0 KB"},
+}
+for _, c := range cases {
+got := formatSize(c.in)
+if got != c.want {
+t.Errorf("formatSize(%d) = %q, want %q", c.in, got, c.want)
+}
+}
+}
+
+func TestFormatSize_BoundaryMB(t *testing.T) {
+cases := []struct {
+in   int64
+want string
+}{
+{1024 * 1024 * 100, "100.0 MB"},
+{1024 * 1024 * 500, "500.0 MB"},
+{1024*1024*1024 - 1, "1024.0 MB"},
+}
+for _, c := range cases {
+got := formatSize(c.in)
+if got != c.want {
+t.Errorf("formatSize(%d) = %q, want %q", c.in, got, c.want)
+}
+}
+}
+
+func TestFormatSize_MultipleGB(t *testing.T) {
+cases := []struct {
+in   int64
+want string
+}{
+{2 * 1024 * 1024 * 1024, "2.0 GB"},
+{10 * 1024 * 1024 * 1024, "10.0 GB"},
+}
+for _, c := range cases {
+got := formatSize(c.in)
+if got != c.want {
+t.Errorf("formatSize(%d) = %q, want %q", c.in, got, c.want)
+}
+}
+}

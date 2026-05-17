@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T17:26:00Z|
-| Iteration Count | 112|
-| Best Metric | 993.73|
+| Last Run | 2026-05-17T18:27:00Z|
+| Iteration Count | 113|
+| Best Metric | 994.21|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -72,6 +72,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 113 -- 2026-05-17 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25999065222)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 6 thin Go test suites (apmyml, mcpargs, deptypes, githubhost, exclude, updatepolicy) with 425 new lines; registered 6 new test-migrated entries
+- **Metric**: 994.21% (previous best: 993.73%, delta: +0.48pp)
+- **Commit**: 674fab0
+- **Notes**: Added error-type assertions, CSV/list variants, constant-distinctness, hex-length boundaries, FQDN/URL parsing, backslash normalization, and tab-char fallback tests. All Go tests pass.
 
 ### Iteration 112 -- 2026-05-17 17:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25997665218)
 

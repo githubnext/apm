@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 869215,
+  "migrated_python_lines": 869537,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16364,6 +16364,48 @@
       "python_lines": 30,
       "status": "test-migrated",
       "notes": "Extended intutils_test.go: no-scheme-no-slash, multi-path HTTPS, both suffixes, empty string"
+    },
+    {
+      "module": "test/commands/view/extended-iter109",
+      "go_package": "internal/commands/view",
+      "python_lines": 76,
+      "status": "test-migrated",
+      "notes": "Extended view_test.go with ViewOptions, PackageInfo, parseSimpleYAML edge cases"
+    },
+    {
+      "module": "test/core/experimental/extended-iter109",
+      "go_package": "internal/core/experimental",
+      "python_lines": 48,
+      "status": "test-migrated",
+      "notes": "Extended experimental_test.go with hint, immutability, DisplayName edge cases"
+    },
+    {
+      "module": "test/deps/installedpkg/extended-iter109",
+      "go_package": "internal/deps/installedpkg",
+      "python_lines": 42,
+      "status": "test-migrated",
+      "notes": "Extended installedpkg_test.go with zero value, depth levels, commit formats"
+    },
+    {
+      "module": "test/integration/coverage/extended-iter109",
+      "go_package": "internal/integration/coverage",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "notes": "Extended coverage_test.go with DispatchEntry, multi-special, all-special cases"
+    },
+    {
+      "module": "test/install/mcpconflicts/extended-iter109",
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "python_lines": 50,
+      "status": "test-migrated",
+      "notes": "Extended mcpconflicts_test.go with URL, env, header, zero-value, error interface tests"
+    },
+    {
+      "module": "test/install/request/extended-iter109",
+      "go_package": "internal/install/request",
+      "python_lines": 52,
+      "status": "test-migrated",
+      "notes": "Extended request_test.go with zero value, skill subset, frozen, OnlyPackages tests"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

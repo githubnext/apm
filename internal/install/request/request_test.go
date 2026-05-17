@@ -56,3 +56,55 @@ func TestInstallRequestFields(t *testing.T) {
 		t.Errorf("ProtocolPref: got %q, want %q", r.ProtocolPref, "https")
 	}
 }
+
+func TestInstallRequestZeroValue(t *testing.T) {
+	var r request.InstallRequest
+	if r.ParallelDownloads != 0 {
+		t.Errorf("zero ParallelDownloads: got %d, want 0", r.ParallelDownloads)
+	}
+	if r.Force {
+		t.Error("zero Force should be false")
+	}
+}
+
+func TestDefaultInstallRequest_AllowInsecureFalse(t *testing.T) {
+	r := request.DefaultInstallRequest()
+	if r.AllowInsecure {
+		t.Error("AllowInsecure default should be false")
+	}
+	if len(r.AllowInsecureHosts) != 0 {
+		t.Errorf("AllowInsecureHosts should be empty, got %v", r.AllowInsecureHosts)
+	}
+}
+
+func TestDefaultInstallRequest_NoSkillSubset(t *testing.T) {
+	r := request.DefaultInstallRequest()
+	if len(r.SkillSubset) != 0 {
+		t.Errorf("SkillSubset should be empty, got %v", r.SkillSubset)
+	}
+	if r.SkillSubsetFromCLI {
+		t.Error("SkillSubsetFromCLI should default to false")
+	}
+}
+
+func TestDefaultInstallRequest_NotFrozen(t *testing.T) {
+	r := request.DefaultInstallRequest()
+	if r.Frozen {
+		t.Error("Frozen should default to false")
+	}
+	if r.LegacySkillPaths {
+		t.Error("LegacySkillPaths should default to false")
+	}
+}
+
+func TestInstallRequest_OnlyPackages(t *testing.T) {
+	r := request.InstallRequest{
+		OnlyPackages: []string{"alpha", "beta", "gamma"},
+	}
+	if len(r.OnlyPackages) != 3 {
+		t.Errorf("OnlyPackages: got %d, want 3", len(r.OnlyPackages))
+	}
+	if r.OnlyPackages[2] != "gamma" {
+		t.Errorf("OnlyPackages[2]: got %q, want %q", r.OnlyPackages[2], "gamma")
+	}
+}

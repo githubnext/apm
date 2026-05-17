@@ -56,3 +56,53 @@ func TestPositionalPackagesMixedWithMCP_Fails(t *testing.T) {
 func TestValidMCPWithStdio(t *testing.T) {
 	ok(t, mcpconflicts.ConflictConfig{HasMCPName: true, MCPName: "myserver", Transport: "stdio"})
 }
+
+func TestValidMCPWithURL(t *testing.T) {
+	ok(t, mcpconflicts.ConflictConfig{HasMCPName: true, MCPName: "srv", URL: "https://mcp.example.com"})
+}
+
+func TestMCPWithEnv(t *testing.T) {
+	ok(t, mcpconflicts.ConflictConfig{
+		HasMCPName: true,
+		MCPName:    "srv",
+		Env:        map[string]string{"TOKEN": "abc"},
+	})
+}
+
+func TestNoMCPName_WithEnv_Fails(t *testing.T) {
+	fail(t, mcpconflicts.ConflictConfig{
+		HasMCPName: false,
+		Env:        map[string]string{"X": "1"},
+	}, "--env requires --mcp")
+}
+
+func TestMCPWithHeader(t *testing.T) {
+	ok(t, mcpconflicts.ConflictConfig{
+		HasMCPName: true,
+		MCPName:    "srv",
+		URL:        "https://mcp.example.com",
+		Headers:    map[string]string{"Authorization": "Bearer token"},
+	})
+}
+
+func TestConflictConfigZeroValue(t *testing.T) {
+	var cfg mcpconflicts.ConflictConfig
+	if cfg.HasMCPName {
+		t.Error("HasMCPName default should be false")
+	}
+	if cfg.Global {
+		t.Error("Global default should be false")
+	}
+}
+
+func TestValidationErrorImplementsError(t *testing.T) {
+	cfg := mcpconflicts.ConflictConfig{HasMCPName: false, Transport: "stdio"}
+	err := mcpconflicts.ValidateMCPConflicts(cfg)
+	if err == nil {
+		t.Fatal("expected error")
+	}
+	msg := err.Error()
+	if msg == "" {
+		t.Error("error message should not be empty")
+	}
+}

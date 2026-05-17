@@ -52,3 +52,51 @@ func TestDisplayName(t *testing.T) {
 		}
 	}
 }
+
+func TestFlagsAreImmutable(t *testing.T) {
+	flags1 := experimental.Flags()
+	flags2 := experimental.Flags()
+	if len(flags1) != len(flags2) {
+		t.Errorf("Flags() returned different lengths on repeated calls: %d vs %d", len(flags1), len(flags2))
+	}
+}
+
+func TestFlagHasHint(t *testing.T) {
+	flags := experimental.Flags()
+	vv, ok := flags["verbose_version"]
+	if !ok {
+		t.Fatal("verbose_version not found")
+	}
+	if vv.Hint == "" {
+		t.Error("verbose_version should have a non-empty Hint")
+	}
+}
+
+func TestFlagCopilotCoworkHasHint(t *testing.T) {
+	flags := experimental.Flags()
+	cc, ok := flags["copilot_cowork"]
+	if !ok {
+		t.Fatal("copilot_cowork not found")
+	}
+	if cc.Hint == "" {
+		t.Error("copilot_cowork should have a non-empty Hint")
+	}
+}
+
+func TestDisplayNameMultipleUnderscores(t *testing.T) {
+	cases := []struct {
+		in   string
+		want string
+	}{
+		{"a_b_c_d", "a-b-c-d"},
+		{"_leading", "-leading"},
+		{"trailing_", "trailing-"},
+		{"__double__", "--double--"},
+	}
+	for _, tc := range cases {
+		got := experimental.DisplayName(tc.in)
+		if got != tc.want {
+			t.Errorf("DisplayName(%q) = %q, want %q", tc.in, got, tc.want)
+		}
+	}
+}

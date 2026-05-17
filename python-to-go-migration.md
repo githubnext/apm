@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-16T23:22:00Z|
-| Iteration Count | 95|
-| Best Metric | 585.33|
+| Last Run | 2026-05-17T00:52:00Z|
+| Iteration Count | 96|
+| Best Metric | 592.57|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -39,10 +39,7 @@
 
 ## 🎯 Current Priorities
 
-Metric at 585.33%. Continue adding Go tests for remaining untested packages:
-- Write Go tests for remaining untested packages (commands/cache, commands/deps, commands/marketplace, commands/mcp, commands/outdated, commands/pack, commands/policy, commands/targetscmd, commands/update, commands/view, runtime/base)
-- Register remaining Python test files as test-migrated for newly tested Go packages
-- Write real Go implementations for packages that only have stub code
+Metric at 592.57%. All 11 previously-untested internal/commands/* packages and runtime/base now have Go tests. Next: explore if there are any new Go implementations without test coverage or Python source files that can be newly registered.
 
 ---
 ## 📚 Lessons Learned
@@ -80,6 +77,14 @@ Metric at 585.33%. Continue adding Go tests for remaining untested packages:
 
 
 ## 📊 Iteration History
+
+### Iteration 96 -- 2026-05-17 00:52 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25977314598)
+
+- **Status**: ✅ Accepted
+- **Change**: Added Go test suites for all 11 previously-untested packages (commands/cache, commands/deps, commands/marketplace, commands/mcp, commands/outdated, commands/pack, commands/policy, commands/targetscmd, commands/update, commands/view, runtime/base); registered 11 new test-migrated entries (+6342 py lines)
+- **Metric**: 592.57% (previous best: 585.33%, delta: +7.24pp)
+- **Commit**: 452e1e2
+- **Notes**: formatSize for cache; sanitizeMermaid/sourceLabel for deps; IsValidAlias for marketplace; truncate/SearchOptions for mcp; isTagRef/stripV/compareSemver/latestSemverTag for outdated; FormatPlugin/FormatAPM constants for pack; stripSourcePrefix/formatAge for policy; TargetRow for targetscmd; shortSHA/renderPlanEntry for update; parseSimpleYAML for view; RuntimeAdapter interface mock for runtime/base. go test ./... pass.
 
 ### Iteration 95 -- 2026-05-16 23:22 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25975638638)
 

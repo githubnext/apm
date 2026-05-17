@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 867786,
+  "migrated_python_lines": 868582,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16256,6 +16256,30 @@
       "python_lines": 19,
       "status": "test-migrated",
       "notes": "Extended gitutils_test.go: added multiple-tokens and plain-text RedactToken tests (+19 lines)"
+    },
+    {
+      "module": "test/internal/output/scriptformatters",
+      "go_file": "internal/output/scriptformatters/scriptformatters_test.go",
+      "python_lines": 235,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/internal/output/models",
+      "go_file": "internal/output/models/models_test.go",
+      "python_lines": 210,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/internal/primitives/primmodels",
+      "go_file": "internal/primitives/primmodels/primmodels_test.go",
+      "python_lines": 192,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test/internal/workflow/runner",
+      "go_file": "internal/workflow/runner/runner_test.go",
+      "python_lines": 159,
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-17T08:23:58Z",

@@ -80,3 +80,80 @@ func TestCollectParameters_EmptyWorkflow(t *testing.T) {
 		t.Errorf("expected extra=val, got %q", result["extra"])
 	}
 }
+
+func TestSubstituteParameters_AllReplaced(t *testing.T) {
+	content := "${input:a}/${input:b}/${input:c}"
+	params := map[string]string{"a": "1", "b": "2", "c": "3"}
+	result := SubstituteParameters(content, params)
+	if result != "1/2/3" {
+		t.Errorf("unexpected result: %q", result)
+	}
+}
+
+func TestRunWorkflow_NoExecutor(t *testing.T) {
+	result := RunWorkflow("nonexistent", nil, "/tmp", nil)
+	if result.Success {
+		t.Error("expected failure with no executor")
+	}
+	if result.ErrorMsg == "" {
+		t.Error("expected non-empty error message")
+	}
+}
+
+func TestPreviewWorkflow_NotFound(t *testing.T) {
+	result := PreviewWorkflow("nonexistent-workflow-xyz", nil, "/tmp")
+	if result.Success {
+		t.Error("expected failure for nonexistent workflow")
+	}
+	if result.ErrorMsg == "" {
+		t.Error("expected non-empty error message")
+	}
+}
+
+func TestFindWorkflowByName_NotFound(t *testing.T) {
+	_, err := FindWorkflowByName("nonexistent-abc", "/tmp")
+	if err == nil {
+		t.Error("expected error for nonexistent workflow")
+	}
+}
+
+func TestRunResult_Fields(t *testing.T) {
+	r := RunResult{Success: true, Output: "hello", ErrorMsg: ""}
+	if !r.Success {
+		t.Error("expected Success=true")
+	}
+	if r.Output != "hello" {
+		t.Errorf("unexpected output: %q", r.Output)
+	}
+
+	r2 := RunResult{ErrorMsg: "some error"}
+	if r2.Success {
+		t.Error("expected Success=false")
+	}
+	if r2.ErrorMsg == "" {
+		t.Error("expected non-empty error")
+	}
+}
+
+func TestRunWorkflow_ExecutorError(t *testing.T) {
+	// No real workflow files in /tmp — expect "not found" error before executor
+	result := RunWorkflow("bad-wf", nil, "/tmp", func(content, model string) (string, error) {
+		return "", nil
+	})
+	if result.Success {
+		t.Error("expected failure for missing workflow")
+	}
+}
+
+func TestCollectParameters_NilProvided(t *testing.T) {
+	wf := &wfparser.WorkflowDefinition{
+		InputParameters: []string{"x", "y"},
+	}
+	result := CollectParameters(wf, nil)
+	if _, ok := result["x"]; !ok {
+		t.Error("expected x key")
+	}
+	if _, ok := result["y"]; !ok {
+		t.Error("expected y key")
+	}
+}

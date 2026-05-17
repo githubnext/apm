@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-17T10:05:37Z|
-| Iteration Count | 104|
-| Best Metric | 989.87|
+| Last Run | 2026-05-17T10:56:00Z|
+| Iteration Count | 105|
+| Best Metric | 990.33|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -70,6 +70,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 105 -- 2026-05-17 10:56 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25988873881)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended 7 thin Go test suites (policy, update, pack, yamlio, llmruntime, cursor, gitutils) with 401 new lines; registered 7 new test-migrated entries
+- **Metric**: 990.33% (previous best: 989.87%, delta: +0.46pp)
+- **Commit**: 2341750
+- **Notes**: Added struct-field tests, boundary cases, file-backed tests, and capability checks across 7 packages. All 2201 migration entries now registered.
 
 ### Iteration 104 -- 2026-05-17 10:05 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25987842893)
 

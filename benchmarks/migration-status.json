@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 512902,
+  "migrated_python_lines": 519244,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -10742,6 +10742,94 @@
       "python_lines": 544,
       "status": "test-migrated",
       "notes": "Go tests for mcpwriter: DiffEntry (nil/new/same/removed), FindExistingMCPEntry (empty/found/not-found), MCPListSection"
+    },
+    {
+      "module": "test/commands/cache_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/cache",
+      "python_file": "src/apm_cli/commands/cache.py",
+      "python_lines": 137,
+      "status": "test-migrated",
+      "notes": "Go tests for CacheInfo/CacheClean/CachePrune/formatSize"
+    },
+    {
+      "module": "test/commands/deps_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/deps",
+      "python_file": "src/apm_cli/commands/deps/cli.py",
+      "python_lines": 927,
+      "status": "test-migrated",
+      "notes": "Go tests for sanitizeMermaid/sourceLabel/DepEntry struct"
+    },
+    {
+      "module": "test/commands/marketplace_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/marketplace",
+      "python_file": "src/apm_cli/commands/marketplace/__init__.py",
+      "python_lines": 2493,
+      "status": "test-migrated",
+      "notes": "Go tests for IsValidAlias/MarketplaceEntry"
+    },
+    {
+      "module": "test/commands/mcp_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/mcp",
+      "python_file": "src/apm_cli/commands/mcp.py",
+      "python_lines": 501,
+      "status": "test-migrated",
+      "notes": "Go tests for truncate/SearchOptions/InstallOptions/MCPRegistryEnv"
+    },
+    {
+      "module": "test/commands/outdated_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/outdated",
+      "python_file": "src/apm_cli/commands/outdated.py",
+      "python_lines": 538,
+      "status": "test-migrated",
+      "notes": "Go tests for isTagRef/stripV/compareSemver/latestSemverTag"
+    },
+    {
+      "module": "test/commands/pack_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/pack",
+      "python_file": "src/apm_cli/commands/pack.py",
+      "python_lines": 417,
+      "status": "test-migrated",
+      "notes": "Go tests for FormatPlugin/FormatAPM constants and PackOptions/UnpackOptions structs"
+    },
+    {
+      "module": "test/commands/policy_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/policy",
+      "python_file": "src/apm_cli/commands/policy.py",
+      "python_lines": 372,
+      "status": "test-migrated",
+      "notes": "Go tests for stripSourcePrefix/formatAge"
+    },
+    {
+      "module": "test/commands/targetscmd_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/targetscmd",
+      "python_file": "src/apm_cli/commands/targets.py",
+      "python_lines": 135,
+      "status": "test-migrated",
+      "notes": "Go tests for TargetRow struct"
+    },
+    {
+      "module": "test/commands/update_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/update",
+      "python_file": "src/apm_cli/commands/update.py",
+      "python_lines": 319,
+      "status": "test-migrated",
+      "notes": "Go tests for shortSHA/renderPlanEntry"
+    },
+    {
+      "module": "test/commands/view_gotests",
+      "go_package": "github.com/githubnext/apm/internal/commands/view",
+      "python_file": "src/apm_cli/commands/view.py",
+      "python_lines": 486,
+      "status": "test-migrated",
+      "notes": "Go tests for parseSimpleYAML/ViewOptions"
+    },
+    {
+      "module": "test/runtime/base_gotests",
+      "go_package": "github.com/githubnext/apm/internal/runtime/base",
+      "python_file": "src/apm_cli/runtime/__init__.py",
+      "python_lines": 17,
+      "status": "test-migrated",
+      "notes": "Go tests for RuntimeAdapter interface (mock implementation)"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

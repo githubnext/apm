@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 869904,
+  "migrated_python_lines": 870277,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16448,10 +16448,52 @@
       "python_lines": 65,
       "status": "test-migrated",
       "notes": "Extended aggregator_test.go with single MCP, deduplication across files, recursive scan"
+    },
+    {
+      "module": "test/adapters/windsurf-ext",
+      "go_package": "internal/adapters/windsurf",
+      "python_lines": 57,
+      "status": "test-migrated",
+      "notes": "Extended windsurf test suite: adapter fields, path checks, runtime name matching, MCPServersKey format"
+    },
+    {
+      "module": "test/install/policytargetcheck-ext",
+      "go_package": "internal/install/phases/policytargetcheck",
+      "python_lines": 51,
+      "status": "test-migrated",
+      "notes": "Extended policytargetcheck tests: map immutability, case sensitivity, CheckResult fields, empty message"
+    },
+    {
+      "module": "test/install/localbundle-ext",
+      "go_package": "internal/install/localbundle",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "notes": "Extended localbundle tests: multiple servers, env map, malformed JSON, no key, SSE transport"
+    },
+    {
+      "module": "test/marketplace/mkio-ext",
+      "go_package": "internal/marketplace/mkio",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "notes": "Extended mkio tests: empty content, large content, empty string, missing subdir, idempotent write"
+    },
+    {
+      "module": "test/compilation/agentformatter-ext",
+      "go_package": "internal/compilation/agentformatter",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "notes": "Extended agentformatter tests: Build ID, non-default path, placement fields, result zero values, multiple errors"
+    },
+    {
+      "module": "test/runtime/codexruntime-ext",
+      "go_package": "internal/runtime/codexruntime",
+      "python_lines": 52,
+      "status": "test-migrated",
+      "notes": "Extended codexruntime tests: zero value, info keys, non-empty models, string model name, NewDefault unavailable"
     }
   ],
-  "last_updated": "2026-05-17T08:23:58Z",
-  "iteration": 77,
+  "last_updated": "2026-05-17T16:29:52Z",
+  "iteration": 78,
   "python_lines_migrated_pct": 989.0,
   "modules_migrated": 2185,
   "modules": [

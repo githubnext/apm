@@ -61,3 +61,74 @@ func TestSummarizeClaudeResultFailure(t *testing.T) {
 		t.Error("failure summary should contain error message")
 	}
 }
+
+func TestRenderGeminiStub_ContainsBuildID(t *testing.T) {
+	stub := agentformatter.RenderGeminiStub("AGENTS.md", "1.0.0")
+	if !strings.Contains(stub, "Build ID") {
+		t.Error("stub should contain Build ID placeholder")
+	}
+}
+
+func TestRenderGeminiStub_NonDefaultPath(t *testing.T) {
+	stub := agentformatter.RenderGeminiStub("docs/AGENTS.md", "2.0.0")
+	if !strings.Contains(stub, "docs/AGENTS.md") {
+		t.Errorf("stub should contain path, got: %s", stub)
+	}
+}
+
+func TestClaudePlacement_Fields(t *testing.T) {
+	cp := agentformatter.ClaudePlacement{
+		ClaudePath:       "CLAUDE.md",
+		InstructionFiles: []string{"instructions.md"},
+		AgentFiles:       []string{"agent.md"},
+		Dependencies:     []string{"dep1"},
+	}
+	if cp.ClaudePath != "CLAUDE.md" {
+		t.Errorf("ClaudePath = %q", cp.ClaudePath)
+	}
+	if len(cp.InstructionFiles) != 1 {
+		t.Errorf("InstructionFiles len = %d", len(cp.InstructionFiles))
+	}
+}
+
+func TestClaudeCompilationResult_ZeroValue(t *testing.T) {
+	var r agentformatter.ClaudeCompilationResult
+	if r.Success {
+		t.Error("zero value Success should be false")
+	}
+	if len(r.Placements) != 0 {
+		t.Error("zero value Placements should be empty")
+	}
+}
+
+func TestGeminiCompilationResult_Fields(t *testing.T) {
+	r := agentformatter.GeminiCompilationResult{
+		Success:  true,
+		Warnings: []string{"w1"},
+		Stats:    map[string]float64{"coverage": 0.9},
+	}
+	if !r.Success {
+		t.Error("expected Success true")
+	}
+	if r.Stats["coverage"] != 0.9 {
+		t.Errorf("Stats coverage = %v", r.Stats["coverage"])
+	}
+}
+
+func TestRenderClaudeHeader_NotEmpty(t *testing.T) {
+	h := agentformatter.RenderClaudeHeader()
+	if h == "" {
+		t.Error("RenderClaudeHeader should not be empty")
+	}
+}
+
+func TestSummarizeClaudeResult_MultipleErrors(t *testing.T) {
+	r := &agentformatter.ClaudeCompilationResult{
+		Success: false,
+		Errors:  []string{"err1", "err2"},
+	}
+	summary := agentformatter.SummarizeClaudeResult(r)
+	if !strings.Contains(summary, "err1") || !strings.Contains(summary, "err2") {
+		t.Errorf("summary should contain all errors, got: %s", summary)
+	}
+}

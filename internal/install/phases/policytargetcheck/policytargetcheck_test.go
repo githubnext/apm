@@ -58,3 +58,54 @@ func TestPolicyViolationError(t *testing.T) {
 		t.Error("expected Passed to be false")
 	}
 }
+
+func TestTargetCheckIDs_MapImmutability(t *testing.T) {
+	// Verify map exists and contains expected keys
+	ids := policytargetcheck.TargetCheckIDs
+	if ids == nil {
+		t.Fatal("TargetCheckIDs should not be nil")
+	}
+	if len(ids) == 0 {
+		t.Fatal("TargetCheckIDs should not be empty")
+	}
+}
+
+func TestShouldRunCheck_CaseSensitive(t *testing.T) {
+	// Case sensitivity: "Compilation-Target" (capital) should not match
+	got := policytargetcheck.ShouldRunCheck("Compilation-Target")
+	if got {
+		t.Error("ShouldRunCheck should be case-sensitive")
+	}
+}
+
+func TestCheckResult_PassedTrue(t *testing.T) {
+	cr := policytargetcheck.CheckResult{
+		Name:    "compilation-target",
+		Passed:  true,
+		Message: "all good",
+	}
+	if !cr.Passed {
+		t.Error("expected Passed to be true")
+	}
+	if cr.Message != "all good" {
+		t.Errorf("Message = %q, want 'all good'", cr.Message)
+	}
+}
+
+func TestCheckResult_Details(t *testing.T) {
+	cr := policytargetcheck.CheckResult{
+		Name:    "compilation-target",
+		Passed:  false,
+		Details: []string{"reason1", "reason2"},
+	}
+	if len(cr.Details) != 2 {
+		t.Errorf("expected 2 details, got %d", len(cr.Details))
+	}
+}
+
+func TestPolicyViolationError_EmptyMessage(t *testing.T) {
+	err := policytargetcheck.PolicyViolationError{Message: ""}
+	if err.Error() != "" {
+		t.Errorf("Error() = %q, want empty string", err.Error())
+	}
+}

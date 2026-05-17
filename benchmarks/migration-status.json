@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 538660,
+  "migrated_python_lines": 543766,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -12406,6 +12406,30 @@
       "python_lines": 117,
       "status": "test-migrated",
       "go_test_file": "internal/workflow/wfparser/wfparser_test.go"
+    },
+    {
+      "module": "test/marketplace/publisher_state",
+      "go_package": "internal/marketplace/publisher",
+      "python_file": "tests/unit/marketplace/test_publisher.py",
+      "python_lines": 1433,
+      "status": "test-migrated",
+      "notes": "Extended test suite: redactToken, DefaultOptions, PublishReport.OK, LoadPublishState, SavePublishState round-trip, BumpPatch edge cases, RenderTag variants, PublishStatus constants"
+    },
+    {
+      "module": "test/models/depreference_extras",
+      "go_package": "internal/models/depreference",
+      "python_file": "tests/test_apm_package_models.py",
+      "python_lines": 1987,
+      "status": "test-migrated",
+      "notes": "Extended test suite: VirtualType, GetVirtualPackageName, GetIdentity, ToCloneURL, GetDisplayName, String, IsArtifactory, IsLocalPath edge cases, GetUniqueKey, GetCanonicalDependencyString"
+    },
+    {
+      "module": "test/deps/githubdownloader_extras",
+      "go_package": "internal/deps/githubdownloader",
+      "python_file": "src/apm_cli/deps/github_downloader.py",
+      "python_lines": 1686,
+      "status": "test-migrated",
+      "notes": "Extended test suite: DefaultOptions, ParseLsRemoteOutput edge cases, SemverSortKey edge cases, SortRemoteRefs stability, RemoteRef struct, ProtocolPreference constants"
     }
   ],
   "last_updated": "2026-05-16T15:33:39Z",

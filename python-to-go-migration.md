@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T15:48:00Z |
-| Iteration Count | 128 |
-| Best Metric | 1005.73 |
+| Last Run | 2026-05-18T17:03:00Z |
+| Iteration Count | 129 |
+| Best Metric | 1006.67 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -69,6 +69,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 129 -- 2026-05-18 17:03 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26048102896)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra_test.go files for 6 thin Go packages (agentintegrator, models/validation, commands/update, cache/locking, marketplace/registry, workflow/wfparser) with 816 new test lines; registered 6 new test-migrated entries
+- **Metric**: 1006.67% (previous best: 1005.73%, delta: +0.94pp)
+- **Commit**: fcf15df8
+- **Notes**: Added tests for agentintegrator (chatmodes, mixed agents dir, codex TOML output, PortableRelpath, missing source), models/validation (content type strings, APM package with .apm/ dir, hybrid/skill-bundle detection), commands/update (renderPlanEntry variants, ShortSHA edge cases), cache/locking (stage path uniqueness, AtomicLand idempotency, CleanupIncomplete multiple), marketplace/registry (GetByName case-insensitive, upsert behavior, Count/Names), workflow/wfparser (author/llm fields, MCP/input lists, body preservation).
 
 ### Iteration 128 -- 2026-05-18 15:48 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26044218154)
 

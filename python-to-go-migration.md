@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T01:53:00Z|
-| Iteration Count | 120|
-| Best Metric | 997.88|
+| Last Run | 2026-05-18T04:57:00Z|
+| Iteration Count | 121|
+| Best Metric | 998.99|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -75,6 +75,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 121 -- 2026-05-18 04:57 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26014344730)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 7 thin Go packages (contentscanner, dockerargs, contenthash, policymodels, finalize, gitcache, commandlogger) with 917 new lines total; registered 7 test-migrated entries
+- **Metric**: 998.99% (previous best: 997.88%, delta: +1.11pp)
+- **Commit**: 135790a
+- **Notes**: Added tag-character/variation-selector/BOM/multi-finding tests for contentscanner; empty-args/no-run/value-with-equals edge cases for dockerargs; file-change/subdir/.git/__pycache__ exclusion for contenthash; all-known-checks/empty-checks/JSON-summary/SARIF-failure-only tests for policymodels; zero/single/four/six-name variants and drift-hint for finalize; dir-creation/CleanAll/Prune-old/Prune-recent/SSH-sanitize for gitcache; all PolicyDiscoveryMiss outcomes, PolicyViolation, AuthStep, PackageInlineWarning for commandlogger.
+
 ### Iteration 120 -- 2026-05-18 01:53 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26009157875)
 
 - **Status**: ✅ Accepted
@@ -99,53 +107,7 @@
 - **Commit**: 103d5b5
 - **Notes**: Added FindInstructionFiles/CopyInstruction variants, parseFrontmatter edge cases, ParseSkillFile/ParsePrimitiveFile types, RenderInstructionsBlock multi-pattern and nil/empty tests, DiagnosticCollector all-category and verbose tests, GetExistingServerConfigs/FindConflicts, MergeDependencyPolicies/MergeMcpPolicies edge cases, and localcontent multi-subdir/nested/file-not-dir tests.
 
-### Iteration 117 -- 2026-05-17 22:22 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26004392245)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 6 thin Go packages (buildid, cachepin, integrity, apmpackage, gate, mcpwriter) with 469 new lines total; registered 6 test-migrated entries
-- **Metric**: 996.04% (previous best: 995.51%, delta: +0.53pp)
-- **Commit**: b05e971
-- **Notes**: Added edge-case coverage: empty/no-trailing-newline for buildid, overwrite/empty-commit for cachepin, dangling-ref/empty-expected for integrity, case-variants/unknown-type for apmpackage, ReportPolicy/WarnPolicy never block + multiple files for gate, modified-value-diff/dev-MCPListSection for mcpwriter.
-
-### Iteration 116 -- 2026-05-17 21:30 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26003059051)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (targetdetection, mktvalidator, tagpattern, adapter-base, adapter-claude, policy-matcher) with 351 new lines; registered 6 test-migrated entries
-- **Metric**: 995.51% (previous best: 995.11%, delta: +0.40pp)
-- **Commit**: 741ce7b
-- **Notes**: Added ResolveTargets edge cases, mktvalidator multiple-error/empty-list tests, tagpattern empty patterns, regex non-match guards, claude multi-server roundtrip, and matcher wildcard boundary tests. Always check for *_extra_test.go files before extending base test files.
-
-### Iteration 115 -- 2026-05-17 20:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26001755432)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 5 thin Go test suites (packagevalidator, reflink, installctx, discovery, errors) with 376 new lines; registered 5 test-migrated entries
-- **Metric**: 995.11% (previous best: 994.68%, delta: +0.43pp)
-- **Commit**: 517c6c5
-- **Notes**: Added boundary cases for ValidationResult, CloneFile missing/empty/large inputs, InstallContext field defaults, multi-file workflow discovery, and error-type assertions plus rendered-output checks.
-
-### Iteration 114 -- 2026-05-17 19:34 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26000504363)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (cache, scope, outdated, cachepaths, shadowdetector, cursor) with 410 new lines; registered 6 new test-migrated entries
-- **Metric**: 994.68% (previous best: 994.21%, delta: +0.47pp)
-- **Commit**: 803f3ee
-- **Notes**: Added formatSize boundary cases, scope GetModulesDir/GetManifestPath/GetLockfileDir/EnsureUserDirs, truncate edge cases, semver comparisons, cachepaths env variants, shadow multi-conflict and empty-list, cursor invalid-JSON and UpdateConfig with/without .cursor dir.
-
-### Iteration 113 -- 2026-05-17 18:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25999065222)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (apmyml, mcpargs, deptypes, githubhost, exclude, updatepolicy) with 425 new lines; registered 6 new test-migrated entries
-- **Metric**: 994.21% (previous best: 993.73%, delta: +0.48pp)
-- **Commit**: 674fab0
-- **Notes**: Added error-type assertions, CSV/list variants, constant-distinctness, hex-length boundaries, FQDN/URL parsing, backslash normalization, and tab-char fallback tests. All Go tests pass.
-
-### Iteration 112 -- 2026-05-17 17:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/25997665218)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended 6 thin Go test suites (versionchecker, fileops, schema, policygate, installvalidation, gitrefresolver) with 485 new lines; registered 6 new test-migrated entries
-- **Metric**: 993.73% (previous best: 993.17%, delta: +0.56pp)
-- **Commit**: c5012ab
-- **Notes**: Added prerelease comparisons, invalid-input guards, nested copy, multi-file ops, transport policy fields, ADO auth signal, LocalPathNoMarkersHint, ProbeResult variants, SHA boundary cases. All Go tests pass.
+### Iters 112-120 -- 2026-05-17/18 -- ✅ (metrics 993->997%): Extended 50+ thin Go test suites (versionchecker, fileops, policygate, buildid, cachepin, integrity, mcpwriter, targetdetection, mktvalidator, packagevalidator, reflink, cache, scope, apmyml, mcpargs, instructionintegrator, primparser, installservice, operations, mcpwarnings, plan, listcmd, pluginparser, urlnormalize, gitauthenv, etc.) with 300-900 new lines per iter.
 
 ### Iters 84-111 -- 2026-05-16/17 -- ✅ (metrics 551->993%): Registered 350 unregistered Python files, 133 Go test packages; extended test suites for 50+ packages.
 

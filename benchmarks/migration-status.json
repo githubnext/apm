@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 882101,
+  "migrated_python_lines": 883139,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17375,6 +17375,36 @@
       "module": "workflow/wfparser-extra-test",
       "status": "test-migrated",
       "python_lines": 138
+    },
+    {
+      "module": "utils/console-extra-test",
+      "status": "test-migrated",
+      "python_lines": 223
+    },
+    {
+      "module": "utils/gitenv-extra-test",
+      "status": "test-migrated",
+      "python_lines": 159
+    },
+    {
+      "module": "integration/skilltransformer-extra-test",
+      "status": "test-migrated",
+      "python_lines": 204
+    },
+    {
+      "module": "deps/apmresolver-extra-test",
+      "status": "test-migrated",
+      "python_lines": 161
+    },
+    {
+      "module": "instructionintegrator-extra2-test",
+      "status": "test-migrated",
+      "python_lines": 152
+    },
+    {
+      "module": "promptintegrator-extra2-test",
+      "status": "test-migrated",
+      "python_lines": 139
     }
   ]
 }

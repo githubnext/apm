@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T17:03:00Z |
-| Iteration Count | 129 |
-| Best Metric | 1006.67 |
+| Last Run | 2026-05-18T19:08:52Z |
+| Iteration Count | 130 |
+| Best Metric | 1008.88 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -69,6 +69,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 130 -- 2026-05-18 19:08 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26054516496)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra_test.go files for 6 thin packages (policytargetcheck, pack, mcpentry, heals, codexruntime, publisher) with 898 new test lines; registered 6 new test-migrated entries
+- **Metric**: 1008.88% (previous best: 1006.67%, delta: +2.21pp)
+- **Commit**: 1e97f1f8
+- **Notes**: Added tests for policytargetcheck (TargetCheckIDs map/ShouldRunCheck whitespace variants, PolicyViolationError edge cases, CheckResult zero value), pack (Format string equality, PackOptions fields, PackResult variants), mcpentry (EntryKind distinctness, IsSelfDefined all 4 kinds, BuildMCPEntry stdio/remote/registry with env/headers), heals (NewHealContext all flags, AddBypassKey idempotency, Emit info/warn/multiple, RunHealChain empty chain, heal metadata), codexruntime (GetRuntimeName/String/GetRuntimeInfo/ListAvailableModels, installCmd contents), publisher (BumpPatch variants, RenderTag, PublishReport.OK, status constants, ConsumerUpdate/PublishResult).
 
 ### Iteration 129 -- 2026-05-18 17:03 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26048102896)
 

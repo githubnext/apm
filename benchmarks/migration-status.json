@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 886797,
+  "migrated_python_lines": 887729,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17555,6 +17555,36 @@
       "module": "internal/runtime/base/base_extra_test.go",
       "python_lines": 108,
       "status": "test-migrated"
+    },
+    {
+      "module": "internal/commands/install/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 195
+    },
+    {
+      "module": "internal/install/bundle/packer/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 178
+    },
+    {
+      "module": "internal/primitives/discovery/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 152
+    },
+    {
+      "module": "internal/integration/commandintegrator/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 143
+    },
+    {
+      "module": "internal/models/mcpdep/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 119
+    },
+    {
+      "module": "internal/policy/cichecks/extra_tests",
+      "status": "test-migrated",
+      "python_lines": 145
     }
   ]
 }

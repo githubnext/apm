@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 873506,
+  "migrated_python_lines": 874399,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16852,6 +16852,41 @@
       "module": "outputwriter-extra-tests",
       "status": "test-migrated",
       "python_lines": 78
+    },
+    {
+      "module": "test-migration/listcmd-extra",
+      "python_lines": 126,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/pluginparser-extra",
+      "python_lines": 132,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/urlnormalize-extra",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/gitauthenv-extra",
+      "python_lines": 115,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/installedpkg-extra",
+      "python_lines": 115,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/unpacker-extra",
+      "python_lines": 157,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migration/opencode-extra",
+      "python_lines": 138,
+      "status": "test-migrated"
     }
   ]
 }

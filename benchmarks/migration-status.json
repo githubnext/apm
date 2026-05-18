@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 883139,
+  "migrated_python_lines": 884037,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17405,6 +17405,42 @@
       "module": "promptintegrator-extra2-test",
       "status": "test-migrated",
       "python_lines": 139
+    },
+    {
+      "module": "policytargetcheck-extra-tests",
+      "python_lines": 148,
+      "go_test_lines": 0,
+      "status": "test-migrated"
+    },
+    {
+      "module": "pack-extra-tests",
+      "python_lines": 152,
+      "go_test_lines": 0,
+      "status": "test-migrated"
+    },
+    {
+      "module": "mcpentry-extra-tests",
+      "python_lines": 147,
+      "go_test_lines": 0,
+      "status": "test-migrated"
+    },
+    {
+      "module": "heals-extra-tests",
+      "python_lines": 144,
+      "go_test_lines": 0,
+      "status": "test-migrated"
+    },
+    {
+      "module": "codexruntime-extra-tests",
+      "python_lines": 136,
+      "go_test_lines": 0,
+      "status": "test-migrated"
+    },
+    {
+      "module": "publisher-extra-tests",
+      "python_lines": 171,
+      "go_test_lines": 0,
+      "status": "test-migrated"
     }
   ]
 }

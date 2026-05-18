@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 881285,
+  "migrated_python_lines": 882101,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17345,6 +17345,36 @@
       "python_lines": 127,
       "status": "test-migrated",
       "go_package": "internal/install/errors"
+    },
+    {
+      "module": "integration/agentintegrator-extra-test",
+      "status": "test-migrated",
+      "python_lines": 157
+    },
+    {
+      "module": "models/validation-extra-test",
+      "status": "test-migrated",
+      "python_lines": 116
+    },
+    {
+      "module": "commands/update-extra-test",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "module": "cache/locking-extra-test",
+      "status": "test-migrated",
+      "python_lines": 137
+    },
+    {
+      "module": "marketplace/registry-extra-test",
+      "status": "test-migrated",
+      "python_lines": 169
+    },
+    {
+      "module": "workflow/wfparser-extra-test",
+      "status": "test-migrated",
+      "python_lines": 138
     }
   ]
 }

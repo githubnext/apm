@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 872814,
+  "migrated_python_lines": 873506,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16817,6 +16817,41 @@
       "python_lines": 81,
       "status": "test-migrated",
       "notes": "mcpwriter_extra_test.go: modified value diff, multiple entries find, dev/prod MCPListSection, outcome constants"
+    },
+    {
+      "module": "installservice-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 107
+    },
+    {
+      "module": "operations-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 104
+    },
+    {
+      "module": "mcpwarnings-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 90
+    },
+    {
+      "module": "plan-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 149
+    },
+    {
+      "module": "intutils-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 65
+    },
+    {
+      "module": "promptintegrator-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "module": "outputwriter-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 78
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 874461,
+  "migrated_python_lines": 875378,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16984,6 +16984,41 @@
       "module": "test-migration/opencode-extra",
       "python_lines": 138,
       "status": "test-migrated"
+    },
+    {
+      "module": "contentscanner-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 152
+    },
+    {
+      "module": "dockerargs-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 123
+    },
+    {
+      "module": "contenthash-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 147
+    },
+    {
+      "module": "policymodels-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 145
+    },
+    {
+      "module": "finalize-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "module": "gitcache-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 129
+    },
+    {
+      "module": "commandlogger-extra-tests",
+      "status": "test-migrated",
+      "python_lines": 119
     }
   ]
 }

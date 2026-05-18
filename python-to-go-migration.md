@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T14:16:00Z |
-| Iteration Count | 127 |
-| Best Metric | 1004.81 |
+| Last Run | 2026-05-18T15:48:00Z |
+| Iteration Count | 128 |
+| Best Metric | 1005.73 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -69,6 +69,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 128 -- 2026-05-18 15:48 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26044218154)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra_test.go files for 5 thin packages (constants, version, normalization, gitremoteops, httpcache) with 814 new test lines; registered 5 new test-migrated entries
+- **Metric**: 1005.73% (previous best: 1004.81%, delta: +0.92pp)
+- **Commit**: 5803c516
+- **Notes**: Added comprehensive tests for constants (InstallMode, DefaultSkipDirs, all file constants), version (BuildVersion/SHA variants, alpha/beta/rc), normalization (StripBOM/BOM-only/BOM+CRLF, Normalize idempotency), gitremoteops (ParseLsRemoteOutput edge cases, SortRefsBySemver descending), httpcache (Store/Get ETag, StatusCode, GetStats, parseTTL cap).
 
 ### Iteration 127 -- 2026-05-18 14:16 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26039072508)
 

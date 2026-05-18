@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 884936,
+  "migrated_python_lines": 885973,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17483,6 +17483,48 @@
       "go_test_lines": 0,
       "status": "test-migrated",
       "go_package": "internal/output/compilationformatter"
+    },
+    {
+      "module": "test-semver-extra",
+      "python_lines": 215,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-shadowdetector-extra",
+      "python_lines": 127,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-tagpattern-extra",
+      "python_lines": 143,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-constitutionblock-extra",
+      "python_lines": 150,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-cachepaths-extra",
+      "python_lines": 125,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-injector-extra",
+      "python_lines": 163,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
+    },
+    {
+      "module": "test-mkterrors-extra",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "description": "Extra Go test file"
     }
   ]
 }

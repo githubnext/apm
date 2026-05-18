@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T20:07:56Z |
-| Iteration Count | 131 |
-| Best Metric | 1009.9 |
+| Last Run | 2026-05-18T21:15:00Z |
+| Iteration Count | 132 |
+| Best Metric | 1011.08 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -70,6 +70,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 132 -- 2026-05-18 21:15 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26059981931)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra_test.go files for 7 thin Go packages (semver, shadowdetector, tagpattern, constitutionblock, cachepaths, injector, mkterrors) with 1038 new test lines; registered 7 new test-migrated entries
+- **Metric**: 1011.08% (previous best: 1009.90%, delta: +1.18pp)
+- **Commit**: 1aba2204
+- **Notes**: Added tests for semver (prerelease/buildmeta parsing, Compare edge cases, SatisfiesRange caret/tilde/comparison boundaries), shadowdetector (returns fields, error-marketplace skipped, multiple matches, break-on-first), tagpattern (both/one/no placeholder, BuildTagRegex+ExtractVersion for version-only and middle patterns), constitutionblock (hash length/determinism, RenderBlock structure, FindExistingBlock indices, InjectOrUpdate all statuses), cachepaths (dir created, absolute paths, constant values, env var variants), injector (all 5 status constants, missing/create/update/unchanged/preserve flows), mkterrors (error types as errors.As, field values, empty/long messages).
+
 ### Iteration 131 -- 2026-05-18 20:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26057497454)
 
 - **Status**: ✅ Accepted
@@ -78,45 +86,7 @@
 - **Commit**: 7a44a55e
 - **Notes**: Added tests for mcpregistry (decimal loopback IP, cloud metadata, RFC1918 private ranges, exact max-length, redact username-only), guards (nested dirs, multiple roots, sorted violations, wrapped origErr), schema (ApmPolicy combos with FetchFailure/Remote/Cache, DependencyPolicy Allow/Deny/Require variants, McpPolicy SelfDefined, CompilationPolicy targets/strategy), results (overwrite map entry, missing key, negative counts, large values), mcp-cmd (SearchOptions/InstallOptions/InfoOptions fields, truncate edge cases), compilationformatter (FileTypesSummary empty/1/3/>3, strategy constants, HasIssues, New, FormatDefault/DryRun, ProjectAnalysis constitution).
 
-### Iteration 130 -- 2026-05-18 19:08 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26054516496)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 6 thin packages (policytargetcheck, pack, mcpentry, heals, codexruntime, publisher) with 898 new test lines; registered 6 new test-migrated entries
-- **Metric**: 1008.88% (previous best: 1006.67%, delta: +2.21pp)
-- **Commit**: 1e97f1f8
-- **Notes**: Added tests for policytargetcheck (TargetCheckIDs map/ShouldRunCheck whitespace variants, PolicyViolationError edge cases, CheckResult zero value), pack (Format string equality, PackOptions fields, PackResult variants), mcpentry (EntryKind distinctness, IsSelfDefined all 4 kinds, BuildMCPEntry stdio/remote/registry with env/headers), heals (NewHealContext all flags, AddBypassKey idempotency, Emit info/warn/multiple, RunHealChain empty chain, heal metadata), codexruntime (GetRuntimeName/String/GetRuntimeInfo/ListAvailableModels, installCmd contents), publisher (BumpPatch variants, RenderTag, PublishReport.OK, status constants, ConsumerUpdate/PublishResult).
-
-### Iteration 129 -- 2026-05-18 17:03 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26048102896)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 6 thin Go packages (agentintegrator, models/validation, commands/update, cache/locking, marketplace/registry, workflow/wfparser) with 816 new test lines; registered 6 new test-migrated entries
-- **Metric**: 1006.67% (previous best: 1005.73%, delta: +0.94pp)
-- **Commit**: fcf15df8
-- **Notes**: Added tests for agentintegrator (chatmodes, mixed agents dir, codex TOML output, PortableRelpath, missing source), models/validation (content type strings, APM package with .apm/ dir, hybrid/skill-bundle detection), commands/update (renderPlanEntry variants, ShortSHA edge cases), cache/locking (stage path uniqueness, AtomicLand idempotency, CleanupIncomplete multiple), marketplace/registry (GetByName case-insensitive, upsert behavior, Count/Names), workflow/wfparser (author/llm fields, MCP/input lists, body preservation).
-
-### Iteration 128 -- 2026-05-18 15:48 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26044218154)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 5 thin packages (constants, version, normalization, gitremoteops, httpcache) with 814 new test lines; registered 5 new test-migrated entries
-- **Metric**: 1005.73% (previous best: 1004.81%, delta: +0.92pp)
-- **Commit**: 5803c516
-- **Notes**: Added comprehensive tests for constants (InstallMode, DefaultSkipDirs, all file constants), version (BuildVersion/SHA variants, alpha/beta/rc), normalization (StripBOM/BOM-only/BOM+CRLF, Normalize idempotency), gitremoteops (ParseLsRemoteOutput edge cases, SortRefsBySemver descending), httpcache (Store/Get ETag, StatusCode, GetStats, parseTTL cap).
-
-### Iteration 127 -- 2026-05-18 14:16 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26039072508)
-
-- **Status**: ✅ Accepted
-- **Change**: Extended builder and hookintegrator test suites with extra_test.go files (379 + 339 = 718 lines); registered 15 new alias entries (3703 + extra lines)
-- **Metric**: 1004.81% (previous best: 1004.06%, delta: +0.75pp)
-- **Commit**: bcf6da55
-- **Notes**: Added tests for builder (DefaultBuildOptions, ResolveResult.OK, stripRefPrefix, error types, extractPluginSHAs, computeDiff, serializeJSON) and hookintegrator (filterHookFilesForTarget, shallowCopyMap, copilotKeysToGemini, deepCopyMap, portableRelpath, toSlice, toGeminiHookEntries, hasAnyPrefix).
-
-### Iteration 126 -- 2026-05-18 12:46 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26034286266)
-
-- **Status**: ✅ Accepted
-- **Change**: Created stable test suites for 8 thin Go packages (request, gate, mcpwarnings, operations, coverage, finalize, installservice, install/errors) with 1166 new lines total; registered 8 test-migrated entries
-- **Metric**: 1004.06% (previous best: 1002.73%, delta: +1.33pp)
-- **Commit**: 3c2028b7
-- **Notes**: Added DefaultInstallRequest field defaults, Force/NoPolicy/LegacySkillPaths/ProtocolPref/AllowInsecure variants for request; OnCritical constants, ScanPolicy EffectiveBlock all paths, ScanVerdict fields, Gate nil/single/multi-file checks for gate; IsInternalOrMetadataHost loopback/RFC1918/public variants, WarnSSRFURL safe/localhost/192-range, WarnShellMetachars semicolon/||/>>/</<input variants for mcpwarnings; ConfigureClient all-clients/ProjectRoot/ConfigUpdates/UserScope, InstallPackage/UninstallPackage all-client variants for operations; CheckPrimitiveCoverage single/multi/nil/special/extra cases for coverage; UnpinnedWarning zero/one/two/truncation variants, VerboseStatLines all combos for finalize; IsFrozenInstallError double-wrapped, InstallRequest/Result fields, Run multi-package/scope/UpdateRefs for installservice; IsDirect/IsAuthentication/IsFrozen/IsPolicy all variants, error constructors for install/errors.
+### Iters 126-131 -- 2026-05-18 -- ✅ (metrics 1004->1010%): Created/extended extra_test.go for 40+ thin packages (request, gate, mcpwarnings, operations, coverage, finalize, installservice, install/errors, builder, hookintegrator, constants, version, normalization, gitremoteops, httpcache, agentintegrator, models/validation, commands/update, cache/locking, marketplace/registry, workflow/wfparser, policytargetcheck, pack, mcpentry, heals, codexruntime, publisher, mcpregistry, guards, schema, results, mcp-cmd, compilationformatter); registered 40+ test-migrated entries.
 
 ### Iters 118-125 -- 2026-05-17/18 -- ✅ (metrics 996->1003%): Extended 60+ thin Go test suites (coverage, targets, auditreport, mcpcommand, lockfile, request, mktmodels, refresolver, lockfileenrichment, mcpintegrator, downloadstrategies, securityscan, copilot, coworkpaths, cloneengine, mcpconflicts, contentscanner, dockerargs, contenthash, policymodels, finalize, gitcache, commandlogger, listcmd, pluginparser, urlnormalize, gitauthenv, installedpkg, unpacker, opencode, instructionintegrator, primparser, templatebuilder, diagnostics, conflictdetector, inheritance, localcontent, installservice, operations, mcpwarnings, plan, intutils, promptintegrator, outputwriter) with 600-1100 new lines per iter.
 

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 884037,
+  "migrated_python_lines": 884936,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17441,6 +17441,48 @@
       "python_lines": 171,
       "go_test_lines": 0,
       "status": "test-migrated"
+    },
+    {
+      "module": "mcpregistry-extra-tests",
+      "python_lines": 159,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/install/mcp/mcpregistry"
+    },
+    {
+      "module": "guards-extra-tests",
+      "python_lines": 181,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/utils/guards"
+    },
+    {
+      "module": "schema-extra-tests",
+      "python_lines": 142,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/policy/schema"
+    },
+    {
+      "module": "results-extra-tests",
+      "python_lines": 124,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/models/results"
+    },
+    {
+      "module": "mcp-cmd-extra-tests",
+      "python_lines": 142,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/commands/mcp"
+    },
+    {
+      "module": "compilationformatter-extra-tests",
+      "python_lines": 151,
+      "go_test_lines": 0,
+      "status": "test-migrated",
+      "go_package": "internal/output/compilationformatter"
     }
   ]
 }

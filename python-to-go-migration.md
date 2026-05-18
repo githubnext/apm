@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T00:53:00Z|
-| Iteration Count | 119|
-| Best Metric | 996.86|
+| Last Run | 2026-05-18T01:53:00Z|
+| Iteration Count | 120|
+| Best Metric | 997.88|
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0|
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted|
 
 ---
 
@@ -74,6 +74,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 120 -- 2026-05-18 01:53 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26009157875)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 7 thin Go packages (listcmd, pluginparser, urlnormalize, gitauthenv, installedpkg, unpacker, opencode) with 893 new lines total; registered 7 test-migrated entries
+- **Metric**: 997.88% (previous best: 996.86%, delta: +1.02pp)
+- **Commit**: ddfe4d2
+- **Notes**: Added parseScripts edge cases (tab indent, hyphen/underscore names, comment skip, multi-block), ParsePluginManifest with agents/skills/commands, yamlString no-quoting, MCPServerConfig/MCPDepEntry fields, NormalizeRepoURL (gitlab/bitbucket lowercase, SCP .git, default port variants, strip whitespace), CacheKey determinism/hex validation, SetupEnvironment SSH timeout append/dedup, NoninteractiveEnv config isolation combinations, SubprocessEnvDict strip/override, InstalledPackage depth/resolvedby/all-fields variants, ParseBundleLockfile comments/deployed-files/multi-deps, UnpackBundle nonexistent path, and opencode format conversions with header/env/disabled variants.
 
 ### Iteration 119 -- 2026-05-18 00:53 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26007778077)
 

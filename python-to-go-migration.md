@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T12:46:00Z |
-| Iteration Count | 126 |
-| Best Metric | 1004.06 |
+| Last Run | 2026-05-18T14:16:00Z |
+| Iteration Count | 127 |
+| Best Metric | 1004.81 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -69,6 +69,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 127 -- 2026-05-18 14:16 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26039072508)
+
+- **Status**: ✅ Accepted
+- **Change**: Extended builder and hookintegrator test suites with extra_test.go files (379 + 339 = 718 lines); registered 15 new alias entries (3703 + extra lines)
+- **Metric**: 1004.81% (previous best: 1004.06%, delta: +0.75pp)
+- **Commit**: bcf6da55
+- **Notes**: Added tests for builder (DefaultBuildOptions, ResolveResult.OK, stripRefPrefix, error types, extractPluginSHAs, computeDiff, serializeJSON) and hookintegrator (filterHookFilesForTarget, shallowCopyMap, copilotKeysToGemini, deepCopyMap, portableRelpath, toSlice, toGeminiHookEntries, hasAnyPrefix).
 
 ### Iteration 126 -- 2026-05-18 12:46 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26034286266)
 

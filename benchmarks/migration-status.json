@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 878649,
+  "migrated_python_lines": 879815,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17157,6 +17157,54 @@
       "python_lines": 120,
       "status": "test-migrated",
       "go_package": "internal/marketplace/refresolver"
+    },
+    {
+      "module": "test-request-stable",
+      "python_lines": 157,
+      "status": "test-migrated",
+      "go_package": "internal/install/request"
+    },
+    {
+      "module": "gate-stable-tests",
+      "python_lines": 167,
+      "status": "test-migrated",
+      "go_package": "internal/security/gate"
+    },
+    {
+      "module": "mcpwarnings-stable-tests",
+      "python_lines": 131,
+      "status": "test-migrated",
+      "go_package": "internal/install/mcp/mcpwarnings"
+    },
+    {
+      "module": "operations-stable-tests",
+      "python_lines": 187,
+      "status": "test-migrated",
+      "go_package": "internal/core/operations"
+    },
+    {
+      "module": "coverage-stable-tests",
+      "python_lines": 112,
+      "status": "test-migrated",
+      "go_package": "internal/integration/coverage"
+    },
+    {
+      "module": "finalize-stable-tests",
+      "python_lines": 123,
+      "status": "test-migrated",
+      "go_package": "internal/install/phases/finalize"
+    },
+    {
+      "module": "installservice-stable-tests",
+      "python_lines": 162,
+      "status": "test-migrated",
+      "go_package": "internal/install/installservice"
+    },
+    {
+      "module": "install-errors-stable-tests",
+      "python_lines": 127,
+      "status": "test-migrated",
+      "go_package": "internal/install/errors"
     }
   ]
 }

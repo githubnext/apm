@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 874399,
+  "migrated_python_lines": 874461,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16719,6 +16719,103 @@
       "python_lines": 84,
       "status": "test-migrated",
       "notes": "Extended localcontent test suite with multi-subdir, nested file, and edge-case coverage"
+    },
+    {
+      "module": "marketplace/mktresolver-extra",
+      "go_package": "internal/marketplace/mktresolver",
+      "python_lines": 177,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "marketplace/versionpins-extra",
+      "go_package": "internal/marketplace/versionpins",
+      "python_lines": 117,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "compilation/constitution-extra",
+      "go_package": "internal/compilation/constitution",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "core/experimental-extra",
+      "go_package": "internal/core/experimental",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "install/gitlabresolver-extra",
+      "go_package": "internal/install/gitlabresolver",
+      "python_lines": 126,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "install/phases/installphase-extra",
+      "go_package": "internal/install/phases/installphase",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "utils/pathsecurity-extra",
+      "go_package": "internal/utils/pathsecurity",
+      "python_lines": 115,
+      "status": "test-migrated",
+      "note": "extra test file"
+    },
+    {
+      "module": "compilation/compilationconst-extra",
+      "go_package": "internal/compilationconst-extra",
+      "python_lines": 83,
+      "status": "test-migrated"
+    },
+    {
+      "module": "marketplace/gitstderr-extra",
+      "go_package": "internal/gitstderr-extra",
+      "python_lines": 88,
+      "status": "test-migrated"
+    },
+    {
+      "module": "utils/installtui-extra",
+      "go_package": "internal/installtui-extra",
+      "python_lines": 101,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core/nulllogger-extra",
+      "go_package": "internal/nulllogger-extra",
+      "python_lines": 91,
+      "status": "test-migrated"
+    },
+    {
+      "module": "marketplace/gitutils-extra",
+      "go_package": "internal/gitutils-extra",
+      "python_lines": 82,
+      "status": "test-migrated"
+    },
+    {
+      "module": "policy/outcomerouting-extra",
+      "go_package": "internal/outcomerouting-extra",
+      "python_lines": 119,
+      "status": "test-migrated"
+    },
+    {
+      "module": "install/bundle/pluginexporter-extra",
+      "go_package": "internal/pluginexporter-extra",
+      "python_lines": 142,
+      "status": "test-migrated"
+    },
+    {
+      "module": "install/errors-extra",
+      "go_package": "internal/errors-extra",
+      "python_lines": 96,
+      "status": "test-migrated"
     }
   ],
   "last_updated": "2026-05-17T23:24:00Z",

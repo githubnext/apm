@@ -63,3 +63,45 @@ func TestNormalizeRepoURL_UnusualScheme(t *testing.T) {
 		t.Fatalf("expected 'owner/repo', got %q", got)
 	}
 }
+
+func TestNormalizeRepoURL_PlainOwnerRepo(t *testing.T) {
+	got := intutils.NormalizeRepoURL("owner/repo")
+	if got != "owner/repo" {
+		t.Fatalf("expected 'owner/repo', got %q", got)
+	}
+}
+
+func TestNormalizeRepoURL_DotGitSuffix(t *testing.T) {
+	got := intutils.NormalizeRepoURL("owner/repo.git")
+	if got != "owner/repo" {
+t.Fatalf("expected 'owner/repo', got %q", got)
+}
+}
+
+func TestNormalizeRepoURL_HTTPGitHub(t *testing.T) {
+	got := intutils.NormalizeRepoURL("http://github.com/owner/repo")
+	if got != "owner/repo" {
+t.Fatalf("expected 'owner/repo', got %q", got)
+}
+}
+
+func TestNormalizeRepoURL_HTTPSWithDotGitAndSlash(t *testing.T) {
+	got := intutils.NormalizeRepoURL("https://github.com/myorg/myrepo.git/")
+	if got != "myorg/myrepo" {
+t.Fatalf("expected 'myorg/myrepo', got %q", got)
+}
+}
+
+func TestNormalizeRepoURL_SubpathPreserved(t *testing.T) {
+	got := intutils.NormalizeRepoURL("https://github.com/owner/repo/blob/main/README.md")
+	if got == "" {
+t.Fatal("should not return empty for path with subpath")
+}
+}
+
+func TestNormalizeRepoURL_OnlyScheme(t *testing.T) {
+	got := intutils.NormalizeRepoURL("https://")
+	if got == "" {
+t.Fatal("should return something (the input unchanged) for scheme-only")
+}
+}

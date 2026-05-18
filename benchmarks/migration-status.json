@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 875378,
+  "migrated_python_lines": 875801,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16872,7 +16872,7 @@
     {
       "module": "workflow/discovery-test-ext",
       "status": "test-migrated",
-      "python_lines": 48
+      "python_lines": 150
     },
     {
       "module": "core/errors-test-ext",
@@ -16881,19 +16881,19 @@
     },
     {
       "module": "buildid-extra-tests",
-      "python_lines": 77,
+      "python_lines": 127,
       "status": "test-migrated",
       "notes": "buildid_extra_test.go: empty string, no trailing newline, large content, determinism edge cases"
     },
     {
       "module": "cachepin-extra-tests",
-      "python_lines": 74,
+      "python_lines": 123,
       "status": "test-migrated",
       "notes": "cachepin_extra_test.go: read-back, overwrite, empty commit, IsCachePinError with stdlib error"
     },
     {
       "module": "integrity-extra-tests",
-      "python_lines": 69,
+      "python_lines": 125,
       "status": "test-migrated",
       "notes": "integrity_extra_test.go: empty dir, direct SHA, dangling ref, empty expected SHA, packed-refs with comment"
     },
@@ -16911,7 +16911,7 @@
     },
     {
       "module": "mcpwriter-extra-tests",
-      "python_lines": 81,
+      "python_lines": 155,
       "status": "test-migrated",
       "notes": "mcpwriter_extra_test.go: modified value diff, multiple entries find, dev/prod MCPListSection, outcome constants"
     },
@@ -16938,7 +16938,7 @@
     {
       "module": "intutils-extra-tests",
       "status": "test-migrated",
-      "python_lines": 65
+      "python_lines": 107
     },
     {
       "module": "promptintegrator-extra-tests",
@@ -16948,7 +16948,7 @@
     {
       "module": "outputwriter-extra-tests",
       "status": "test-migrated",
-      "python_lines": 78
+      "python_lines": 128
     },
     {
       "module": "test-migration/listcmd-extra",

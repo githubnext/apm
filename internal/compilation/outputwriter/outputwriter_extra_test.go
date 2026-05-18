@@ -76,3 +76,53 @@ func TestWrite_NewInstance(t *testing.T) {
 		}
 	}
 }
+
+func TestWrite_EmptyStringContent(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "empty.md")
+	w := &CompiledOutputWriter{}
+	if err := w.Write(path, ""); err != nil {
+		t.Fatalf("write empty content failed: %v", err)
+	}
+	data, _ := os.ReadFile(path)
+	if len(data) != 0 {
+		t.Errorf("expected empty file, got %d bytes", len(data))
+	}
+}
+
+func TestWrite_CreatesParentDirs(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "a", "b", "c", "out.md")
+	w := &CompiledOutputWriter{}
+	if err := w.Write(path, "content"); err != nil {
+		t.Fatalf("write to nested path failed: %v", err)
+	}
+	if _, err := os.Stat(path); err != nil {
+		t.Errorf("file not found after write: %v", err)
+	}
+}
+
+func TestWrite_OverwritesExistingFile(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "file.md")
+	w := &CompiledOutputWriter{}
+	if err := w.Write(path, "original content"); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.Write(path, "new content"); err != nil {
+		t.Fatal(err)
+	}
+	data, _ := os.ReadFile(path)
+	if string(data) != "new content" {
+		t.Errorf("expected overwritten content, got %q", string(data))
+	}
+}
+
+func TestWrite_PlainContentNoError(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "out.md")
+	w := &CompiledOutputWriter{}
+	if err := w.Write(path, "hello world\n"); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}

@@ -75,3 +75,53 @@ func TestStabilizeBuildID_LargeContent(t *testing.T) {
 		t.Error("placeholder not replaced in large content")
 	}
 }
+
+func TestStabilizeBuildID_PlaceholderInFirstLine(t *testing.T) {
+content := compilationconst.BuildIDPlaceholder + "\nsome content\n"
+got := buildid.StabilizeBuildID(content)
+if strings.Contains(got, compilationconst.BuildIDPlaceholder) {
+t.Error("placeholder in first line should be replaced")
+}
+if !strings.Contains(got, "<!-- Build ID:") {
+t.Errorf("expected Build ID comment, got %q", got)
+}
+}
+
+func TestStabilizeBuildID_NoBuildIDPlaceholder(t *testing.T) {
+content := "line1\nline2\nline3\n"
+got := buildid.StabilizeBuildID(content)
+if got != content {
+t.Errorf("content without placeholder should be unchanged, got %q", got)
+}
+}
+
+func TestStabilizeBuildID_HashLength(t *testing.T) {
+content := compilationconst.BuildIDPlaceholder
+got := buildid.StabilizeBuildID(content)
+// Extract hash from "<!-- Build ID: <hash> -->"
+if !strings.Contains(got, "<!-- Build ID:") {
+t.Fatal("expected Build ID comment")
+}
+inner := strings.TrimPrefix(got, "<!-- Build ID: ")
+inner = strings.TrimSuffix(inner, " -->")
+if len(inner) != 12 {
+t.Errorf("expected 12-char hash, got %d chars: %q", len(inner), inner)
+}
+}
+
+func TestStabilizeBuildID_TrailingNewlinePreserved(t *testing.T) {
+content := "a\n" + compilationconst.BuildIDPlaceholder + "\nb\n"
+got := buildid.StabilizeBuildID(content)
+if !strings.HasSuffix(got, "\n") {
+t.Errorf("trailing newline should be preserved, got %q", got)
+}
+}
+
+func TestStabilizeBuildID_OnlyPlaceholderNoNewline(t *testing.T) {
+content := compilationconst.BuildIDPlaceholder
+got := buildid.StabilizeBuildID(content)
+// Must not add newline since input has none
+if strings.HasSuffix(got, "\n") {
+t.Error("should not add trailing newline when input has none")
+}
+}

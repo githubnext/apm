@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 880471,
+  "migrated_python_lines": 881285,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16963,11 +16963,46 @@
       "python_lines": 339,
       "status": "test-migrated",
       "notes": "Alias: unit test hookintegrator comprehensive"
+    },
+    {
+      "module": "test/constants/extra",
+      "go_package": "internal/constants",
+      "python_lines": 184,
+      "status": "test-migrated",
+      "notes": "Extra test coverage for constants package: InstallMode values, file constants, DefaultSkipDirs membership"
+    },
+    {
+      "module": "test/version/extra",
+      "go_package": "internal/version",
+      "python_lines": 138,
+      "status": "test-migrated",
+      "notes": "Extra test coverage for version package: BuildVersion/BuildSHA set/restore, alpha/beta/rc variants"
+    },
+    {
+      "module": "test/utils/normalization/extra",
+      "go_package": "internal/utils/normalization",
+      "python_lines": 166,
+      "status": "test-migrated",
+      "notes": "Extra test coverage for normalization: StripBOM, NormalizeLineEndings, Normalize, StripBuildID variants"
+    },
+    {
+      "module": "test/deps/gitremoteops/extra",
+      "go_package": "internal/deps/gitremoteops",
+      "python_lines": 165,
+      "status": "test-migrated",
+      "notes": "Extra test coverage for gitremoteops: ParseLsRemoteOutput edge cases, SortRefsBySemver descending/nil/single"
+    },
+    {
+      "module": "test/cache/httpcache/extra",
+      "go_package": "internal/cache/httpcache",
+      "python_lines": 161,
+      "status": "test-migrated",
+      "notes": "Extra test coverage for httpcache: Store/Get ETag/status, GetStats after store, parseTTL variants"
     }
   ],
-  "last_updated": "2026-05-18T14:21:57Z",
-  "iteration": 84,
-  "python_lines_migrated_pct": 1004.81,
+  "last_updated": "2026-05-18T15:54:55Z",
+  "iteration": 128,
+  "python_lines_migrated_pct": 1005.73,
   "modules_migrated": 2253,
   "modules": [
     {

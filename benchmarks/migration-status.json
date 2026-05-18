@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 885973,
+  "migrated_python_lines": 886797,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17525,6 +17525,36 @@
       "python_lines": 115,
       "status": "test-migrated",
       "description": "Extra Go test file"
+    },
+    {
+      "module": "internal/adapters/windsurf/windsurf_extra_test.go",
+      "python_lines": 114,
+      "status": "test-migrated"
+    },
+    {
+      "module": "internal/deps/lockfile/lockfile_extra_test.go",
+      "python_lines": 164,
+      "status": "test-migrated"
+    },
+    {
+      "module": "internal/integration/baseintegrator/baseintegrator_extra_test.go",
+      "python_lines": 121,
+      "status": "test-migrated"
+    },
+    {
+      "module": "internal/commands/experimental/experimental_extra_test.go",
+      "python_lines": 169,
+      "status": "test-migrated"
+    },
+    {
+      "module": "internal/core/auth/auth_extra_test.go",
+      "python_lines": 148,
+      "status": "test-migrated"
+    },
+    {
+      "module": "internal/runtime/base/base_extra_test.go",
+      "python_lines": 108,
+      "status": "test-migrated"
     }
   ]
 }

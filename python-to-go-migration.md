@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-18T22:26:00Z |
-| Iteration Count | 133 |
-| Best Metric | 1012.02 |
+| Last Run | 2026-05-18T23:27:58Z |
+| Iteration Count | 134 |
+| Best Metric | 1013.09 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -67,6 +67,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 134 -- 2026-05-18 23:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26066382313)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra_test.go files for 6 thin Go packages (install, packer, discovery, commandintegrator, mcpdep, cichecks) with 1136 new test lines; registered 6 new test-migrated entries
+- **Metric**: 1013.09% (previous best: 1012.02%, delta: +1.07pp)
+- **Commit**: 9498e805
+- **Notes**: Added tests for install (error types, mapToEntry, mergeDependencies, InstallMode constants, parseDependencyRefs variants), packer (PackResult/PackOptions fields, copyFile/copyDirContents, createTarGz, readDeployedFiles, filterFilesByTarget), discovery (shouldReplace direction, globMatch patterns, AddPrimitive for all types, conflict detection, FindPrimitiveFiles), commandintegrator (parseFrontmatter with/without frontmatter, buildCommandContent, extractInputNames with maps/slices, preservedCommandKeys), mcpdep (isValidName boundaries, Validate scenarios, String/ToDict/FromDict coverage), cichecks (CheckLockfileSync/CheckRefConsistency pass/fail, CIAuditResult HasFailures/RenderSummary, struct fields).
 
 ### Iteration 133 -- 2026-05-18 22:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26063987994)
 

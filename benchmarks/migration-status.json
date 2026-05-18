@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 877562,
+  "migrated_python_lines": 878649,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17109,6 +17109,54 @@
       "python_lines": 131,
       "status": "test-migrated",
       "go_package": "internal/install/mcp/mcpconflicts"
+    },
+    {
+      "module": "test-coverage-extra",
+      "python_lines": 99,
+      "status": "test-migrated",
+      "go_package": "internal/integration/coverage"
+    },
+    {
+      "module": "test-targets-extra",
+      "python_lines": 189,
+      "status": "test-migrated",
+      "go_package": "internal/integration/targets"
+    },
+    {
+      "module": "test-auditreport-extra",
+      "python_lines": 171,
+      "status": "test-migrated",
+      "go_package": "internal/security/auditreport"
+    },
+    {
+      "module": "test-mcpcommand-extra",
+      "python_lines": 141,
+      "status": "test-migrated",
+      "go_package": "internal/install/mcp/mcpcommand"
+    },
+    {
+      "module": "test-lockfile-extra",
+      "python_lines": 137,
+      "status": "test-migrated",
+      "go_package": "internal/install/phases/lockfile"
+    },
+    {
+      "module": "test-request-extra",
+      "python_lines": 74,
+      "status": "test-migrated",
+      "go_package": "internal/install/request"
+    },
+    {
+      "module": "test-mktmodels-extra",
+      "python_lines": 156,
+      "status": "test-migrated",
+      "go_package": "internal/marketplace/mktmodels"
+    },
+    {
+      "module": "test-refresolver-extra",
+      "python_lines": 120,
+      "status": "test-migrated",
+      "go_package": "internal/marketplace/refresolver"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 876590,
+  "migrated_python_lines": 877562,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16860,9 +16860,9 @@
       "go_test_file": "internal/marketplace/ymlschema/ymlschema_extra_test.go"
     }
   ],
-  "last_updated": "2026-05-18T08:26:00Z",
+  "last_updated": "2026-05-18T09:50:00Z",
   "iteration": 83,
-  "python_lines_migrated_pct": 995.11,
+  "python_lines_migrated_pct": 1001.49,
   "modules_migrated": 2253,
   "modules": [
     {
@@ -17061,6 +17061,54 @@
       "module": "commandlogger-extra-tests",
       "status": "test-migrated",
       "python_lines": 119
+    },
+    {
+      "module": "test-lockfileenrichment-extra",
+      "python_lines": 140,
+      "status": "test-migrated",
+      "go_package": "internal/install/bundle/lockfileenrichment"
+    },
+    {
+      "module": "test-mcpintegrator-extra",
+      "python_lines": 146,
+      "status": "test-migrated",
+      "go_package": "internal/integration/mcpintegrator"
+    },
+    {
+      "module": "test-downloadstrategies-extra",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "go_package": "internal/deps/downloadstrategies"
+    },
+    {
+      "module": "test-securityscan-extra",
+      "python_lines": 102,
+      "status": "test-migrated",
+      "go_package": "internal/install/securityscan"
+    },
+    {
+      "module": "test-copilot-extra",
+      "python_lines": 98,
+      "status": "test-migrated",
+      "go_package": "internal/adapters/client/copilot"
+    },
+    {
+      "module": "test-coworkpaths-extra",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "go_package": "internal/integration/coworkpaths"
+    },
+    {
+      "module": "test-cloneengine-extra",
+      "python_lines": 155,
+      "status": "test-migrated",
+      "go_package": "internal/deps/cloneengine"
+    },
+    {
+      "module": "test-mcpconflicts-extra",
+      "python_lines": 131,
+      "status": "test-migrated",
+      "go_package": "internal/install/mcp/mcpconflicts"
     }
   ]
 }

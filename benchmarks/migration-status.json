@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 938376,
+  "migrated_python_lines": 939507,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19192,6 +19192,54 @@
       "module": "extra-test/core-apmyml",
       "python_lines": 101,
       "status": "test-migrated"
+    },
+    {
+      "module": "versionchecker-extra-test",
+      "status": "test-migrated",
+      "python_lines": 108,
+      "go_file": "internal/utils/versionchecker/versionchecker_extra_test.go"
+    },
+    {
+      "module": "githubhost-extra-test",
+      "status": "test-migrated",
+      "python_lines": 145,
+      "go_file": "internal/utils/githubhost/githubhost_extra_test.go"
+    },
+    {
+      "module": "cleanup-extra-test",
+      "status": "test-migrated",
+      "python_lines": 162,
+      "go_file": "internal/install/phases/cleanup/cleanup_extra_test.go"
+    },
+    {
+      "module": "installctx-extra-test",
+      "status": "test-migrated",
+      "python_lines": 153,
+      "go_file": "internal/install/installctx/installctx_extra_test.go"
+    },
+    {
+      "module": "matcher-extra-test",
+      "status": "test-migrated",
+      "python_lines": 116,
+      "go_file": "internal/policy/matcher/matcher_extra_test.go"
+    },
+    {
+      "module": "template-extra-test",
+      "status": "test-migrated",
+      "python_lines": 185,
+      "go_file": "internal/install/template/template_extra_test.go"
+    },
+    {
+      "module": "localbundle-extra-test",
+      "status": "test-migrated",
+      "python_lines": 154,
+      "go_file": "internal/install/localbundle/localbundle_extra_test.go"
+    },
+    {
+      "module": "vscode-extra-test",
+      "status": "test-migrated",
+      "python_lines": 108,
+      "go_file": "internal/adapters/client/vscode/vscode_extra_test.go"
     }
   ]
 }

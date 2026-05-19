@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 947391,
+  "migrated_python_lines": 948093,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19573,6 +19573,51 @@
       "python_lines": 92,
       "status": "test-migrated",
       "go_test_file": "internal/deps/pluginparser/pluginparser_extra2_test.go"
+    },
+    {
+      "module": "test-apmpackage-extra2",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "module": "test-localcontent-extra2",
+      "status": "test-migrated",
+      "python_lines": 110
+    },
+    {
+      "module": "test-nulllogger-extra2",
+      "status": "test-migrated",
+      "python_lines": 74
+    },
+    {
+      "module": "test-gitutils-extra2",
+      "status": "test-migrated",
+      "python_lines": 72
+    },
+    {
+      "module": "test-helptext-extra2",
+      "status": "test-migrated",
+      "python_lines": 58
+    },
+    {
+      "module": "test-compilationconst-extra2",
+      "status": "test-migrated",
+      "python_lines": 67
+    },
+    {
+      "module": "test-inittemplate-extra2",
+      "status": "test-migrated",
+      "python_lines": 74
+    },
+    {
+      "module": "test-gitstderr-extra2",
+      "status": "test-migrated",
+      "python_lines": 84
+    },
+    {
+      "module": "test-intutils-extra2",
+      "status": "test-migrated",
+      "python_lines": 61
     }
   ]
 }

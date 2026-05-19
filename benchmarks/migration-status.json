@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 945052,
+  "migrated_python_lines": 945751,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17042,7 +17042,7 @@
       "go_lines": 221
     }
   ],
-  "last_updated": "2026-05-18T15:54:55Z",
+  "last_updated": "2026-05-19T17:50:00Z",
   "iteration": 128,
   "python_lines_migrated_pct": 1073.58,
   "modules_migrated": 2253,
@@ -19453,6 +19453,48 @@
       "status": "test-migrated",
       "python_lines": 111,
       "source_file": "internal/install/cachepin/cachepin_extra2_test.go"
+    },
+    {
+      "name": "llmruntime_extra2_tests",
+      "python_lines": 120,
+      "status": "test-migrated",
+      "go_test_file": "internal/runtime/llmruntime/llmruntime_extra2_test.go"
+    },
+    {
+      "name": "cache_integrity_extra2_tests",
+      "python_lines": 89,
+      "status": "test-migrated",
+      "go_test_file": "internal/cache/integrity/integrity_extra2_test.go"
+    },
+    {
+      "name": "conflictdetector_extra2_tests",
+      "python_lines": 89,
+      "status": "test-migrated",
+      "go_test_file": "internal/core/conflictdetector/conflictdetector_extra2_test.go"
+    },
+    {
+      "name": "policy_inheritance_extra2_tests",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "go_test_file": "internal/policy/inheritance/inheritance_extra2_test.go"
+    },
+    {
+      "name": "coworkpaths_extra2_tests",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/coworkpaths/coworkpaths_extra2_test.go"
+    },
+    {
+      "name": "paths_extra2_tests",
+      "python_lines": 86,
+      "status": "test-migrated",
+      "go_test_file": "internal/utils/paths/paths_extra2_test.go"
+    },
+    {
+      "name": "constitution_extra2_tests",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "go_test_file": "internal/compilation/constitution/constitution_extra2_test.go"
     }
   ]
 }

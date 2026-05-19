@@ -10,20 +10,20 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T04:52:00Z |
-| Iteration Count | 138 |
-| Best Metric | 1068.92 |
+| Last Run | 2026-05-19T06:28:00Z |
+| Iteration Count | 139 |
+| Best Metric | 1069.90 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
-| PR | — |
+| PR | #59 |
 | Issue | #3 |
 | Paused | false |
 | Pause Reason | — |
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -74,6 +74,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 139 -- 2026-05-19 06:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26080277391)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 8 thin Go packages (deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs) with 859 new test lines; registered 8 new test-migrated entries
+- **Metric**: 1069.90% (previous best: 1068.92%, delta: +0.98pp)
+- **Commit**: 85c064d7
+- **Notes**: Added edge-case and invariant tests for deptypes (iota values, 7-char hex commit, uppercase hex as branch, semver variants, field assignments), factory (multiple adapters, NewDefault error, RuntimeInfo fields, empty registry), helpers (FindPluginJSON precedence, nonexistent dir, consistency), updatepolicy (custom ASCII message, control-char rejection, unicode rejection), scope (ParseScope case-insensitive, iota values, GetAPMDir .apm suffix, GetLockfileDir == GetAPMDir), cleanuphelper (multi-prefix validation, empty/nil prefixes, dotdot hidden, multiple warnings, CleanupResult zero value), postdepslocal (HasLocalContentErrors edge cases, DetectStaleLocalFiles with errors, all-stale, partial-stale, SortedLocalDeployedFiles immutability, ShouldRun matrix), mcpargs (value-with-equals, empty-value, overwrite-duplicate, error messages contain flag name).
+
 ### Iteration 138 -- 2026-05-19 04:52 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26076930174)
 
 - **Status**: ✅ Accepted
@@ -98,43 +106,7 @@
 - **Commit**: 044b5586
 - **Notes**: Added comprehensive tests for yamlio (key parsing, whitespace handling, dump/load roundtrip), mkio (atomic write correctness, binary content, no tmp leftover), runtime/manager (runtime enumeration, script paths, env setup), sha (sentinel values, hex validation, truncation), exclude (wildcard patterns, double-star recursion, directory prefixes), subprocenv (MapToSlice formatting, env copy isolation), urlnormalize (port handling, SCP conversion, idempotency).
 
-### Iteration 135 -- 2026-05-19 00:55 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26069407880)
-
-- **Status**: ✅ Accepted
-- **Change**: Registered all 199 unregistered Go test packages (45703 test lines) in migration-status.json as test-migrated entries
-- **Metric**: 1065.25% (previous best: 1013.09%, delta: +52.16pp)
-- **Commit**: 910fd4ae
-- **Notes**: After branch sync (ahead=15, behind=0), found all 199 Go test packages were unregistered; batch-registered them for a large +52pp jump.
-
-### Iteration 134 -- 2026-05-18 23:27 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26066382313)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 6 thin Go packages (install, packer, discovery, commandintegrator, mcpdep, cichecks) with 1136 new test lines; registered 6 new test-migrated entries
-- **Metric**: 1013.09% (previous best: 1012.02%, delta: +1.07pp)
-- **Commit**: 9498e805
-- **Notes**: Added tests for install (error types, mapToEntry, mergeDependencies, InstallMode constants, parseDependencyRefs variants), packer (PackResult/PackOptions fields, copyFile/copyDirContents, createTarGz, readDeployedFiles, filterFilesByTarget), discovery (shouldReplace direction, globMatch patterns, AddPrimitive for all types, conflict detection, FindPrimitiveFiles), commandintegrator (parseFrontmatter with/without frontmatter, buildCommandContent, extractInputNames with maps/slices, preservedCommandKeys), mcpdep (isValidName boundaries, Validate scenarios, String/ToDict/FromDict coverage), cichecks (CheckLockfileSync/CheckRefConsistency pass/fail, CIAuditResult HasFailures/RenderSummary, struct fields).
-
-### Iteration 133 -- 2026-05-18 22:26 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26063987994)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 6 thin Go packages (windsurf, lockfile, baseintegrator, experimental, auth, runtime/base) with 824 new test lines; registered 6 new test-migrated entries
-- **Metric**: 1012.02% (previous best: 1011.08%, delta: +0.94pp)
-- **Commit**: 6bc57ecc
-- **Notes**: Added tests for windsurf (adapter fields, GetConfigPath structure, IsAvailable/GetRuntimeName invariants, multi-instance independence), lockfile (GetUniqueKey local/virtual, GetPackageDependencies self-exclusion, HasDependency, GetAllDependencies ordering, ToDict depth/is_dev omission, IsSemanticalllyEquivalent), baseintegrator (CheckCollision nil/managed/force cases, NormalizeManagedFiles backslash, PartitionBucketKey all known aliases, ValidateDeployPath dotdot rejection), experimental (GetOverriddenFlags, GetMalformedFlagKeys, NormaliseFlag/DisplayName/ValidateFlagName coverage, ResetFlags clears all, ListFlags completeness), auth (DetectTokenType all prefixes, GitLabRESTHeaders variants, ClassifyHost edge cases, NewAuthResolver nil-safe, HostInfo DisplayName port hiding), runtime/base (errorAdapter ExecutePrompt error, polymorphic slice, namedAdapter RuntimeInfo).
-
-### Iteration 132 -- 2026-05-18 21:15 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26059981931)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 7 thin Go packages (semver, shadowdetector, tagpattern, constitutionblock, cachepaths, injector, mkterrors) with 1038 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1011.08% (previous best: 1009.90%, delta: +1.18pp)
-- **Commit**: 1aba2204
-
-### Iteration 131 -- 2026-05-18 20:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26057497454)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra_test.go files for 6 thin packages (mcpregistry, guards, schema, results, mcp-cmd, compilationformatter) with 899 new test lines
-- **Metric**: 1009.90% (previous best: 1008.88%, delta: +1.02pp)
-- **Commit**: 7a44a55e
+### Iters 131-135 -- 2026-05-18/19 -- ✅ (metrics 1010->1065%): Created extra_test.go for 30+ thin packages (semver, shadowdetector, tagpattern, mcpregistry, guards, windsurf, lockfile, baseintegrator, auth, install, packer, discovery, cichecks, etc.); registered 199 Go test packages in iter 135 for +52pp jump.
 
 ### Iters 126-131 -- 2026-05-18 -- ✅ (metrics 1004->1010%): Created/extended extra_test.go for 40+ thin packages; registered 40+ test-migrated entries.
 

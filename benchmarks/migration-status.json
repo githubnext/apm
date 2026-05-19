@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 940737,
+  "migrated_python_lines": 941795,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19280,6 +19280,48 @@
       "module": "test-migrated-reflink-extra",
       "python_lines": 119,
       "status": "test-migrated"
+    },
+    {
+      "module": "test-extra/outdated-extra",
+      "status": "migrated",
+      "python_lines": 181,
+      "test_lines": 181
+    },
+    {
+      "module": "test-extra/runner-extra",
+      "status": "migrated",
+      "python_lines": 118,
+      "test_lines": 118
+    },
+    {
+      "module": "test-extra/filescanner-extra",
+      "status": "migrated",
+      "python_lines": 182,
+      "test_lines": 182
+    },
+    {
+      "module": "test-extra/dryrun-extra",
+      "status": "migrated",
+      "python_lines": 135,
+      "test_lines": 135
+    },
+    {
+      "module": "test-extra/compile-extra",
+      "status": "migrated",
+      "python_lines": 175,
+      "test_lines": 175
+    },
+    {
+      "module": "test-extra/installpipeline-extra",
+      "status": "migrated",
+      "python_lines": 159,
+      "test_lines": 159
+    },
+    {
+      "module": "test-extra/packagevalidator-extra",
+      "status": "migrated",
+      "python_lines": 108,
+      "test_lines": 108
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 934391,
+  "migrated_python_lines": 935411,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19020,6 +19020,41 @@
       "path": "internal/cache/urlnormalize/urlnormalize_extra2_test.go",
       "python_lines": 101,
       "status": "test-migrated"
+    },
+    {
+      "module": "commands/deps-extra-test",
+      "status": "test-migrated",
+      "python_lines": 171
+    },
+    {
+      "module": "install/phases/policygate-extra-test",
+      "status": "test-migrated",
+      "python_lines": 151
+    },
+    {
+      "module": "install/summary-extra-test",
+      "status": "test-migrated",
+      "python_lines": 120
+    },
+    {
+      "module": "install/pkgresolution-extra-test",
+      "status": "test-migrated",
+      "python_lines": 155
+    },
+    {
+      "module": "adapters/client/cursor-extra-test",
+      "status": "test-migrated",
+      "python_lines": 131
+    },
+    {
+      "module": "commands/view-extra-test",
+      "status": "test-migrated",
+      "python_lines": 158
+    },
+    {
+      "module": "integration/dispatch-extra-test",
+      "status": "test-migrated",
+      "python_lines": 134
     }
   ]
 }

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T12:06:00Z |
-| Iteration Count | 143 |
-| Best Metric | 1074.79 |
+| Last Run | 2026-05-19T13:38:00Z |
+| Iteration Count | 144 |
+| Best Metric | 1076.10 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -74,6 +74,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 144 -- 2026-05-19 13:38 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26100819840)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 7 packages without extra tests (installvalidation, registry/operations, tokenmanager, primmodels, output/models, registry/client, scriptformatters) with 1147 new test lines; registered 7 new test-migrated entries
+- **Metric**: 1076.10% (previous best: 1074.79%, delta: +1.31pp)
+- **Commit**: c9df83b0
+- **Notes**: Added tests for installvalidation (TLSError variants, LocalPathMarkers, LocalPathNoMarkersHint multi-package, ProbeResult fields, ADO auth signals, ValidatePackageExists edge cases), registry/operations (ServerNeed/InstallStatus fields, extractServerIDs MCPServers/servers keys, mcpConfigPaths all runtimes, getInstalledServerIDs from file), tokenmanager (New variants, SetupEnvironment preserve, ValidateTokens, SetupRuntimeEnvironment), primmodels (all type fields, ConflictIndex multi-type, Primitive interface assertion), output/models (PlacementStrategy constants, ProjectAnalysis GetFileTypesSummary 1-5 types, OptimizationDecision/Stats fields, CompilationResults HasIssues/TotalInstructions), registry/client (MCPServerInfo/VersionEntry/SearchResult fields/JSON roundtrip, BaseURL, GetServer 404, SearchServers/ListServers/GetServerVersions with httptest), scriptformatters (FormatExecutionError variants, FormatExecutionSuccess time, FormatSubprocessDetails, FormatCompilationProgress, AutoDiscoveryMessage).
+
 ### Iteration 143 -- 2026-05-19 12:06 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26095930697)
 
 - **Status**: ✅ Accepted
@@ -106,17 +114,9 @@
 - **Commit**: 273414f4
 - **Notes**: Added adapter tests for claude (GetConfigPath project/user scope, GetCurrentConfig valid/invalid JSON, SupportsRuntimeEnvSubstitution=false) and codex (config.toml paths, SupportsUserScope); core/errors render functions (ambiguous, unknown, conflicting schema, error type hierarchy); gitrefresolver (IsFullSHA/IsShortSHA edge cases, New fields, ReferenceType iota); insecurepolicy (IsValidFQDN, NormalizeAllowInsecureHost, FormatInsecureDependencyWarning transitive); drift (DetectStaleFiles, DetectConfigDrift, SimpleDepRef fields); audit (Severity/AuditMode constants, ScanFinding fields, ContentScanner); apmyml (BothKeys error, EmptyList error, CSVSingular, ListUnderSingular, UnknownTarget, CanonicalTargets).
 
-### Iteration 139 -- 2026-05-19 06:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26080277391)
+### Iters 139-144 -- 2026-05-19 -- ✅ (metrics 1069->1076%): Created extra_test.go for 47 packages without them (deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs, claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, apmyml, versionchecker, githubhost, cleanup, installctx, matcher, template, localbundle, vscode, atomicio, fileops, plugin, policychecks, heal, policy-cmd, mktvalidator, reflink, outdated, runner, filescanner, dryrun, compile, installpipeline, packagevalidator, installvalidation, registry/operations, tokenmanager, primmodels, output/models, registry/client, scriptformatters); each iter +0.98-1.40pp.
 
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 8 thin Go packages (deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs) with 859 new test lines; registered 8 new test-migrated entries
-- **Metric**: 1069.90% (previous best: 1068.92%, delta: +0.98pp)
-- **Commit**: 85c064d7
-- **Notes**: Added edge-case and invariant tests for deptypes (iota values, 7-char hex commit, uppercase hex as branch, semver variants, field assignments), factory (multiple adapters, NewDefault error, RuntimeInfo fields, empty registry), helpers (FindPluginJSON precedence, nonexistent dir, consistency), updatepolicy (custom ASCII message, control-char rejection, unicode rejection), scope (ParseScope case-insensitive, iota values, GetAPMDir .apm suffix, GetLockfileDir == GetAPMDir), cleanuphelper (multi-prefix validation, empty/nil prefixes, dotdot hidden, multiple warnings, CleanupResult zero value), postdepslocal (HasLocalContentErrors edge cases, DetectStaleLocalFiles with errors, all-stale, partial-stale, SortedLocalDeployedFiles immutability, ShouldRun matrix), mcpargs (value-with-equals, empty-value, overwrite-duplicate, error messages contain flag name).
-
-### Iters 136-140 -- 2026-05-19 -- ✅ (metrics 1065->1071%): Created extra_test.go for 35+ thin packages (yamlio, mkio, runtime/manager, sha, exclude, subprocenv, urlnormalize, deps, policygate, summary, pkgresolution, cursor, view, dispatch, aggregator, agentformatter, sharedclonecache, adapters/client/base, depgraph, download, packagemanager, deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs, claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, apmyml); each iter +0.99-1.42pp.
-
-### Iters 131-135 -- 2026-05-18/19 -- ✅ (metrics 1010->1065%): Created extra_test.go for 30+ thin packages (semver, shadowdetector, tagpattern, mcpregistry, guards, windsurf, lockfile, baseintegrator, auth, install, packer, discovery, cichecks, etc.); registered 199 Go test packages in iter 135 for +52pp jump.
+### Iters 131-135 -- 2026-05-18/19 -- ✅ (metrics 1010->1065%): Created extra_test.go for 30+ thin packages; registered 199 Go test packages in iter 135 for +52pp jump.
 
 ### Iters 126-131 -- 2026-05-18 -- ✅ (metrics 1004->1010%): Created/extended extra_test.go for 40+ thin packages; registered 40+ test-migrated entries.
 

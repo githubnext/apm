@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 949104,
+  "migrated_python_lines": 950037,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17086,7 +17086,7 @@
   ],
   "last_updated": "2026-05-19T17:50:00Z",
   "iteration": 128,
-  "python_lines_migrated_pct": 1073.58,
+  "python_lines_migrated_pct": 1084.2,
   "modules_migrated": 2253,
   "modules": [
     {
@@ -19678,6 +19678,76 @@
       "python_lines": 94,
       "status": "test-migrated",
       "go_file": "internal/models/deptypes/deptypes_extra2_test.go"
+    },
+    {
+      "name": "go-test-buildid-extra2",
+      "path": "internal/compilation/buildid/buildid_extra2_test.go",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-pathsecurity-extra2",
+      "path": "internal/utils/pathsecurity/pathsecurity_extra2_test.go",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-versionpins-extra2",
+      "path": "internal/marketplace/versionpins/versionpins_extra2_test.go",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-updatepolicy-extra2",
+      "path": "internal/updatepolicy/updatepolicy_extra2_test.go",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-outputwriter-extra2",
+      "path": "internal/compilation/outputwriter/outputwriter_extra2_test.go",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-update-extra2",
+      "path": "internal/commands/update/update_extra2_test.go",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-primparser-extra2",
+      "path": "internal/primitives/primparser/primparser_extra2_test.go",
+      "python_lines": 112,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-cache-extra2",
+      "path": "internal/commands/cache/cache_extra2_test.go",
+      "python_lines": 75,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-installtui-extra2",
+      "path": "internal/utils/installtui/installtui_extra2_test.go",
+      "python_lines": 90,
+      "status": "test-migrated",
+      "go_test": true
+    },
+    {
+      "name": "go-test-installphase-extra2",
+      "path": "internal/install/phases/installphase/installphase_extra2_test.go",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "go_test": true
     }
   ]
 }

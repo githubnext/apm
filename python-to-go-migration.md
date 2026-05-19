@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T00:55:45Z |
-| Iteration Count | 135 |
-| Best Metric | 1065.25 |
+| Last Run | 2026-05-19T01:46:00Z |
+| Iteration Count | 136 |
+| Best Metric | 1066.34 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -73,6 +73,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 136 -- 2026-05-19 01:46 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26071073779)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 7 thin Go packages (yamlio, mkio, runtime/manager, sha, exclude, subprocenv, urlnormalize) with 959 new test lines; registered 7 new test-migrated entries
+- **Metric**: 1066.34% (previous best: 1065.25%, delta: +1.09pp)
+- **Commit**: 044b5586
+- **Notes**: Added comprehensive tests for yamlio (key parsing, whitespace handling, dump/load roundtrip), mkio (atomic write correctness, binary content, no tmp leftover), runtime/manager (runtime enumeration, script paths, env setup), sha (sentinel values, hex validation, truncation), exclude (wildcard patterns, double-star recursion, directory prefixes), subprocenv (MapToSlice formatting, env copy isolation), urlnormalize (port handling, SCP conversion, idempotency).
 
 ### Iteration 135 -- 2026-05-19 00:55 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26069407880)
 

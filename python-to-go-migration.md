@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T13:38:00Z |
-| Iteration Count | 144 |
-| Best Metric | 1076.10 |
+| Last Run | 2026-05-19T15:11:00Z |
+| Iteration Count | 145 |
+| Best Metric | 1077.13 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -74,47 +74,15 @@
 
 ## 📊 Iteration History
 
-### Iteration 144 -- 2026-05-19 13:38 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26100819840)
+### Iteration 145 -- 2026-05-19 15:11 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26106222678)
 
 - **Status**: ✅ Accepted
-- **Change**: Created extra test files for 7 packages without extra tests (installvalidation, registry/operations, tokenmanager, primmodels, output/models, registry/client, scriptformatters) with 1147 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1076.10% (previous best: 1074.79%, delta: +1.31pp)
-- **Commit**: c9df83b0
-- **Notes**: Added tests for installvalidation (TLSError variants, LocalPathMarkers, LocalPathNoMarkersHint multi-package, ProbeResult fields, ADO auth signals, ValidatePackageExists edge cases), registry/operations (ServerNeed/InstallStatus fields, extractServerIDs MCPServers/servers keys, mcpConfigPaths all runtimes, getInstalledServerIDs from file), tokenmanager (New variants, SetupEnvironment preserve, ValidateTokens, SetupRuntimeEnvironment), primmodels (all type fields, ConflictIndex multi-type, Primitive interface assertion), output/models (PlacementStrategy constants, ProjectAnalysis GetFileTypesSummary 1-5 types, OptimizationDecision/Stats fields, CompilationResults HasIssues/TotalInstructions), registry/client (MCPServerInfo/VersionEntry/SearchResult fields/JSON roundtrip, BaseURL, GetServer 404, SearchServers/ListServers/GetServerVersions with httptest), scriptformatters (FormatExecutionError variants, FormatExecutionSuccess time, FormatSubprocessDetails, FormatCompilationProgress, AutoDiscoveryMessage).
+- **Change**: Created extra test files for 7 packages without extra tests (targetscmd, skillintegrator, agentscompiler, hostbackends, policy/discovery, scriptrunner, marketplace) with 901 new test lines; registered 7 new test-migrated entries
+- **Metric**: 1077.13% (previous best: 1076.10%, delta: +1.03pp)
+- **Commit**: bcbf5f9d
+- **Notes**: Added tests for targetscmd (TargetRow JSON roundtrip, omit-empty source, many targets), skillintegrator (ToHyphenCase variants, ValidateSkillName edge cases + max length, SkillIntegrationResult fields), agentscompiler (config defaults, target/strategy constants, BuildIDPlaceholder, MergedResult OK, CopilotRootInstructionsPath), hostbackends (BuildCloneHTTPSURL with/without token/bearer, SSH URL, ADO HTTPS, GitLab generic, ContentsAPIURLs, CommitsAPIURL branch ref), policy/discovery (PolicyFetchResult fields/zero value, splitHashPin variants, cache constants), scriptrunner (RuntimeKind constants, ScriptRunner fields, detectRuntime LLM/Gemini/unknown, copyEnv nil, generateRuntimeCommand variants), marketplace (MarketplaceEntry/Config fields, Add/List roundtrip, duplicate detection, force overwrite, OutdatedPackage/DoctorResult/PackageSummary fields).
 
-### Iteration 143 -- 2026-05-19 12:06 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26095930697)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 7 thin packages (outdated, runner, filescanner, dryrun, compile, installpipeline, packagevalidator) with 1058 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1074.79% (previous best: 1073.58%, delta: +1.21pp)
-- **Commit**: a2896354
-- **Notes**: Added tests for outdated (semverParts, truncate, ParseLockFile format, OutdatedRow/CheckResult fields), runner (SubstituteParameters edge cases, CollectParameters variants, RunResult zero value), filescanner (all suspiciousRunes variants, ScanDeployedFiles with filter/traversal, ScanFinding/ScanResult fields), dryrun (DevAPMDeps notice, many orphans with truncation, nil vs empty orphans), compile (computeHash determinism/length, extractTitle fallback, buildConstitution empty/with sections, fileMatchesContent, writeAtomic overwrite), installpipeline (DiagCollector many/single/empty, InstallContext zero value, PipelineResult fields, frozen without lockfile), packagevalidator (warnings-only valid, error-after-warnings, ValidateAPMPackage/Structure agreement, insertion order).
-
-### Iteration 142 -- 2026-05-19 10:44 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26092105598)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 8 packages without extra tests (atomicio, fileops, plugin, policychecks, heal, policy-cmd, mktvalidator, reflink) with 1230 new test lines; registered 8 new test-migrated entries
-- **Metric**: 1073.58% (previous best: 1072.18%, delta: +1.40pp)
-- **Commit**: 90b3c7cf
-- **Notes**: Added edge-case tests for atomicio (concurrent writes, binary content, special chars, mode handling), fileops (empty/large/nested copy, many files, retry), plugin (all fields, claude/agent subdirs, path invariants), policychecks (empty audit, multi-details, LoadRawApmYML), heal (counting healer, FiredGroups, multiple message types, BypassKeys), policy-cmd (PolicySource/PolicyStatus fields, discoverPolicyFile YAML, countRules multi-keys, formatAge boundaries), mktvalidator (empty lists, many errors, ValidateMarketplace pass/fail combos), reflink (large/empty/overwrite files, MultipleTimes, NoReflinkEnv).
-
-### Iteration 141 -- 2026-05-19 09:17 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26087931648)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 8 thin packages (versionchecker, githubhost, cleanup, installctx, matcher, template, localbundle, vscode) with 1131 new test lines; registered 8 new test-migrated entries
-- **Metric**: 1072.18% (previous best: 1070.89%, delta: +1.29pp)
-- **Commit**: 197a7ebf
-- **Notes**: Added edge-case tests for versionchecker (rc/alpha prerelease, lexicographic ordering, zero versions, v-prefix rejection), githubhost (IsVisualStudioLegacyHostname case-insensitive, GitLab SaaS/env, IsSupportedGitHost FQDN, ClassifyHost ADO, ParseHostFromURL HTTPS/SSH), cleanup (CleanupResult zero value/fields, duplicate detection, multi-orphan, all-files-removed, error-skip), installctx (counter defaults, slice initialization, independent instances, map mutation), matcher (concurrent cache, quoted special chars, multi-pattern allow/deny), template (nil PackageInfo, HasTargets=false, all delta fields, verbose collision warning), localbundle (SSE transport, fallback transport field, args preserved, case-insensitive .mcp.json), vscode (TargetName/MCPServersKey/SupportsUserScope invariants, GetConfigPath, GetCurrentConfig, SupportsRuntimeEnvSubstitution=false).
-
-### Iteration 140 -- 2026-05-19 07:51 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26083802256)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 8 packages (claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, core/apmyml) with 864 new test lines; registered 8 new test-migrated entries
-- **Metric**: 1070.89% (previous best: 1069.90%, delta: +0.99pp)
-- **Commit**: 273414f4
-- **Notes**: Added adapter tests for claude (GetConfigPath project/user scope, GetCurrentConfig valid/invalid JSON, SupportsRuntimeEnvSubstitution=false) and codex (config.toml paths, SupportsUserScope); core/errors render functions (ambiguous, unknown, conflicting schema, error type hierarchy); gitrefresolver (IsFullSHA/IsShortSHA edge cases, New fields, ReferenceType iota); insecurepolicy (IsValidFQDN, NormalizeAllowInsecureHost, FormatInsecureDependencyWarning transitive); drift (DetectStaleFiles, DetectConfigDrift, SimpleDepRef fields); audit (Severity/AuditMode constants, ScanFinding fields, ContentScanner); apmyml (BothKeys error, EmptyList error, CSVSingular, ListUnderSingular, UnknownTarget, CanonicalTargets).
-
-### Iters 139-144 -- 2026-05-19 -- ✅ (metrics 1069->1076%): Created extra_test.go for 47 packages without them (deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs, claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, apmyml, versionchecker, githubhost, cleanup, installctx, matcher, template, localbundle, vscode, atomicio, fileops, plugin, policychecks, heal, policy-cmd, mktvalidator, reflink, outdated, runner, filescanner, dryrun, compile, installpipeline, packagevalidator, installvalidation, registry/operations, tokenmanager, primmodels, output/models, registry/client, scriptformatters); each iter +0.98-1.40pp.
+### Iters 136-145 -- 2026-05-18/19 -- ✅ (metrics 1065->1077%): Created extra_test.go for 60+ packages; each iter +1.0-1.4pp.
 
 ### Iters 131-135 -- 2026-05-18/19 -- ✅ (metrics 1010->1065%): Created extra_test.go for 30+ thin packages; registered 199 Go test packages in iter 135 for +52pp jump.
 

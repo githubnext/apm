@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T06:28:00Z |
-| Iteration Count | 139 |
-| Best Metric | 1069.90 |
+| Last Run | 2026-05-19T07:51:00Z |
+| Iteration Count | 140 |
+| Best Metric | 1070.89 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -73,6 +73,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 140 -- 2026-05-19 07:51 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26083802256)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 8 packages (claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, core/apmyml) with 864 new test lines; registered 8 new test-migrated entries
+- **Metric**: 1070.89% (previous best: 1069.90%, delta: +0.99pp)
+- **Commit**: 273414f4
+- **Notes**: Added adapter tests for claude (GetConfigPath project/user scope, GetCurrentConfig valid/invalid JSON, SupportsRuntimeEnvSubstitution=false) and codex (config.toml paths, SupportsUserScope); core/errors render functions (ambiguous, unknown, conflicting schema, error type hierarchy); gitrefresolver (IsFullSHA/IsShortSHA edge cases, New fields, ReferenceType iota); insecurepolicy (IsValidFQDN, NormalizeAllowInsecureHost, FormatInsecureDependencyWarning transitive); drift (DetectStaleFiles, DetectConfigDrift, SimpleDepRef fields); audit (Severity/AuditMode constants, ScanFinding fields, ContentScanner); apmyml (BothKeys error, EmptyList error, CSVSingular, ListUnderSingular, UnknownTarget, CanonicalTargets).
 
 ### Iteration 139 -- 2026-05-19 06:28 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26080277391)
 

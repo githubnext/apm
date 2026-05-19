@@ -75,7 +75,8 @@ jobs:
     - name: Lint - auth-protocol boundary (#1212 anti-regression)
       run: bash scripts/lint-auth-signals.sh
 
-  # Linux-only for PR feedback. Full platform matrix (incl. macOS + Windows) runs post-merge in build-release.yml.
+  # Python test + binary build remain Linux-only for PR feedback. Full packaged
+  # platform coverage (incl. macOS + Windows) runs post-merge in build-release.yml.
   # Combines unit tests + binary build into a single job to eliminate runner re-provisioning overhead.
   build-and-test:
     name: Build & Test (Linux)
@@ -127,6 +128,31 @@ jobs:
         include-hidden-files: true
         retention-days: 30
         if-no-files-found: error
+
+  go-build-test:
+    name: Go Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+        cache: true
+
+    - name: Run Go tests
+      run: go test ./...
+
+    - name: Run Go build
+      run: go build ./...
 
   # Dogfood the two CI gates we ship and document to users:
   #   - Gate A (consumer-side): `apm audit --ci` -- lockfile / install fidelity.

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 950037,
+  "migrated_python_lines": 951163,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19748,6 +19748,66 @@
       "python_lines": 97,
       "status": "test-migrated",
       "go_test": true
+    },
+    {
+      "name": "test-templatebuilder-extra2",
+      "module": "internal/compilation/templatebuilder",
+      "status": "test-migrated",
+      "python_lines": 167
+    },
+    {
+      "name": "test-dockerargs-extra2",
+      "module": "internal/core/dockerargs",
+      "status": "test-migrated",
+      "python_lines": 114
+    },
+    {
+      "name": "test-refresolver-extra2",
+      "module": "internal/marketplace/refresolver",
+      "status": "test-migrated",
+      "python_lines": 107
+    },
+    {
+      "name": "test-gitlabresolver-extra2",
+      "module": "internal/install/gitlabresolver",
+      "status": "test-migrated",
+      "python_lines": 121
+    },
+    {
+      "name": "test-commandlogger-extra2",
+      "module": "internal/core/commandlogger",
+      "status": "test-migrated",
+      "python_lines": 142
+    },
+    {
+      "name": "test-helpers-extra2",
+      "module": "internal/utils/helpers",
+      "status": "test-migrated",
+      "python_lines": 75
+    },
+    {
+      "name": "test-opencode-extra2",
+      "module": "internal/adapters/opencode",
+      "status": "test-migrated",
+      "python_lines": 106
+    },
+    {
+      "name": "test-gitcache-extra2",
+      "module": "internal/cache/gitcache",
+      "status": "test-migrated",
+      "python_lines": 103
+    },
+    {
+      "name": "test-gemini-extra2",
+      "module": "internal/adapters/client/gemini",
+      "status": "test-migrated",
+      "python_lines": 95
+    },
+    {
+      "name": "test-discovery-extra2",
+      "module": "internal/workflow/discovery",
+      "status": "test-migrated",
+      "python_lines": 96
     }
   ]
 }

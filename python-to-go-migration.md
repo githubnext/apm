@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T01:46:00Z |
-| Iteration Count | 136 |
-| Best Metric | 1066.34 |
+| Last Run | 2026-05-19T03:14:00Z |
+| Iteration Count | 137 |
+| Best Metric | 1067.50 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -73,6 +73,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 137 -- 2026-05-19 03:14 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26073892157)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 7 thin Go packages (deps, policygate, summary, pkgresolution, cursor, view, dispatch) with 1020 new test lines; registered 7 new test-migrated entries
+- **Metric**: 1067.50% (previous best: 1066.34%, delta: +1.16pp)
+- **Commit**: e499083e
+- **Notes**: Added comprehensive tests for commands/deps (ListOptions, CheckIssue, SyncResult, OrphanResult, GraphOptions structs, TreeNode nesting), policygate (env var edge cases, PolicyViolationError as interface, EnforcementResult variants), summary (exact format strings, precision, field ordering, HasCriticalSecurityError matrix), pkgresolution (NormalizePackageSpec whitespace, ResolutionError with/without cause, YAML entry serialization), cursor (New fields, GetConfigPath structure, UpdateConfig with/without .cursor dir, multi-instance independence), view (parseSimpleYAML edge cases, PackageInfo fields), dispatch (size invariant, MultiTarget exclusivity, ImmutableBaseline).
 
 ### Iteration 136 -- 2026-05-19 01:46 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26071073779)
 

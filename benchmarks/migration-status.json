@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 937512,
+  "migrated_python_lines": 938376,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19152,6 +19152,46 @@
       "status": "test-migrated",
       "python_lines": 102,
       "go_test_file": "internal/install/mcpargs/mcpargs_extra_test.go"
+    },
+    {
+      "module": "extra-test/claude-adapter",
+      "python_lines": 111,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/codex-adapter",
+      "python_lines": 96,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/core-errors",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/gitrefresolver",
+      "python_lines": 87,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/insecurepolicy",
+      "python_lines": 131,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/install-drift",
+      "python_lines": 117,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/audit-cmd",
+      "python_lines": 111,
+      "status": "test-migrated"
+    },
+    {
+      "module": "extra-test/core-apmyml",
+      "python_lines": 101,
+      "status": "test-migrated"
     }
   ]
 }

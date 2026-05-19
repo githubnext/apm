@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 935411,
+  "migrated_python_lines": 936653,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19055,6 +19055,55 @@
       "module": "integration/dispatch-extra-test",
       "status": "test-migrated",
       "python_lines": 134
+    },
+    {
+      "module": "internal/deps/aggregator/aggregator_extra_test.go",
+      "python_lines": 163,
+      "status": "test-migrated",
+      "go_lines": 163,
+      "notes": "extra tests for aggregator package"
+    },
+    {
+      "module": "internal/compilation/agentformatter/agentformatter_extra_test.go",
+      "python_lines": 185,
+      "status": "test-migrated",
+      "go_lines": 185,
+      "notes": "extra tests for agentformatter package"
+    },
+    {
+      "module": "internal/deps/sharedclonecache/sharedclonecache_extra_test.go",
+      "python_lines": 175,
+      "status": "test-migrated",
+      "go_lines": 175,
+      "notes": "extra tests for sharedclonecache package"
+    },
+    {
+      "module": "internal/adapters/client/base/base_extra_test.go",
+      "python_lines": 173,
+      "status": "test-migrated",
+      "go_lines": 173,
+      "notes": "extra tests for adapters/client/base package"
+    },
+    {
+      "module": "internal/deps/depgraph/depgraph_extra_test.go",
+      "python_lines": 221,
+      "status": "test-migrated",
+      "go_lines": 221,
+      "notes": "extra tests for depgraph package"
+    },
+    {
+      "module": "internal/install/phases/download/download_extra_test.go",
+      "python_lines": 154,
+      "status": "test-migrated",
+      "go_lines": 154,
+      "notes": "extra tests for download package"
+    },
+    {
+      "module": "internal/adapters/packagemanager/packagemanager_extra_test.go",
+      "python_lines": 171,
+      "status": "test-migrated",
+      "go_lines": 171,
+      "notes": "extra tests for packagemanager package"
     }
   ]
 }

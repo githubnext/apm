@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 933432,
+  "migrated_python_lines": 934391,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -18978,6 +18978,48 @@
       "python_lines": 255,
       "go_package": "internal/workflow/wfparser",
       "note": "Go test package"
+    },
+    {
+      "module": "yamlio-extra-tests",
+      "path": "internal/utils/yamlio/yamlio_extra_test.go",
+      "python_lines": 168,
+      "status": "test-migrated"
+    },
+    {
+      "module": "mkio-extra-tests",
+      "path": "internal/marketplace/mkio/mkio_extra_test.go",
+      "python_lines": 145,
+      "status": "test-migrated"
+    },
+    {
+      "module": "runtime-manager-extra-tests",
+      "path": "internal/runtime/manager/manager_extra_test.go",
+      "python_lines": 174,
+      "status": "test-migrated"
+    },
+    {
+      "module": "sha-extra-tests",
+      "path": "internal/utils/sha/sha_extra_test.go",
+      "python_lines": 126,
+      "status": "test-migrated"
+    },
+    {
+      "module": "exclude-extra-tests",
+      "path": "internal/utils/exclude/exclude_extra_test.go",
+      "python_lines": 136,
+      "status": "test-migrated"
+    },
+    {
+      "module": "subprocenv-extra-tests",
+      "path": "internal/utils/subprocenv/subprocenv_extra_test.go",
+      "python_lines": 109,
+      "status": "test-migrated"
+    },
+    {
+      "module": "urlnormalize-extra2-tests",
+      "path": "internal/cache/urlnormalize/urlnormalize_extra2_test.go",
+      "python_lines": 101,
+      "status": "test-migrated"
     }
   ]
 }

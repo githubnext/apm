@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 941795,
+  "migrated_python_lines": 942942,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19322,6 +19322,41 @@
       "status": "migrated",
       "python_lines": 108,
       "test_lines": 108
+    },
+    {
+      "module": "internal/install/installvalidation-extra",
+      "status": "test-migrated",
+      "python_lines": 151
+    },
+    {
+      "module": "internal/registry/operations-extra",
+      "status": "test-migrated",
+      "python_lines": 201
+    },
+    {
+      "module": "internal/core/tokenmanager-extra",
+      "status": "test-migrated",
+      "python_lines": 134
+    },
+    {
+      "module": "internal/primitives/primmodels-extra",
+      "status": "test-migrated",
+      "python_lines": 155
+    },
+    {
+      "module": "internal/output/models-extra",
+      "status": "test-migrated",
+      "python_lines": 187
+    },
+    {
+      "module": "internal/registry/client-extra",
+      "status": "test-migrated",
+      "python_lines": 189
+    },
+    {
+      "module": "internal/output/scriptformatters-extra",
+      "status": "test-migrated",
+      "python_lines": 130
     }
   ]
 }

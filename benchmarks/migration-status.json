@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 942942,
+  "migrated_python_lines": 943843,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -16998,6 +16998,48 @@
       "python_lines": 161,
       "status": "test-migrated",
       "notes": "Extra test coverage for httpcache: Store/Get ETag/status, GetStats after store, parseTTL variants"
+    },
+    {
+      "module": "test-extra-targetscmd",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "go_lines": 85
+    },
+    {
+      "module": "test-extra-skillintegrator",
+      "python_lines": 138,
+      "status": "test-migrated",
+      "go_lines": 138
+    },
+    {
+      "module": "test-extra-agentscompiler",
+      "python_lines": 121,
+      "status": "test-migrated",
+      "go_lines": 121
+    },
+    {
+      "module": "test-extra-hostbackends",
+      "python_lines": 150,
+      "status": "test-migrated",
+      "go_lines": 150
+    },
+    {
+      "module": "test-extra-policy-discovery",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "go_lines": 79
+    },
+    {
+      "module": "test-extra-scriptrunner",
+      "python_lines": 107,
+      "status": "test-migrated",
+      "go_lines": 107
+    },
+    {
+      "module": "test-extra-marketplace",
+      "python_lines": 221,
+      "status": "test-migrated",
+      "go_lines": 221
     }
   ],
   "last_updated": "2026-05-18T15:54:55Z",

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-19T07:51:00Z |
-| Iteration Count | 140 |
-| Best Metric | 1070.89 |
+| Last Run | 2026-05-19T09:17:00Z |
+| Iteration Count | 141 |
+| Best Metric | 1072.18 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -74,6 +74,14 @@
 
 ## 📊 Iteration History
 
+### Iteration 141 -- 2026-05-19 09:17 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26087931648)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra test files for 8 thin packages (versionchecker, githubhost, cleanup, installctx, matcher, template, localbundle, vscode) with 1131 new test lines; registered 8 new test-migrated entries
+- **Metric**: 1072.18% (previous best: 1070.89%, delta: +1.29pp)
+- **Commit**: 197a7ebf
+- **Notes**: Added edge-case tests for versionchecker (rc/alpha prerelease, lexicographic ordering, zero versions, v-prefix rejection), githubhost (IsVisualStudioLegacyHostname case-insensitive, GitLab SaaS/env, IsSupportedGitHost FQDN, ClassifyHost ADO, ParseHostFromURL HTTPS/SSH), cleanup (CleanupResult zero value/fields, duplicate detection, multi-orphan, all-files-removed, error-skip), installctx (counter defaults, slice initialization, independent instances, map mutation), matcher (concurrent cache, quoted special chars, multi-pattern allow/deny), template (nil PackageInfo, HasTargets=false, all delta fields, verbose collision warning), localbundle (SSE transport, fallback transport field, args preserved, case-insensitive .mcp.json), vscode (TargetName/MCPServersKey/SupportsUserScope invariants, GetConfigPath, GetCurrentConfig, SupportsRuntimeEnvSubstitution=false).
+
 ### Iteration 140 -- 2026-05-19 07:51 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26083802256)
 
 - **Status**: ✅ Accepted
@@ -90,29 +98,7 @@
 - **Commit**: 85c064d7
 - **Notes**: Added edge-case and invariant tests for deptypes (iota values, 7-char hex commit, uppercase hex as branch, semver variants, field assignments), factory (multiple adapters, NewDefault error, RuntimeInfo fields, empty registry), helpers (FindPluginJSON precedence, nonexistent dir, consistency), updatepolicy (custom ASCII message, control-char rejection, unicode rejection), scope (ParseScope case-insensitive, iota values, GetAPMDir .apm suffix, GetLockfileDir == GetAPMDir), cleanuphelper (multi-prefix validation, empty/nil prefixes, dotdot hidden, multiple warnings, CleanupResult zero value), postdepslocal (HasLocalContentErrors edge cases, DetectStaleLocalFiles with errors, all-stale, partial-stale, SortedLocalDeployedFiles immutability, ShouldRun matrix), mcpargs (value-with-equals, empty-value, overwrite-duplicate, error messages contain flag name).
 
-### Iteration 138 -- 2026-05-19 04:52 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26076930174)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 7 thin Go packages (aggregator, agentformatter, sharedclonecache, adapters/client/base, depgraph, download, packagemanager) with 1242 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1068.92% (previous best: 1067.50%, delta: +1.42pp)
-- **Commit**: b9dd8be8
-- **Notes**: Added edge-case tests for aggregator (empty mcp block, deep subdirs, deduplication), agentformatter (version variants, struct fields, zero placements), sharedclonecache (concurrent deduplication, different refs/hosts, retry after error), adapters/client/base (regex capture groups, mixed content, env: prefix), depgraph (ancestor chain, tree depth query, FlatDependencyMap conflicts, DependencyGraph errors), download (single worker, partial success, all-fail, nil progress), packagemanager (IsSupported variants, install/uninstall/list correctness).
-
-### Iteration 137 -- 2026-05-19 03:14 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26073892157)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 7 thin Go packages (deps, policygate, summary, pkgresolution, cursor, view, dispatch) with 1020 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1067.50% (previous best: 1066.34%, delta: +1.16pp)
-- **Commit**: e499083e
-- **Notes**: Added comprehensive tests for commands/deps (ListOptions, CheckIssue, SyncResult, OrphanResult, GraphOptions structs, TreeNode nesting), policygate (env var edge cases, PolicyViolationError as interface, EnforcementResult variants), summary (exact format strings, precision, field ordering, HasCriticalSecurityError matrix), pkgresolution (NormalizePackageSpec whitespace, ResolutionError with/without cause, YAML entry serialization), cursor (New fields, GetConfigPath structure, UpdateConfig with/without .cursor dir, multi-instance independence), view (parseSimpleYAML edge cases, PackageInfo fields), dispatch (size invariant, MultiTarget exclusivity, ImmutableBaseline).
-
-### Iteration 136 -- 2026-05-19 01:46 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26071073779)
-
-- **Status**: ✅ Accepted
-- **Change**: Created extra test files for 7 thin Go packages (yamlio, mkio, runtime/manager, sha, exclude, subprocenv, urlnormalize) with 959 new test lines; registered 7 new test-migrated entries
-- **Metric**: 1066.34% (previous best: 1065.25%, delta: +1.09pp)
-- **Commit**: 044b5586
-- **Notes**: Added comprehensive tests for yamlio (key parsing, whitespace handling, dump/load roundtrip), mkio (atomic write correctness, binary content, no tmp leftover), runtime/manager (runtime enumeration, script paths, env setup), sha (sentinel values, hex validation, truncation), exclude (wildcard patterns, double-star recursion, directory prefixes), subprocenv (MapToSlice formatting, env copy isolation), urlnormalize (port handling, SCP conversion, idempotency).
+### Iters 136-140 -- 2026-05-19 -- ✅ (metrics 1065->1071%): Created extra_test.go for 35+ thin packages (yamlio, mkio, runtime/manager, sha, exclude, subprocenv, urlnormalize, deps, policygate, summary, pkgresolution, cursor, view, dispatch, aggregator, agentformatter, sharedclonecache, adapters/client/base, depgraph, download, packagemanager, deptypes, factory, helpers, updatepolicy, scope, cleanuphelper, postdepslocal, mcpargs, claude, codex, core/errors, gitrefresolver, insecurepolicy, drift, audit, apmyml); each iter +0.99-1.42pp.
 
 ### Iters 131-135 -- 2026-05-18/19 -- ✅ (metrics 1010->1065%): Created extra_test.go for 30+ thin packages (semver, shadowdetector, tagpattern, mcpregistry, guards, windsurf, lockfile, baseintegrator, auth, install, packer, discovery, cichecks, etc.); registered 199 Go test packages in iter 135 for +52pp jump.
 

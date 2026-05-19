@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 887729,
+  "migrated_python_lines": 933432,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17585,6 +17585,1399 @@
       "module": "internal/policy/cichecks/extra_tests",
       "status": "test-migrated",
       "python_lines": 145
+    },
+    {
+      "module": "internal/adapters/client/base",
+      "status": "test-migrated",
+      "python_lines": 135,
+      "go_package": "internal/adapters/client/base",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/claude",
+      "status": "test-migrated",
+      "python_lines": 136,
+      "go_package": "internal/adapters/client/claude",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/codex",
+      "status": "test-migrated",
+      "python_lines": 321,
+      "go_package": "internal/adapters/client/codex",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/copilot",
+      "status": "test-migrated",
+      "python_lines": 205,
+      "go_package": "internal/adapters/client/copilot",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/cursor",
+      "status": "test-migrated",
+      "python_lines": 128,
+      "go_package": "internal/adapters/client/cursor",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/gemini",
+      "status": "test-migrated",
+      "python_lines": 211,
+      "go_package": "internal/adapters/client/gemini",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/client/vscode",
+      "status": "test-migrated",
+      "python_lines": 143,
+      "go_package": "internal/adapters/client/vscode",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/opencode",
+      "status": "test-migrated",
+      "python_lines": 226,
+      "go_package": "internal/adapters/opencode",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/packagemanager",
+      "status": "test-migrated",
+      "python_lines": 141,
+      "go_package": "internal/adapters/packagemanager",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/adapters/windsurf",
+      "status": "test-migrated",
+      "python_lines": 231,
+      "go_package": "internal/adapters/windsurf",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/cachepaths",
+      "status": "test-migrated",
+      "python_lines": 250,
+      "go_package": "internal/cache/cachepaths",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/gitcache",
+      "status": "test-migrated",
+      "python_lines": 226,
+      "go_package": "internal/cache/gitcache",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/httpcache",
+      "status": "test-migrated",
+      "python_lines": 275,
+      "go_package": "internal/cache/httpcache",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/integrity",
+      "status": "test-migrated",
+      "python_lines": 209,
+      "go_package": "internal/cache/integrity",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/locking",
+      "status": "test-migrated",
+      "python_lines": 252,
+      "go_package": "internal/cache/locking",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/cache/urlnormalize",
+      "status": "test-migrated",
+      "python_lines": 206,
+      "go_package": "internal/cache/urlnormalize",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/audit",
+      "status": "test-migrated",
+      "python_lines": 272,
+      "go_package": "internal/commands/audit",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/cache",
+      "status": "test-migrated",
+      "python_lines": 212,
+      "go_package": "internal/commands/cache",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/compile",
+      "status": "test-migrated",
+      "python_lines": 176,
+      "go_package": "internal/commands/compile",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/configcmd",
+      "status": "test-migrated",
+      "python_lines": 214,
+      "go_package": "internal/commands/configcmd",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/deps",
+      "status": "test-migrated",
+      "python_lines": 126,
+      "go_package": "internal/commands/deps",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/experimental",
+      "status": "test-migrated",
+      "python_lines": 290,
+      "go_package": "internal/commands/experimental",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/install",
+      "status": "test-migrated",
+      "python_lines": 356,
+      "go_package": "internal/commands/install",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/listcmd",
+      "status": "test-migrated",
+      "python_lines": 212,
+      "go_package": "internal/commands/listcmd",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/marketplace",
+      "status": "test-migrated",
+      "python_lines": 651,
+      "go_package": "internal/commands/marketplace",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/mcp",
+      "status": "test-migrated",
+      "python_lines": 255,
+      "go_package": "internal/commands/mcp",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/outdated",
+      "status": "test-migrated",
+      "python_lines": 159,
+      "go_package": "internal/commands/outdated",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/pack",
+      "status": "test-migrated",
+      "python_lines": 266,
+      "go_package": "internal/commands/pack",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/policy",
+      "status": "test-migrated",
+      "python_lines": 139,
+      "go_package": "internal/commands/policy",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/targetscmd",
+      "status": "test-migrated",
+      "python_lines": 207,
+      "go_package": "internal/commands/targetscmd",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/update",
+      "status": "test-migrated",
+      "python_lines": 213,
+      "go_package": "internal/commands/update",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/commands/view",
+      "status": "test-migrated",
+      "python_lines": 130,
+      "go_package": "internal/commands/view",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/agentformatter",
+      "status": "test-migrated",
+      "python_lines": 134,
+      "go_package": "internal/compilation/agentformatter",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/agentscompiler",
+      "status": "test-migrated",
+      "python_lines": 283,
+      "go_package": "internal/compilation/agentscompiler",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/buildid",
+      "status": "test-migrated",
+      "python_lines": 207,
+      "go_package": "internal/compilation/buildid",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/compilationconst",
+      "status": "test-migrated",
+      "python_lines": 189,
+      "go_package": "internal/compilation/compilationconst",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/constitution",
+      "status": "test-migrated",
+      "python_lines": 205,
+      "go_package": "internal/compilation/constitution",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/constitutionblock",
+      "status": "test-migrated",
+      "python_lines": 277,
+      "go_package": "internal/compilation/constitutionblock",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/contextoptimizer",
+      "status": "test-migrated",
+      "python_lines": 334,
+      "go_package": "internal/compilation/contextoptimizer",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/injector",
+      "status": "test-migrated",
+      "python_lines": 291,
+      "go_package": "internal/compilation/injector",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/outputwriter",
+      "status": "test-migrated",
+      "python_lines": 221,
+      "go_package": "internal/compilation/outputwriter",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/compilation/templatebuilder",
+      "status": "test-migrated",
+      "python_lines": 198,
+      "go_package": "internal/compilation/templatebuilder",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/constants",
+      "status": "test-migrated",
+      "python_lines": 297,
+      "go_package": "internal/constants",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/apmyml",
+      "status": "test-migrated",
+      "python_lines": 150,
+      "go_package": "internal/core/apmyml",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/auth",
+      "status": "test-migrated",
+      "python_lines": 270,
+      "go_package": "internal/core/auth",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/commandlogger",
+      "status": "test-migrated",
+      "python_lines": 228,
+      "go_package": "internal/core/commandlogger",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/conflictdetector",
+      "status": "test-migrated",
+      "python_lines": 206,
+      "go_package": "internal/core/conflictdetector",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/dockerargs",
+      "status": "test-migrated",
+      "python_lines": 230,
+      "go_package": "internal/core/dockerargs",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/errors",
+      "status": "test-migrated",
+      "python_lines": 145,
+      "go_package": "internal/core/errors",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/experimental",
+      "status": "test-migrated",
+      "python_lines": 208,
+      "go_package": "internal/core/experimental",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/nulllogger",
+      "status": "test-migrated",
+      "python_lines": 180,
+      "go_package": "internal/core/nulllogger",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/operations",
+      "status": "test-migrated",
+      "python_lines": 372,
+      "go_package": "internal/core/operations",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/scope",
+      "status": "test-migrated",
+      "python_lines": 138,
+      "go_package": "internal/core/scope",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/scriptrunner",
+      "status": "test-migrated",
+      "python_lines": 368,
+      "go_package": "internal/core/scriptrunner",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/targetdetection",
+      "status": "test-migrated",
+      "python_lines": 428,
+      "go_package": "internal/core/targetdetection",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/core/tokenmanager",
+      "status": "test-migrated",
+      "python_lines": 190,
+      "go_package": "internal/core/tokenmanager",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/aggregator",
+      "status": "test-migrated",
+      "python_lines": 133,
+      "go_package": "internal/deps/aggregator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/apmresolver",
+      "status": "test-migrated",
+      "python_lines": 275,
+      "go_package": "internal/deps/apmresolver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/cloneengine",
+      "status": "test-migrated",
+      "python_lines": 263,
+      "go_package": "internal/deps/cloneengine",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/depgraph",
+      "status": "test-migrated",
+      "python_lines": 140,
+      "go_package": "internal/deps/depgraph",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/downloadstrategies",
+      "status": "test-migrated",
+      "python_lines": 199,
+      "go_package": "internal/deps/downloadstrategies",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/gitauthenv",
+      "status": "test-migrated",
+      "python_lines": 209,
+      "go_package": "internal/deps/gitauthenv",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/githubdownloader",
+      "status": "test-migrated",
+      "python_lines": 306,
+      "go_package": "internal/deps/githubdownloader",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/gitrefresolver",
+      "status": "test-migrated",
+      "python_lines": 157,
+      "go_package": "internal/deps/gitrefresolver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/gitremoteops",
+      "status": "test-migrated",
+      "python_lines": 276,
+      "go_package": "internal/deps/gitremoteops",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/hostbackends",
+      "status": "test-migrated",
+      "python_lines": 241,
+      "go_package": "internal/deps/hostbackends",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/installedpkg",
+      "status": "test-migrated",
+      "python_lines": 211,
+      "go_package": "internal/deps/installedpkg",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/lockfile",
+      "status": "test-migrated",
+      "python_lines": 283,
+      "go_package": "internal/deps/lockfile",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/packagevalidator",
+      "status": "test-migrated",
+      "python_lines": 169,
+      "go_package": "internal/deps/packagevalidator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/pluginparser",
+      "status": "test-migrated",
+      "python_lines": 225,
+      "go_package": "internal/deps/pluginparser",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/deps/sharedclonecache",
+      "status": "test-migrated",
+      "python_lines": 134,
+      "go_package": "internal/deps/sharedclonecache",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/bundle/lockfileenrichment",
+      "status": "test-migrated",
+      "python_lines": 241,
+      "go_package": "internal/install/bundle/lockfileenrichment",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/bundle/packer",
+      "status": "test-migrated",
+      "python_lines": 329,
+      "go_package": "internal/install/bundle/packer",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/bundle/pluginexporter",
+      "status": "test-migrated",
+      "python_lines": 235,
+      "go_package": "internal/install/bundle/pluginexporter",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/bundle/unpacker",
+      "status": "test-migrated",
+      "python_lines": 245,
+      "go_package": "internal/install/bundle/unpacker",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/cachepin",
+      "status": "test-migrated",
+      "python_lines": 206,
+      "go_package": "internal/install/cachepin",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/drift",
+      "status": "test-migrated",
+      "python_lines": 173,
+      "go_package": "internal/install/drift",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/errors",
+      "status": "test-migrated",
+      "python_lines": 317,
+      "go_package": "internal/install/errors",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/gitlabresolver",
+      "status": "test-migrated",
+      "python_lines": 228,
+      "go_package": "internal/install/gitlabresolver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/heals",
+      "status": "test-migrated",
+      "python_lines": 259,
+      "go_package": "internal/install/heals",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/insecurepolicy",
+      "status": "test-migrated",
+      "python_lines": 141,
+      "go_package": "internal/install/insecurepolicy",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/installctx",
+      "status": "test-migrated",
+      "python_lines": 149,
+      "go_package": "internal/install/installctx",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/installpipeline",
+      "status": "test-migrated",
+      "python_lines": 171,
+      "go_package": "internal/install/installpipeline",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/installservice",
+      "status": "test-migrated",
+      "python_lines": 349,
+      "go_package": "internal/install/installservice",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/installvalidation",
+      "status": "test-migrated",
+      "python_lines": 182,
+      "go_package": "internal/install/installvalidation",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/localbundle",
+      "status": "test-migrated",
+      "python_lines": 142,
+      "go_package": "internal/install/localbundle",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpcommand",
+      "status": "test-migrated",
+      "python_lines": 251,
+      "go_package": "internal/install/mcp/mcpcommand",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpconflicts",
+      "status": "test-migrated",
+      "python_lines": 239,
+      "go_package": "internal/install/mcp/mcpconflicts",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpentry",
+      "status": "test-migrated",
+      "python_lines": 261,
+      "go_package": "internal/install/mcp/mcpentry",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpregistry",
+      "status": "test-migrated",
+      "python_lines": 278,
+      "go_package": "internal/install/mcp/mcpregistry",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpwarnings",
+      "status": "test-migrated",
+      "python_lines": 307,
+      "go_package": "internal/install/mcp/mcpwarnings",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcp/mcpwriter",
+      "status": "test-migrated",
+      "python_lines": 240,
+      "go_package": "internal/install/mcp/mcpwriter",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/mcpargs",
+      "status": "test-migrated",
+      "python_lines": 144,
+      "go_package": "internal/install/mcpargs",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/cleanup",
+      "status": "test-migrated",
+      "python_lines": 148,
+      "go_package": "internal/install/phases/cleanup",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/download",
+      "status": "test-migrated",
+      "python_lines": 140,
+      "go_package": "internal/install/phases/download",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/finalize",
+      "status": "test-migrated",
+      "python_lines": 321,
+      "go_package": "internal/install/phases/finalize",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/heal",
+      "status": "test-migrated",
+      "python_lines": 144,
+      "go_package": "internal/install/phases/heal",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/installphase",
+      "status": "test-migrated",
+      "python_lines": 204,
+      "go_package": "internal/install/phases/installphase",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/localcontent",
+      "status": "test-migrated",
+      "python_lines": 172,
+      "go_package": "internal/install/phases/localcontent",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/lockfile",
+      "status": "test-migrated",
+      "python_lines": 247,
+      "go_package": "internal/install/phases/lockfile",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/policygate",
+      "status": "test-migrated",
+      "python_lines": 126,
+      "go_package": "internal/install/phases/policygate",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/policytargetcheck",
+      "status": "test-migrated",
+      "python_lines": 259,
+      "go_package": "internal/install/phases/policytargetcheck",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/phases/postdepslocal",
+      "status": "test-migrated",
+      "python_lines": 143,
+      "go_package": "internal/install/phases/postdepslocal",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/pkgresolution",
+      "status": "test-migrated",
+      "python_lines": 128,
+      "go_package": "internal/install/pkgresolution",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/plan",
+      "status": "test-migrated",
+      "python_lines": 238,
+      "go_package": "internal/install/plan",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/presentation/dryrun",
+      "status": "test-migrated",
+      "python_lines": 151,
+      "go_package": "internal/install/presentation/dryrun",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/request",
+      "status": "test-migrated",
+      "python_lines": 341,
+      "go_package": "internal/install/request",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/securityscan",
+      "status": "test-migrated",
+      "python_lines": 208,
+      "go_package": "internal/install/securityscan",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/summary",
+      "status": "test-migrated",
+      "python_lines": 127,
+      "go_package": "internal/install/summary",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/install/template",
+      "status": "test-migrated",
+      "python_lines": 141,
+      "go_package": "internal/install/template",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/agentintegrator",
+      "status": "test-migrated",
+      "python_lines": 268,
+      "go_package": "internal/integration/agentintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/baseintegrator",
+      "status": "test-migrated",
+      "python_lines": 240,
+      "go_package": "internal/integration/baseintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/cleanuphelper",
+      "status": "test-migrated",
+      "python_lines": 138,
+      "go_package": "internal/integration/cleanuphelper",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/commandintegrator",
+      "status": "test-migrated",
+      "python_lines": 296,
+      "go_package": "internal/integration/commandintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/coverage",
+      "status": "test-migrated",
+      "python_lines": 319,
+      "go_package": "internal/integration/coverage",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/coworkpaths",
+      "status": "test-migrated",
+      "python_lines": 213,
+      "go_package": "internal/integration/coworkpaths",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/dispatch",
+      "status": "test-migrated",
+      "python_lines": 131,
+      "go_package": "internal/integration/dispatch",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/hookintegrator",
+      "status": "test-migrated",
+      "python_lines": 509,
+      "go_package": "internal/integration/hookintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/instructionintegrator",
+      "status": "test-migrated",
+      "python_lines": 415,
+      "go_package": "internal/integration/instructionintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/intutils",
+      "status": "test-migrated",
+      "python_lines": 194,
+      "go_package": "internal/integration/intutils",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/mcpintegrator",
+      "status": "test-migrated",
+      "python_lines": 248,
+      "go_package": "internal/integration/mcpintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/promptintegrator",
+      "status": "test-migrated",
+      "python_lines": 328,
+      "go_package": "internal/integration/promptintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/skillintegrator",
+      "status": "test-migrated",
+      "python_lines": 281,
+      "go_package": "internal/integration/skillintegrator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/skilltransformer",
+      "status": "test-migrated",
+      "python_lines": 322,
+      "go_package": "internal/integration/skilltransformer",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/integration/targets",
+      "status": "test-migrated",
+      "python_lines": 298,
+      "go_package": "internal/integration/targets",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/builder",
+      "status": "test-migrated",
+      "python_lines": 537,
+      "go_package": "internal/marketplace/builder",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/gitstderr",
+      "status": "test-migrated",
+      "python_lines": 194,
+      "go_package": "internal/marketplace/gitstderr",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/gitutils",
+      "status": "test-migrated",
+      "python_lines": 186,
+      "go_package": "internal/marketplace/gitutils",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/inittemplate",
+      "status": "test-migrated",
+      "python_lines": 190,
+      "go_package": "internal/marketplace/inittemplate",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/mkio",
+      "status": "test-migrated",
+      "python_lines": 126,
+      "go_package": "internal/marketplace/mkio",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/mkterrors",
+      "status": "test-migrated",
+      "python_lines": 243,
+      "go_package": "internal/marketplace/mkterrors",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/mktmodels",
+      "status": "test-migrated",
+      "python_lines": 266,
+      "go_package": "internal/marketplace/mktmodels",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/mktresolver",
+      "status": "test-migrated",
+      "python_lines": 277,
+      "go_package": "internal/marketplace/mktresolver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/mktvalidator",
+      "status": "test-migrated",
+      "python_lines": 150,
+      "go_package": "internal/marketplace/mktvalidator",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/publisher",
+      "status": "test-migrated",
+      "python_lines": 579,
+      "go_package": "internal/marketplace/publisher",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/refresolver",
+      "status": "test-migrated",
+      "python_lines": 230,
+      "go_package": "internal/marketplace/refresolver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/registry",
+      "status": "test-migrated",
+      "python_lines": 285,
+      "go_package": "internal/marketplace/registry",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/semver",
+      "status": "test-migrated",
+      "python_lines": 348,
+      "go_package": "internal/marketplace/semver",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/shadowdetector",
+      "status": "test-migrated",
+      "python_lines": 257,
+      "go_package": "internal/marketplace/shadowdetector",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/tagpattern",
+      "status": "test-migrated",
+      "python_lines": 276,
+      "go_package": "internal/marketplace/tagpattern",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/versionpins",
+      "status": "test-migrated",
+      "python_lines": 217,
+      "go_package": "internal/marketplace/versionpins",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/marketplace/ymlschema",
+      "status": "test-migrated",
+      "python_lines": 253,
+      "go_package": "internal/marketplace/ymlschema",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/apmpackage",
+      "status": "test-migrated",
+      "python_lines": 167,
+      "go_package": "internal/models/apmpackage",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/depreference",
+      "status": "test-migrated",
+      "python_lines": 597,
+      "go_package": "internal/models/depreference",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/deptypes",
+      "status": "test-migrated",
+      "python_lines": 135,
+      "go_package": "internal/models/deptypes",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/mcpdep",
+      "status": "test-migrated",
+      "python_lines": 316,
+      "go_package": "internal/models/mcpdep",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/plugin",
+      "status": "test-migrated",
+      "python_lines": 153,
+      "go_package": "internal/models/plugin",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/results",
+      "status": "test-migrated",
+      "python_lines": 245,
+      "go_package": "internal/models/results",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/models/validation",
+      "status": "test-migrated",
+      "python_lines": 227,
+      "go_package": "internal/models/validation",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/output/compilationformatter",
+      "status": "test-migrated",
+      "python_lines": 268,
+      "go_package": "internal/output/compilationformatter",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/output/models",
+      "status": "test-migrated",
+      "python_lines": 210,
+      "go_package": "internal/output/models",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/output/scriptformatters",
+      "status": "test-migrated",
+      "python_lines": 235,
+      "go_package": "internal/output/scriptformatters",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/cichecks",
+      "status": "test-migrated",
+      "python_lines": 305,
+      "go_package": "internal/policy/cichecks",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/discovery",
+      "status": "test-migrated",
+      "python_lines": 243,
+      "go_package": "internal/policy/discovery",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/helptext",
+      "status": "test-migrated",
+      "python_lines": 188,
+      "go_package": "internal/policy/helptext",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/inheritance",
+      "status": "test-migrated",
+      "python_lines": 212,
+      "go_package": "internal/policy/inheritance",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/matcher",
+      "status": "test-migrated",
+      "python_lines": 139,
+      "go_package": "internal/policy/matcher",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/outcomerouting",
+      "status": "test-migrated",
+      "python_lines": 231,
+      "go_package": "internal/policy/outcomerouting",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/policychecks",
+      "status": "test-migrated",
+      "python_lines": 165,
+      "go_package": "internal/policy/policychecks",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/policymodels",
+      "status": "test-migrated",
+      "python_lines": 249,
+      "go_package": "internal/policy/policymodels",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/policy/schema",
+      "status": "test-migrated",
+      "python_lines": 269,
+      "go_package": "internal/policy/schema",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/primitives/discovery",
+      "status": "test-migrated",
+      "python_lines": 308,
+      "go_package": "internal/primitives/discovery",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/primitives/primmodels",
+      "status": "test-migrated",
+      "python_lines": 192,
+      "go_package": "internal/primitives/primmodels",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/primitives/primparser",
+      "status": "test-migrated",
+      "python_lines": 220,
+      "go_package": "internal/primitives/primparser",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/registry/client",
+      "status": "test-migrated",
+      "python_lines": 212,
+      "go_package": "internal/registry/client",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/registry/operations",
+      "status": "test-migrated",
+      "python_lines": 188,
+      "go_package": "internal/registry/operations",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/runtime/base",
+      "status": "test-migrated",
+      "python_lines": 232,
+      "go_package": "internal/runtime/base",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/runtime/codexruntime",
+      "status": "test-migrated",
+      "python_lines": 251,
+      "go_package": "internal/runtime/codexruntime",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/runtime/factory",
+      "status": "test-migrated",
+      "python_lines": 136,
+      "go_package": "internal/runtime/factory",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/runtime/llmruntime",
+      "status": "test-migrated",
+      "python_lines": 203,
+      "go_package": "internal/runtime/llmruntime",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/runtime/manager",
+      "status": "test-migrated",
+      "python_lines": 128,
+      "go_package": "internal/runtime/manager",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/security/auditreport",
+      "status": "test-migrated",
+      "python_lines": 280,
+      "go_package": "internal/security/auditreport",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/security/contentscanner",
+      "status": "test-migrated",
+      "python_lines": 257,
+      "go_package": "internal/security/contentscanner",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/security/filescanner",
+      "status": "test-migrated",
+      "python_lines": 170,
+      "go_package": "internal/security/filescanner",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/security/gate",
+      "status": "test-migrated",
+      "python_lines": 336,
+      "go_package": "internal/security/gate",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/updatepolicy",
+      "status": "test-migrated",
+      "python_lines": 137,
+      "go_package": "internal/updatepolicy",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/atomicio",
+      "status": "test-migrated",
+      "python_lines": 152,
+      "go_package": "internal/utils/atomicio",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/console",
+      "status": "test-migrated",
+      "python_lines": 344,
+      "go_package": "internal/utils/console",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/contenthash",
+      "status": "test-migrated",
+      "python_lines": 254,
+      "go_package": "internal/utils/contenthash",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/diagnostics",
+      "status": "test-migrated",
+      "python_lines": 209,
+      "go_package": "internal/utils/diagnostics",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/exclude",
+      "status": "test-migrated",
+      "python_lines": 132,
+      "go_package": "internal/utils/exclude",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/fileops",
+      "status": "test-migrated",
+      "python_lines": 152,
+      "go_package": "internal/utils/fileops",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/gitenv",
+      "status": "test-migrated",
+      "python_lines": 280,
+      "go_package": "internal/utils/gitenv",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/githubhost",
+      "status": "test-migrated",
+      "python_lines": 151,
+      "go_package": "internal/utils/githubhost",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/guards",
+      "status": "test-migrated",
+      "python_lines": 307,
+      "go_package": "internal/utils/guards",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/helpers",
+      "status": "test-migrated",
+      "python_lines": 136,
+      "go_package": "internal/utils/helpers",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/installtui",
+      "status": "test-migrated",
+      "python_lines": 207,
+      "go_package": "internal/utils/installtui",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/normalization",
+      "status": "test-migrated",
+      "python_lines": 284,
+      "go_package": "internal/utils/normalization",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/paths",
+      "status": "test-migrated",
+      "python_lines": 214,
+      "go_package": "internal/utils/paths",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/pathsecurity",
+      "status": "test-migrated",
+      "python_lines": 217,
+      "go_package": "internal/utils/pathsecurity",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/reflink",
+      "status": "test-migrated",
+      "python_lines": 155,
+      "go_package": "internal/utils/reflink",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/sha",
+      "status": "test-migrated",
+      "python_lines": 135,
+      "go_package": "internal/utils/sha",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/subprocenv",
+      "status": "test-migrated",
+      "python_lines": 135,
+      "go_package": "internal/utils/subprocenv",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/versionchecker",
+      "status": "test-migrated",
+      "python_lines": 136,
+      "go_package": "internal/utils/versionchecker",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/utils/yamlio",
+      "status": "test-migrated",
+      "python_lines": 128,
+      "go_package": "internal/utils/yamlio",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/version",
+      "status": "test-migrated",
+      "python_lines": 253,
+      "go_package": "internal/version",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/workflow/discovery",
+      "status": "test-migrated",
+      "python_lines": 222,
+      "go_package": "internal/workflow/discovery",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/workflow/runner",
+      "status": "test-migrated",
+      "python_lines": 159,
+      "go_package": "internal/workflow/runner",
+      "note": "Go test package"
+    },
+    {
+      "module": "internal/workflow/wfparser",
+      "status": "test-migrated",
+      "python_lines": 255,
+      "go_package": "internal/workflow/wfparser",
+      "note": "Go test package"
     }
   ]
 }

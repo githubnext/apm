@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 948093,
+  "migrated_python_lines": 949104,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19618,6 +19618,66 @@
       "module": "test-intutils-extra2",
       "status": "test-migrated",
       "python_lines": 61
+    },
+    {
+      "name": "test-aggregator-extra2",
+      "python_lines": 116,
+      "status": "test-migrated",
+      "go_file": "internal/deps/aggregator/aggregator_extra2_test.go"
+    },
+    {
+      "name": "test-installedpkg-extra2",
+      "python_lines": 108,
+      "status": "test-migrated",
+      "go_file": "internal/deps/installedpkg/installedpkg_extra2_test.go"
+    },
+    {
+      "name": "test-listcmd-extra2",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "go_file": "internal/commands/listcmd/listcmd_extra2_test.go"
+    },
+    {
+      "name": "test-apmresolver-extra3",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "go_file": "internal/deps/apmresolver/resolver_extra3_test.go"
+    },
+    {
+      "name": "test-cachepin-extra3",
+      "python_lines": 103,
+      "status": "test-migrated",
+      "go_file": "internal/install/cachepin/cachepin_extra3_test.go"
+    },
+    {
+      "name": "test-localcontent-extra3",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "go_file": "internal/install/phases/localcontent/localcontent_extra3_test.go"
+    },
+    {
+      "name": "test-integrity-extra3",
+      "python_lines": 93,
+      "status": "test-migrated",
+      "go_file": "internal/cache/integrity/integrity_extra3_test.go"
+    },
+    {
+      "name": "test-constants-extra2",
+      "python_lines": 100,
+      "status": "test-migrated",
+      "go_file": "internal/constants/constants_extra2_test.go"
+    },
+    {
+      "name": "test-mkterrors-extra2",
+      "python_lines": 91,
+      "status": "test-migrated",
+      "go_file": "internal/marketplace/mkterrors/mkterrors_extra2_test.go"
+    },
+    {
+      "name": "test-deptypes-extra2",
+      "python_lines": 94,
+      "status": "test-migrated",
+      "go_file": "internal/models/deptypes/deptypes_extra2_test.go"
     }
   ]
 }

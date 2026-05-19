@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 939507,
+  "migrated_python_lines": 940737,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17002,7 +17002,7 @@
   ],
   "last_updated": "2026-05-18T15:54:55Z",
   "iteration": 128,
-  "python_lines_migrated_pct": 1005.73,
+  "python_lines_migrated_pct": 1073.58,
   "modules_migrated": 2253,
   "modules": [
     {
@@ -19240,6 +19240,46 @@
       "status": "test-migrated",
       "python_lines": 108,
       "go_file": "internal/adapters/client/vscode/vscode_extra_test.go"
+    },
+    {
+      "module": "test-migrated-atomicio-extra",
+      "python_lines": 152,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-fileops-extra",
+      "python_lines": 159,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-plugin-extra",
+      "python_lines": 194,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-policychecks-extra",
+      "python_lines": 170,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-heal-extra",
+      "python_lines": 153,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-policy-cmd-extra",
+      "python_lines": 142,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-mktvalidator-extra",
+      "python_lines": 141,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated-reflink-extra",
+      "python_lines": 119,
+      "status": "test-migrated"
     }
   ]
 }

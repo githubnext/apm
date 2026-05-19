@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 936653,
+  "migrated_python_lines": 937512,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19104,6 +19104,54 @@
       "status": "test-migrated",
       "go_lines": 171,
       "notes": "extra tests for packagemanager package"
+    },
+    {
+      "module": "test-migrated/deptypes-extra",
+      "status": "test-migrated",
+      "python_lines": 125,
+      "go_test_file": "internal/models/deptypes/deptypes_extra_test.go"
+    },
+    {
+      "module": "test-migrated/factory-extra",
+      "status": "test-migrated",
+      "python_lines": 130,
+      "go_test_file": "internal/runtime/factory/factory_extra_test.go"
+    },
+    {
+      "module": "test-migrated/helpers-extra",
+      "status": "test-migrated",
+      "python_lines": 93,
+      "go_test_file": "internal/utils/helpers/helpers_extra_test.go"
+    },
+    {
+      "module": "test-migrated/updatepolicy-extra",
+      "status": "test-migrated",
+      "python_lines": 87,
+      "go_test_file": "internal/updatepolicy/updatepolicy_extra_test.go"
+    },
+    {
+      "module": "test-migrated/scope-extra",
+      "status": "test-migrated",
+      "python_lines": 104,
+      "go_test_file": "internal/core/scope/scope_extra_test.go"
+    },
+    {
+      "module": "test-migrated/cleanuphelper-extra",
+      "status": "test-migrated",
+      "python_lines": 95,
+      "go_test_file": "internal/integration/cleanuphelper/cleanup_extra_test.go"
+    },
+    {
+      "module": "test-migrated/postdepslocal-extra",
+      "status": "test-migrated",
+      "python_lines": 123,
+      "go_test_file": "internal/install/phases/postdepslocal/postdepslocal_extra_test.go"
+    },
+    {
+      "module": "test-migrated/mcpargs-extra",
+      "status": "test-migrated",
+      "python_lines": 102,
+      "go_test_file": "internal/install/mcpargs/mcpargs_extra_test.go"
     }
   ]
 }

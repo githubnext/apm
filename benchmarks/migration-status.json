@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 943843,
+  "migrated_python_lines": 945052,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19399,6 +19399,60 @@
       "module": "internal/output/scriptformatters-extra",
       "status": "test-migrated",
       "python_lines": 130
+    },
+    {
+      "module": "test-downloadstrategies-extra2",
+      "status": "test-migrated",
+      "python_lines": 196,
+      "source_file": "internal/deps/downloadstrategies/strategies_extra2_test.go"
+    },
+    {
+      "module": "test-copilot-extra2",
+      "status": "test-migrated",
+      "python_lines": 146,
+      "source_file": "internal/adapters/client/copilot/copilot_extra2_test.go"
+    },
+    {
+      "module": "test-diagnostics-extra2",
+      "status": "test-migrated",
+      "python_lines": 151,
+      "source_file": "internal/utils/diagnostics/diagnostics_extra2_test.go"
+    },
+    {
+      "module": "test-experimental-extra2",
+      "status": "test-migrated",
+      "python_lines": 104,
+      "source_file": "internal/core/experimental/experimental_extra2_test.go"
+    },
+    {
+      "module": "test-configcmd-extra2",
+      "status": "test-migrated",
+      "python_lines": 130,
+      "source_file": "internal/commands/configcmd/configcmd_extra2_test.go"
+    },
+    {
+      "module": "test-gitauthenv-extra2",
+      "status": "test-migrated",
+      "python_lines": 104,
+      "source_file": "internal/deps/gitauthenv/gitauthenv_extra2_test.go"
+    },
+    {
+      "module": "test-securityscan-extra2",
+      "status": "test-migrated",
+      "python_lines": 114,
+      "source_file": "internal/install/securityscan/securityscan_extra2_test.go"
+    },
+    {
+      "module": "test-validation-extra2",
+      "status": "test-migrated",
+      "python_lines": 153,
+      "source_file": "internal/models/validation/validation_extra2_test.go"
+    },
+    {
+      "module": "test-cachepin-extra2",
+      "status": "test-migrated",
+      "python_lines": 111,
+      "source_file": "internal/install/cachepin/cachepin_extra2_test.go"
     }
   ]
 }

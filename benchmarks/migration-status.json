@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 946406,
+  "migrated_python_lines": 947391,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -17040,6 +17040,48 @@
       "python_lines": 221,
       "status": "test-migrated",
       "go_lines": 221
+    },
+    {
+      "module": "test/marketplace-extra2",
+      "go_package": "internal/commands/marketplace",
+      "python_lines": 251,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 251 lines of Go tests"
+    },
+    {
+      "module": "test/depreference-extra2",
+      "go_package": "internal/models/depreference",
+      "python_lines": 184,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 184 lines of Go tests"
+    },
+    {
+      "module": "test/publisher-extra2",
+      "go_package": "internal/marketplace/publisher",
+      "python_lines": 137,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 137 lines of Go tests"
+    },
+    {
+      "module": "test/builder-extra2",
+      "go_package": "internal/marketplace/builder",
+      "python_lines": 127,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 127 lines of Go tests"
+    },
+    {
+      "module": "test/hookintegrator-extra2",
+      "go_package": "internal/integration/hookintegrator",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 122 lines of Go tests"
+    },
+    {
+      "module": "test/targetdetection-extra2",
+      "go_package": "internal/core/targetdetection",
+      "python_lines": 164,
+      "status": "test-migrated",
+      "notes": "extra2 test file with 164 lines of Go tests"
     }
   ],
   "last_updated": "2026-05-19T17:50:00Z",

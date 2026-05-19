@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 945751,
+  "migrated_python_lines": 946406,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19495,6 +19495,42 @@
       "python_lines": 116,
       "status": "test-migrated",
       "go_test_file": "internal/compilation/constitution/constitution_extra2_test.go"
+    },
+    {
+      "name": "depgraph_extra2_tests",
+      "python_lines": 186,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/depgraph/depgraph_extra2_test.go"
+    },
+    {
+      "name": "gitremoteops_extra2_tests",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/gitremoteops/gitremoteops_extra2_test.go"
+    },
+    {
+      "name": "lockfile_extra2_tests",
+      "python_lines": 125,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/lockfile/lockfile_extra2_test.go"
+    },
+    {
+      "name": "apmresolver_extra2_tests",
+      "python_lines": 75,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/apmresolver/resolver_extra2_test.go"
+    },
+    {
+      "name": "cloneengine_extra2_tests",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/cloneengine/cloneengine_extra2_test.go"
+    },
+    {
+      "name": "pluginparser_extra2_tests",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "go_test_file": "internal/deps/pluginparser/pluginparser_extra2_test.go"
     }
   ]
 }

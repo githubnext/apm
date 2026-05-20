@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 972953,
+  "migrated_python_lines": 973602,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20922,6 +20922,56 @@
       "module": "auth_extra3_test",
       "status": "test-migrated",
       "python_lines": 114
+    },
+    {
+      "module": "core-commandlogger-extra3",
+      "python_lines": 65,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-conflictdetector-extra3",
+      "python_lines": 61,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-dockerargs-extra3",
+      "python_lines": 79,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-errors-extra3",
+      "python_lines": 60,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-experimental-extra3",
+      "python_lines": 58,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-nulllogger-extra3",
+      "python_lines": 54,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-operations-extra3",
+      "python_lines": 73,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-scope-extra3",
+      "python_lines": 76,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-scriptrunner-extra3",
+      "python_lines": 64,
+      "status": "test-migrated"
+    },
+    {
+      "module": "core-targetdetection-extra3",
+      "python_lines": 59,
+      "status": "test-migrated"
     }
   ]
 }

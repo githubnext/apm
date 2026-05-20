@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 967482,
+  "migrated_python_lines": 968673,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20631,6 +20631,66 @@
       "name": "go-test-internal-commands-deps-deps_extra3_test.go",
       "python_lines": 82,
       "go_lines": 82,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-base-extra3",
+      "path": "internal/adapters/client/base/base_extra3_test.go",
+      "python_lines": 123,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-claude-extra3",
+      "path": "internal/adapters/client/claude/claude_extra3_test.go",
+      "python_lines": 136,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-codex-extra3",
+      "path": "internal/adapters/client/codex/codex_extra3_test.go",
+      "python_lines": 126,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-copilot-extra3",
+      "path": "internal/adapters/client/copilot/copilot_extra3_test.go",
+      "python_lines": 112,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-cursor-extra3",
+      "path": "internal/adapters/client/cursor/cursor_extra3_test.go",
+      "python_lines": 113,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-gemini-extra3",
+      "path": "internal/adapters/client/gemini/gemini_extra3_test.go",
+      "python_lines": 121,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-client-vscode-extra3",
+      "path": "internal/adapters/client/vscode/vscode_extra3_test.go",
+      "python_lines": 126,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-opencode-extra3",
+      "path": "internal/adapters/opencode/opencode_extra3_test.go",
+      "python_lines": 107,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-packagemanager-extra3",
+      "path": "internal/adapters/packagemanager/packagemanager_extra3_test.go",
+      "python_lines": 117,
+      "status": "test-migrated"
+    },
+    {
+      "name": "adapters-windsurf-extra3",
+      "path": "internal/adapters/windsurf/windsurf_extra3_test.go",
+      "python_lines": 110,
       "status": "test-migrated"
     }
   ]

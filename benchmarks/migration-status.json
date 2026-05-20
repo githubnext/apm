@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 952342,
+  "migrated_python_lines": 953816,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19857,6 +19857,66 @@
     {
       "name": "lockfileenrichment-extra2-tests",
       "python_lines": 111,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/adapters_client_base_extra2",
+      "python_lines": 134,
+      "go_lines": 134,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/cache_cachepaths_extra2",
+      "python_lines": 138,
+      "go_lines": 138,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/cache_locking_extra2",
+      "python_lines": 152,
+      "go_lines": 152,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/core_errors_extra2",
+      "python_lines": 137,
+      "go_lines": 137,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/core_scope_extra2",
+      "python_lines": 179,
+      "go_lines": 179,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/core_apmyml_extra2",
+      "python_lines": 158,
+      "go_lines": 158,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/compilation_agentformatter_extra2",
+      "python_lines": 129,
+      "go_lines": 129,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/compilation_constitutionblock_extra2",
+      "python_lines": 136,
+      "go_lines": 136,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/compilation_contextoptimizer_extra2",
+      "python_lines": 144,
+      "go_lines": 144,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-migrated/cache_httpcache_extra2",
+      "python_lines": 167,
+      "go_lines": 167,
       "status": "test-migrated"
     }
   ]

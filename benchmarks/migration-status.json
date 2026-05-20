@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 966641,
+  "migrated_python_lines": 967482,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20571,6 +20571,66 @@
       "name": "runtime-manager-extra2",
       "go_path": "internal/runtime/manager",
       "python_lines": 104,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-cache-cachepaths-cachepaths_extra3_test.go",
+      "python_lines": 90,
+      "go_lines": 90,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-cache-gitcache-gitcache_extra3_test.go",
+      "python_lines": 74,
+      "go_lines": 74,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-cache-httpcache-httpcache_extra3_test.go",
+      "python_lines": 101,
+      "go_lines": 101,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-cache-locking-locking_extra3_test.go",
+      "python_lines": 77,
+      "go_lines": 77,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-cache-urlnormalize-urlnormalize_extra3_test.go",
+      "python_lines": 90,
+      "go_lines": 90,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-commands-audit-audit_extra3_test.go",
+      "python_lines": 89,
+      "go_lines": 89,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-commands-cache-cache_extra3_test.go",
+      "python_lines": 51,
+      "go_lines": 51,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-commands-compile-compile_extra3_test.go",
+      "python_lines": 101,
+      "go_lines": 101,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-commands-configcmd-configcmd_extra3_test.go",
+      "python_lines": 86,
+      "go_lines": 86,
+      "status": "test-migrated"
+    },
+    {
+      "name": "go-test-internal-commands-deps-deps_extra3_test.go",
+      "python_lines": 82,
+      "go_lines": 82,
       "status": "test-migrated"
     }
   ]

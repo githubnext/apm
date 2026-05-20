@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 957908,
+  "migrated_python_lines": 959096,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20078,6 +20078,56 @@
       "name": "mcp-cmd-extra2-tests",
       "status": "test-migrated",
       "python_lines": 68
+    },
+    {
+      "module": "test-utils-atomicio-extra2",
+      "python_lines": 106,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-console-extra2",
+      "python_lines": 142,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-exclude-extra2",
+      "python_lines": 93,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-sha-extra2",
+      "python_lines": 98,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-normalization-extra2",
+      "python_lines": 118,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-guards-extra2",
+      "python_lines": 140,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-yamlio-extra2",
+      "python_lines": 137,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-gitenv-extra2",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-reflink-extra2",
+      "python_lines": 123,
+      "status": "test-migrated"
+    },
+    {
+      "module": "test-utils-fileops-extra2",
+      "python_lines": 121,
+      "status": "test-migrated"
     }
   ]
 }

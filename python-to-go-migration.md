@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-20T14:35:00Z |
-| Iteration Count | 159 |
-| Best Metric | 1100.89 |
+| Last Run | 2026-05-20T15:48:00Z |
+| Iteration Count | 160 |
+| Best Metric | 1102.02 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -75,6 +75,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 160 -- 2026-05-20 15:48 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26173611806)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra2 test files for 10 install/integration packages (cleanup, download, heal, policygate, pkgresolution, dryrun, template, agentintegrator, commandintegrator, skilltransformer) with 982 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1102.02% (previous best: 1100.89%, delta: +1.13pp)
+- **Commit**: 7d8728cb
+- **Notes**: Added extra2_test.go covering zero-values, struct fields, edge cases, interface semantics, and scenario variants. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 159 -- 2026-05-20 14:35 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26168804094)
 

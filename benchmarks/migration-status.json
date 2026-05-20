@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 963430,
+  "migrated_python_lines": 964670,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20398,6 +20398,56 @@
       "go_lines": 78,
       "status": "test-migrated",
       "iteration": 158
+    },
+    {
+      "module": "install-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 158
+    },
+    {
+      "module": "policy-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 143
+    },
+    {
+      "module": "injector-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 90
+    },
+    {
+      "module": "hostbackends-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 121
+    },
+    {
+      "module": "sharedclonecache-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 145
+    },
+    {
+      "module": "packer-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 107
+    },
+    {
+      "module": "installctx-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "module": "installpipeline-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 140
+    },
+    {
+      "module": "localbundle-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 125
+    },
+    {
+      "module": "mcpregistry-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 109
     }
   ]
 }

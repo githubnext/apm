@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 951163,
+  "migrated_python_lines": 952342,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19808,6 +19808,56 @@
       "module": "internal/workflow/discovery",
       "status": "test-migrated",
       "python_lines": 96
+    },
+    {
+      "name": "windsurf-extra2-tests",
+      "python_lines": 114,
+      "status": "test-migrated"
+    },
+    {
+      "name": "outcomerouting-extra2-tests",
+      "python_lines": 122,
+      "status": "test-migrated"
+    },
+    {
+      "name": "base-extra2-tests",
+      "python_lines": 106,
+      "status": "test-migrated"
+    },
+    {
+      "name": "cleanuphelper-extra2-tests",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "name": "pluginexporter-extra2-tests",
+      "python_lines": 124,
+      "status": "test-migrated"
+    },
+    {
+      "name": "plan-extra2-tests",
+      "python_lines": 144,
+      "status": "test-migrated"
+    },
+    {
+      "name": "mcpconflicts-extra2-tests",
+      "python_lines": 112,
+      "status": "test-migrated"
+    },
+    {
+      "name": "mcpwriter-extra2-tests",
+      "python_lines": 128,
+      "status": "test-migrated"
+    },
+    {
+      "name": "baseintegrator-extra2-tests",
+      "python_lines": 108,
+      "status": "test-migrated"
+    },
+    {
+      "name": "lockfileenrichment-extra2-tests",
+      "python_lines": 111,
+      "status": "test-migrated"
     }
   ]
 }

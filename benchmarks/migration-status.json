@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 971871,
+  "migrated_python_lines": 972953,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20872,6 +20872,56 @@
       "python_lines": 88,
       "go_lines": 88,
       "status": "test-migrated"
+    },
+    {
+      "module": "agentformatter_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 114
+    },
+    {
+      "module": "agentscompiler_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "module": "buildid_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "module": "constitutionblock_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "module": "contextoptimizer_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 104
+    },
+    {
+      "module": "outputwriter_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 111
+    },
+    {
+      "module": "templatebuilder_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 116
+    },
+    {
+      "module": "constants_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 101
+    },
+    {
+      "module": "apmyml_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 122
+    },
+    {
+      "module": "auth_extra3_test",
+      "status": "test-migrated",
+      "python_lines": 114
     }
   ]
 }

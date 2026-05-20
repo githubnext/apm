@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 960613,
+  "migrated_python_lines": 961437,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20198,6 +20198,66 @@
       "status": "test-migrated",
       "python_lines": 173,
       "go_file": "internal/models/plugin/plugin_extra2_test.go"
+    },
+    {
+      "name": "installservice-extra2-test",
+      "python_lines": 95,
+      "status": "test-migrated",
+      "go_test_lines": 95
+    },
+    {
+      "name": "security-gate-extra2-test",
+      "python_lines": 101,
+      "status": "test-migrated",
+      "go_test_lines": 101
+    },
+    {
+      "name": "mcpwarnings-extra2-test",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "go_test_lines": 79
+    },
+    {
+      "name": "finalize-extra2-test",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "go_test_lines": 84
+    },
+    {
+      "name": "mktresolver-extra2-test",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "go_test_lines": 83
+    },
+    {
+      "name": "coverage-extra2-test",
+      "python_lines": 71,
+      "status": "test-migrated",
+      "go_test_lines": 71
+    },
+    {
+      "name": "targets-extra2-test",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "go_test_lines": 82
+    },
+    {
+      "name": "auditreport-extra2-test",
+      "python_lines": 77,
+      "status": "test-migrated",
+      "go_test_lines": 77
+    },
+    {
+      "name": "request-extra2-test",
+      "python_lines": 70,
+      "status": "test-migrated",
+      "go_test_lines": 70
+    },
+    {
+      "name": "mktmodels-extra2-test",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "go_test_lines": 82
     }
   ]
 }

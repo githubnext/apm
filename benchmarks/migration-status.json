@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 957116,
+  "migrated_python_lines": 957908,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20028,6 +20028,56 @@
       "module": "registry/operations-extra2",
       "status": "test-migrated",
       "python_lines": 128
+    },
+    {
+      "name": "subprocenv-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 79
+    },
+    {
+      "name": "versionchecker-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 95
+    },
+    {
+      "name": "results-model-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 62
+    },
+    {
+      "name": "mcpargs-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 68
+    },
+    {
+      "name": "lockfile-phase-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 100
+    },
+    {
+      "name": "install-summary-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 76
+    },
+    {
+      "name": "policymodels-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 99
+    },
+    {
+      "name": "mcpcommand-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 94
+    },
+    {
+      "name": "version-pkg-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 51
+    },
+    {
+      "name": "mcp-cmd-extra2-tests",
+      "status": "test-migrated",
+      "python_lines": 68
     }
   ]
 }

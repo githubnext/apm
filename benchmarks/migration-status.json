@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 969791,
+  "migrated_python_lines": 970967,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20752,6 +20752,56 @@
       "status": "test-migrated",
       "python_lines": 125,
       "source": "pluginparser_extra3_test.go"
+    },
+    {
+      "module": "go-test-depgraph-extra3",
+      "status": "test-migrated",
+      "python_lines": 191
+    },
+    {
+      "module": "go-test-installedpkg-extra3",
+      "status": "test-migrated",
+      "python_lines": 104
+    },
+    {
+      "module": "go-test-githubdownloader-extra3",
+      "status": "test-migrated",
+      "python_lines": 121
+    },
+    {
+      "module": "go-test-gitrefresolver-extra3",
+      "status": "test-migrated",
+      "python_lines": 116
+    },
+    {
+      "module": "go-test-listcmd-extra3",
+      "status": "test-migrated",
+      "python_lines": 123
+    },
+    {
+      "module": "go-test-view-extra3",
+      "status": "test-migrated",
+      "python_lines": 106
+    },
+    {
+      "module": "go-test-update-extra3",
+      "status": "test-migrated",
+      "python_lines": 107
+    },
+    {
+      "module": "go-test-pack-extra3",
+      "status": "test-migrated",
+      "python_lines": 83
+    },
+    {
+      "module": "go-test-policy-extra3",
+      "status": "test-migrated",
+      "python_lines": 111
+    },
+    {
+      "module": "go-test-install-extra3",
+      "status": "test-migrated",
+      "python_lines": 114
     }
   ]
 }

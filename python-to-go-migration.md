@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-20T22:07:00Z |
-| Iteration Count | 165 |
-| Best Metric | 1109.11 |
+| Last Run | 2026-05-20T22:58:00Z |
+| Iteration Count | 166 |
+| Best Metric | 1110.35 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -75,6 +75,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 166 -- 2026-05-20 22:58 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26194783549)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra3_test.go for 10 compilation/core packages (agentformatter, agentscompiler, buildid, constitutionblock, contextoptimizer, outputwriter, templatebuilder, constants, apmyml, auth) with 1082 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1110.35% (previous best: 1109.11%, delta: +1.24pp)
+- **Commit**: db0636c6
+- **Notes**: Added extra3_test.go covering struct fields, zero-values, edge cases, and scenario variants. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 165 -- 2026-05-20 22:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26192743587)
 

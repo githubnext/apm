@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-05-19T20:58:00Z",
+  "last_run": "2026-05-20T21:07:54Z",
   "validated_commands": {
     "go_test": "go test ./...",
     "go_test_coverage": "go test ./... -coverprofile=coverage.out && go tool cover -func=coverage.out",
@@ -8,17 +8,23 @@
     "lint_check": "python3 -m ruff check src/ tests/ && python3 -m ruff format --check src/ tests/",
     "lint_fix": "python3 -m ruff check src/ tests/ --fix && python3 -m ruff format src/ tests/"
   },
-  "env_notes": "Go 1.24.x env. Use 'go test ./...' for Go. Python src/ still present but Go is primary. PyPy 3.10 for Python tests.",
+  "env_notes": "Go 1.24.x env. Use 'go test ./...' for Go. Python src/ still present. Total coverage ~49.9%.",
   "tasks_last_run": {
     "task1": "2026-05-19",
-    "task2": "2026-05-16",
-    "task3": "2026-05-19",
+    "task2": "2026-05-20",
+    "task3": "2026-05-20",
     "task4": "2026-05-17",
     "task5": "2026-05-17",
     "task6": "2026-05-15",
-    "task7": "2026-05-19"
+    "task7": "2026-05-20"
   },
   "completed_prs": [
+    {
+      "branch": "test-assist/experimental-functional-tests",
+      "description": "36 functional tests for experimental feature-flag API: 1.5% -> 90.5% coverage",
+      "date": "2026-05-20",
+      "status": "submitted"
+    },
     {
       "branch": "test-assist/pack-functional-tests",
       "description": "Functional tests for commands/pack: 0% -> 81.4% coverage (12 tests)",
@@ -57,15 +63,13 @@
     }
   ],
   "testing_backlog": [
-    {"pkg": "internal/core/experimental", "priority": "high", "reason": "11.8% avg coverage, 298 lines"},
-    {"pkg": "internal/commands/mcp", "priority": "medium", "reason": "16.7% avg coverage"},
-    {"pkg": "internal/commands/view", "priority": "medium", "reason": "16.7% avg coverage"},
+    {"pkg": "internal/commands/mcp", "priority": "high", "reason": "16.7% avg coverage"},
+    {"pkg": "internal/commands/view", "priority": "high", "reason": "16.7% avg coverage"},
     {"pkg": "internal/install/bundle/unpacker", "priority": "medium", "reason": "18.3% avg coverage"},
-    {"pkg": "internal/adapters/client/copilot", "priority": "low", "reason": "22.5% avg, 828-line file, complex file I/O"},
-    {"file": "src/apm_cli/deps/git_remote_ops.py", "priority": "low", "reason": "0 tests, 91 lines (Python)"}
+    {"pkg": "internal/adapters/client/copilot", "priority": "low", "reason": "22.5% avg, 828-line file, complex file I/O"}
   ],
-  "monthly_issue": "2026-05 created 2026-05-19",
-  "infrastructure_notes": "Go codebase migrated from Python. 350 Go test files. Total coverage ~49.9%. Go tests run with 'go test ./...'.",
-  "testing_notes": "Pack tests: existing tests only tested struct fields (0% code coverage). Functional tests with t.TempDir() work well. Cover Run(), RunUnpack(), helpers.",
+  "monthly_issue": "2026-05 created 2026-05-20",
+  "infrastructure_notes": "Go codebase migrated from Python. Total coverage ~49.9%. Internal package tests (package foo, not foo_test) needed for cache/state access.",
+  "testing_notes": "experimental: use t.Setenv(HOME, t.TempDir()) + invalidateCache() for isolation. Internal package tests needed for unexported helpers.",
   "migration_note": "PR #56 merged 2026-05-19: full python-to-go-migration. Primary language is now Go."
 }

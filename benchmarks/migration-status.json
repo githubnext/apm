@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 955604,
+  "migrated_python_lines": 957116,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19978,6 +19978,56 @@
       "python_lines": 159,
       "go_test_lines": 159,
       "status": "test-migrated"
+    },
+    {
+      "module": "core/scriptrunner-extra2",
+      "status": "test-migrated",
+      "python_lines": 184
+    },
+    {
+      "module": "policy/discovery-extra2",
+      "status": "test-migrated",
+      "python_lines": 137
+    },
+    {
+      "module": "integration/skillintegrator-extra2",
+      "status": "test-migrated",
+      "python_lines": 157
+    },
+    {
+      "module": "compilation/agentscompiler-extra2",
+      "status": "test-migrated",
+      "python_lines": 160
+    },
+    {
+      "module": "deps/githubdownloader-extra2",
+      "status": "test-migrated",
+      "python_lines": 153
+    },
+    {
+      "module": "core/tokenmanager-extra2",
+      "status": "test-migrated",
+      "python_lines": 150
+    },
+    {
+      "module": "install/drift-extra2",
+      "status": "test-migrated",
+      "python_lines": 185
+    },
+    {
+      "module": "install/errors-extra2",
+      "status": "test-migrated",
+      "python_lines": 133
+    },
+    {
+      "module": "deps/packagevalidator-extra2",
+      "status": "test-migrated",
+      "python_lines": 125
+    },
+    {
+      "module": "registry/operations-extra2",
+      "status": "test-migrated",
+      "python_lines": 128
     }
   ]
 }

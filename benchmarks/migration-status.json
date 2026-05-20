@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 965652,
+  "migrated_python_lines": 966641,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20518,6 +20518,60 @@
       "python_lines": 86,
       "status": "test-migrated",
       "go_test_file": "internal/integration/skilltransformer/skilltransformer_extra2_test.go"
+    },
+    {
+      "name": "mkio-extra2",
+      "go_path": "internal/marketplace/mkio",
+      "python_lines": 100,
+      "status": "test-migrated"
+    },
+    {
+      "name": "mktvalidator-extra2",
+      "go_path": "internal/marketplace/mktvalidator",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "name": "semver-extra2",
+      "go_path": "internal/marketplace/semver",
+      "python_lines": 115,
+      "status": "test-migrated"
+    },
+    {
+      "name": "tagpattern-extra2",
+      "go_path": "internal/marketplace/tagpattern",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "name": "compilationformatter-extra2",
+      "go_path": "internal/output/compilationformatter",
+      "python_lines": 115,
+      "status": "test-migrated"
+    },
+    {
+      "name": "scriptformatters-extra2",
+      "go_path": "internal/output/scriptformatters",
+      "python_lines": 115,
+      "status": "test-migrated"
+    },
+    {
+      "name": "primmodels-extra2",
+      "go_path": "internal/primitives/primmodels",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "name": "registry-client-extra2",
+      "go_path": "internal/registry/client",
+      "python_lines": 110,
+      "status": "test-migrated"
+    },
+    {
+      "name": "runtime-manager-extra2",
+      "go_path": "internal/runtime/manager",
+      "python_lines": 104,
+      "status": "test-migrated"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 961437,
+  "migrated_python_lines": 962595,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20258,6 +20258,66 @@
       "python_lines": 82,
       "status": "test-migrated",
       "go_test_lines": 82
+    },
+    {
+      "name": "test-outdated-extra2",
+      "module": "internal/commands/outdated",
+      "status": "test-migrated",
+      "python_lines": 165
+    },
+    {
+      "name": "test-compile-extra2",
+      "module": "internal/commands/compile",
+      "status": "test-migrated",
+      "python_lines": 144
+    },
+    {
+      "name": "test-deps-extra2",
+      "module": "internal/commands/deps",
+      "status": "test-migrated",
+      "python_lines": 111
+    },
+    {
+      "name": "test-auth-extra2",
+      "module": "internal/core/auth",
+      "status": "test-migrated",
+      "python_lines": 115
+    },
+    {
+      "name": "test-heals-extra2",
+      "module": "internal/install/heals",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "test-insecurepolicy-extra2",
+      "module": "internal/install/insecurepolicy",
+      "status": "test-migrated",
+      "python_lines": 104
+    },
+    {
+      "name": "test-installvalidation-extra2",
+      "module": "internal/install/installvalidation",
+      "status": "test-migrated",
+      "python_lines": 109
+    },
+    {
+      "name": "test-cichecks-extra2",
+      "module": "internal/policy/cichecks",
+      "status": "test-migrated",
+      "python_lines": 106
+    },
+    {
+      "name": "test-matcher-extra2",
+      "module": "internal/policy/matcher",
+      "status": "test-migrated",
+      "python_lines": 89
+    },
+    {
+      "name": "test-policychecks-extra2",
+      "module": "internal/policy/policychecks",
+      "status": "test-migrated",
+      "python_lines": 113
     }
   ]
 }

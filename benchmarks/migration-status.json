@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 959096,
+  "migrated_python_lines": 960613,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20128,6 +20128,76 @@
       "module": "test-utils-fileops-extra2",
       "python_lines": 121,
       "status": "test-migrated"
+    },
+    {
+      "name": "test-codex-extra2",
+      "module": "test-codex-extra2",
+      "status": "test-migrated",
+      "python_lines": 125,
+      "go_file": "internal/adapters/client/codex/codex_extra2_test.go"
+    },
+    {
+      "name": "test-packagemanager-extra2",
+      "module": "test-packagemanager-extra2",
+      "status": "test-migrated",
+      "python_lines": 174,
+      "go_file": "internal/adapters/packagemanager/packagemanager_extra2_test.go"
+    },
+    {
+      "name": "test-audit-extra2",
+      "module": "test-audit-extra2",
+      "status": "test-migrated",
+      "python_lines": 187,
+      "go_file": "internal/commands/audit/audit_extra2_test.go"
+    },
+    {
+      "name": "test-experimental-extra2",
+      "module": "test-experimental-extra2",
+      "status": "test-migrated",
+      "python_lines": 142,
+      "go_file": "internal/commands/experimental/experimental_extra2_test.go"
+    },
+    {
+      "name": "test-pack-extra2",
+      "module": "test-pack-extra2",
+      "status": "test-migrated",
+      "python_lines": 123,
+      "go_file": "internal/commands/pack/pack_extra2_test.go"
+    },
+    {
+      "name": "test-view-extra2",
+      "module": "test-view-extra2",
+      "status": "test-migrated",
+      "python_lines": 141,
+      "go_file": "internal/commands/view/view_extra2_test.go"
+    },
+    {
+      "name": "test-operations-extra2",
+      "module": "test-operations-extra2",
+      "status": "test-migrated",
+      "python_lines": 144,
+      "go_file": "internal/core/operations/operations_extra2_test.go"
+    },
+    {
+      "name": "test-output-models-extra2",
+      "module": "test-output-models-extra2",
+      "status": "test-migrated",
+      "python_lines": 155,
+      "go_file": "internal/output/models/models_extra2_test.go"
+    },
+    {
+      "name": "test-mcpdep-extra2",
+      "module": "test-mcpdep-extra2",
+      "status": "test-migrated",
+      "python_lines": 153,
+      "go_file": "internal/models/mcpdep/mcpdep_extra2_test.go"
+    },
+    {
+      "name": "test-plugin-extra2",
+      "module": "test-plugin-extra2",
+      "status": "test-migrated",
+      "python_lines": 173,
+      "go_file": "internal/models/plugin/plugin_extra2_test.go"
     }
   ]
 }

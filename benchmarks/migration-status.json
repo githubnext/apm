@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 962595,
+  "migrated_python_lines": 963430,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20318,6 +20318,86 @@
       "module": "internal/policy/policychecks",
       "status": "test-migrated",
       "python_lines": 113
+    },
+    {
+      "module": "test-targetscmd-extra2",
+      "file": "internal/commands/targetscmd/targetscmd_extra2_test.go",
+      "python_lines": 111,
+      "go_lines": 111,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-shadowdetector-extra2",
+      "file": "internal/marketplace/shadowdetector/shadowdetector_extra2_test.go",
+      "python_lines": 83,
+      "go_lines": 83,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-postdepslocal-extra2",
+      "file": "internal/install/phases/postdepslocal/postdepslocal_extra2_test.go",
+      "python_lines": 82,
+      "go_lines": 82,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-wfparser-extra2",
+      "file": "internal/workflow/wfparser/wfparser_extra2_test.go",
+      "python_lines": 93,
+      "go_lines": 93,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-runner-extra2",
+      "file": "internal/workflow/runner/runner_extra2_test.go",
+      "python_lines": 70,
+      "go_lines": 70,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-factory-extra2",
+      "file": "internal/runtime/factory/factory_extra2_test.go",
+      "python_lines": 77,
+      "go_lines": 77,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-dispatch-extra2",
+      "file": "internal/integration/dispatch/dispatch_extra2_test.go",
+      "python_lines": 78,
+      "go_lines": 78,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-policytargetcheck-extra2",
+      "file": "internal/install/phases/policytargetcheck/policytargetcheck_extra2_test.go",
+      "python_lines": 73,
+      "go_lines": 73,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-mcpentry-extra2",
+      "file": "internal/install/mcp/mcpentry/mcpentry_extra2_test.go",
+      "python_lines": 90,
+      "go_lines": 90,
+      "status": "test-migrated",
+      "iteration": 158
+    },
+    {
+      "module": "test-schema-extra2",
+      "file": "internal/policy/schema/schema_extra2_test.go",
+      "python_lines": 78,
+      "go_lines": 78,
+      "status": "test-migrated",
+      "iteration": 158
     }
   ]
 }

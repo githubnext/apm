@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 970967,
+  "migrated_python_lines": 971871,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20802,6 +20802,76 @@
       "module": "go-test-install-extra3",
       "status": "test-migrated",
       "python_lines": 114
+    },
+    {
+      "module": "outdated-extra3-test",
+      "go_file": "internal/commands/outdated/outdated_extra3_test.go",
+      "python_lines": 102,
+      "go_lines": 102,
+      "status": "test-migrated"
+    },
+    {
+      "module": "mcp-extra3-test",
+      "go_file": "internal/commands/mcp/mcp_extra3_test.go",
+      "python_lines": 99,
+      "go_lines": 99,
+      "status": "test-migrated"
+    },
+    {
+      "module": "experimental-extra3-test",
+      "go_file": "internal/commands/experimental/experimental_extra3_test.go",
+      "python_lines": 93,
+      "go_lines": 93,
+      "status": "test-migrated"
+    },
+    {
+      "module": "targetscmd-extra3-test",
+      "go_file": "internal/commands/targetscmd/targetscmd_extra3_test.go",
+      "python_lines": 87,
+      "go_lines": 87,
+      "status": "test-migrated"
+    },
+    {
+      "module": "marketplace-extra3-test",
+      "go_file": "internal/commands/marketplace/marketplace_extra3_test.go",
+      "python_lines": 87,
+      "go_lines": 87,
+      "status": "test-migrated"
+    },
+    {
+      "module": "primparser-extra3-test",
+      "go_file": "internal/primitives/primparser/primparser_extra3_test.go",
+      "python_lines": 77,
+      "go_lines": 77,
+      "status": "test-migrated"
+    },
+    {
+      "module": "primmodels-extra3-test",
+      "go_file": "internal/primitives/primmodels/primmodels_extra3_test.go",
+      "python_lines": 111,
+      "go_lines": 111,
+      "status": "test-migrated"
+    },
+    {
+      "module": "injector-extra3-test",
+      "go_file": "internal/compilation/injector/injector_extra3_test.go",
+      "python_lines": 91,
+      "go_lines": 91,
+      "status": "test-migrated"
+    },
+    {
+      "module": "compilationconst-extra3-test",
+      "go_file": "internal/compilation/compilationconst/const_extra3_test.go",
+      "python_lines": 69,
+      "go_lines": 69,
+      "status": "test-migrated"
+    },
+    {
+      "module": "constitution-extra3-test",
+      "go_file": "internal/compilation/constitution/constitution_extra3_test.go",
+      "python_lines": 88,
+      "go_lines": 88,
+      "status": "test-migrated"
     }
   ]
 }

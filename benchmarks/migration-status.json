@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 968673,
+  "migrated_python_lines": 969791,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20692,6 +20692,66 @@
       "path": "internal/adapters/windsurf/windsurf_extra3_test.go",
       "python_lines": 110,
       "status": "test-migrated"
+    },
+    {
+      "module": "deps/aggregator-extra3",
+      "status": "test-migrated",
+      "python_lines": 134,
+      "source": "aggregator_extra3_test.go"
+    },
+    {
+      "module": "deps/downloadstrategies-extra3",
+      "status": "test-migrated",
+      "python_lines": 97,
+      "source": "strategies_extra3_test.go"
+    },
+    {
+      "module": "deps/lockfile-extra3",
+      "status": "test-migrated",
+      "python_lines": 125,
+      "source": "lockfile_extra3_test.go"
+    },
+    {
+      "module": "deps/gitauthenv-extra3",
+      "status": "test-migrated",
+      "python_lines": 114,
+      "source": "gitauthenv_extra3_test.go"
+    },
+    {
+      "module": "deps/gitremoteops-extra3",
+      "status": "test-migrated",
+      "python_lines": 120,
+      "source": "gitremoteops_extra3_test.go"
+    },
+    {
+      "module": "deps/packagevalidator-extra3",
+      "status": "test-migrated",
+      "python_lines": 115,
+      "source": "packagevalidator_extra3_test.go"
+    },
+    {
+      "module": "deps/sharedclonecache-extra3",
+      "status": "test-migrated",
+      "python_lines": 98,
+      "source": "sharedclonecache_extra3_test.go"
+    },
+    {
+      "module": "deps/hostbackends-extra3",
+      "status": "test-migrated",
+      "python_lines": 75,
+      "source": "hostbackends_extra3_test.go"
+    },
+    {
+      "module": "deps/cloneengine-extra3",
+      "status": "test-migrated",
+      "python_lines": 115,
+      "source": "cloneengine_extra3_test.go"
+    },
+    {
+      "module": "deps/pluginparser-extra3",
+      "status": "test-migrated",
+      "python_lines": 125,
+      "source": "pluginparser_extra3_test.go"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 964670,
+  "migrated_python_lines": 965652,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20448,6 +20448,76 @@
       "module": "mcpregistry-extra2-tests",
       "status": "test-migrated",
       "python_lines": 109
+    },
+    {
+      "module": "install-phases-cleanup-extra2",
+      "python_file": "internal/install/phases/cleanup/cleanup_extra2_test.go",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/cleanup/cleanup_extra2_test.go"
+    },
+    {
+      "module": "install-phases-download-extra2",
+      "python_file": "internal/install/phases/download/download_extra2_test.go",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/download/download_extra2_test.go"
+    },
+    {
+      "module": "install-phases-heal-extra2",
+      "python_file": "internal/install/phases/heal/heal_extra2_test.go",
+      "python_lines": 114,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/heal/heal_extra2_test.go"
+    },
+    {
+      "module": "install-phases-policygate-extra2",
+      "python_file": "internal/install/phases/policygate/policygate_extra2_test.go",
+      "python_lines": 84,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/phases/policygate/policygate_extra2_test.go"
+    },
+    {
+      "module": "install-pkgresolution-extra2",
+      "python_file": "internal/install/pkgresolution/pkgresolution_extra2_test.go",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/pkgresolution/pkgresolution_extra2_test.go"
+    },
+    {
+      "module": "install-presentation-dryrun-extra2",
+      "python_file": "internal/install/presentation/dryrun/dryrun_extra2_test.go",
+      "python_lines": 129,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/presentation/dryrun/dryrun_extra2_test.go"
+    },
+    {
+      "module": "install-template-extra2",
+      "python_file": "internal/install/template/template_extra2_test.go",
+      "python_lines": 83,
+      "status": "test-migrated",
+      "go_test_file": "internal/install/template/template_extra2_test.go"
+    },
+    {
+      "module": "integration-agentintegrator-extra2",
+      "python_file": "internal/integration/agentintegrator/agentintegrator_extra2_test.go",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/agentintegrator/agentintegrator_extra2_test.go"
+    },
+    {
+      "module": "integration-commandintegrator-extra2",
+      "python_file": "internal/integration/commandintegrator/commandintegrator_extra2_test.go",
+      "python_lines": 96,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/commandintegrator/commandintegrator_extra2_test.go"
+    },
+    {
+      "module": "integration-skilltransformer-extra2",
+      "python_file": "internal/integration/skilltransformer/skilltransformer_extra2_test.go",
+      "python_lines": 86,
+      "status": "test-migrated",
+      "go_test_file": "internal/integration/skilltransformer/skilltransformer_extra2_test.go"
     }
   ]
 }

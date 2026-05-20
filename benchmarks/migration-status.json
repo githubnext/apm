@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 953816,
+  "migrated_python_lines": 955604,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -19917,6 +19917,66 @@
       "module": "test-migrated/cache_httpcache_extra2",
       "python_lines": 167,
       "go_lines": 167,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:mcpintegrator_extra2",
+      "python_lines": 206,
+      "go_test_lines": 206,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:ymlschema_extra2",
+      "python_lines": 278,
+      "go_test_lines": 278,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:vscode_extra2",
+      "python_lines": 193,
+      "go_test_lines": 193,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:unpacker_extra2",
+      "python_lines": 163,
+      "go_test_lines": 163,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:scanner_extra2",
+      "python_lines": 156,
+      "go_test_lines": 156,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:contenthash_extra2",
+      "python_lines": 169,
+      "go_test_lines": 169,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:codexruntime_extra2",
+      "python_lines": 118,
+      "go_test_lines": 118,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:claude_extra2",
+      "python_lines": 173,
+      "go_test_lines": 173,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:gitrefresolver_extra2",
+      "python_lines": 173,
+      "go_test_lines": 173,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test:cursor_extra2",
+      "python_lines": 159,
+      "go_test_lines": 159,
       "status": "test-migrated"
     }
   ]

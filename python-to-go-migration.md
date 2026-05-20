@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-20T17:11:00Z |
-| Iteration Count | 161 |
-| Best Metric | 1103.14 |
+| Last Run | 2026-05-20T18:19:00Z |
+| Iteration Count | 162 |
+| Best Metric | 1104.10 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -75,6 +75,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 162 -- 2026-05-20 18:19 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26181429159)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra3_test.go for 10 cache/commands packages (cachepaths, gitcache, httpcache, locking, urlnormalize, audit, cachecmd, compile, configcmd, deps) with 841 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1104.10% (previous best: 1103.14%, delta: +0.96pp)
+- **Commit**: 60cf06a2
+- **Notes**: Added extra3_test.go covering additional edge cases, field assignments, round-trips, and struct zero-values. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 161 -- 2026-05-20 17:11 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26177926066)
 

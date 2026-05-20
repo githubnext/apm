@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-20T15:48:00Z |
-| Iteration Count | 160 |
-| Best Metric | 1102.02 |
+| Last Run | 2026-05-20T17:11:00Z |
+| Iteration Count | 161 |
+| Best Metric | 1103.14 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -75,6 +75,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 161 -- 2026-05-20 17:11 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26177926066)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra2 test files for 9 packages (mkio, mktvalidator, semver, tagpattern, compilationformatter, scriptformatters, primmodels, registry/client, runtime/manager) with 989 new test lines; registered 9 new test-migrated entries
+- **Metric**: 1103.14% (previous best: 1102.02%, delta: +1.12pp)
+- **Commit**: 1d982cc5
+- **Notes**: Added extra2_test.go covering zero-values, struct fields, round-trips, edge cases, and scenario variants for each package. All 9 new files pass go test and go build ./... is clean.
 
 ### Iteration 160 -- 2026-05-20 15:48 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26173611806)
 

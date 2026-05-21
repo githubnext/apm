@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "generated_by": "go test -bench=. -benchmem ./internal/...",
+  "entries": [
+    {
+      "module": "install/manifest_ops",
+      "go_package": "internal/install",
+      "python_benchmark": "scripts/benchmark_manifest_ops.py",
+      "input_shape": "50 packages x 5 files = 250 managed paths; 6 integration prefixes",
+      "benchmarks": [
+        {
+          "name": "BenchmarkManifestNormalizeManagedFiles50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 11818
+        },
+        {
+          "name": "BenchmarkManifestCheckCollision50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 2148
+        },
+        {
+          "name": "BenchmarkManifestPartitionManagedFiles50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 100448
+        },
+        {
+          "name": "BenchmarkManifestSyncRemoveFiles50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 819506
+        },
+        {
+          "name": "BenchmarkManifestCleanupEmptyParents50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 5379128
+        },
+        {
+          "name": "BenchmarkManifestScopedUninstallSet50x5",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 785.3
+        }
+      ]
+    },
+    {
+      "module": "security/gate",
+      "go_package": "internal/security/gate",
+      "python_benchmark": "tests/benchmarks/test_security_and_resolver_benchmarks.py",
+      "input_shape": "100KB mixed hidden-Unicode content; 50-file gate scan",
+      "benchmarks": [
+        {
+          "name": "BenchmarkGateCheckMixedContent100KB",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 59285
+        },
+        {
+          "name": "BenchmarkGateCheckWideFileSet50",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 506322
+        }
+      ]
+    },
+    {
+      "module": "deps/apm_resolver",
+      "go_package": "internal/deps/apmresolver",
+      "python_benchmark": "tests/benchmarks/test_security_and_resolver_benchmarks.py",
+      "input_shape": "wide fan of 50 direct dependencies; linear chain depth 50",
+      "benchmarks": [
+        {
+          "name": "BenchmarkBuildDependencyTreeWideFan50",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 1504816
+        },
+        {
+          "name": "BenchmarkBuildDependencyTreeLinearChain50",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 1670628
+        }
+      ]
+    },
+    {
+      "module": "marketplace/builder",
+      "go_package": "internal/marketplace/builder",
+      "python_benchmark": "tests/benchmarks/test_perf_benchmarks.py",
+      "input_shape": "50 resolved marketplace packages composed into marketplace.json",
+      "benchmarks": [
+        {
+          "name": "BenchmarkComposeMarketplaceJSON50Packages",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 49078
+        }
+      ]
+    },
+    {
+      "module": "deps/github_downloader",
+      "go_package": "internal/deps/githubdownloader",
+      "python_benchmark": "tests/benchmarks/test_git_and_compiler_benchmarks.py",
+      "input_shape": "500 synthetic ls-remote refs: 60% tags, 40% branches, every third tag annotated",
+      "benchmarks": [
+        {
+          "name": "BenchmarkParseLsRemoteOutput500Refs",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 91844
+        },
+        {
+          "name": "BenchmarkSortRemoteRefs500Refs",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 1103284
+        }
+      ]
+    },
+    {
+      "module": "utils/exclude",
+      "go_package": "internal/utils/exclude",
+      "python_benchmark": "tests/benchmarks/test_security_and_resolver_benchmarks.py",
+      "input_shape": "3 '**' pattern segments over path depth 20; should_exclude glob path",
+      "benchmarks": [
+        {
+          "name": "BenchmarkMatchDoubleStar3SegmentsDepth20",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 1070
+        },
+        {
+          "name": "BenchmarkShouldExcludeSimpleGlob1000Shape",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 1197
+        },
+        {
+          "name": "BenchmarkMatchPatternNoDoubleStar",
+          "python_ns_per_op": null,
+          "go_ns_per_op": 702.8
+        }
+      ]
+    }
+  ]
+}

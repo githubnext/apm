@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 977095,
+  "migrated_python_lines": 978115,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21212,6 +21212,66 @@
       "name": "internal/commands/update/update_extra4_test.go",
       "python_lines": 87,
       "status": "test-migrated"
+    },
+    {
+      "name": "pack-commands-extra4",
+      "module": "internal/commands/pack",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "policy-commands-extra4",
+      "module": "internal/commands/policy",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "cache-commands-extra4",
+      "module": "internal/commands/cache",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "install-commands-extra4",
+      "module": "internal/commands/install",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "outdated-commands-extra4",
+      "module": "internal/commands/outdated",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "compile-commands-extra4",
+      "module": "internal/commands/compile",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "mcp-commands-extra4",
+      "module": "internal/commands/mcp",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "configcmd-commands-extra4",
+      "module": "internal/commands/configcmd",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "normalization-utils-extra4",
+      "module": "internal/utils/normalization",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "helpers-utils-extra4",
+      "module": "internal/utils/helpers",
+      "status": "test-migrated",
+      "python_lines": 102
     }
   ]
 }

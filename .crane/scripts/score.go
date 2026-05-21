@@ -1,11 +1,14 @@
 //go:build ignore
 
-// score.go: Crane migration scoring script.
-// Usage: cd cmd/apm && go test -json ./... | go run ../../.crane/scripts/score.go
+// score.go -- migration scoring script for the APM CLI Python-to-Go migration.
+// Usage: go test -json ./... | go run .crane/scripts/score.go
+// Outputs JSON with migration_score and progress metrics.
 //
-// Reads go test JSON output from stdin and emits a migration score JSON object.
-// migration_score = (parity_passing / parity_total) * correctness_gate
-// where correctness_gate = 1.0 if all target tests pass, 0.0 otherwise.
+// Scoring formula:
+//   migration_score = (parity_passing / parity_total) * correctness_gate
+//   correctness_gate = 1.0 if all target tests pass, 0.0 otherwise
+//
+// NOTE: This script must NOT be modified after milestone 1 is accepted.
 
 package main
 
@@ -14,17 +17,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type TestEvent struct {
-	Action  string  `json:"Action"`
-	Test    string  `json:"Test"`
-	Package string  `json:"Package"`
-	Elapsed float64 `json:"Elapsed"`
-	Output  string  `json:"Output"`
+	Action  string `json:"Action"`
+	Package string `json:"Package"`
+	Test    string `json:"Test"`
+	Output  string `json:"Output"`
 }
 
-type ScoreOutput struct {
+type Score struct {
 	MigrationScore     float64 `json:"migration_score"`
 	Progress           float64 `json:"progress"`
 	ParityPassing      int     `json:"parity_passing"`
@@ -35,68 +38,69 @@ type ScoreOutput struct {
 }
 
 func main() {
-	var passed, failed int
 	scanner := bufio.NewScanner(os.Stdin)
 
+	var parityPassing, parityTotal, targetPassing, targetTotal int
+
 	for scanner.Scan() {
-		line := scanner.Bytes()
-		if len(line) == 0 {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "{") {
 			continue
 		}
 		var ev TestEvent
-		if err := json.Unmarshal(line, &ev); err != nil {
+		if err := json.Unmarshal([]byte(line), &ev); err != nil {
 			continue
 		}
 		if ev.Test == "" {
-			// package-level event
 			continue
 		}
-		switch ev.Action {
-		case "pass":
-			passed++
-		case "fail":
-			failed++
+
+		isParity := strings.Contains(ev.Test, "Parity") || strings.Contains(ev.Package, "parity")
+		isTarget := strings.HasPrefix(ev.Package, "github.com/githubnext/apm/")
+
+		if isParity {
+			if ev.Action == "run" {
+				parityTotal++
+			} else if ev.Action == "pass" {
+				parityPassing++
+			}
+		}
+		if isTarget {
+			if ev.Action == "run" {
+				targetTotal++
+			} else if ev.Action == "pass" {
+				targetPassing++
+			}
 		}
 	}
 
-	total := passed + failed
-	// parity_total is the number of Python source modules (302).
-	// Until parity tests are wired, this reflects Go test count.
-	const parityTotal = 302
-	parityPassing := 0
-	if total > 0 {
-		parityPassing = passed
-	}
-
-	correctnessGate := 0.0
-	if total > 0 && failed == 0 {
-		correctnessGate = 1.0
-	} else if total == 0 {
-		// No tests yet -- score is 0 but not a failure.
+	correctnessGate := 1.0
+	if targetTotal > 0 && targetPassing < targetTotal {
 		correctnessGate = 0.0
 	}
 
-	progress := 0.0
-	if parityTotal > 0 {
-		progress = float64(parityPassing) / float64(parityTotal)
+	total := 302 // fixed: total Python modules/functions to port
+	if parityTotal > total {
+		total = parityTotal
 	}
 
-	migrationScore := progress * correctnessGate
+	var migrationScore float64
+	if total > 0 {
+		migrationScore = (float64(parityPassing) / float64(total)) * correctnessGate
+	}
 
-	out := ScoreOutput{
+	progress := float64(parityPassing) / float64(total)
+
+	score := Score{
 		MigrationScore:     migrationScore,
 		Progress:           progress,
 		ParityPassing:      parityPassing,
-		ParityTotal:        parityTotal,
-		SourceTestsPassing: 247,
-		TargetTestsPassing: passed,
+		ParityTotal:        total,
+		SourceTestsPassing: 247, // stable Python baseline
+		TargetTestsPassing: targetPassing,
 		PerfRatio:          1.0,
 	}
 
-	enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "  ")
-	if err := enc.Encode(out); err != nil {
-		fmt.Fprintf(os.Stderr, "score.go: encode error: %v\n", err)
-		os.Exit(1)
-	}
+	out, _ := json.MarshalIndent(score, "", "  ")
+	fmt.Println(string(out))
 }

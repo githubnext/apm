@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-21T06:30:00Z |
-| Iteration Count | 171 |
-| Best Metric | 1116.24 |
+| Last Run | 2026-05-21T07:55:49Z |
+| Iteration Count | 172 |
+| Best Metric | 1117.19 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -76,6 +76,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 172 -- 2026-05-21 07:55 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26213119904)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra4_test.go for 10 cache/compilation/core packages (cachepaths, urlnormalize, locking, integrity, buildid, compilationconst, constitution, constants, version, apmyml) with 837 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1117.19% (previous best: 1116.24%, delta: +0.95pp)
+- **Commit**: 024689ed
+- **Notes**: Added extra4_test.go covering cache root handling, URL normalization edge cases, shard locking, integrity checks, build ID stabilization, and compilation constants. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 171 -- 2026-05-21 06:30 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26209497561)
 

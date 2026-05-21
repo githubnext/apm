@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-21T09:15:22Z |
-| Iteration Count | 173 |
-| Best Metric | 1118.18 |
+| Last Run | 2026-05-21T10:47:43Z |
+| Iteration Count | 174 |
+| Best Metric | 1119.27 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -77,6 +77,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 174 -- 2026-05-21 10:47 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26221246430)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra4_test.go for 10 adapters/cache/compilation/core/utils packages (base, claude, packagemanager, gitcache, httpcache, agentformatter, outputwriter, auth, commandlogger, yamlio) with 953 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1119.27% (previous best: 1118.18%, delta: +1.09pp)
+- **Commit**: a9abedfd
+- **Notes**: Added extra4_test.go covering regex patterns, adapter round-trips, cache stats, compilation output, auth host classification, and YAML I/O. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 173 -- 2026-05-21 09:15 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26216900097)
 

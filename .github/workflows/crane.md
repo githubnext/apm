@@ -46,7 +46,7 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, crane]
-    protected-files: fallback-to-issue
+    protected-files: allowed
     preserve-branch-name: true
     max: 1
   push-to-pull-request-branch:

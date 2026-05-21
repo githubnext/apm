@@ -43,9 +43,7 @@ def test_run_benchmarks_uses_configured_work_dir(tmp_path, monkeypatch):
 def test_update_doc_replaces_generated_block(tmp_path):
     benchmark = load_benchmark_module()
     doc_path = tmp_path / "page.mdx"
-    doc_path.write_text(
-        f"before\n{benchmark.DOC_START}\nold content\n{benchmark.DOC_END}\nafter\n"
-    )
+    doc_path.write_text(f"before\n{benchmark.DOC_START}\nold content\n{benchmark.DOC_END}\nafter\n")
 
     benchmark.update_doc(doc_path, f"{benchmark.DOC_START}\nnew content\n{benchmark.DOC_END}")
 

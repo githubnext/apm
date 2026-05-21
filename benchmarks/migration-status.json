@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 974639,
+  "migrated_python_lines": 975225,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21042,6 +21042,66 @@
       "python_lines": 117,
       "go_test_lines": 117,
       "status": "test-migrated"
+    },
+    {
+      "module": "test-guards-extra4",
+      "python_lines": 82,
+      "status": "test-migrated",
+      "file": "internal/utils/guards/guards_extra4_test.go"
+    },
+    {
+      "module": "test-paths-extra4",
+      "python_lines": 49,
+      "status": "test-migrated",
+      "file": "internal/utils/paths/paths_extra4_test.go"
+    },
+    {
+      "module": "test-sha-extra4",
+      "python_lines": 54,
+      "status": "test-migrated",
+      "file": "internal/utils/sha/sha_extra4_test.go"
+    },
+    {
+      "module": "test-errors-extra4",
+      "python_lines": 66,
+      "status": "test-migrated",
+      "file": "internal/core/errors/errors_extra4_test.go"
+    },
+    {
+      "module": "test-nulllogger-extra4",
+      "python_lines": 51,
+      "status": "test-migrated",
+      "file": "internal/core/nulllogger/nulllogger_extra4_test.go"
+    },
+    {
+      "module": "test-dockerargs-extra4",
+      "python_lines": 65,
+      "status": "test-migrated",
+      "file": "internal/core/dockerargs/dockerargs_extra4_test.go"
+    },
+    {
+      "module": "test-scope-extra4",
+      "python_lines": 51,
+      "status": "test-migrated",
+      "file": "internal/core/scope/scope_extra4_test.go"
+    },
+    {
+      "module": "test-experimental-extra4",
+      "python_lines": 58,
+      "status": "test-migrated",
+      "file": "internal/core/experimental/experimental_extra4_test.go"
+    },
+    {
+      "module": "test-targetdetection-extra4",
+      "python_lines": 62,
+      "status": "test-migrated",
+      "file": "internal/core/targetdetection/targetdetection_extra4_test.go"
+    },
+    {
+      "module": "test-scriptrunner-extra4",
+      "python_lines": 48,
+      "status": "test-migrated",
+      "file": "internal/core/scriptrunner/scriptrunner_extra4_test.go"
     }
   ]
 }

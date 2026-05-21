@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 981390,
+  "migrated_python_lines": 982778,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21512,6 +21512,72 @@
       "status": "test-migrated",
       "python_lines": 61,
       "go_test_file": "internal/install/phases/installphase/installphase_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_client_codex_extra4",
+      "status": "test-migrated",
+      "python_lines": 215,
+      "go_test_file": "internal/adapters/client/codex/codex_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_client_copilot_extra4",
+      "status": "test-migrated",
+      "python_lines": 169,
+      "go_test_file": "internal/adapters/client/copilot/copilot_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_client_cursor_extra4",
+      "status": "test-migrated",
+      "python_lines": 94,
+      "go_test_file": "internal/adapters/client/cursor/cursor_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_client_gemini_extra4",
+      "status": "test-migrated",
+      "python_lines": 122,
+      "go_test_file": "internal/adapters/client/gemini/gemini_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_client_vscode_extra4",
+      "status": "test-migrated",
+      "python_lines": 120,
+      "go_test_file": "internal/adapters/client/vscode/vscode_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_opencode_extra4",
+      "status": "test-migrated",
+      "python_lines": 114,
+      "go_test_file": "internal/adapters/opencode/opencode_extra4_test.go"
+    },
+    {
+      "module": "internal_adapters_windsurf_extra4",
+      "status": "test-migrated",
+      "python_lines": 86,
+      "go_test_file": "internal/adapters/windsurf/windsurf_extra4_test.go"
+    },
+    {
+      "module": "internal_compilation_templatebuilder_extra4",
+      "status": "test-migrated",
+      "python_lines": 113,
+      "go_test_file": "internal/compilation/templatebuilder/templatebuilder_extra4_test.go"
+    },
+    {
+      "module": "internal_core_conflictdetector_extra4",
+      "status": "test-migrated",
+      "python_lines": 121,
+      "go_test_file": "internal/core/conflictdetector/conflictdetector_extra4_test.go"
+    },
+    {
+      "module": "internal_install_cachepin_extra4",
+      "status": "test-migrated",
+      "python_lines": 119,
+      "go_test_file": "internal/install/cachepin/cachepin_extra4_test.go"
+    },
+    {
+      "module": "internal_workflow_wfparser_extra4",
+      "status": "test-migrated",
+      "python_lines": 115,
+      "go_test_file": "internal/workflow/wfparser/wfparser_extra4_test.go"
     }
   ]
 }

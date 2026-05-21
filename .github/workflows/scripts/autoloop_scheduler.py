@@ -385,6 +385,26 @@ def _fetch_issue_programs(repo, github_token):
     return program_files, issue_programs
 
 
+def dedupe_program_files(program_files):
+    """Return program files with first location winning for duplicate names.
+
+    The caller supplies files in precedence order: directory-based programs,
+    then bare markdown programs, then issue-based programs. Keeping the first
+    path preserves the documented "directory-based programs (preferred)"
+    behavior while still allowing issue metadata to be attached separately.
+    """
+    seen = set()
+    deduped = []
+    for pf in program_files:
+        name = get_program_name(pf)
+        if name in seen:
+            print(f"  Skipping duplicate program definition for {name} at {pf}")
+            continue
+        seen.add(name)
+        deduped.append(pf)
+    return deduped
+
+
 def _parse_target_metric_from_file(path):
     """Re-parse a program file to extract its ``target-metric``, if any."""
     try:
@@ -591,6 +611,7 @@ def main():
     program_files.extend(_scan_bare_programs())
     issue_files, issue_programs = _fetch_issue_programs(repo, github_token)
     program_files.extend(issue_files)
+    program_files = dedupe_program_files(program_files)
 
     if not program_files:
         # Fallback to single-file locations

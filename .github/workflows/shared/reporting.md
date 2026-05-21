@@ -13,13 +13,13 @@ When analyzing workflow run logs or reporting information from GitHub Actions ru
 **Format:**
 
 `````markdown
-[§12345](https://github.com/owner/repo/actions/runs/12345)
+[#12345](https://github.com/owner/repo/actions/runs/12345)
 `````
 
 **Example:**
 
 `````markdown
-Analysis based on [§456789](https://github.com/github/gh-aw/actions/runs/456789)
+Analysis based on [#456789](https://github.com/github/gh-aw/actions/runs/456789)
 `````
 
 ### 2. Document References for Workflow Runs
@@ -32,9 +32,9 @@ When your analysis is based on information mined from one or more workflow runs,
 ---
 
 **References:**
-- [§12345](https://github.com/owner/repo/actions/runs/12345)
-- [§12346](https://github.com/owner/repo/actions/runs/12346)
-- [§12347](https://github.com/owner/repo/actions/runs/12347)
+- [#12345](https://github.com/owner/repo/actions/runs/12345)
+- [#12346](https://github.com/owner/repo/actions/runs/12346)
+- [#12347](https://github.com/owner/repo/actions/runs/12347)
 `````
 
 **Guidelines:**

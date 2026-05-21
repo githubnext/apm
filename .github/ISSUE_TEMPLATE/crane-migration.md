@@ -28,8 +28,8 @@ metric_direction: higher
 - **Language**: REPLACE (e.g. Python 3.11)
 - **Runtime**: REPLACE (e.g. CPython)
 - **Paths**:
-  - `REPLACE/path/to/source` — (what lives here)
-  - `REPLACE/path/to/source-tests` — existing test suite
+  - `REPLACE/path/to/source` -- (what lives here)
+  - `REPLACE/path/to/source-tests` -- existing test suite
 
 ## Target
 
@@ -38,14 +38,14 @@ metric_direction: higher
 - **Languages**: REPLACE (e.g. TypeScript, Go)
 - **Runtime**: REPLACE (e.g. Node 22 / Bun 1.x)
 - **Paths**:
-  - `REPLACE/path/to/target` — (what should live here)
+  - `REPLACE/path/to/target` -- (what should live here)
 - **Bridge** *(if polyglot)*: REPLACE (e.g. "Go core compiled to WASM, called from TypeScript through a thin wrapper")
 
 ## Strategy
 
 <!-- Choose one and justify, or leave as `auto` in the frontmatter and let Crane decide on its first iteration. -->
 
-REPLACE — explain why this strategy fits.
+REPLACE -- explain why this strategy fits.
 
 - `in-place` (strangler-fig): system stays live throughout. Each milestone ports one unit and re-routes callers. Preferred for production code or anything with external consumers.
 - `greenfield`: target built in parallel; cutover after parity is total. Best for small, self-contained sources.
@@ -53,13 +53,13 @@ REPLACE — explain why this strategy fits.
 
 ## Verification
 
-<!-- A command that prints JSON containing `migration_score` (0.0–1.0). Recommended: migration_score = correctness_gate × progress -->
+<!-- A command that prints JSON containing `migration_score` (0.0-1.0). Recommended: migration_score = correctness_gate x progress -->
 
 ```bash
 REPLACE_WITH_YOUR_VERIFICATION_COMMAND
 ```
 
-The metric is `migration_score` (0.0–1.0). **Higher is better.** Optional companion fields: `progress`, `parity_passing`, `parity_total`, `source_tests_passing`, `target_tests_passing`, `perf_ratio`.
+The metric is `migration_score` (0.0-1.0). **Higher is better.** Optional companion fields: `progress`, `parity_passing`, `parity_total`, `source_tests_passing`, `target_tests_passing`, `perf_ratio`.
 
 ## Out of scope
 

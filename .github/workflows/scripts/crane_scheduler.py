@@ -69,9 +69,9 @@ STATE_FILE_MAX_BYTES = 40960
 
 
 def parse_machine_state(content):
-    """Parse the ⚙️ Machine State table from a state file. Returns a dict."""
+    """Parse the [*] Machine State table from a state file. Returns a dict."""
     state = {}
-    m = re.search(r"## ⚙️ Machine State.*?\n(.*?)(?=\n## |\Z)", content, re.DOTALL)
+    m = re.search(r"## [*] Machine State.*?\n(.*?)(?=\n## |\Z)", content, re.DOTALL)
     if not m:
         return state
     section = m.group(0)
@@ -81,7 +81,7 @@ def parse_machine_state(content):
         if raw_key.lower() in ("field", "---", ":---", ":---:", "---:"):
             continue
         key = raw_key.lower().replace(" ", "_")
-        val = None if raw_val in ("—", "-", "") else raw_val
+        val = None if raw_val in ("--", "-", "") else raw_val
         state[key] = val
     # Coerce types
     for int_field in ("iteration_count", "consecutive_errors"):
@@ -257,7 +257,7 @@ def _bootstrap_template_if_missing():
     if os.path.isdir(MIGRATIONS_DIR):
         return
     os.makedirs(MIGRATIONS_DIR, exist_ok=True)
-    bt = chr(96)  # backtick — keep gh-aw compiler happy if this ever gets inlined
+    bt = chr(96)  # backtick -- keep gh-aw compiler happy if this ever gets inlined
     template = "\n".join([
         "<!-- CRANE:UNCONFIGURED -->",
         "<!-- Remove the line above once you have filled in your migration. -->",
@@ -309,7 +309,7 @@ def _bootstrap_template_if_missing():
     ])
     with open(TEMPLATE_FILE, "w") as f:
         f.write(template)
-    # Leave the template unstaged — the agent will create a draft PR with it
+    # Leave the template unstaged -- the agent will create a draft PR with it
     print("BOOTSTRAPPED: created {} locally (agent will create a draft PR)".format(TEMPLATE_FILE))
 
 

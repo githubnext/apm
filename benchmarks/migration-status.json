@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 973602,
+  "migrated_python_lines": 974639,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -20971,6 +20971,76 @@
     {
       "module": "core-targetdetection-extra3",
       "python_lines": 59,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-helpers",
+      "module": "internal/utils/helpers",
+      "python_lines": 129,
+      "go_test_lines": 129,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-sha",
+      "module": "internal/utils/sha",
+      "python_lines": 87,
+      "go_test_lines": 87,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-version",
+      "module": "internal/version",
+      "python_lines": 85,
+      "go_test_lines": 85,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-normalization",
+      "module": "internal/utils/normalization",
+      "python_lines": 105,
+      "go_test_lines": 105,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-paths",
+      "module": "internal/utils/paths",
+      "python_lines": 64,
+      "go_test_lines": 64,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-yamlio",
+      "module": "internal/utils/yamlio",
+      "python_lines": 112,
+      "go_test_lines": 112,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-guards",
+      "module": "internal/utils/guards",
+      "python_lines": 121,
+      "go_test_lines": 121,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-discovery",
+      "module": "internal/workflow/discovery",
+      "python_lines": 101,
+      "go_test_lines": 101,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-runner",
+      "module": "internal/workflow/runner",
+      "python_lines": 116,
+      "go_test_lines": 116,
+      "status": "test-migrated"
+    },
+    {
+      "name": "test-extra3-wfparser",
+      "module": "internal/workflow/wfparser",
+      "python_lines": 117,
+      "go_test_lines": 117,
       "status": "test-migrated"
     }
   ]

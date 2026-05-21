@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-21T05:10:00Z |
-| Iteration Count | 170 |
-| Best Metric | 1115.07 |
+| Last Run | 2026-05-21T06:30:00Z |
+| Iteration Count | 171 |
+| Best Metric | 1116.24 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -23,7 +23,7 @@
 | Completed | false |
 | Completed Reason | — |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -76,6 +76,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 171 -- 2026-05-21 06:30 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26209497561)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra4_test.go for 10 command/utils packages (pack, policy, cache, install, outdated, compile, mcp, configcmd, normalization, helpers) with 1022 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1116.24% (previous best: 1115.07%, delta: +1.17pp)
+- **Commit**: 63389d0e
+- **Notes**: Added extra4_test.go covering struct fields, zero values, edge cases, and scenario variants. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 170 -- 2026-05-21 05:10 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26206369390)
 

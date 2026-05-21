@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 978115,
+  "migrated_python_lines": 978952,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21272,6 +21272,56 @@
       "module": "internal/utils/helpers",
       "status": "test-migrated",
       "python_lines": 102
+    },
+    {
+      "module": "go-test:cache/cachepaths-extra4",
+      "status": "test-migrated",
+      "python_lines": 96
+    },
+    {
+      "module": "go-test:cache/urlnormalize-extra4",
+      "status": "test-migrated",
+      "python_lines": 85
+    },
+    {
+      "module": "go-test:cache/locking-extra4",
+      "status": "test-migrated",
+      "python_lines": 73
+    },
+    {
+      "module": "go-test:cache/integrity-extra4",
+      "status": "test-migrated",
+      "python_lines": 80
+    },
+    {
+      "module": "go-test:compilation/buildid-extra4",
+      "status": "test-migrated",
+      "python_lines": 86
+    },
+    {
+      "module": "go-test:compilation/compilationconst-extra4",
+      "status": "test-migrated",
+      "python_lines": 74
+    },
+    {
+      "module": "go-test:compilation/constitution-extra4",
+      "status": "test-migrated",
+      "python_lines": 105
+    },
+    {
+      "module": "go-test:constants-extra4",
+      "status": "test-migrated",
+      "python_lines": 92
+    },
+    {
+      "module": "go-test:version-extra4",
+      "status": "test-migrated",
+      "python_lines": 69
+    },
+    {
+      "module": "go-test:core/apmyml-extra4",
+      "status": "test-migrated",
+      "python_lines": 77
     }
   ]
 }

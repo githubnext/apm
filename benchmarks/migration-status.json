@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 978952,
+  "migrated_python_lines": 979819,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21322,6 +21322,76 @@
       "module": "go-test:core/apmyml-extra4",
       "status": "test-migrated",
       "python_lines": 77
+    },
+    {
+      "module": "commands/experimental-test-extra4",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_package": "internal/commands/experimental",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "commands/targetscmd-test-extra4",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "go_package": "internal/commands/targetscmd",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "commands/marketplace-test-extra4",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "go_package": "internal/commands/marketplace",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "primitives/primparser-test-extra4",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "go_package": "internal/primitives/primparser",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "primitives/primmodels-test-extra4",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_package": "internal/primitives/primmodels",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/contextoptimizer-test-extra4",
+      "python_lines": 73,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/contextoptimizer",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/injector-test-extra4",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/injector",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/compilationconst-test-extra4",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/compilationconst",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/agentscompiler-test-extra4",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/agentscompiler",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/constitutionblock-test-extra4",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/constitutionblock",
+      "notes": "extra4_test.go"
     }
   ]
 }

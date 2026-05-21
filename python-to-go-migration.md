@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-21T10:47:43Z |
-| Iteration Count | 174 |
-| Best Metric | 1119.27 |
+| Last Run | 2026-05-21T12:07:00Z |
+| Iteration Count | 175 |
+| Best Metric | 1119.98 |
 | Target Metric | — |
 | Metric Direction | higher |
 | Branch | `autoloop/python-to-go-migration` |
@@ -77,6 +77,14 @@
 ---
 
 ## 📊 Iteration History
+
+### Iteration 175 -- 2026-05-21 12:07 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26224836864)
+
+- **Status**: ✅ Accepted
+- **Change**: Created extra4_test.go for 10 packages (helptext, intutils, gitutils, inittemplate, apmpackage, gitstderr, registry, githubhost, installtui, installphase) with 618 new test lines; registered 10 new test-migrated entries
+- **Metric**: 1119.98% (previous best: 1119.27%, delta: +0.71pp)
+- **Commit**: 04b19320
+- **Notes**: Added extra4_test.go covering edge cases, round-trips, empty inputs, and struct field validation. All 10 new files pass go test and go build ./... is clean.
 
 ### Iteration 174 -- 2026-05-21 10:47 UTC -- [Run](https://github.com/githubnext/apm/actions/runs/26221246430)
 

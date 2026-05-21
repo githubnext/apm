@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 975225,
+  "migrated_python_lines": 976135,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21102,6 +21102,66 @@
       "python_lines": 48,
       "status": "test-migrated",
       "file": "internal/core/scriptrunner/scriptrunner_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/apmresolver/resolver_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 79,
+      "go_test_file": "internal/deps/apmresolver/resolver_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/lockfile/lockfile_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 110,
+      "go_test_file": "internal/deps/lockfile/lockfile_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/gitauthenv/gitauthenv_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 88,
+      "go_test_file": "internal/deps/gitauthenv/gitauthenv_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/gitremoteops/gitremoteops_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 81,
+      "go_test_file": "internal/deps/gitremoteops/gitremoteops_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/aggregator/aggregator_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 102,
+      "go_test_file": "internal/deps/aggregator/aggregator_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/packagevalidator/packagevalidator_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 101,
+      "go_test_file": "internal/deps/packagevalidator/packagevalidator_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/sharedclonecache/sharedclonecache_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 90,
+      "go_test_file": "internal/deps/sharedclonecache/sharedclonecache_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/hostbackends/hostbackends_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 69,
+      "go_test_file": "internal/deps/hostbackends/hostbackends_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/cloneengine/cloneengine_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 88,
+      "go_test_file": "internal/deps/cloneengine/cloneengine_extra4_test.go"
+    },
+    {
+      "module": "internal/deps/downloadstrategies/strategies_extra4_test.go",
+      "status": "test-migrated",
+      "python_lines": 102,
+      "go_test_file": "internal/deps/downloadstrategies/strategies_extra4_test.go"
     }
   ]
 }

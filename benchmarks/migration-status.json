@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 976135,
+  "migrated_python_lines": 977095,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21162,6 +21162,56 @@
       "status": "test-migrated",
       "python_lines": 102,
       "go_test_file": "internal/deps/downloadstrategies/strategies_extra4_test.go"
+    },
+    {
+      "name": "internal/deps/pluginparser/pluginparser_extra4_test.go",
+      "python_lines": 169,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/deps/depgraph/depgraph_extra4_test.go",
+      "python_lines": 100,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/deps/installedpkg/installedpkg_extra4_test.go",
+      "python_lines": 80,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/deps/githubdownloader/downloader_extra4_test.go",
+      "python_lines": 101,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/deps/gitrefresolver/gitrefresolver_extra4_test.go",
+      "python_lines": 100,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/commands/deps/deps_extra4_test.go",
+      "python_lines": 87,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/commands/listcmd/listcmd_extra4_test.go",
+      "python_lines": 70,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/commands/view/view_extra4_test.go",
+      "python_lines": 80,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/commands/audit/audit_extra4_test.go",
+      "python_lines": 86,
+      "status": "test-migrated"
+    },
+    {
+      "name": "internal/commands/update/update_extra4_test.go",
+      "python_lines": 87,
+      "status": "test-migrated"
     }
   ]
 }

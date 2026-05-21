@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 977095,
+  "migrated_python_lines": 981390,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21212,6 +21212,306 @@
       "name": "internal/commands/update/update_extra4_test.go",
       "python_lines": 87,
       "status": "test-migrated"
+    },
+    {
+      "name": "pack-commands-extra4",
+      "module": "internal/commands/pack",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "policy-commands-extra4",
+      "module": "internal/commands/policy",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "cache-commands-extra4",
+      "module": "internal/commands/cache",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "install-commands-extra4",
+      "module": "internal/commands/install",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "outdated-commands-extra4",
+      "module": "internal/commands/outdated",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "compile-commands-extra4",
+      "module": "internal/commands/compile",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "mcp-commands-extra4",
+      "module": "internal/commands/mcp",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "configcmd-commands-extra4",
+      "module": "internal/commands/configcmd",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "normalization-utils-extra4",
+      "module": "internal/utils/normalization",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "name": "helpers-utils-extra4",
+      "module": "internal/utils/helpers",
+      "status": "test-migrated",
+      "python_lines": 102
+    },
+    {
+      "module": "go-test:cache/cachepaths-extra4",
+      "status": "test-migrated",
+      "python_lines": 96
+    },
+    {
+      "module": "go-test:cache/urlnormalize-extra4",
+      "status": "test-migrated",
+      "python_lines": 85
+    },
+    {
+      "module": "go-test:cache/locking-extra4",
+      "status": "test-migrated",
+      "python_lines": 73
+    },
+    {
+      "module": "go-test:cache/integrity-extra4",
+      "status": "test-migrated",
+      "python_lines": 80
+    },
+    {
+      "module": "go-test:compilation/buildid-extra4",
+      "status": "test-migrated",
+      "python_lines": 86
+    },
+    {
+      "module": "go-test:compilation/compilationconst-extra4",
+      "status": "test-migrated",
+      "python_lines": 74
+    },
+    {
+      "module": "go-test:compilation/constitution-extra4",
+      "status": "test-migrated",
+      "python_lines": 105
+    },
+    {
+      "module": "go-test:constants-extra4",
+      "status": "test-migrated",
+      "python_lines": 92
+    },
+    {
+      "module": "go-test:version-extra4",
+      "status": "test-migrated",
+      "python_lines": 69
+    },
+    {
+      "module": "go-test:core/apmyml-extra4",
+      "status": "test-migrated",
+      "python_lines": 77
+    },
+    {
+      "module": "commands/experimental-test-extra4",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_package": "internal/commands/experimental",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "commands/targetscmd-test-extra4",
+      "python_lines": 92,
+      "status": "test-migrated",
+      "go_package": "internal/commands/targetscmd",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "commands/marketplace-test-extra4",
+      "python_lines": 78,
+      "status": "test-migrated",
+      "go_package": "internal/commands/marketplace",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "primitives/primparser-test-extra4",
+      "python_lines": 122,
+      "status": "test-migrated",
+      "go_package": "internal/primitives/primparser",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "primitives/primmodels-test-extra4",
+      "python_lines": 80,
+      "status": "test-migrated",
+      "go_package": "internal/primitives/primmodels",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/contextoptimizer-test-extra4",
+      "python_lines": 73,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/contextoptimizer",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/injector-test-extra4",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/injector",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/compilationconst-test-extra4",
+      "python_lines": 81,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/compilationconst",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/agentscompiler-test-extra4",
+      "python_lines": 72,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/agentscompiler",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "compilation/constitutionblock-test-extra4",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "go_package": "internal/compilation/constitutionblock",
+      "notes": "extra4_test.go"
+    },
+    {
+      "module": "go-test-extra4-base",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_lines": 88
+    },
+    {
+      "module": "go-test-extra4-claude",
+      "python_lines": 98,
+      "status": "test-migrated",
+      "go_test_lines": 98
+    },
+    {
+      "module": "go-test-extra4-packagemanager",
+      "python_lines": 106,
+      "status": "test-migrated",
+      "go_test_lines": 106
+    },
+    {
+      "module": "go-test-extra4-gitcache",
+      "python_lines": 97,
+      "status": "test-migrated",
+      "go_test_lines": 97
+    },
+    {
+      "module": "go-test-extra4-httpcache",
+      "python_lines": 104,
+      "status": "test-migrated",
+      "go_test_lines": 104
+    },
+    {
+      "module": "go-test-extra4-agentformatter",
+      "python_lines": 88,
+      "status": "test-migrated",
+      "go_test_lines": 88
+    },
+    {
+      "module": "go-test-extra4-outputwriter",
+      "python_lines": 99,
+      "status": "test-migrated",
+      "go_test_lines": 99
+    },
+    {
+      "module": "go-test-extra4-auth",
+      "python_lines": 85,
+      "status": "test-migrated",
+      "go_test_lines": 85
+    },
+    {
+      "module": "go-test-extra4-commandlogger",
+      "python_lines": 79,
+      "status": "test-migrated",
+      "go_test_lines": 79
+    },
+    {
+      "module": "go-test-extra4-yamlio",
+      "python_lines": 109,
+      "status": "test-migrated",
+      "go_test_lines": 109
+    },
+    {
+      "module": "internal_policy_helptext_helptext_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/policy/helptext/helptext_extra4_test.go"
+    },
+    {
+      "module": "internal_integration_intutils_intutils_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/integration/intutils/intutils_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_gitutils_gitutils_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/gitutils/gitutils_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_inittemplate_inittemplate_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/inittemplate/inittemplate_extra4_test.go"
+    },
+    {
+      "module": "internal_models_apmpackage_apmpackage_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/models/apmpackage/apmpackage_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_gitstderr_gitstderr_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/gitstderr/gitstderr_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_registry_registry_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/registry/registry_extra4_test.go"
+    },
+    {
+      "module": "internal_utils_githubhost_githubhost_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/utils/githubhost/githubhost_extra4_test.go"
+    },
+    {
+      "module": "internal_utils_installtui_installtui_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/utils/installtui/installtui_extra4_test.go"
+    },
+    {
+      "module": "internal_install_phases_installphase_installphase_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/install/phases/installphase/installphase_extra4_test.go"
     }
   ]
 }

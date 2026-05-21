@@ -1,0 +1,5 @@
+name: "CodeQL configuration"
+
+paths-ignore:
+  # Auto-generated lock files from gh-aw compile
+  - ".github/workflows/*.lock.yml"

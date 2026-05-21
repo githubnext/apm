@@ -1,6 +1,6 @@
 {
   "original_python_lines": 87626,
-  "migrated_python_lines": 980772,
+  "migrated_python_lines": 981390,
   "migrated_modules": [
     {
       "module": "deps/apm_resolver",
@@ -21452,6 +21452,66 @@
       "python_lines": 109,
       "status": "test-migrated",
       "go_test_lines": 109
+    },
+    {
+      "module": "internal_policy_helptext_helptext_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/policy/helptext/helptext_extra4_test.go"
+    },
+    {
+      "module": "internal_integration_intutils_intutils_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/integration/intutils/intutils_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_gitutils_gitutils_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/gitutils/gitutils_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_inittemplate_inittemplate_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/inittemplate/inittemplate_extra4_test.go"
+    },
+    {
+      "module": "internal_models_apmpackage_apmpackage_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/models/apmpackage/apmpackage_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_gitstderr_gitstderr_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/gitstderr/gitstderr_extra4_test.go"
+    },
+    {
+      "module": "internal_marketplace_registry_registry_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/marketplace/registry/registry_extra4_test.go"
+    },
+    {
+      "module": "internal_utils_githubhost_githubhost_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/utils/githubhost/githubhost_extra4_test.go"
+    },
+    {
+      "module": "internal_utils_installtui_installtui_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/utils/installtui/installtui_extra4_test.go"
+    },
+    {
+      "module": "internal_install_phases_installphase_installphase_extra4_test",
+      "status": "test-migrated",
+      "python_lines": 61,
+      "go_test_file": "internal/install/phases/installphase/installphase_extra4_test.go"
     }
   ]
 }

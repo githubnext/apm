@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-22T07:40:58Z |
-| Iteration Count | 5 |
-| Best Metric | 0.2483 |
+| Last Run | 2026-05-22T13:17:32Z |
+| Iteration Count | 6 |
+| Best Metric | 0.2980 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -97,7 +97,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 2 | Go test/parity harness | Acceptance tests calling Python binary, parity framework | score.go returns valid JSON, parity_total >= 10 | done |
 | 3 | utils/ + constants + config | internal/utils, internal/constants, internal/config | parity tests pass for all util functions | done |
 | 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
-| 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | todo |
+| 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | in-progress |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | todo |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | todo |
 | 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 5 -- deps/**: Port `internal/deps` -- dependency resolution logic with parity tests.
+**Milestone 5 -- deps/ (continued)**: Core data structures ported (DependencyGraph, LockedDependency, InstalledPackage). Next: port plugin_parser.py and lockfile read/write logic (YAML round-trip).
 
 ---
 
@@ -145,6 +145,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 6 -- 2026-05-22T13:17:32Z -- [Run](https://github.com/githubnext/apm/actions/runs/26290002076)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 5 -- deps/ (partial)
+- **Change**: Added internal/deps/graph.go (DependencyNode, CircularRef, ConflictInfo, FlatDependencyMap, DependencyTree, DependencyGraph) and internal/deps/lockfile.go (LockedDependency with to_dict/from_dict parity, InstalledPackage)
+- **Score**: 0.2980 (previous best: 0.2483, delta: +0.0497)
+- **Progress**: 90/302
+- **Commit**: 8355c53
+- **Notes**: 15 new TestParity* tests. All 91 Go tests pass. Ported core dep graph and lockfile types; remaining deps/ work (plugin_parser, YAML lockfile I/O) continues next iteration.
 
 ### Iteration 5 -- 2026-05-22T07:40:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26275008291)
 

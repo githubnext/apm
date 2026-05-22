@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-22T01:23:00Z |
-| Iteration Count | 4 |
-| Best Metric | 0.1622 |
+| Last Run | 2026-05-22T07:40:58Z |
+| Iteration Count | 5 |
+| Best Metric | 0.2483 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -96,7 +96,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 1 | Build scaffolding | go.mod, cmd/apm/main.go stub, CI wiring | `go build ./...` passes, CI green | done |
 | 2 | Go test/parity harness | Acceptance tests calling Python binary, parity framework | score.go returns valid JSON, parity_total >= 10 | done |
 | 3 | utils/ + constants + config | internal/utils, internal/constants, internal/config | parity tests pass for all util functions | done |
-| 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | todo |
+| 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | todo |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | todo |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 4 -- models/ + primitives/**: Port `internal/models`, `internal/primitives` with parity tests for data structures.
+**Milestone 5 -- deps/**: Port `internal/deps` -- dependency resolution logic with parity tests.
 
 ---
 
@@ -145,6 +145,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 5 -- 2026-05-22T07:40:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26275008291)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 4 -- models + primitives
+- **Change**: Added internal/models (InstallResult, PrimitiveCounts, PackageType, PackageContentType, ValidationError, PluginMetadata), internal/models/dependency (GitReferenceType, ResolvedReference, ParseGitReference), internal/primitives (Chatmode, Instruction, Context, Skill, PrimitiveCollection) with parity tests
+- **Score**: 0.2483 (previous best: 0.1622, delta: +0.0861)
+- **Progress**: 75/302
+- **Commit**: e2a10ec
+- **Notes**: 75 parity tests passing. Ported all core data structure types for models and primitives modules. ParseGitReference mirrors Python logic exactly.
 
 ### Iteration 4 -- 2026-05-22T01:23:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26262872727)
 

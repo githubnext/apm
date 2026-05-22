@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-22T13:17:32Z |
-| Iteration Count | 6 |
-| Best Metric | 0.2980 |
+| Last Run | 2026-05-22T19:04:20Z |
+| Iteration Count | 7 |
+| Best Metric | 0.3477 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -97,7 +97,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 2 | Go test/parity harness | Acceptance tests calling Python binary, parity framework | score.go returns valid JSON, parity_total >= 10 | done |
 | 3 | utils/ + constants + config | internal/utils, internal/constants, internal/config | parity tests pass for all util functions | done |
 | 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
-| 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | in-progress |
+| 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | todo |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | todo |
 | 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 5 -- deps/ (continued)**: Core data structures ported (DependencyGraph, LockedDependency, InstalledPackage). Next: port plugin_parser.py and lockfile read/write logic (YAML round-trip).
+**Milestone 6 -- cache/**: Port internal/cache -- HTTP/git caching layer. Start with cache key generation and simple TTL-based lookup (mirrors cache/http_cache.py and bare_cache.py).
 
 ---
 
@@ -145,6 +145,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 7 -- 2026-05-22T19:04:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26306616690)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 5 -- deps/ (completed)
+- **Change**: Added LockFile struct with YAML round-trip (ToYAML/LockFileFromYAML/WriteLockFile/ReadLockFile/IsSemanticallylEquivalent), fixed legacy deployed_skills migration in LockedDependencyFromMap, added plugin_parser.go (ParsePluginManifest, NormalizePluginManifest, IsWithinPlugin, DerivePluginName), added gopkg.in/yaml.v3
+- **Score**: 0.3477 (previous best: 0.2980, delta: +0.0497)
+- **Progress**: 105/302
+- **Commit**: 7d00efe
+- **Notes**: 15 new TestParity* tests. Milestone 5 (deps/) is now done. Next focus: Milestone 6 -- cache/ layer.
 
 ### Iteration 6 -- 2026-05-22T13:17:32Z -- [Run](https://github.com/githubnext/apm/actions/runs/26290002076)
 

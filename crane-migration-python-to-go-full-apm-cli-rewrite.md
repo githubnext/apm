@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-23T07:20:01Z |
-| Iteration Count | 9 |
-| Best Metric | 0.4470 |
+| Last Run | 2026-05-23T12:45:42Z |
+| Iteration Count | 10 |
+| Best Metric | 0.5397 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -99,7 +99,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
-| 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | in-progress |
+| 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
 | 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 7 -- core/ (continued)**: Continue porting internal/core -- next up are the auth resolver (auth.py, token_manager.py) and token_manager utilities.
+**Milestone 8 -- install/ (next)**: Port internal/install -- install pipeline and phases.
 
 ---
 
@@ -128,6 +128,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - score.go counts tests with "Parity" in the test name as parity points. All Go unit tests for ported modules should use TestParity* naming.
 - Iteration 3 parity files (d817cef) were lost from the branch in a merge conflict resolution. Iteration 4 re-established parity + ported utils/constants (49 tests).
 - cache/http_cache.go uses only stdlib (crypto/sha256, encoding/json, os, sync); no external filelock library needed -- in-process sync.Mutex per-shard is sufficient for a single-process binary.
+- Host classification utilities (IsValidFQDN, IsGitHubHostname, etc.) from github_host.py go in internal/utils/githubhost/ -- they are needed by both auth and cache packages so must be a shared utility, not in core.
 
 ---
 
@@ -146,6 +147,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 10 -- 2026-05-23T12:45:42Z -- [Run](https://github.com/githubnext/apm/actions/runs/26333024747)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 7 -- core/ (completed)
+- **Change**: Added internal/utils/githubhost/githubhost.go (IsValidFQDN, DefaultHost, IsAzureDevOpsHostname, IsGitHubHostname, IsGitLabHostname, SupportGHCLIHost, IsADOAuthFailureSignal, BuildAuthorizationHeaderGitEnv, BuildADOBearerGitEnv), internal/core/token_manager.go (GitHubTokenManager, credential resolution), internal/core/auth.go (HostInfo, AuthContext, AuthResolver with ClassifyHost, DetectTokenType, Resolve)
+- **Score**: 0.5397 (previous best: 0.4470, delta: +0.0927)
+- **Progress**: 163/302
+- **Commit**: ca63578
+- **Notes**: 28 new TestParity* tests. All 164 Go tests pass. Milestone 7 done. Next: Milestone 8 -- install/.
 
 ### Iteration 9 -- 2026-05-23T07:20:01Z -- [Run](https://github.com/githubnext/apm/actions/runs/26326750518)
 

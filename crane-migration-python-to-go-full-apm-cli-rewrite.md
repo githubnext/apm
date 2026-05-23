@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-23T01:18:25Z |
-| Iteration Count | 8 |
-| Best Metric | 0.3609 |
+| Last Run | 2026-05-23T07:20:01Z |
+| Iteration Count | 9 |
+| Best Metric | 0.4470 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -99,7 +99,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
-| 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | todo |
+| 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | in-progress |
 | 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 7 -- core/**: Port internal/core -- auth, target detection, orchestration. Start with the auth resolver and host info types (mirrors core/auth.py, core/host_info.py).
+**Milestone 7 -- core/ (continued)**: Continue porting internal/core -- next up are the auth resolver (auth.py, token_manager.py) and token_manager utilities.
 
 ---
 
@@ -146,6 +146,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 9 -- 2026-05-23T07:20:01Z -- [Run](https://github.com/githubnext/apm/actions/runs/26326750518)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 7 -- core/ (partial)
+- **Change**: Added internal/core/errors.go (TargetResolutionError hierarchy + renderers), internal/core/scope.go (InstallScope enum + path helpers), internal/core/target_detection.go (DetectTarget, ShouldCompile*, NormalizeTargetList), internal/core/apm_yml.go (ParseTargetsField)
+- **Score**: 0.4470 (previous best: 0.3609, delta: +0.0861)
+- **Progress**: 135/302
+- **Commit**: 22dc497
+- **Notes**: 26 new TestParity* tests. All 136 Go tests pass. Next: auth.py and token_manager.py for Milestone 7.
 
 ### Iteration 8 -- 2026-05-23T01:18:25Z -- [Run](https://github.com/githubnext/apm/actions/runs/26319562573)
 

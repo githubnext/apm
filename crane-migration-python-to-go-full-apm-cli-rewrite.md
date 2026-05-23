@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-22T19:04:20Z |
-| Iteration Count | 7 |
-| Best Metric | 0.3477 |
+| Last Run | 2026-05-23T01:18:25Z |
+| Iteration Count | 8 |
+| Best Metric | 0.3609 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -98,7 +98,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 3 | utils/ + constants + config | internal/utils, internal/constants, internal/config | parity tests pass for all util functions | done |
 | 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
-| 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | todo |
+| 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | todo |
 | 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 6 -- cache/**: Port internal/cache -- HTTP/git caching layer. Start with cache key generation and simple TTL-based lookup (mirrors cache/http_cache.py and bare_cache.py).
+**Milestone 7 -- core/**: Port internal/core -- auth, target detection, orchestration. Start with the auth resolver and host info types (mirrors core/auth.py, core/host_info.py).
 
 ---
 
@@ -127,6 +127,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - Python binary (uv run apm) is not available in the CI sandbox. Parity tests that require Python must use t.Skip(). Tests not requiring Python count as parity points.
 - score.go counts tests with "Parity" in the test name as parity points. All Go unit tests for ported modules should use TestParity* naming.
 - Iteration 3 parity files (d817cef) were lost from the branch in a merge conflict resolution. Iteration 4 re-established parity + ported utils/constants (49 tests).
+- cache/http_cache.go uses only stdlib (crypto/sha256, encoding/json, os, sync); no external filelock library needed -- in-process sync.Mutex per-shard is sufficient for a single-process binary.
 
 ---
 
@@ -146,6 +147,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
+### Iteration 8 -- 2026-05-23T01:18:25Z -- [Run](https://github.com/githubnext/apm/actions/runs/26319562573)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 6 -- cache/ (completed)
+- **Change**: Added internal/cache/paths.go (GetCacheRoot, GetGitDBPath, GetGitCheckoutsPath, GetHTTPPath, platform-aware cache root), internal/cache/url_normalize.go (NormalizeRepoURL, CacheShardKey, SCP-like regex), internal/cache/integrity.go (VerifyCheckoutSHA, readHeadSHA with worktree/packed-refs support), internal/cache/http_cache.go (HTTPCache with Get/Store/ConditionalHeaders/RefreshExpiry/CleanAll/GetStats, atomic stage-rename, LRU eviction)
+- **Score**: 0.3609 (previous best: 0.3477, delta: +0.0132)
+- **Progress**: 109/302
+- **Commit**: b02edba
+- **Notes**: 4 new parity files, 4 TestParity* test functions across cache submodules. All 110 Go tests pass. Milestone 6 (cache/) done. Next focus: Milestone 7 -- core/ auth and host info types.
+
 ### Iteration 7 -- 2026-05-22T19:04:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26306616690)
 
 - **Status**: [+] Accepted
@@ -162,56 +173,6 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - **Milestone**: Milestone 5 -- deps/ (partial)
 - **Change**: Added internal/deps/graph.go (DependencyNode, CircularRef, ConflictInfo, FlatDependencyMap, DependencyTree, DependencyGraph) and internal/deps/lockfile.go (LockedDependency with to_dict/from_dict parity, InstalledPackage)
 - **Score**: 0.2980 (previous best: 0.2483, delta: +0.0497)
-- **Progress**: 90/302
 - **Commit**: 8355c53
-- **Notes**: 15 new TestParity* tests. All 91 Go tests pass. Ported core dep graph and lockfile types; remaining deps/ work (plugin_parser, YAML lockfile I/O) continues next iteration.
 
-### Iteration 5 -- 2026-05-22T07:40:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26275008291)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 4 -- models + primitives
-- **Change**: Added internal/models (InstallResult, PrimitiveCounts, PackageType, PackageContentType, ValidationError, PluginMetadata), internal/models/dependency (GitReferenceType, ResolvedReference, ParseGitReference), internal/primitives (Chatmode, Instruction, Context, Skill, PrimitiveCollection) with parity tests
-- **Score**: 0.2483 (previous best: 0.1622, delta: +0.0861)
-- **Progress**: 75/302
-- **Commit**: e2a10ec
-- **Notes**: 75 parity tests passing. Ported all core data structure types for models and primitives modules. ParseGitReference mirrors Python logic exactly.
-
-### Iteration 4 -- 2026-05-22T01:23:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26262872727)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 3 -- utils + constants
-- **Change**: Added internal/constants, internal/utils/normalization, internal/utils/sha, internal/utils/paths with parity tests
-- **Score**: 0.1622 (previous best: 0.0430, delta: +0.1192)
-- **Progress**: 49/302
-- **Commit**: 256f9ba
-- **Notes**: 49 parity tests passing. Ported APM file/dir constants, InstallMode, DefaultSkipDirs, BOM/CRLF/BuildID normalization, short SHA formatting, portable_relpath. Previous iteration 3 parity files were lost in branch merge; re-established with larger test suite.
-
-### Iteration 3 -- 2026-05-21T19:08:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26247218124)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 2 -- Go parity test harness
-- **Change**: Added parity.go (ParityResult, ParityScore types), version.go constants, parity_test.go (12 tests)
-- **Score**: 0.0430 (previous best: 0.0033, delta: +0.0397)
-- **Progress**: 13/302
-- **Commit**: d817cef
-- **Notes**: parity_passing=13 exceeds milestone criterion of 10. Python binary not available in sandbox but harness is ready for future use.
-
-### Iteration 2 -- 2026-05-21T16:56:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26240416651)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 1 -- Build scaffolding
-- **Change**: Added go.mod, cmd/apm/main.go stub, cmd/apm/main_test.go smoke test, .crane/scripts/score.go
-- **Score**: 0.0033 (previous best: 0.0, delta: +0.0033)
-- **Progress**: 1/302
-- **Commit**: 63d1cc9
-- **Notes**: go build ./... and go test ./... both pass. First parity point established via smoke test. PR created.
-
-### Iteration 1 -- 2026-05-21T15:05:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26234338023)
-
-- **Status**: [+] Accepted (planning iteration -- no CI gate)
-- **Milestone**: Planning (Iteration 0)
-- **Change**: Created migration plan with 16 milestones, score.go scaffold, directory structure
-- **Score**: 0.0 (previous best: --, delta: +0.0)
-- **Progress**: 0/302
-- **Commit**: 672681d
-- **Notes**: First iteration is pure planning. Inventory complete: 302 Python files, 20 modules. Strategy: greenfield. Next focus: go.mod + build scaffolding.
+### Iters 1-5 -- [+] (score 0.0->0.2483, milestones 0-4 done): Planning; go.mod + score.go + build scaffolding; parity harness; utils/constants (49 tests); models + primitives (75 tests).

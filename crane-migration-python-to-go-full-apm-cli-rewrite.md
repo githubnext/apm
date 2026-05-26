@@ -10,21 +10,21 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-26T22:36:37Z |
-| Iteration Count | 11 |
-| Best Metric | 0.6589 |
+| Last Run | 2026-05-26T22:52:57Z |
+| Iteration Count | 12 |
+| Best Metric | 0.6987 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | -- |
+| PR | #86 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -34,7 +34,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: #83
+**Pull Request**: #86
 **Issue**: #78
 
 ---
@@ -100,7 +100,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
-| 8 | install/ (partial) | internal/install -- errors, plan types | parity tests pass for install errors/plan | in-progress |
+| 8 | install/ (partial) | internal/install -- errors, plan types, context, request | parity tests pass for install errors/plan/context/request | in-progress |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
 | 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 8 -- install/ (in-progress)**: Port remaining install types: context.go, request.go, sources.go and phases.
+**Milestone 8 -- install/ (in-progress)**: Port remaining install types: sources.go (DependencySource ABC + LocalDependencySource, CachedDependencySource, FreshDependencySource) and phases.
 
 ---
 
@@ -148,6 +148,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
+### Iteration 12 -- 2026-05-26T22:52:57Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479708206)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 8 -- install/ (partial)
+- **Change**: Added internal/install/context.go (InstallContext with all pipeline fields, NewInstallContext), internal/install/request.go (InstallRequest with PlanCallback, NewInstallRequest), install_test.go (20 TestParity* tests for context + request)
+- **Score**: 0.6987 (previous best: 0.6589, delta: +0.0398)
+- **Progress**: 211/302
+- **Commit**: fc8f0b4
+- **Notes**: 20 new TestParity* tests for context and request types. All 212 Go tests pass. Next: sources.go (DependencySource ABC and implementations).
+
 ### Iteration 11 -- 2026-05-26T22:36:37Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479056327)
 
 - **Status**: [+] Accepted
@@ -158,52 +168,6 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - **Commit**: 6c0db76
 - **Notes**: 36 new TestParity* tests. All 200 Go tests pass. Previous PR #83 was merged; new PR created.
 
-### Iteration 10 -- 2026-05-23T12:45:42Z -- [Run](https://github.com/githubnext/apm/actions/runs/26333024747)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 7 -- core/ (completed)
-- **Change**: Added internal/utils/githubhost/githubhost.go (IsValidFQDN, DefaultHost, IsAzureDevOpsHostname, IsGitHubHostname, IsGitLabHostname, SupportGHCLIHost, IsADOAuthFailureSignal, BuildAuthorizationHeaderGitEnv, BuildADOBearerGitEnv), internal/core/token_manager.go (GitHubTokenManager, credential resolution), internal/core/auth.go (HostInfo, AuthContext, AuthResolver with ClassifyHost, DetectTokenType, Resolve)
-- **Score**: 0.5397 (previous best: 0.4470, delta: +0.0927)
-- **Progress**: 163/302
-- **Commit**: ca63578
-- **Notes**: 28 new TestParity* tests. All 164 Go tests pass. Milestone 7 done. Next: Milestone 8 -- install/.
-
-### Iteration 9 -- 2026-05-23T07:20:01Z -- [Run](https://github.com/githubnext/apm/actions/runs/26326750518)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 7 -- core/ (partial)
-- **Change**: Added internal/core/errors.go (TargetResolutionError hierarchy + renderers), internal/core/scope.go (InstallScope enum + path helpers), internal/core/target_detection.go (DetectTarget, ShouldCompile*, NormalizeTargetList), internal/core/apm_yml.go (ParseTargetsField)
-- **Score**: 0.4470 (previous best: 0.3609, delta: +0.0861)
-- **Progress**: 135/302
-- **Commit**: 22dc497
-- **Notes**: 26 new TestParity* tests. All 136 Go tests pass. Next: auth.py and token_manager.py for Milestone 7.
-
-### Iteration 8 -- 2026-05-23T01:18:25Z -- [Run](https://github.com/githubnext/apm/actions/runs/26319562573)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 6 -- cache/ (completed)
-- **Change**: Added internal/cache/paths.go (GetCacheRoot, GetGitDBPath, GetGitCheckoutsPath, GetHTTPPath, platform-aware cache root), internal/cache/url_normalize.go (NormalizeRepoURL, CacheShardKey, SCP-like regex), internal/cache/integrity.go (VerifyCheckoutSHA, readHeadSHA with worktree/packed-refs support), internal/cache/http_cache.go (HTTPCache with Get/Store/ConditionalHeaders/RefreshExpiry/CleanAll/GetStats, atomic stage-rename, LRU eviction)
-- **Score**: 0.3609 (previous best: 0.3477, delta: +0.0132)
-- **Progress**: 109/302
-- **Commit**: b02edba
-- **Notes**: 4 new parity files, 4 TestParity* test functions across cache submodules. All 110 Go tests pass. Milestone 6 (cache/) done. Next focus: Milestone 7 -- core/ auth and host info types.
-
-### Iteration 7 -- 2026-05-22T19:04:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26306616690)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 5 -- deps/ (completed)
-- **Change**: Added LockFile struct with YAML round-trip (ToYAML/LockFileFromYAML/WriteLockFile/ReadLockFile/IsSemanticallylEquivalent), fixed legacy deployed_skills migration in LockedDependencyFromMap, added plugin_parser.go (ParsePluginManifest, NormalizePluginManifest, IsWithinPlugin, DerivePluginName), added gopkg.in/yaml.v3
-- **Score**: 0.3477 (previous best: 0.2980, delta: +0.0497)
-- **Progress**: 105/302
-- **Commit**: 7d00efe
-- **Notes**: 15 new TestParity* tests. Milestone 5 (deps/) is now done. Next focus: Milestone 6 -- cache/ layer.
-
-### Iteration 6 -- 2026-05-22T13:17:32Z -- [Run](https://github.com/githubnext/apm/actions/runs/26290002076)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 5 -- deps/ (partial)
-- **Change**: Added internal/deps/graph.go (DependencyNode, CircularRef, ConflictInfo, FlatDependencyMap, DependencyTree, DependencyGraph) and internal/deps/lockfile.go (LockedDependency with to_dict/from_dict parity, InstalledPackage)
-- **Score**: 0.2980 (previous best: 0.2483, delta: +0.0497)
-- **Commit**: 8355c53
+### Iters 6-10 -- [+] (score 0.2980->0.5397, milestones 5-7 done): deps/ graph+lockfile+plugin_parser; cache/ paths+url_normalize+integrity+http_cache; core/ errors+scope+target_detection+apm_yml+auth+token_manager+githubhost utils.
 
 ### Iters 1-5 -- [+] (score 0.0->0.2483, milestones 0-4 done): Planning; go.mod + score.go + build scaffolding; parity harness; utils/constants (49 tests); models + primitives (75 tests).

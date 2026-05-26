@@ -10,21 +10,21 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-23T12:45:42Z |
-| Iteration Count | 10 |
-| Best Metric | 0.5397 |
+| Last Run | 2026-05-26T22:36:37Z |
+| Iteration Count | 11 |
+| Best Metric | 0.6589 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #83 |
+| PR | -- |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -100,7 +100,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
-| 8 | install/ | internal/install -- install pipeline and phases | parity tests pass for install | todo |
+| 8 | install/ (partial) | internal/install -- errors, plan types | parity tests pass for install errors/plan | in-progress |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
 | 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | todo |
@@ -114,7 +114,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 8 -- install/ (next)**: Port internal/install -- install pipeline and phases.
+**Milestone 8 -- install/ (in-progress)**: Port remaining install types: context.go, request.go, sources.go and phases.
 
 ---
 
@@ -147,6 +147,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 11 -- 2026-05-26T22:36:37Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479056327)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 8 -- install/ (partial)
+- **Change**: Added internal/install/errors.go (DirectDependencyError, AuthenticationError, FrozenInstallError, PolicyViolationError), internal/install/plan.go (PlanEntry, UpdatePlan, BuildUpdatePlan, LockfileSatisfiesManifest, RenderPlanText), internal/install/install_test.go (36 TestParity* tests)
+- **Score**: 0.6589 (previous best: 0.5397, delta: +0.1192)
+- **Progress**: 199/302
+- **Commit**: 6c0db76
+- **Notes**: 36 new TestParity* tests. All 200 Go tests pass. Previous PR #83 was merged; new PR created.
 
 ### Iteration 10 -- 2026-05-23T12:45:42Z -- [Run](https://github.com/githubnext/apm/actions/runs/26333024747)
 

@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-26T22:52:57Z |
-| Iteration Count | 12 |
-| Best Metric | 0.6987 |
+| Last Run | 2026-05-26T23:28:27Z |
+| Iteration Count | 13 |
+| Best Metric | 0.7483 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -100,7 +100,8 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
 | 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
-| 8 | install/ (partial) | internal/install -- errors, plan types, context, request | parity tests pass for install errors/plan/context/request | in-progress |
+| 8 | install/ (partial) | internal/install -- errors, plan types, context, request | parity tests pass for install errors/plan/context/request | done |
+| 8b | install/ cache_pin + sources | internal/install/cache_pin.go, sources.go types | parity tests pass for cache pin and source types | done |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
 | 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | todo |
@@ -114,7 +115,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 8 -- install/ (in-progress)**: Port remaining install types: sources.go (DependencySource ABC + LocalDependencySource, CachedDependencySource, FreshDependencySource) and phases.
+**Milestone 9 -- commands/ (next)**: Port cobra command stubs for all top-level apm commands (install, unpack, audit, compile, etc.) with parity tests verifying command names and flags.
 
 ---
 
@@ -147,6 +148,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 13 -- 2026-05-26T23:28:27Z -- [Run](https://github.com/githubnext/apm/actions/runs/26481040888)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 8b -- install/ cache_pin + sources
+- **Change**: Added internal/install/cache_pin.go (WriteMarker, VerifyMarker, CachePinError, constants) and internal/install/sources.go (Materialization, DependencySource interface, SourceKind, IntegrateErrorPrefix constants); 15 new TestParity* tests
+- **Score**: 0.7483 (previous best: 0.6987, delta: +0.0496)
+- **Progress**: 226/302
+- **Commit**: f2140a2
+- **Notes**: cache_pin.go is pure Go (no external deps); sources.go provides the strategy interface. Next: Milestone 9 -- commands/ cobra stubs.
 
 ### Iteration 12 -- 2026-05-26T22:52:57Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479708206)
 

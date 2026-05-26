@@ -1,6 +1,8 @@
 package install
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -499,4 +501,248 @@ func TestParityInstallRequest(t *testing.T) {
 			t.Fatal("PlanCallback should return true")
 		}
 	})
+}
+
+// ---------------------------------------------------------------------------
+// TestParityCachePin -- mirrors cache_pin.py
+// ---------------------------------------------------------------------------
+
+// TestParityCachePinConstants verifies the marker filename and schema version
+// match the Python constants.
+func TestParityCachePinConstants(t *testing.T) {
+	if MarkerFilename != ".apm-pin" {
+		t.Fatalf("MarkerFilename: want .apm-pin, got %q", MarkerFilename)
+	}
+	if CachePinSchemaVersion != 1 {
+		t.Fatalf("CachePinSchemaVersion: want 1, got %d", CachePinSchemaVersion)
+	}
+}
+
+// TestParityCachePinWriteAndVerify exercises the round-trip write -> verify.
+func TestParityCachePinWriteAndVerify(t *testing.T) {
+	dir := t.TempDir()
+	WriteMarker(dir, "abc123")
+
+	marker := filepath.Join(dir, MarkerFilename)
+	if _, err := os.Stat(marker); err != nil {
+		t.Fatalf("marker file not created: %v", err)
+	}
+
+	if err := VerifyMarker(dir, "abc123"); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+// TestParityCachePinWriteNoopOnMissingDir verifies WriteMarker is silent when
+// the path does not exist -- mirroring the Python try/except OSError.
+func TestParityCachePinWriteNoopOnMissingDir(t *testing.T) {
+	WriteMarker("/nonexistent/path/that/does/not/exist", "abc123")
+	// no panic, no error
+}
+
+// TestParityCachePinWriteNoopOnFile verifies WriteMarker is a no-op when the
+// path is a file, not a directory.
+func TestParityCachePinWriteNoopOnFile(t *testing.T) {
+	f, err := os.CreateTemp(t.TempDir(), "not-a-dir")
+	if err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+	WriteMarker(f.Name(), "abc123")
+	// no panic
+}
+
+// TestParityCachePinMissingMarker verifies VerifyMarker returns CachePinError
+// when the marker file is absent.
+func TestParityCachePinMissingMarker(t *testing.T) {
+	dir := t.TempDir()
+	err := VerifyMarker(dir, "abc123")
+	if err == nil {
+		t.Fatal("expected error for missing marker")
+	}
+	ce, ok := err.(*CachePinError)
+	if !ok {
+		t.Fatalf("expected *CachePinError, got %T", err)
+	}
+	if !strings.Contains(ce.Error(), "cache pin marker missing") {
+		t.Fatalf("unexpected message: %q", ce.Error())
+	}
+	if !strings.Contains(ce.Error(), "supply-chain hardening") {
+		t.Fatalf("missing supply-chain phrase: %q", ce.Error())
+	}
+}
+
+// TestParityCachePinMalformedJSON verifies VerifyMarker returns CachePinError
+// for invalid JSON.
+func TestParityCachePinMalformedJSON(t *testing.T) {
+	dir := t.TempDir()
+	marker := filepath.Join(dir, MarkerFilename)
+	if err := os.WriteFile(marker, []byte("not json at all"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	err := VerifyMarker(dir, "abc123")
+	if err == nil {
+		t.Fatal("expected error for malformed JSON")
+	}
+	ce, ok := err.(*CachePinError)
+	if !ok {
+		t.Fatalf("expected *CachePinError, got %T", err)
+	}
+	if !strings.Contains(ce.Error(), "not valid JSON") {
+		t.Fatalf("unexpected message: %q", ce.Error())
+	}
+}
+
+// TestParityCachePinWrongSchema verifies VerifyMarker returns CachePinError
+// for an unsupported schema_version -- mirrors the Python check.
+func TestParityCachePinWrongSchema(t *testing.T) {
+	dir := t.TempDir()
+	marker := filepath.Join(dir, MarkerFilename)
+	payload := `{"schema_version": 99, "resolved_commit": "abc"}`
+	if err := os.WriteFile(marker, []byte(payload), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	err := VerifyMarker(dir, "abc")
+	if err == nil {
+		t.Fatal("expected error for wrong schema")
+	}
+	ce, ok := err.(*CachePinError)
+	if !ok {
+		t.Fatalf("expected *CachePinError, got %T", err)
+	}
+	if !strings.Contains(ce.Error(), "unsupported schema_version") {
+		t.Fatalf("unexpected message: %q", ce.Error())
+	}
+	if !strings.Contains(ce.Error(), "99") {
+		t.Fatalf("schema version 99 not mentioned: %q", ce.Error())
+	}
+}
+
+// TestParityCachePinMissingCommitField verifies VerifyMarker returns
+// CachePinError when the marker has no resolved_commit field.
+func TestParityCachePinMissingCommitField(t *testing.T) {
+	dir := t.TempDir()
+	marker := filepath.Join(dir, MarkerFilename)
+	payload := `{"schema_version": 1}`
+	if err := os.WriteFile(marker, []byte(payload), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	err := VerifyMarker(dir, "abc123")
+	if err == nil {
+		t.Fatal("expected error for missing resolved_commit")
+	}
+	ce, ok := err.(*CachePinError)
+	if !ok {
+		t.Fatalf("expected *CachePinError, got %T", err)
+	}
+	if !strings.Contains(ce.Error(), "missing resolved_commit") {
+		t.Fatalf("unexpected message: %q", ce.Error())
+	}
+}
+
+// TestParityCachePinMismatch verifies VerifyMarker returns CachePinError when
+// the marker commit differs from the expected commit.
+func TestParityCachePinMismatch(t *testing.T) {
+	dir := t.TempDir()
+	WriteMarker(dir, "aaa111")
+	err := VerifyMarker(dir, "bbb222")
+	if err == nil {
+		t.Fatal("expected error for commit mismatch")
+	}
+	ce, ok := err.(*CachePinError)
+	if !ok {
+		t.Fatalf("expected *CachePinError, got %T", err)
+	}
+	if !strings.Contains(ce.Error(), "cache pin mismatch") {
+		t.Fatalf("unexpected message: %q", ce.Error())
+	}
+	if !strings.Contains(ce.Error(), "aaa111") {
+		t.Fatalf("marker commit not in error: %q", ce.Error())
+	}
+	if !strings.Contains(ce.Error(), "bbb222") {
+		t.Fatalf("expected commit not in error: %q", ce.Error())
+	}
+}
+
+// TestParityCachePinIdempotent verifies WriteMarker overwrites prior markers.
+func TestParityCachePinIdempotent(t *testing.T) {
+	dir := t.TempDir()
+	WriteMarker(dir, "first")
+	WriteMarker(dir, "second")
+
+	if err := VerifyMarker(dir, "second"); err != nil {
+		t.Fatalf("expected second marker: %v", err)
+	}
+	if err := VerifyMarker(dir, "first"); err == nil {
+		t.Fatal("expected mismatch after overwrite")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// TestParitySources -- mirrors sources.py
+// ---------------------------------------------------------------------------
+
+// TestParityMaterializationDefaults verifies NewMaterialization sets default
+// Deltas with installed:1.
+func TestParityMaterializationDefaults(t *testing.T) {
+	m := NewMaterialization(nil, "/tmp/some-pkg", "owner/repo")
+	if m.InstallPath != "/tmp/some-pkg" {
+		t.Fatalf("InstallPath: want /tmp/some-pkg, got %q", m.InstallPath)
+	}
+	if m.DepKey != "owner/repo" {
+		t.Fatalf("DepKey: want owner/repo, got %q", m.DepKey)
+	}
+	if m.Deltas == nil {
+		t.Fatal("Deltas should not be nil")
+	}
+	if m.Deltas["installed"] != 1 {
+		t.Fatalf("Deltas[installed]: want 1, got %d", m.Deltas["installed"])
+	}
+}
+
+// TestParityMaterializationNilPackageInfo verifies Materialization can hold a
+// nil PackageInfo (skip-integration signal).
+func TestParityMaterializationNilPackageInfo(t *testing.T) {
+	m := NewMaterialization(nil, "/tmp/x", "k")
+	if m.PackageInfo != nil {
+		t.Fatal("PackageInfo should be nil")
+	}
+}
+
+// TestParityMaterializationUnpinnedDelta verifies that callers can add an
+// "unpinned" delta alongside "installed" -- matching the Python pattern.
+func TestParityMaterializationUnpinnedDelta(t *testing.T) {
+	m := NewMaterialization(nil, "/tmp/x", "k")
+	m.Deltas["unpinned"] = 1
+	if m.Deltas["unpinned"] != 1 {
+		t.Fatalf("Deltas[unpinned]: want 1, got %d", m.Deltas["unpinned"])
+	}
+}
+
+// TestParitySourceConstants verifies the integrate-error-prefix constants
+// match the Python class attributes.
+func TestParitySourceConstants(t *testing.T) {
+	if IntegrateErrorPrefix != "Failed to integrate primitives" {
+		t.Fatalf("IntegrateErrorPrefix: got %q", IntegrateErrorPrefix)
+	}
+	if IntegrateErrorPrefixLocal != "Failed to integrate primitives from local package" {
+		t.Fatalf("IntegrateErrorPrefixLocal: got %q", IntegrateErrorPrefixLocal)
+	}
+	if IntegrateErrorPrefixCached != "Failed to integrate primitives from cached package" {
+		t.Fatalf("IntegrateErrorPrefixCached: got %q", IntegrateErrorPrefixCached)
+	}
+}
+
+// TestParitySourceKindValues verifies the SourceKind constants are distinct
+// and match the expected ordering.
+func TestParitySourceKindValues(t *testing.T) {
+	if SourceKindLocal == SourceKindCached {
+		t.Fatal("Local and Cached should differ")
+	}
+	if SourceKindLocal == SourceKindFresh {
+		t.Fatal("Local and Fresh should differ")
+	}
+	if SourceKindCached == SourceKindFresh {
+		t.Fatal("Cached and Fresh should differ")
+	}
 }

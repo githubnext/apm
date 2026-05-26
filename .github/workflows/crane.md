@@ -434,6 +434,22 @@ This Step 0 produces the plan and ships it as commit #1 on the migration branch 
 2. Parse the JSON output. The required field is `migration_score`. Optional fields (`progress`, `parity_passing`, `parity_total`, `source_tests_passing`, `target_tests_passing`, `perf_ratio`) are logged in iteration history.
 3. Compare `migration_score` against `best_metric` from the state file.
 
+### Accepted Iteration Summary
+
+For every accepted iteration, build a **single shared source** summary before updating the PR, migration issue, or repo-memory. Reuse this same summary for the PR body, PR comment, migration issue comment, and repo-memory history so reviewers see the same facts everywhere.
+
+Include, when available:
+- Iteration number and status (`Iteration {N} accepted`).
+- Current milestone or focus.
+- Concise change summary (one line, plus up to 3 compact bullets from the accepted iteration or commit body).
+- Commit short SHA linked to the commit URL, ignoring a `ci: trigger checks` commit unless it is the only new commit.
+- Workflow run URL.
+- Score with best score and signed delta.
+- Progress or parity (`parity_passing`/`parity_total`) if reported.
+- CI fix-attempt count, only when greater than zero.
+
+If the accepted iteration summary already exists in the state file or migration issue, prefer it. If not, fall back to the accepted commit subject and the compact `Changes:` bullets from the commit body. Keep the rendered summary short: roughly 10 bullets or 1,000 characters maximum. Never paste full diffs or long test logs; link to the commit and workflow run for details.
+
 ### Step 5: Accept or Reject
 
 Verification is necessary but **not sufficient** for acceptance. The agent's sandbox cannot reliably install many project toolchains, so a "score improved" signal from the sandbox can mask broken commits CI would catch. Acceptance must therefore be gated on **CI green** for the pushed HEAD commit. If CI fails, attempt to fix-and-retry within the same iteration rather than reverting.
@@ -454,7 +470,15 @@ The first run (no `best_metric` yet) always counts as an improvement.
 
 1. Commit the changes to the long-running branch with a commit message:
    - Subject: `[Crane: {migration-name}] Iteration <N>: <short description of milestone or change>`
-   - Body (after a blank line): `Run: {run_url}`
+   - Body (after a blank line):
+     ```markdown
+     Changes:
+     - <compact bullet describing the main migrated unit or behavior change>
+     - <optional second bullet with test/parity or milestone movement>
+
+     Run: {run_url}
+     ```
+     Keep `Changes:` compact and structured so later PR comments can summarize the commit when score/progress fields are unavailable.
 2. Push the commit to the long-running branch.
 3. **Find or create the PR** so CI runs and `gh pr checks` has a target. Follow these steps in order:
    a. Check `existing_pr` from `/tmp/gh-aw/crane.json`. If it is not null, that is the existing draft PR -- use it as `$EXISTING_PR` below; **never** call `create-pull-request`.
@@ -499,15 +523,28 @@ If `status == "failure"`, **fix and retry -- do not revert, do not accept**:
 2. If a draft PR does not already exist for this branch, create one -- specify `branch: crane/{migration-name}` explicitly:
    - Title: `[Crane: {migration-name}]`
    - Body: summary of the migration (source -> target, strategy), link to the migration issue, current best score and progress, AI disclosure: `[bot] *This PR is maintained by Crane. Each accepted iteration adds a commit to this branch.*`
-   If a draft PR already exists, use `push-to-pull-request-branch` (never `create-pull-request`). Update the PR body with the latest score and a summary of the most recent accepted iteration. Add a comment to the PR summarizing the iteration: what milestone was advanced, old score, new score, fix-attempt count if `> 0`, and a link to the actions run.
+   If a draft PR already exists, use `push-to-pull-request-branch` (never `create-pull-request`). Do not rely on the automatic `push-to-pull-request-branch` "Commit pushed" comment as the only reviewer-facing update. Update the PR body with the latest score and the shared accepted iteration summary, then emit a separate `add-comment` safe output targeted at that PR with the same short summary.
+
+   The PR comment is mandatory for every accepted existing-PR update and should look like:
+   ```markdown
+   [bot] **Iteration {N} accepted** -- [Crane run]({run_url})
+
+   - **Commit**: [`{short_sha}`]({commit_url})
+   - **Change**: {one-line summary}
+   - **Milestone**: {milestone or current focus}
+   - **Score**: {migration_score} (best: {best_metric}, delta: {+/-delta}) *(if available)*
+   - **Progress**: {progress fraction} *(if available)*
+   - **Tests/parity**: {parity_passing}/{parity_total} passing *(if available)*
+   - **CI fix attempts**: {N} *(only if > 0)*
+   ```
 3. Ensure the migration issue exists (see [Migration Issue](#migration-issue) below) -- for file-based migrations with no migration issue yet (`selected_issue` is null in `/tmp/gh-aw/crane.json`), create one and record its number in the state file's `Issue` field.
 4. Update the state file `{migration-name}.md` in the repo-memory folder:
    - **[*] Machine State** table: reset `consecutive_errors` to 0, set `best_metric` (the new `migration_score`), increment `iteration_count`, set `last_run` to current UTC, append `"accepted"` to `recent_statuses` (keep last 10), set `paused` to false.
    - **[ladder] Milestones**: update the relevant milestone's status -- typically `done` if the milestone was fully completed, otherwise leave `in-progress` and update its notes. If the milestone is done, the next milestone in the list becomes the new **[target] Current Focus**.
-   - Prepend an entry to **[chart] Iteration History** with status [+], score, **signed delta**, PR link, fix-attempt count if `> 0`, and a one-line summary of what milestone was advanced and how.
+   - Prepend an entry to **[chart] Iteration History** using the shared accepted iteration summary: status [+], score, **signed delta**, PR link, commit SHA, run URL, fix-attempt count if `> 0`, and a one-line summary of what milestone was advanced and how.
    - Update **[docs] Lessons Learned** if this iteration revealed something new (e.g. a bridging trick, a parity surprise, a perf trap).
    - Update **[scope] Future Work** if this iteration opened new threads.
-5. **Update the migration issue**: edit the status comment and post a per-iteration comment.
+5. **Update the migration issue**: edit the status comment and post a per-iteration comment using the same shared accepted iteration summary.
 6. **Check halting condition** (see [Halting Condition](#halting-condition)): if `target-metric` is set, compare the new `best_metric` against it. For `higher` direction: completed when `best_metric >= target-metric`. When the target is met, mark the migration as completed.
 
 **If the score did not improve**:

@@ -1,0 +1,47 @@
+name: gh-aw lock check
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/*.md"
+      - ".github/workflows/**/*.md"
+      - ".github/workflows/*.lock.yml"
+      - ".github/workflows/**/*.lock.yml"
+      - ".github/workflows/gh-aw-lock-check.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/*.md"
+      - ".github/workflows/**/*.md"
+      - ".github/workflows/*.lock.yml"
+      - ".github/workflows/**/*.lock.yml"
+      - ".github/workflows/gh-aw-lock-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify gh-aw locks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Install gh-aw
+        uses: github/gh-aw-actions/setup-cli@d3abfe96a194bce3a523ed2093ddedd5704cdf62 # v0.74.4
+        with:
+          version: v0.74.4
+
+      - name: Verify compiled workflows are current
+        run: |
+          gh aw compile --no-check-update
+
+          if [ -n "$(git status --porcelain -- .github/workflows)" ]; then
+            echo "::error::gh-aw generated workflow files are stale. Run 'gh aw compile' and commit the result."
+            git status --short -- .github/workflows
+            git diff -- .github/workflows
+            exit 1
+          fi

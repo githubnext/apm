@@ -12,7 +12,7 @@
 |-------|-------|
 | Last Run | 2026-05-27T05:49:31Z |
 | Iteration Count | 18 |
-| Best Metric | 1.0 |
+| Best Metric | 0.9172 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -21,10 +21,10 @@
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached with value 1.0 |
+| Completed | false |
+| Completed Reason | reopened: prior completion used TestParity count, not hard CLI parity gates |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, reopened |
 
 ---
 
@@ -116,7 +116,10 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 14 -- marketplace/ + registry/**: MIGRATION COMPLETE -- all 304 parity tests pass, score 1.0 reached.
+**Milestone 14 -- marketplace/ + registry/**: Reopened after false completion.
+Continue with marketplace/registry, then bundle/output, then final CLI wiring.
+Completion now requires the hard Python-vs-Go CLI parity gates in issue #78,
+not just Go tests named `TestParity*`.
 
 ---
 
@@ -127,7 +130,10 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - Go 1.24 is available in the sandbox. go.mod module path is github.com/githubnext/apm.
 - A smoke test in cmd/apm/main_test.go (TestBuildSmoke) provides the first parity point (1/302).
 - Python binary (uv run apm) is not available in the CI sandbox. Parity tests that require Python must use t.Skip(). Tests not requiring Python count as parity points.
-- score.go counts tests with "Parity" in the test name as parity points. All Go unit tests for ported modules should use TestParity* naming.
+- The previous completion metric was too shallow: score.go counted tests with
+  "Parity" in the test name, so Go-only unit tests could advance the score
+  without proving Python-vs-Go CLI parity. Issue #78 now defines hard
+  completion gates that must pass before marking this migration complete.
 - Iteration 3 parity files (d817cef) were lost from the branch in a merge conflict resolution. Iteration 4 re-established parity + ported utils/constants (49 tests).
 - cobra v1.10.2 integrated; all 247 target tests pass after adding go.sum and wiring cmd/apm/main.go to cobra root.
 

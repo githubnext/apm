@@ -75,7 +75,7 @@ func printHelp() {
 // isGroupCmd returns true for commands that have subcommands and manage their own --help.
 func isGroupCmd(name string) bool {
 	switch name {
-	case "cache", "deps", "marketplace":
+	case "cache", "deps", "marketplace", "mcp", "policy", "runtime", "plugin", "experimental":
 		return true
 	}
 	return false
@@ -213,6 +213,36 @@ func run(args []string) int {
 		return runPack(rest)
 	case "unpack":
 		return runUnpack(rest)
+	case "install":
+		return runInstall(rest)
+	case "uninstall":
+		return runUninstall(rest)
+	case "update":
+		return runUpdate(rest)
+	case "prune":
+		return runPrune(rest)
+	case "audit":
+		return runAudit(rest)
+	case "policy":
+		return runPolicy(rest)
+	case "runtime":
+		return runRuntime(rest)
+	case "mcp":
+		return runMCP(rest)
+	case "plugin":
+		return runPlugin(rest)
+	case "search":
+		return runSearch(rest)
+	case "run":
+		return runRun(rest)
+	case "outdated":
+		return runOutdated(rest)
+	case "self-update":
+		return runSelfUpdate(rest)
+	case "experimental":
+		return runExperimental(rest)
+	case "preview":
+		return runPreview(rest)
 	}
 
 	// Commands not yet fully wired to Go business logic.

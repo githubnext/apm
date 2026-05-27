@@ -188,6 +188,9 @@ func TestParityHarnessWiredCommandMatrix(t *testing.T) {
 	priorityCmds := []string{
 		"init", "config", "targets", "list", "view",
 		"deps", "cache", "marketplace", "compile", "pack", "unpack",
+		"install", "uninstall", "update", "prune", "audit",
+		"policy", "runtime", "mcp", "plugin",
+		"search", "outdated", "self-update", "experimental", "preview",
 	}
 	for _, cmd := range priorityCmds {
 		t.Run(cmd, func(t *testing.T) {

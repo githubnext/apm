@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T02:34:45Z |
-| Iteration Count | 16 |
-| Best Metric | 0.8742 |
+| Last Run | 2026-05-27T04:03:02Z |
+| Iteration Count | 17 |
+| Best Metric | 0.9172 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -105,7 +105,8 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | done |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | done |
 | 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | done |
-| 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | todo |
+| 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | done |
+| 12b | commands/ + integration/ + compilation/ | internal/commands, internal/integration, internal/compilation | parity tests pass | done |
 | 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | todo |
 | 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | todo |
 | 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | todo |
@@ -115,7 +116,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 12 -- runtime/ + adapters/**: Port internal/runtime and internal/adapters; parity tests for runtime adapters.
+**Milestone 13 -- policy/ + security/**: Port internal/policy and internal/security; parity tests.
 
 ---
 
@@ -148,6 +149,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
+### Iteration 17 -- 2026-05-27T04:03:02Z -- [Run](https://github.com/githubnext/apm/actions/runs/26489964081)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestones 12+12b -- runtime/ + adapters/ + commands/ + integration/ + compilation/
+- **Change**: Added internal/runtime (RuntimeAdapter interface, factory, manager, utils), internal/adapters/client (MCPClientAdapter), internal/adapters/pm (MCPPackageManagerAdapter), internal/commands (CommandContext + CommandResult), internal/integration (Integrator + IntegrationResult), internal/compilation (StabilizeBuildID + constants); 51 new TestParity* tests.
+- **Score**: 0.9172 (previous best: 0.7483, delta: +0.1689)
+- **Progress**: 277/302
+- **Commit**: d243c26
+- **Notes**: Recaptured lost commands/integration/compilation work (iters 14-16 had no branch commits). Corrected actual best_metric from 0.8742 to 0.7483 (pre-17). Next: policy/ + security/.
+
 ### Iteration 16 -- 2026-05-27T02:34:45Z -- [Run](https://github.com/githubnext/apm/actions/runs/26487235118)
 
 - **Status**: [+] Accepted
@@ -158,52 +169,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - **Commit**: 2c9fb33
 - **Notes**: Iter 15 state file recorded 0.8411 but code was never pushed. This iteration fixes that and advances to compilation/. Next: Milestone 12 -- runtime/ + adapters/.
 
-### Iteration 15 -- 2026-05-27T01:24:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26485015099)
-
-- **Status**: [x] Rejected (code never committed to branch -- state file artifact only)
-- **Milestone**: Milestones 9+10 -- commands/ cobra stubs + integration/ package
-- **Change**: State file updated but code was not committed to branch (likely push failure)
-- **Score**: 0.8411 (recorded but not verified against branch)
-- **Notes**: See iteration 16 for the actual commit.
-
-### Iteration 14 -- 2026-05-27T00:03:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/26482295207)
-
-- **Status**: [x] Rejected (never committed -- state file artifact)
-- **Milestone**: Milestone 9 -- commands/ cobra stubs (planned)
-- **Change**: State file updated but code was not committed to branch
-- **Score**: 0.8146 (recorded but not verified against branch)
-- **Progress**: 246/302 (planned)
-- **Notes**: Previous run recorded iteration 14 but the branch push failed or was skipped. Iteration 15 covers this work.
-
-### Iteration 13 -- 2026-05-26T23:28:27Z -- [Run](https://github.com/githubnext/apm/actions/runs/26481040888)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 8b -- install/ cache_pin + sources
-- **Change**: Added internal/install/cache_pin.go (WriteMarker, VerifyMarker, CachePinError, constants) and internal/install/sources.go (Materialization, DependencySource interface, SourceKind, IntegrateErrorPrefix constants); 15 new TestParity* tests
-- **Score**: 0.7483 (previous best: 0.6987, delta: +0.0496)
-- **Progress**: 226/302
-- **Commit**: f2140a2
-- **Notes**: cache_pin.go is pure Go (no external deps); sources.go provides the strategy interface. Next: Milestone 9 -- commands/ cobra stubs.
-
-### Iteration 12 -- 2026-05-26T22:52:57Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479708206)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 8 -- install/ (partial)
-- **Change**: Added internal/install/context.go (InstallContext with all pipeline fields, NewInstallContext), internal/install/request.go (InstallRequest with PlanCallback, NewInstallRequest), install_test.go (20 TestParity* tests for context + request)
-- **Score**: 0.6987 (previous best: 0.6589, delta: +0.0398)
-- **Progress**: 211/302
-- **Commit**: fc8f0b4
-- **Notes**: 20 new TestParity* tests for context and request types. All 212 Go tests pass. Next: sources.go (DependencySource ABC and implementations).
-
-### Iteration 11 -- 2026-05-26T22:36:37Z -- [Run](https://github.com/githubnext/apm/actions/runs/26479056327)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 8 -- install/ (partial)
-- **Change**: Added internal/install/errors.go (DirectDependencyError, AuthenticationError, FrozenInstallError, PolicyViolationError), internal/install/plan.go (PlanEntry, UpdatePlan, BuildUpdatePlan, LockfileSatisfiesManifest, RenderPlanText), internal/install/install_test.go (36 TestParity* tests)
-- **Score**: 0.6589 (previous best: 0.5397, delta: +0.1192)
-- **Progress**: 199/302
-- **Commit**: 6c0db76
-- **Notes**: 36 new TestParity* tests. All 200 Go tests pass. Previous PR #83 was merged; new PR created.
+### Iters 11-16 -- [+]/[x] (score 0.5397->0.7483 committed, milestones 8-8b done): install/ errors+plan+context+request+cache_pin+sources; iters 14-16 were state-only with no branch commits (push failures).
 
 ### Iters 6-10 -- [+] (score 0.2980->0.5397, milestones 5-7 done): deps/ graph+lockfile+plugin_parser; cache/ paths+url_normalize+integrity+http_cache; core/ errors+scope+target_detection+apm_yml+auth+token_manager+githubhost utils.
 

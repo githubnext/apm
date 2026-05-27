@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T17:30:00Z |
-| Iteration Count | 20 |
+| Last Run | 2026-05-27T18:32:00Z |
+| Iteration Count | 21 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -22,9 +22,9 @@
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | Hard gates not yet met: Milestone 16 (CLI wiring) still todo |
+| Completed Reason | Hard gate 4/5/6 pending: CLI wired but Python-vs-Go CLI parity fixture tests not yet running |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, reopened, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, reopened, accepted, accepted, accepted |
 
 ---
 
@@ -110,13 +110,13 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | done |
 | 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | done |
 | 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | done |
-| 16 | CLI entry point wiring | cmd/apm/ final wiring | full CLI parity, migration_score = 1.0 | todo |
+| 16 | CLI entry point wiring | cmd/apm/ final wiring | full CLI parity, migration_score = 1.0 | in-progress |
 
 ---
 
 ## [target] Current Focus
 
-**Milestone 16 -- CLI entry point wiring**: Next iteration will wire cmd/apm/ to all internal packages with real cobra command handlers, achieving full Python-vs-Go CLI parity.
+**Milestone 16 -- CLI entry point wiring (in-progress)**: cmd/apm/main.go now has a functional subcommand dispatcher (26 commands, --help, --version, aliases). Next iteration: add Python-vs-Go CLI fixture tests to satisfy hard gates 4/5/6.
 
 ---
 
@@ -133,6 +133,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
   completion gates that must pass before marking this migration complete.
 - Iteration 3 parity files (d817cef) were lost from the branch in a merge conflict resolution. Iteration 4 re-established parity + ported utils/constants (49 tests).
 - cobra v1.10.2 integrated; all 247 target tests pass after adding go.sum and wiring cmd/apm/main.go to cobra root.
+- cobra is NOT in the module cache in the sandbox -- use standard library flag+os.Args dispatch for cmd/apm wiring until a network-connected run can fetch cobra.
 
 ---
 
@@ -152,6 +153,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
+### Iteration 21 -- 2026-05-27T18:32:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26530753920)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 16 -- CLI entry point wiring
+- **Change**: Replaced "work in progress" scaffold in cmd/apm/main.go with a functional 26-command CLI dispatcher. Supports --help, --version, per-command help, and info/self_update aliases. 37 new TestParity* tests (407 total).
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 407/407
+- **Commit**: 1cf41fb
+- **Notes**: cmd/apm is now a real CLI entry point. Hard gates 4/5/6 (Python-vs-Go fixture parity) still pending. Milestone 16 in-progress.
+
 ### Iteration 20 -- 2026-05-27T17:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26527535633)
 
 - **Status**: [+] Accepted
@@ -162,47 +173,9 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - **Commit**: 258ecc3
 - **Notes**: 370 parity tests (33 new). Score stays 1.0. Hard gate for Milestone 16 (CLI wiring) still todo.
 
-### Iteration 19 -- 2026-05-27T16:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26525196311)
+### Iters 16-20 -- [+] (score 0.7483->1.0, milestones 9-15 done): commands/+integration/+compilation/ (iter 16); runtime/+adapters/ (iter 17); policy/+security/ (iter 18); marketplace/+registry/ (iter 19); bundle/+output/ (iter 20). Score reached 1.0 at iter 18 but hard gates not yet met.
 
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 14 -- marketplace/ + registry/
-- **Change**: Added internal/marketplace (MarketplaceSource, MarketplacePlugin, MarketplaceManifest with FindPlugin/Search/MatchesQuery/ToDict) and internal/registry (ServerNotFoundError, RegistryError, ServerEntry, SearchResult, InstallStatus, ConflictEntry, ServerReference/ParseServerReference, SemVer/Compare); 29 new TestParity* tests.
-- **Score**: 1.0 (previous best: 0.9172, delta: +0.0828)
-- **Progress**: 337/337
-- **Commit**: 5349fd8
-- **Notes**: Score.go shows 1.0 (337 passing) but hard completion gates not met -- Milestones 15 (bundle/output) and 16 (CLI wiring) still todo. Branch is new from merged main (PR #86 was merged). New PR needed.
-
-### Iteration 18 -- 2026-05-27T05:49:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/26493354341)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 13 -- policy/ + security/
-- **Change**: Added internal/policy (models, schema, matcher -- CheckResult, CIAuditResult, PolicyDocument, DependencyPolicy, OutcomeRouting, matcher functions) and internal/security (ScanPolicy, ScanVerdict, AuditReport, content patterns); 54 new TestParity* tests.
-- **Score**: 1.0 (previous best: 0.9172, delta: +0.0828)
-- **Progress**: 304/304
-- **Commit**: 8c5441d
-- **Notes**: 304 parity tests exceed the 302-file baseline; total adjusted to 304. Target metric 1.0 reached -- migration complete!
-
-### Iteration 17 -- 2026-05-27T04:03:02Z -- [Run](https://github.com/githubnext/apm/actions/runs/26489964081)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestones 12+12b -- runtime/ + adapters/ + commands/ + integration/ + compilation/
-- **Change**: Added internal/runtime (RuntimeAdapter interface, factory, manager, utils), internal/adapters/client (MCPClientAdapter), internal/adapters/pm (MCPPackageManagerAdapter), internal/commands (CommandContext + CommandResult), internal/integration (Integrator + IntegrationResult), internal/compilation (StabilizeBuildID + constants); 51 new TestParity* tests.
-- **Score**: 0.9172 (previous best: 0.7483, delta: +0.1689)
-- **Progress**: 277/302
-- **Commit**: d243c26
-- **Notes**: Recaptured lost commands/integration/compilation work (iters 14-16 had no branch commits). Corrected actual best_metric from 0.8742 to 0.7483 (pre-17). Next: policy/ + security/.
-
-### Iteration 16 -- 2026-05-27T02:34:45Z -- [Run](https://github.com/githubnext/apm/actions/runs/26487235118)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestones 9+10+11 -- commands/, integration/, compilation/ (re-committed + compilation added)
-- **Change**: Added internal/compilation/ (17 TestParity* tests), internal/commands/ (11 TestParity* tests), internal/integration/ (10 TestParity* tests), cobra v1.10.2 in go.mod. Corrected state: iter 15 code was never committed to branch.
-- **Score**: 0.8742 (previous committed best: 0.7483, delta: +0.1259)
-- **Progress**: 264/302
-- **Commit**: 2c9fb33
-- **Notes**: Iter 15 state file recorded 0.8411 but code was never pushed. This iteration fixes that and advances to compilation/. Next: Milestone 12 -- runtime/ + adapters/.
-
-### Iters 11-16 -- [+]/[x] (score 0.5397->0.7483 committed, milestones 8-8b done): install/ errors+plan+context+request+cache_pin+sources; iters 14-16 were state-only with no branch commits (push failures).
+### Iters 11-15 -- [+]/[x] (score 0.5397->0.7483 committed, milestones 8-8b done): install/ errors+plan+context+request+cache_pin+sources; iters 14-16 were state-only with no branch commits (push failures).
 
 ### Iters 6-10 -- [+] (score 0.2980->0.5397, milestones 5-7 done): deps/ graph+lockfile+plugin_parser; cache/ paths+url_normalize+integrity+http_cache; core/ errors+scope+target_detection+apm_yml+auth+token_manager+githubhost utils.
 

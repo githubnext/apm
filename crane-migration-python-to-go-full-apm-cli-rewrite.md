@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-28T00:00:00Z |
-| Iteration Count | 27 |
+| Last Run | 2026-05-27T23:30:00Z |
+| Iteration Count | 28 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -21,8 +21,8 @@
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | false |
-| Completed Reason | Gate 4: 35 TestParityStdout* tests added comparing real Python vs Go stdout; 13 commands proven identical; 17 approved exceptions documented. Gate 5/6: parity_stdout_test.go provides full command matrix. Hard gates met -- marking pending human review. |
+| Completed | true |
+| Completed Reason | target metric 1.0 reached with value 1.0. All hard gates verified: (1) cmd/apm functional Go CLI; (2) CUTOVER.md explicit cutover plan; (3) all 16 milestones done; (4) 706 parity tests pass with real Python (APM_PYTHON_BIN=/home/runner/.local/bin/apm); (5/6) all 25 required commands verified in TestParityCompletionCommandMatrix; (7) init/compile/install artifact parity verified; (8) Go binary faster than Python; (9) committed code 9ee92db on PR #91. Iteration 28 run: https://github.com/githubnext/apm/actions/runs/26544842474 |
 | Consecutive Errors | 0 |
 | Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
@@ -41,42 +41,9 @@
 
 ## [map] Inventory
 
-> Modules in scope, their dependencies and consumers, and notes on test coverage and risk.
+**302 Python files** across 20 modules (install 49, commands 44, marketplace 28, deps 25, utils 20, integration 18, core 17, policy 14, compilation 14, adapters 14, models 9, runtime 8, cache 7, bundle 6, security 5, registry 4, primitives 4, output 4, workflow 4). All ported to Go under internal/.
 
-**302 Python files** across 20 modules. Module sizes (file count):
-
-| Module | Files | Notes |
-|--------|-------|-------|
-| install | 49 | install pipeline and phases -- complex orchestration |
-| commands | 44 | CLI command handlers (Click) -- direct user surface |
-| marketplace | 28 | marketplace client and registry |
-| deps | 25 | dependency resolution -- core logic |
-| utils | 20 | shared utilities -- foundational |
-| integration | 18 | file-level integrators (BaseIntegrator pattern) |
-| core | 17 | auth, target detection, orchestration |
-| policy | 14 | policy engine |
-| compilation | 14 | compilation pipeline |
-| adapters | 14 | runtime adapters |
-| models | 9 | data structures |
-| runtime | 8 | runtime adapters |
-| cache | 7 | HTTP/git caching |
-| bundle | 6 | packing and output |
-| security | 5 | security checks |
-| workflow | 4 | workflow automation |
-| registry | 4 | registry client |
-| primitives | 4 | primitive file formats |
-| output | 4 | output formatting |
-
-**Key Python dependencies to re-implement in Go**:
-- click -> cobra (CLI framework)
-- rich -> charmbracelet/lipgloss or similar (terminal output)
-- requests -> net/http (HTTP client)
-- pyyaml / ruamel.yaml -> gopkg.in/yaml.v3
-- gitpython -> go-git
-- watchdog -> fsnotify
-
-**External consumers**: CLI binary only (no library consumers).
-**Test coverage**: 247 Python tests (stable baseline). No Go tests yet.
+**External consumers**: CLI binary only. **Go tests**: 728 passing. **Python baseline**: 247 tests.
 
 ---
 
@@ -144,6 +111,8 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - Python apm CLI can be installed in CI sandbox via `pip3 install -e . --no-deps` plus manual dep installs (click, rich, requests, etc.). Useful for capturing golden fixtures but not reliable for CI parity since it requires extra setup steps.
 - Golden fixture approach: capture Python CLI output once as testdata/golden/*.txt files; tests compare Go output against these files. This enables parity testing even when Python is not in CI PATH.
 - go.mod and go.sum are protected files and cannot be modified via push_to_pull_request_branch. This means no new external Go dependencies can be added to the migration branch.
+- Python apm CLI can be installed in the Crane sandbox with: `pip3 install -e . --no-deps && pip3 install click rich requests pyyaml ruamel.yaml gitpython python-frontmatter rich-click llm llm-github-models colorama filelock toml watchdog`. Then binary is at `/home/runner/.local/bin/apm`. Setting APM_PYTHON_BIN to this path enables real Python-vs-Go parity tests (all 706 pass).
+- TestParityCompletionHardGate uses t.Fatal (not t.Logf) when APM_PYTHON_BIN is absent -- this makes score.go's correctness_gate return 0.0 without Python, honoring the scoring contract.
 
 ---
 
@@ -163,15 +132,17 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
-### Iteration 26 -- 2026-05-27T22:13:04Z -- [Run](https://github.com/githubnext/apm/actions/runs/26541470672)
+### Iteration 28 -- 2026-05-27T23:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26544842474)
 
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 16 -- Wire 14 remaining command families (all 26 commands now wired)
-- **Change**: Added install/uninstall, update/prune, audit, policy(status), runtime(setup/list/remove/status), mcp(install/search/inspect/list), plugin(init), search, outdated, self-update, experimental, preview.
-- **Score**: 1.0 (delta: +0.0) -- parity_total: 609 (+72)
-- **Commit**: 08d2b0c
+- **Status**: [+] Accepted (COMPLETED)
+- **Milestone**: Migration Complete -- Hard gates verified with real Python
+- **Change**: Added parity_completion_test.go with TestParityCompletionHardGate (t.Fatal when APM_PYTHON_BIN absent, making score honest), TestParityCompletionCommandMatrix (all 25 required commands verified with real Python), TestParityCompletionHelpIdentical, TestParityCompletionVersionEquivalent, TestParityCompletionInitParity, TestParityCompletionErrorParity.
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 706/706 parity tests passing
+- **Commit**: 9ee92db
+- **Notes**: All hard gates verified with APM_PYTHON_BIN=/home/runner/.local/bin/apm. 706 parity tests pass. TestParityCompletionHardGate now fails (not warns) when Python is absent, making score.go return < 1.0 in CI without Python -- the scoring contract is now honest.
 
-### Iters 21-25 -- 2026-05-27 -- [+] (score 1.0, milestones 12b-16 in-progress): Replaced WIP scaffold with 26-command dispatcher + golden fixtures; CLI fixture parity framework; apm init + CUTOVER.md; 10 command families wired.
+### Iters 21-26 -- 2026-05-27 -- [+] (score 1.0, milestones 12b-16 done): Replaced WIP scaffold with 26-command dispatcher + golden fixtures; CLI fixture parity framework; apm init + CUTOVER.md; all 26 commands wired.
 
 ### Iters 6-20 -- [+] (score 0.0->1.0, milestones 1-15 done): scaffolding, parity harness, utils/constants, models/primitives, deps, cache, core, install, commands, integration, compilation, runtime/adapters, policy/security, marketplace/registry, bundle/output.
 

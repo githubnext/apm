@@ -10,21 +10,21 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T16:45:00Z |
-| Iteration Count | 19 |
+| Last Run | 2026-05-27T17:30:00Z |
+| Iteration Count | 20 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | -- |
+| PR | #91 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | Hard gates not yet met: Milestones 15 (bundle/output) and 16 (CLI wiring) still todo |
+| Completed Reason | Hard gates not yet met: Milestone 16 (CLI wiring) still todo |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, reopened, accepted |
+| Recent Statuses | accepted, accepted, accepted, reopened, accepted, accepted |
 
 ---
 
@@ -109,15 +109,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 12b | commands/ + integration/ + compilation/ | internal/commands, internal/integration, internal/compilation | parity tests pass | done |
 | 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | done |
 | 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | done |
-| 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | todo |
+| 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | done |
 | 16 | CLI entry point wiring | cmd/apm/ final wiring | full CLI parity, migration_score = 1.0 | todo |
 
 ---
 
 ## [target] Current Focus
 
-**Milestone 15 -- bundle/ + output/**: Next iteration will port internal/bundle and internal/output to Go.
-After that: Milestone 16 -- final cmd/apm/ CLI wiring for real Python-vs-Go parity gates.
+**Milestone 16 -- CLI entry point wiring**: Next iteration will wire cmd/apm/ to all internal packages with real cobra command handlers, achieving full Python-vs-Go CLI parity.
 
 ---
 
@@ -152,6 +151,16 @@ After that: Milestone 16 -- final cmd/apm/ CLI wiring for real Python-vs-Go pari
 ---
 
 ## [chart] Iteration History
+
+### Iteration 20 -- 2026-05-27T17:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26527535633)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 15 -- bundle/ + output/
+- **Change**: Added internal/bundle (PackResult, UnpackResult, LocalBundleInfo, ExtractPackTargets, CheckTargetMismatch, IsSafeRelPath -- 17 TestParity* tests) and internal/output (PlacementStrategy, ProjectAnalysis, OptimizationDecision, PlacementSummary, OptimizationStats, CompilationResults -- 16 TestParity* tests).
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 370/370
+- **Commit**: 258ecc3
+- **Notes**: 370 parity tests (33 new). Score stays 1.0. Hard gate for Milestone 16 (CLI wiring) still todo.
 
 ### Iteration 19 -- 2026-05-27T16:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26525196311)
 

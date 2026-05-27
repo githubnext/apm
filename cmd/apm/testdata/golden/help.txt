@@ -1,0 +1,35 @@
+Usage: apm [OPTIONS] COMMAND [ARGS]...
+
+  Agent Package Manager (APM): The package manager for AI-Native Development
+
+Options:
+  --version  Show version and exit.
+  --help     Show this message and exit.
+
+Commands:
+  audit         Scan installed packages for hidden Unicode characters
+  cache         Manage the local package cache
+  compile       Compile APM context into distributed AGENTS.md files
+  config        Configure APM CLI
+  deps          Manage APM package dependencies
+  experimental  Manage experimental feature flags
+  init          Initialize a new APM project
+  install       Install APM and MCP dependencies (supports APM packages,...
+  list          List available scripts in the current project
+  marketplace   Manage marketplaces for discovery and governance
+  mcp           Discover, inspect, and install MCP servers
+  outdated      Show outdated locked dependencies
+  pack          Pack distributable artifacts from your APM project.
+  plugin        Scaffold and manage plugins (plugin-author workflows)
+  policy        Inspect and diagnose APM policy
+  preview       Preview a script's compiled prompt files
+  prune         Remove APM packages not listed in apm.yml
+  run           Run a script with parameters (experimental)
+  runtime       Manage AI runtimes (experimental)
+  search        Search plugins in a marketplace (QUERY@MARKETPLACE)
+  self-update   Update the APM CLI binary itself to the latest version
+  targets       Show resolved targets for the current project.
+  uninstall     Remove APM packages, their integrated files, and apm.yml...
+  unpack        [Deprecated] Extract an APM bundle into the current project.
+  update        Refresh APM dependencies to the latest matching refs
+  view          View package metadata or list remote versions.

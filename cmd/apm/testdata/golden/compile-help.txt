@@ -1,0 +1,39 @@
+Usage: apm compile [OPTIONS]
+
+  Compile APM context into distributed AGENTS.md files
+
+Options:
+  -o, --output TEXT               Output file path (for single-file mode)
+  -t, --target TARGET             Target platform (comma-separated). Values:
+                                  copilot, claude, cursor, opencode, codex,
+                                  gemini, windsurf, agent-skills, all. 'agent-
+                                  skills' deploys to .agents/skills/ (cross-
+                                  client). 'all' = copilot+claude+cursor+openc
+                                  ode+codex+gemini+windsurf (excludes agent-
+                                  skills); combine with 'agent-skills' for
+                                  both.
+  --dry-run                       Preview compilation without writing files
+                                  (shows placement decisions)
+  --no-links                      Skip markdown link resolution
+  --chatmode TEXT                 Chatmode to prepend to AGENTS.md files
+  --watch                         Auto-regenerate on changes
+  --validate                      Validate primitives without compiling
+  --with-constitution / --no-constitution
+                                  Include Spec Kit constitution block at top
+                                  if memory/constitution.md present  [default:
+                                  with-constitution]
+  --single-agents                 Force single-file compilation (legacy mode)
+  -v, --verbose                   Show detailed source attribution and
+                                  optimizer analysis
+  --local-only                    Ignore dependencies, compile only local
+                                  primitives
+  --clean                         Remove orphaned AGENTS.md files that are no
+                                  longer generated
+  --legacy-skill-paths            Deploy skill files to per-client paths (e.g.
+                                  .cursor/skills/) instead of the shared
+                                  .agents/skills/ directory. Compatibility
+                                  flag for projects that need per-client skill
+                                  layouts.
+  --all                           Compile for all canonical targets.
+                                  Equivalent to --target all.
+  --help                          Show this message and exit.

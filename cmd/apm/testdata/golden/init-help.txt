@@ -1,0 +1,13 @@
+Usage: apm init [OPTIONS] [PROJECT_NAME]
+
+  Initialize a new APM project
+
+Options:
+  -y, --yes        Skip interactive prompts and use auto-detected defaults
+  --plugin         (deprecated) Use 'apm plugin init' instead. Scaffolds
+                   plugin.json + apm.yml.
+  --marketplace    (deprecated) Use 'apm marketplace init' instead. Seeds a
+                   marketplace block.
+  --target TARGET  Comma-separated target list (skip prompt, write directly)
+  -v, --verbose    Show detailed output
+  --help           Show this message and exit.

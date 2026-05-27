@@ -1,0 +1,12 @@
+Usage: apm runtime [OPTIONS] COMMAND [ARGS]...
+
+  Manage AI runtimes (experimental)
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  list    List available and installed runtimes
+  remove  Remove an installed runtime
+  setup   Set up a runtime
+  status  Show active runtime and preference order

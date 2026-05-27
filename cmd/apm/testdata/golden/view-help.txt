@@ -1,0 +1,18 @@
+Usage: apm view [OPTIONS] PACKAGE [FIELD]
+
+  View package metadata or list remote versions.
+
+  Without FIELD, displays local metadata for an installed package. With FIELD,
+  queries specific data (may contact the remote).
+
+  Fields:
+      versions    List available remote tags and branches
+
+  Examples:
+      apm view org/repo                # Local metadata
+      apm view org/repo versions       # Remote tags/branches
+      apm view org/repo -g             # From user scope
+
+Options:
+  -g, --global  Inspect package from user scope (~/.apm/)
+  --help        Show this message and exit.

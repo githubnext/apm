@@ -1,0 +1,13 @@
+Usage: apm deps [OPTIONS] COMMAND [ARGS]...
+
+  Manage APM package dependencies
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  clean   Remove all APM dependencies
+  info    Show detailed package information
+  list    List installed APM dependencies
+  tree    Show dependency tree structure
+  update  Update APM dependencies to latest refs

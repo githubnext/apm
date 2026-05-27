@@ -1,0 +1,8 @@
+Usage: apm run [OPTIONS] [SCRIPT_NAME]
+
+  Run a script with parameters (experimental)
+
+Options:
+  -p, --param TEXT  Parameter in format name=value
+  -v, --verbose     Show detailed output
+  --help            Show this message and exit.

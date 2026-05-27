@@ -1,0 +1,8 @@
+Usage: apm search [OPTIONS] QUERY@MARKETPLACE
+
+  Search plugins in a marketplace (QUERY@MARKETPLACE)
+
+Options:
+  --limit INTEGER  Max results to show  [default: 20]
+  -v, --verbose    Show detailed output
+  --help           Show this message and exit.

@@ -1,0 +1,7 @@
+Usage: apm prune [OPTIONS]
+
+  Remove APM packages not listed in apm.yml
+
+Options:
+  --dry-run  Show what would be removed without removing
+  --help     Show this message and exit.

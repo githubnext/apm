@@ -1,0 +1,9 @@
+Usage: apm policy [OPTIONS] COMMAND [ARGS]...
+
+  Inspect and diagnose APM policy
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  status  Show the current policy posture (discovery, cache, rules)

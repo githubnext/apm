@@ -1,0 +1,12 @@
+Usage: apm mcp [OPTIONS] COMMAND [ARGS]...
+
+  Discover, inspect, and install MCP servers
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Add an MCP server to apm.yml.
+  list     List all available MCP servers
+  search   Search MCP servers in registry
+  show     Show detailed MCP server information

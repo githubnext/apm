@@ -1,0 +1,9 @@
+Usage: apm plugin [OPTIONS] COMMAND [ARGS]...
+
+  Scaffold and manage plugins (plugin-author workflows)
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  init  Scaffold a plugin (creates plugin.json + apm.yml)

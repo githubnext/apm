@@ -1,0 +1,11 @@
+Usage: apm targets [OPTIONS] COMMAND [ARGS]...
+
+  Show resolved targets for the current project. If APM detects a target you
+  don't intend (e.g. CLAUDE.md is documentation, not a Claude Code config),
+  pin your targets explicitly in apm.yml.
+
+Options:
+  --json  Output as JSON instead of a table.
+  --all   Include the agent-skills meta-target in JSON output (excluded by
+          default).
+  --help  Show this message and exit.

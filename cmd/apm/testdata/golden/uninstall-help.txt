@@ -1,0 +1,10 @@
+Usage: apm uninstall [OPTIONS] PACKAGES...
+
+  Remove APM packages, their integrated files, and apm.yml entries
+
+Options:
+  --dry-run      Show what would be removed without removing
+  -v, --verbose  Show detailed removal information
+  -g, --global   Remove from user scope (~/.apm/) instead of the current
+                 project
+  --help         Show this message and exit.

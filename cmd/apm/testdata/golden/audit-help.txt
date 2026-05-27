@@ -1,0 +1,36 @@
+Usage: apm audit [OPTIONS] [PACKAGE]
+
+  Scan installed packages for hidden Unicode characters
+
+Options:
+  --file PATH                     Scan an arbitrary file (not just APM-managed
+                                  files)
+  --strip                         Remove hidden characters from scanned files
+                                  (preserves emoji and whitespace)
+  -v, --verbose                   Show all findings including harmless ones
+  --dry-run                       Preview what --strip would remove without
+                                  modifying files
+  -f, --format [text|json|sarif|markdown]
+                                  Output format: text (default), json, sarif
+                                  (GitHub Code Scanning), markdown (step
+                                  summaries).
+  -o, --output PATH               Write output to file (auto-detects format
+                                  from extension: .sarif, .json, .md).
+  --ci                            Run lockfile consistency checks for CI/CD
+                                  gates. Exit 0 if clean, 1 if violations
+                                  found.
+  --policy TEXT                   Policy source. Accepts: 'org' (auto-discover
+                                  from your project's git remote),
+                                  'owner/repo' (defaults to github.com), an
+                                  https:// URL, or a local file path. Used
+                                  with --ci for policy checks. [experimental]
+  --no-cache                      Force fresh policy fetch (skip cache).
+  --no-policy                     Skip org policy discovery and enforcement.
+                                  Overridden when --policy is passed
+                                  explicitly.
+  --no-fail-fast                  Run all checks even after a failure
+                                  (default: stop at first failure).
+  --no-drift                      Skip the install-replay drift check. Reduces
+                                  coverage; use only for performance-
+                                  constrained CI loops.
+  --help                          Show this message and exit.

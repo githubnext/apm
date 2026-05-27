@@ -1,0 +1,74 @@
+Usage: apm pack [OPTIONS]
+
+  Pack distributable artifacts from your APM project.
+
+  Reads apm.yml to decide what to produce:
+
+    dependencies: block  ->  bundle (directory or .tar.gz)   marketplace:
+    block   ->  selected marketplace artifacts   both blocks present  ->
+    bundle plus selected marketplace artifacts
+
+  The lockfile (apm.lock.yaml) pins bundle contents. An enriched copy is
+  embedded in each bundle.
+
+  Examples:
+
+    # Bundle only (most common -- just dependencies: in apm.yml):   apm pack
+    # Claude Code plugin (default)   apm pack --target claude --archive   apm
+    pack --format apm -o ./dist       # Legacy APM bundle layout
+
+    # Marketplace only (marketplace: in apm.yml, no dependencies:):   apm pack
+    apm pack --offline --dry-run
+
+    # Both (apm.yml has dependencies: AND marketplace: blocks):   apm pack
+    apm pack --archive --offline
+
+    # Marketplace output paths are normally configured in apm.yml:   #
+    marketplace.claude.output / marketplace.codex.output
+
+  Exit codes:   0  Success   1  Build or runtime error   2  Manifest schema
+  validation error   3  Version alignment check failed (--check-versions)   4
+  Marketplace working-tree drift detected (--check-clean)
+
+Options:
+  --format [plugin|apm]    Bundle format. 'plugin' (default) emits a Claude
+                           Code plugin directory with plugin.json. 'apm'
+                           produces the legacy APM bundle layout (kept for
+                           tooling that still consumes it).
+  -t, --target TARGET      [Deprecated] Target platform filter. Bundles are
+                           now target-agnostic; the consumer's project decides
+                           where files land at install time. Value is recorded
+                           in pack.target as informational metadata only and
+                           is ignored by 'apm install'. The flag will be
+                           removed in a future release.
+  --archive                Produce a .tar.gz archive instead of a directory.
+  -o, --output PATH        Bundle output directory (default: ./build).
+  --dry-run                Show what would be packed without writing
+  --force                  On collision (plugin format), last writer wins.
+  -v, --verbose            Show detailed packing information.
+  --offline                Marketplace: use cached refs, skip network.
+  --include-prerelease     Marketplace: include pre-release version tags.
+  --check-versions         Release gate: verify per-package versions agree
+                           with the configured marketplace.versioning.strategy
+                           (lockstep | tag_pattern | per_package). Exits 3 on
+                           misalignment. Composes with --check-clean and
+                           --dry-run.
+  --check-clean            Release gate: regenerate every configured
+                           marketplace output to a temp path and diff against
+                           the on-disk file. Exits 4 if the working tree is
+                           dirty (out-of-date marketplace.json). The gate
+                           itself never writes to disk.
+  -m, --marketplace TEXT   Comma-separated marketplace outputs to build (e.g.
+                           'claude,codex'). Use 'all' for every configured
+                           output, 'none' to skip marketplace. Default: build
+                           all configured outputs.
+  --marketplace-path TEXT  Override output path for a format: FORMAT=PATH
+                           (repeatable). Example: --marketplace-path
+                           claude=dist/marketplace.json
+  --json                   Emit machine-readable JSON to stdout; logs go to
+                           stderr.
+  --legacy-skill-paths     Deploy skill files to per-client paths (e.g.
+                           .cursor/skills/) instead of the shared
+                           .agents/skills/ directory. Compatibility flag for
+                           projects that need per-client skill layouts.
+  --help                   Show this message and exit.

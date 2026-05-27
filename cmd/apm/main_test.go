@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -11,11 +10,8 @@ func TestBuildSmoke(t *testing.T) {
 	// If this test runs, the package compiled -- that is the assertion.
 }
 
-// TestParityHelpIncludesCommands verifies the --help output lists all expected commands.
+// TestParityHelpIncludesCommands verifies the commands map contains all expected commands.
 func TestParityHelpIncludesCommands(t *testing.T) {
-	// Capture run with no args should return 0 and show help.
-	// We can't capture stdout easily without refactoring, but we can verify
-	// the helpText constant contains the required commands.
 	expected := []string{
 		"audit", "cache", "compile", "config", "deps", "init", "install",
 		"list", "marketplace", "mcp", "outdated", "pack", "plugin", "policy",
@@ -23,8 +19,8 @@ func TestParityHelpIncludesCommands(t *testing.T) {
 		"update", "view",
 	}
 	for _, cmd := range expected {
-		if !strings.Contains(helpText, cmd) {
-			t.Errorf("helpText missing command: %s", cmd)
+		if _, ok := commands[cmd]; !ok {
+			t.Errorf("commands map missing command: %s", cmd)
 		}
 	}
 }

@@ -1,0 +1,15 @@
+Usage: apm update [OPTIONS]
+
+  Refresh APM dependencies to the latest matching refs
+
+Options:
+  -y, --yes            Skip the confirmation prompt (for CI / automation)
+  --dry-run            Render the update plan and exit without changing
+                       anything
+  -v, --verbose        Show unchanged deps and detailed pipeline diagnostics
+  -t, --target TARGET  Agent target(s) to update for (e.g. claude, copilot,
+                       cursor, windsurf, codex, opencode, gemini). Comma-
+                       separated for multiple: --target claude,cursor.
+                       Highest-priority entry in the resolution chain
+                       (--target > apm.yml targets: > auto-detect).
+  --help               Show this message and exit.

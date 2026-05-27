@@ -1,0 +1,11 @@
+Usage: apm cache [OPTIONS] COMMAND [ARGS]...
+
+  Manage the local package cache
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  clean  Remove all cached content
+  info   Show cache location and size statistics
+  prune  Remove cache entries older than N days

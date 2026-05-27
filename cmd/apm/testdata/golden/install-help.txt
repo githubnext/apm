@@ -1,0 +1,129 @@
+[!] A new version of APM is available: 0.15.0 (current: 0.14.1)
+Run apm update to upgrade
+
+Usage: apm install [OPTIONS] [PACKAGES]...
+
+  Install APM and MCP dependencies (supports APM packages, Claude skills
+  (SKILL.md), and plugin collections (plugin.json); auto-creates apm.yml; use
+  --allow-insecure for http:// packages)
+
+Options:
+  --runtime TEXT                  Target specific runtime only (copilot,
+                                  codex, vscode, cursor, opencode, gemini,
+                                  claude, windsurf)
+  --exclude TEXT                  Exclude specific runtime from installation
+  --only [apm|mcp]                Install only specific dependency type
+  --update                        Update dependencies to latest Git references
+                                  (deprecated: prefer 'apm update' for an
+                                  interactive plan, or 'apm update --yes' for
+                                  CI)
+  --dry-run                       Show what would be installed without
+                                  installing
+  --force                         Overwrite locally-authored files on
+                                  collision and deploy despite critical
+                                  security findings (does NOT refresh refs;
+                                  use 'apm update' for that)
+  --frozen                        Refuse to install when apm.lock.yaml is
+                                  missing or out of sync with apm.yml (CI-
+                                  safe; mutually exclusive with --update).
+                                  Structural presence check only; use 'apm
+                                  audit' for on-disk integrity.
+  -v, --verbose                   Show detailed installation information
+  --trust-transitive-mcp          Trust self-defined MCP servers from
+                                  transitive packages (skip re-declaration
+                                  requirement)
+  --parallel-downloads INTEGER    Max concurrent package downloads (0 to
+                                  disable parallelism)  [default: 4]
+  --dev                           Install as development dependency
+                                  (devDependencies)
+  -t, --target TARGET             Target harness(es) to deploy to. Comma-
+                                  separated for multiple: --target
+                                  claude,cursor. Repeating the flag (e.g. '-t
+                                  a -t b') is NOT supported -- only the last
+                                  value wins; use commas. Highest-priority
+                                  entry in the resolution chain (--target >
+                                  apm.yml targets: > auto-detect). Values:
+                                  copilot, claude, cursor, opencode, codex,
+                                  gemini, windsurf, agent-skills, all. 'agent-
+                                  skills' deploys to .agents/skills/ (cross-
+                                  client). 'all' = copilot+claude+cursor+openc
+                                  ode+codex+gemini+windsurf (excludes agent-
+                                  skills); combine with 'agent-skills' for
+                                  both. 'copilot-cowork' is also accepted when
+                                  the copilot-cowork experimental flag is
+                                  enabled (run 'apm experimental enable
+                                  copilot-cowork'). 'copilot-app' is also
+                                  accepted when the copilot-app experimental
+                                  flag is enabled (run 'apm experimental
+                                  enable copilot-app'). Note: '--target all'
+                                  on 'apm compile' is deprecated; use 'apm
+                                  compile --all' instead.
+  --allow-insecure                Allow HTTP (insecure) dependencies. Required
+                                  when dependencies use http:// URLs.
+  --allow-insecure-host HOSTNAME  Allow transitive HTTP (insecure)
+                                  dependencies from this hostname. Repeat for
+                                  multiple hosts.
+  -g, --global                    Install to user scope (~/.apm/) instead of
+                                  the current project. MCP servers target
+                                  global-capable runtimes only (Copilot CLI,
+                                  Codex CLI).
+  --ssh                           Prefer SSH transport for shorthand
+                                  (owner/repo) dependencies. Mutually
+                                  exclusive with --https.
+  --https                         Prefer HTTPS transport for shorthand
+                                  (owner/repo) dependencies. Mutually
+                                  exclusive with --ssh.
+  --allow-protocol-fallback       Restore the legacy permissive cross-protocol
+                                  fallback chain (escape hatch for migrating
+                                  users; also: APM_ALLOW_PROTOCOL_FALLBACK=1).
+                                  Caveat: fallback reuses the same port across
+                                  schemes; on servers that use different SSH
+                                  and HTTPS ports, omit this flag and pin the
+                                  dependency with an explicit ssh:// or
+                                  https:// URL.
+  --mcp NAME                      Add an MCP server entry to apm.yml. Use with
+                                  --transport, --url, --env, --header, --mcp-
+                                  version, or a stdio command after `--`.
+                                  Resolves active targets the same way `apm
+                                  install` does (--target > apm.yml targets: >
+                                  auto-detect); writes only for active
+                                  targets, skips others with [i].
+  --transport [stdio|http|sse|streamable-http]
+                                  MCP transport (stdio, http, sse, streamable-
+                                  http). Inferred from --url or post-- command
+                                  when omitted (requires --mcp).
+  --url TEXT                      MCP server URL for http/sse/streamable-http
+                                  transports (requires --mcp).
+  --env KEY=VALUE                 Environment variable for stdio MCP,
+                                  repeatable (requires --mcp).
+  --header KEY=VALUE              HTTP header for remote MCP, repeatable
+                                  (requires --mcp and --url).
+  --mcp-version TEXT              Pin MCP registry entry to a specific version
+                                  (requires --mcp).
+  --registry URL                  MCP registry URL (http:// or https://) for
+                                  resolving --mcp NAME. Overrides the
+                                  MCP_REGISTRY_URL env var. Default:
+                                  https://api.mcp.github.com. Captured in
+                                  apm.yml on the entry's 'registry:' field for
+                                  auditability. Not valid with --url or a
+                                  stdio command (self-defined entries).
+  --skill NAME                    Install only named skill(s) from a
+                                  SKILL_BUNDLE. Repeatable. Persisted in
+                                  apm.yml and apm.lock so bare 'apm install'
+                                  is deterministic. Use --skill '*' to reset
+                                  to all skills.
+  --no-policy                     Skip org policy enforcement for this
+                                  invocation. Does NOT bypass apm audit --ci.
+  --refresh                       Bypass the persistent cache and re-fetch all
+                                  dependencies from upstream.
+  --legacy-skill-paths            Deploy skill files to per-client paths (e.g.
+                                  .cursor/skills/) instead of the shared
+                                  .agents/skills/ directory. Compatibility
+                                  flag for projects that need per-client skill
+                                  layouts.
+  --as ALIAS                      Override the log/display label when
+                                  installing a local bundle (directory or
+                                  .tar.gz produced by 'apm pack'). Only valid
+                                  for local-bundle installs; passing --as
+                                  without a local bundle path is rejected.
+  --help                          Show this message and exit.

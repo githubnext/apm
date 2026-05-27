@@ -3,80 +3,51 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"strings"
 )
 
-const version = "0.1.0-go"
+// version mirrors the Python CLI version for parity. The build tag may
+// override this at link time.
+const version = "0.14.1"
 
-const helpText = `Agent Package Manager (APM): The package manager for AI-Native Development
+// commandOrder defines the display order for the top-level help (matches Python CLI).
+var commandOrder = []string{
+	"audit", "cache", "compile", "config", "deps", "experimental",
+	"init", "install", "list", "marketplace", "mcp", "outdated", "pack",
+	"plugin", "policy", "preview", "prune", "run", "runtime", "search",
+	"self-update", "targets", "uninstall", "unpack", "update", "view",
+}
 
-Usage:
-  apm [command]
-
-Available Commands:
-  audit       Audit installed packages for security issues
-  cache       Manage the APM package cache
-  compile     Compile APM primitives for a project
-  config      View or set APM configuration values
-  deps        Show or manage package dependencies
-  experimental Access experimental features
-  init        Initialize a new APM project
-  install     Install packages
-  list        List installed packages
-  marketplace Browse the APM marketplace
-  mcp         Manage MCP server integrations
-  outdated    Show outdated packages
-  pack        Pack a project into a distributable bundle
-  plugin      Manage APM plugins
-  policy      View or enforce APM policies
-  preview     Preview changes before applying them
-  prune       Remove unused packages
-  run         Run a script or command via APM
-  runtime     Manage runtimes
-  search      Search the marketplace
-  self-update Update APM itself
-  targets     List available targets
-  uninstall   Remove installed packages
-  unpack      Unpack a bundle
-  update      Update installed packages
-  view        View package information
-
-Flags:
-  --help      Show this help and exit
-  --version   Show version and exit
-
-Use "apm [command] --help" for more information about a command.`
-
+// commands maps each command name to its one-line description (matches Python CLI).
 var commands = map[string]string{
-	"audit":       "Audit installed packages for security issues",
-	"cache":       "Manage the APM package cache",
-	"compile":     "Compile APM primitives for a project",
-	"config":      "View or set APM configuration values",
-	"deps":        "Show or manage package dependencies",
-	"experimental": "Access experimental features",
-	"init":        "Initialize a new APM project",
-	"install":     "Install packages",
-	"list":        "List installed packages",
-	"marketplace": "Browse the APM marketplace",
-	"mcp":         "Manage MCP server integrations",
-	"outdated":    "Show outdated packages",
-	"pack":        "Pack a project into a distributable bundle",
-	"plugin":      "Manage APM plugins",
-	"policy":      "View or enforce APM policies",
-	"preview":     "Preview changes before applying them",
-	"prune":       "Remove unused packages",
-	"run":         "Run a script or command via APM",
-	"runtime":     "Manage runtimes",
-	"search":      "Search the marketplace",
-	"self-update": "Update APM itself",
-	"targets":     "List available targets",
-	"uninstall":   "Remove installed packages",
-	"unpack":      "Unpack a bundle",
-	"update":      "Update installed packages",
-	"view":        "View package information",
+	"audit":        "Scan installed packages for hidden Unicode characters",
+	"cache":        "Manage the local package cache",
+	"compile":      "Compile APM context into distributed AGENTS.md files",
+	"config":       "Configure APM CLI",
+	"deps":         "Manage APM package dependencies",
+	"experimental": "Manage experimental feature flags",
+	"init":         "Initialize a new APM project",
+	"install":      "Install APM and MCP dependencies (supports APM packages,...",
+	"list":         "List available scripts in the current project",
+	"marketplace":  "Manage marketplaces for discovery and governance",
+	"mcp":          "Discover, inspect, and install MCP servers",
+	"outdated":     "Show outdated locked dependencies",
+	"pack":         "Pack distributable artifacts from your APM project.",
+	"plugin":       "Scaffold and manage plugins (plugin-author workflows)",
+	"policy":       "Inspect and diagnose APM policy",
+	"preview":      "Preview a script's compiled prompt files",
+	"prune":        "Remove APM packages not listed in apm.yml",
+	"run":          "Run a script with parameters (experimental)",
+	"runtime":      "Manage AI runtimes (experimental)",
+	"search":       "Search plugins in a marketplace (QUERY@MARKETPLACE)",
+	"self-update":  "Update the APM CLI binary itself to the latest version",
+	"targets":      "Show resolved targets for the current project.",
+	"uninstall":    "Remove APM packages, their integrated files, and apm.yml...",
+	"unpack":       "[Deprecated] Extract an APM bundle into the current project.",
+	"update":       "Refresh APM dependencies to the latest matching refs",
+	"view":         "View package metadata or list remote versions.",
 }
 
 // aliases maps legacy or alternate names to canonical commands.
@@ -85,103 +56,130 @@ var aliases = map[string]string{
 	"self_update": "self-update",
 }
 
-func cmdHelp(name string) {
+func printHelp() {
+	fmt.Println("Usage: apm [OPTIONS] COMMAND [ARGS]...")
+	fmt.Println()
+	fmt.Println("  Agent Package Manager (APM): The package manager for AI-Native Development")
+	fmt.Println()
+	fmt.Println("Options:")
+	fmt.Println("  --version  Show version and exit.")
+	fmt.Println("  --help     Show this message and exit.")
+	fmt.Println()
+	fmt.Println("Commands:")
+	for _, name := range commandOrder {
+		desc := commands[name]
+		fmt.Printf("  %-14s%s\n", name, desc)
+	}
+}
+
+func printCmdHelp(name string) {
 	canonical := name
 	if a, ok := aliases[name]; ok {
 		canonical = a
 	}
 	desc, ok := commands[canonical]
 	if !ok {
-		fmt.Fprintf(os.Stderr, "apm: unknown command %q\n", name)
-		fmt.Fprintln(os.Stderr, `Run "apm --help" for usage.`)
-		os.Exit(1)
+		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", name)
+		fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		os.Exit(2)
 	}
-	fmt.Printf("Usage:\n  apm %s [flags]\n\n%s\n\nFlags:\n  --help   Show this help and exit\n", canonical, desc)
+	// Full description for selected commands (matches Python Click output).
+	fullDesc := commandFullDesc[canonical]
+	if fullDesc == "" {
+		fullDesc = desc
+	}
+	fmt.Printf("Usage: apm %s [OPTIONS]", canonical)
+	// Commands with positional args.
+	switch canonical {
+	case "install", "uninstall", "view", "search", "run":
+		fmt.Printf(" [ARGS]...")
+	case "init":
+		fmt.Printf(" [PROJECT_NAME]")
+	}
+	fmt.Println()
+	fmt.Println()
+	fmt.Printf("  %s\n", fullDesc)
+	fmt.Println()
+	fmt.Println("Options:")
+	if opts, ok := commandOptions[canonical]; ok {
+		for _, opt := range opts {
+			fmt.Println(opt)
+		}
+	}
+	fmt.Println("  --help  Show this message and exit.")
 }
 
 func run(args []string) int {
 	if len(args) == 0 {
-		fmt.Println(helpText)
+		printHelp()
 		return 0
 	}
 
-	// Top-level flags
-	fs := flag.NewFlagSet("apm", flag.ContinueOnError)
-	showVersion := fs.Bool("version", false, "Show version and exit")
-	showHelp := fs.Bool("help", false, "Show help and exit")
-
-	// Only parse flags that appear before any subcommand.
-	// Collect the first non-flag arg as the subcommand.
 	var subArgs []string
-	i := 0
-	for i < len(args) {
+	showVersion := false
+	showHelp := false
+
+	for i := 0; i < len(args); {
 		a := args[i]
-		if a == "--version" || a == "-version" {
-			*showVersion = true
+		switch {
+		case a == "--version" || a == "-version":
+			showVersion = true
 			i++
-			continue
-		}
-		if a == "--help" || a == "-help" || a == "-h" {
-			*showHelp = true
+		case a == "--help" || a == "-help" || a == "-h":
+			showHelp = true
 			i++
-			continue
+		default:
+			subArgs = append(subArgs, args[i:]...)
+			i = len(args)
 		}
-		// Stop at first non-flag token.
-		subArgs = append(subArgs, args[i:]...)
-		break
 	}
 
-	if *showVersion {
-		fmt.Printf("apm version %s (go)\n", version)
+	if showVersion {
+		fmt.Printf("Agent Package Manager (APM) CLI version %s (go)\n", version)
 		return 0
 	}
-	if *showHelp && len(subArgs) == 0 {
-		fmt.Println(helpText)
+	if showHelp && len(subArgs) == 0 {
+		printHelp()
 		return 0
 	}
-
 	if len(subArgs) == 0 {
-		fmt.Println(helpText)
+		printHelp()
 		return 0
 	}
 
 	cmd := subArgs[0]
 	rest := subArgs[1:]
 
-	// "help <command>" dispatches to per-command help.
 	if cmd == "help" {
 		if len(rest) == 0 {
-			fmt.Println(helpText)
+			printHelp()
 			return 0
 		}
-		cmdHelp(rest[0])
+		printCmdHelp(rest[0])
 		return 0
 	}
 
-	// Resolve aliases.
 	if canonical, ok := aliases[cmd]; ok {
 		cmd = canonical
 	}
 
-	// Unknown command.
 	if _, ok := commands[cmd]; !ok {
-		fmt.Fprintf(os.Stderr, "apm: unknown command %q\n", cmd)
-		fmt.Fprintln(os.Stderr, `Run "apm --help" for usage.`)
-		return 1
+		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", cmd)
+		fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		return 2
 	}
 
-	// --help on subcommand.
 	for _, a := range rest {
 		if a == "--help" || a == "-h" || a == "-help" {
-			cmdHelp(cmd)
+			printCmdHelp(cmd)
 			return 0
 		}
 	}
 
-	// Subcommand stub: print informative not-yet-implemented message.
-	fmt.Fprintf(os.Stderr, "apm %s: not yet fully implemented in the Go rewrite.\n", cmd)
-	fmt.Fprintf(os.Stderr, "Use the Python APM CLI for production use: uv run apm %s %s\n",
-		cmd, strings.Join(rest, " "))
+	// Commands not yet fully wired to Go business logic.
+	fmt.Fprintf(os.Stderr, "apm: %s is not yet fully implemented in the Go rewrite.\n", cmd)
+	fmt.Fprintf(os.Stderr, "Run 'apm --help' for usage.\n")
+	_ = strings.Join(rest, " ")
 	return 1
 }
 

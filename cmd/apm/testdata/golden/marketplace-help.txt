@@ -1,0 +1,24 @@
+Usage: apm marketplace [OPTIONS] COMMAND [ARGS]...
+
+  Manage marketplaces for discovery and governance
+
+Options:
+  --help  Show this message and exit.
+
+Consumer commands:
+  add       Register a marketplace
+  list      List registered marketplaces
+  browse    Browse plugins in a marketplace
+  update    Refresh marketplace cache
+  remove    Remove a registered marketplace
+  validate  Validate a marketplace manifest
+
+Authoring commands:
+  init      Add a 'marketplace:' block to apm.yml (scaffolds apm.yml if
+            missing)
+  check     Validate marketplace entries are resolvable
+  outdated  Show packages with available upgrades
+  doctor    Run environment diagnostics for marketplace publishing
+  publish   Publish marketplace updates to consumer repositories
+  package   Manage packages in marketplace authoring config
+  migrate   Fold marketplace.yml into apm.yml's 'marketplace:' block

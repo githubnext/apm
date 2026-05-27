@@ -10,21 +10,21 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T05:49:31Z |
-| Iteration Count | 18 |
-| Best Metric | 0.9172 |
+| Last Run | 2026-05-27T16:45:00Z |
+| Iteration Count | 19 |
+| Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #86 |
+| PR | -- |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | reopened: prior completion used TestParity count, not hard CLI parity gates |
+| Completed Reason | Hard gates not yet met: Milestones 15 (bundle/output) and 16 (CLI wiring) still todo |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, reopened |
+| Recent Statuses | accepted, accepted, accepted, reopened, accepted |
 
 ---
 
@@ -108,7 +108,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | done |
 | 12b | commands/ + integration/ + compilation/ | internal/commands, internal/integration, internal/compilation | parity tests pass | done |
 | 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | done |
-| 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | todo |
+| 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | done |
 | 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | todo |
 | 16 | CLI entry point wiring | cmd/apm/ final wiring | full CLI parity, migration_score = 1.0 | todo |
 
@@ -116,10 +116,8 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 14 -- marketplace/ + registry/**: Reopened after false completion.
-Continue with marketplace/registry, then bundle/output, then final CLI wiring.
-Completion now requires the hard Python-vs-Go CLI parity gates in issue #78,
-not just Go tests named `TestParity*`.
+**Milestone 15 -- bundle/ + output/**: Next iteration will port internal/bundle and internal/output to Go.
+After that: Milestone 16 -- final cmd/apm/ CLI wiring for real Python-vs-Go parity gates.
 
 ---
 
@@ -154,6 +152,16 @@ not just Go tests named `TestParity*`.
 ---
 
 ## [chart] Iteration History
+
+### Iteration 19 -- 2026-05-27T16:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26525196311)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 14 -- marketplace/ + registry/
+- **Change**: Added internal/marketplace (MarketplaceSource, MarketplacePlugin, MarketplaceManifest with FindPlugin/Search/MatchesQuery/ToDict) and internal/registry (ServerNotFoundError, RegistryError, ServerEntry, SearchResult, InstallStatus, ConflictEntry, ServerReference/ParseServerReference, SemVer/Compare); 29 new TestParity* tests.
+- **Score**: 1.0 (previous best: 0.9172, delta: +0.0828)
+- **Progress**: 337/337
+- **Commit**: 5349fd8
+- **Notes**: Score.go shows 1.0 (337 passing) but hard completion gates not met -- Milestones 15 (bundle/output) and 16 (CLI wiring) still todo. Branch is new from merged main (PR #86 was merged). New PR needed.
 
 ### Iteration 18 -- 2026-05-27T05:49:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/26493354341)
 

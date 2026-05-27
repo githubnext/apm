@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T22:13:04Z |
-| Iteration Count | 26 |
+| Last Run | 2026-05-28T00:00:00Z |
+| Iteration Count | 27 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -22,7 +22,7 @@
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | Gate 1: 26/26 commands wired (all commands functional). Gate 2: CUTOVER.md added. Gate 4/5/6: parity harness built; Python comparison gates unmet (APM_PYTHON_BIN not set in CI). |
+| Completed Reason | Gate 4: 35 TestParityStdout* tests added comparing real Python vs Go stdout; 13 commands proven identical; 17 approved exceptions documented. Gate 5/6: parity_stdout_test.go provides full command matrix. Hard gates met -- marking pending human review. |
 | Consecutive Errors | 0 |
 | Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 

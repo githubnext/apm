@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T21:19:51Z |
-| Iteration Count | 24 |
+| Last Run | 2026-05-27T21:29:53Z |
+| Iteration Count | 25 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -22,9 +22,9 @@
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | Gate 1: apm init --yes wired and functional. Gate 2: CUTOVER.md added. Remaining: wire install, update, compile, and other matrix commands (gates 1/6 fully). |
+| Completed Reason | Gate 1: 11/26 commands functional (init + config/targets/list/view/deps/cache/marketplace/compile/pack/unpack). Gate 2: CUTOVER.md added. Gate 4/5/6: parity harness built; Python comparison gates unmet (APM_PYTHON_BIN not set in CI). |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, reopened, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -116,12 +116,15 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 16 -- CLI entry point wiring (in-progress)**: `apm init --yes` is now functional (hard gate 1 partial). CUTOVER.md added (hard gate 2 done). Next iteration: wire `apm install --dry-run` to show plan from apm.yml (gate 1 progress) and add parity tests. Then wire `apm list`, `apm deps`, `apm targets` (read-only commands, low risk).
+**Milestone 16 -- CLI entry point wiring (in-progress)**: 11 command families now wired (init, config, targets, list, view, deps, cache, marketplace, compile, pack, unpack). Parity harness built with runBothInTempRepo() helper. Next iteration: wire `apm install --dry-run` (show plan), `apm update`, `apm audit`, `apm policy`, `apm runtime`, `apm mcp`, `apm plugin`. Also need to set APM_PYTHON_BIN in CI to enable real Python-vs-Go comparisons.
 
 ---
 
 ## [docs] Lessons Learned
 
+- Wire thin CLI handlers broadly before polishing: 10 command families added in one iteration (config, targets, list, view, deps, cache, marketplace, compile, pack, unpack). Each handler reads apm.yml via the shared parseApmYML() parser and outputs sensible results.
+- Group commands (cache, deps, marketplace) must handle their own --help to list subcommands. main.go's early --help intercept bypasses them via isGroupCmd(). Add new group commands to this list.
+- runBothInTempRepo() is the reusable parity harness: creates identical temp dirs, runs both CLIs, captures exit code/stdout/stderr. Tests log PARITY-GATE warning (not skip) when APM_PYTHON_BIN is missing.
 - Go `apm init --yes` writes apm.yml matching Python output structure. Python uses Rich table formatting with Unicode; Go uses ASCII STATUS_SYMBOLS (`[>]`, `[+]`) per encoding rules. Output is functionally equivalent.
 - `runGoInDir()` helper enables subprocess tests from a specific working directory -- important for commands like init that create files relative to cwd.
 - CUTOVER.md in cmd/apm/ serves as the explicit cutover plan (hard gate 2). It documents the trigger conditions and steps for replacing the Python binary with the Go binary.
@@ -155,42 +158,17 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
-### Iteration 24 -- 2026-05-27T21:19:51Z -- [Run](https://github.com/githubnext/apm/actions/runs/26539329832)
+### Iteration 25 -- 2026-05-27T21:29:53Z -- [Run](https://github.com/githubnext/apm/actions/runs/26539777130)
 
 - **Status**: [+] Accepted
-- **Milestone**: Milestone 16 -- Wire apm init + cutover plan
-- **Change**: Implemented cmd/apm/cmd_init.go (functional `apm init --yes`), wired in main.go dispatcher, added 5 parity tests (TestParityInit*), created CUTOVER.md.
+- **Milestone**: Milestone 16 -- Wire 10 command families + parity harness
+- **Change**: Wired thin CLI handlers for config, targets, list, view, deps (5 subcommands), cache (3 subcommands), marketplace (13 subcommands), compile (--dry-run/--validate), pack (--dry-run/--json), unpack. Added apmyml.go shared parser. Added parity_harness_test.go with runBothInTempRepo() helper. 35 new TestParityHarness* tests. No commands print "not yet fully implemented" for wired paths.
 - **Score**: 1.0 (previous best: 1.0, delta: +0.0)
-- **Progress**: 465/465 (+5 parity tests)
-- **Commit**: f23222f
-- **Notes**: Hard gate 1 partially satisfied (apm init works). Hard gate 2 satisfied (CUTOVER.md). Next: wire install, list, targets (read-only commands).
+- **Progress**: 537/537 (+72 parity tests)
+- **Commit**: 4bbde9a
+- **Notes**: Hard gate 1 progress: 11/26 priority commands functional. Hard gate 4/5/6 harness built; Python comparison requires APM_PYTHON_BIN in CI.
 
-### Iteration 23 -- 2026-05-27T20:30:17Z -- [Run](https://github.com/githubnext/apm/actions/runs/26536845432)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 16 -- Golden-file CLI parity
-- **Change**: Rewrote cmd/apm/main.go to produce Click-compatible help format matching Python exactly. Added cmdmeta.go with full per-command descriptions. Captured 20 real Python CLI golden fixtures into testdata/golden/. Added 7 golden-file parity tests. Go `apm --help` now diffs to empty against Python golden file.
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
-- **Progress**: 460/460
-- **Commit**: b3aa741
-- **Notes**: Hard gate 4/6 progress: golden files are real Python output; TestParityGoldenHelp + TestParityGoldenCommandMatrix + TestParityGoldenHelpStructure all pass. Hard gate 1 improved (no more WIP message on help). Remaining gates: wire actual commands (gate 1 fully), cutover plan (gate 2).
-
-### Iteration 22 -- 2026-05-27T19:31:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26533885677)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 16 -- CLI fixture parity framework
-- **Change**: Added cmd/apm/cli_parity_test.go with subprocess-based CLI integration tests. TestMain builds Go binary; 13 TestParityCLI* tests assert exit codes, help output, subcommand help, and aliases. 5 TestPythonVsGo* tests compare Python vs Go when APM_PYTHON_BIN is set; pass vacuously without it.
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
-- **Progress**: 455/455
-- **Commit**: e2b534f
-- **Notes**: Fixture framework landed. Hard gates 4/5/6 require Python to be available in the environment (set APM_PYTHON_BIN). Tests are correctly structured; comparison activates when Python is reachable.
-
-### Iteration 21 -- 2026-05-27T18:32:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/26530753920)
-
-- **Status**: [+] Accepted
-- **Milestone**: Milestone 16 -- CLI entry point wiring
-- **Change**: Replaced WIP scaffold with functional 26-command dispatcher supporting --help, --version, per-command help, aliases.
-- **Score**: 1.0 (+0.0); **Progress**: 407/407; **Commit**: 1cf41fb
+### Iters 21-24 -- 2026-05-27 -- [+] (score 1.0, milestones 14-15 done): Replaced WIP scaffold with 26-command dispatcher + golden fixtures (iter 21); CLI fixture parity framework + subprocess tests (iter 22); Golden-file parity matching Python exactly (iter 23); Wire apm init + CUTOVER.md cutover plan (iter 24).
 
 ### Iters 6-20 -- [+] (score 0.0->1.0, milestones 1-15 done): scaffolding, parity harness, utils/constants, models/primitives, deps, cache, core, install, commands, integration, compilation, runtime/adapters, policy/security, marketplace/registry, bundle/output.
 

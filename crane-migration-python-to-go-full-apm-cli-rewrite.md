@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T20:30:17Z |
-| Iteration Count | 23 |
+| Last Run | 2026-05-27T21:19:51Z |
+| Iteration Count | 24 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -22,9 +22,9 @@
 | Paused | false |
 | Pause Reason | -- |
 | Completed | false |
-| Completed Reason | Hard gates 4/6 advanced: golden files from real Python CLI captured; Go --help matches Python exactly. Gate 1 progress: removed WIP message from help. Remaining: wire actual commands beyond help/version (gate 1 fully), confirm cutover plan (gate 2). |
+| Completed Reason | Gate 1: apm init --yes wired and functional. Gate 2: CUTOVER.md added. Remaining: wire install, update, compile, and other matrix commands (gates 1/6 fully). |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, reopened, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, reopened, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -116,13 +116,15 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 16 -- CLI entry point wiring (in-progress)**: Golden-file parity framework is now established -- real Python CLI output captured as golden fixtures, Go --help matches Python exactly. Next iteration: wire at least `apm init` and `apm install --dry-run` to their internal Go implementations so the CLI is functional beyond help/version (hard gate 1). Also consider adding a cutover plan document (hard gate 2).
+**Milestone 16 -- CLI entry point wiring (in-progress)**: `apm init --yes` is now functional (hard gate 1 partial). CUTOVER.md added (hard gate 2 done). Next iteration: wire `apm install --dry-run` to show plan from apm.yml (gate 1 progress) and add parity tests. Then wire `apm list`, `apm deps`, `apm targets` (read-only commands, low risk).
 
 ---
 
 ## [docs] Lessons Learned
 
-- The Python source has 302 files across 20 modules. The largest are install (49) and commands (44) -- port these last.
+- Go `apm init --yes` writes apm.yml matching Python output structure. Python uses Rich table formatting with Unicode; Go uses ASCII STATUS_SYMBOLS (`[>]`, `[+]`) per encoding rules. Output is functionally equivalent.
+- `runGoInDir()` helper enables subprocess tests from a specific working directory -- important for commands like init that create files relative to cwd.
+- CUTOVER.md in cmd/apm/ serves as the explicit cutover plan (hard gate 2). It documents the trigger conditions and steps for replacing the Python binary with the Go binary.
 - score.go uses `go:build ignore` so it doesn't interfere with `go test ./...` -- it must be run explicitly via `go run`.
 - Go 1.24 is available in the sandbox. go.mod module path is github.com/githubnext/apm.
 - A smoke test in cmd/apm/main_test.go (TestBuildSmoke) provides the first parity point (1/302).
@@ -152,6 +154,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 24 -- 2026-05-27T21:19:51Z -- [Run](https://github.com/githubnext/apm/actions/runs/26539329832)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 16 -- Wire apm init + cutover plan
+- **Change**: Implemented cmd/apm/cmd_init.go (functional `apm init --yes`), wired in main.go dispatcher, added 5 parity tests (TestParityInit*), created CUTOVER.md.
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 465/465 (+5 parity tests)
+- **Commit**: f23222f
+- **Notes**: Hard gate 1 partially satisfied (apm init works). Hard gate 2 satisfied (CUTOVER.md). Next: wire install, list, targets (read-only commands).
 
 ### Iteration 23 -- 2026-05-27T20:30:17Z -- [Run](https://github.com/githubnext/apm/actions/runs/26536845432)
 

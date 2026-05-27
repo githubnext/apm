@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-26T23:28:27Z |
-| Iteration Count | 13 |
-| Best Metric | 0.7483 |
+| Last Run | 2026-05-27T00:03:31Z |
+| Iteration Count | 14 |
+| Best Metric | 0.8146 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -102,7 +102,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
 | 8 | install/ (partial) | internal/install -- errors, plan types, context, request | parity tests pass for install errors/plan/context/request | done |
 | 8b | install/ cache_pin + sources | internal/install/cache_pin.go, sources.go types | parity tests pass for cache pin and source types | done |
-| 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | todo |
+| 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | done |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | todo |
 | 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | todo |
 | 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | todo |
@@ -115,7 +115,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 9 -- commands/ (next)**: Port cobra command stubs for all top-level apm commands (install, unpack, audit, compile, etc.) with parity tests verifying command names and flags.
+**Milestone 10 -- integration/**: Port BaseIntegrator pattern and file-level integrators to internal/integration/; 18 files in the Python source. Parity tests verifying integrator registration, file-type dispatch, and error handling.
 
 ---
 
@@ -128,8 +128,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - Python binary (uv run apm) is not available in the CI sandbox. Parity tests that require Python must use t.Skip(). Tests not requiring Python count as parity points.
 - score.go counts tests with "Parity" in the test name as parity points. All Go unit tests for ported modules should use TestParity* naming.
 - Iteration 3 parity files (d817cef) were lost from the branch in a merge conflict resolution. Iteration 4 re-established parity + ported utils/constants (49 tests).
-- cache/http_cache.go uses only stdlib (crypto/sha256, encoding/json, os, sync); no external filelock library needed -- in-process sync.Mutex per-shard is sufficient for a single-process binary.
-- Host classification utilities (IsValidFQDN, IsGitHubHostname, etc.) from github_host.py go in internal/utils/githubhost/ -- they are needed by both auth and cache packages so must be a shared utility, not in core.
+- cobra v1.10.2 integrated; all 247 target tests pass after adding go.sum and wiring cmd/apm/main.go to cobra root.
 
 ---
 
@@ -148,6 +147,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 14 -- 2026-05-27T00:03:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/26482295207)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 9 -- commands/ cobra stubs
+- **Change**: Added internal/commands/commands.go with cobra stubs for all 27 top-level APM commands and groups; wired cmd/apm/main.go to cobra root; 20 new TestParity* tests
+- **Score**: 0.8146 (previous best: 0.7483, delta: +0.0663)
+- **Progress**: 246/302
+- **Commit**: 8958edb
+- **Notes**: cobra v1.10.2 added to go.mod. All 247 Go tests pass. Commands match the Python CLI surface: 18 leaf commands + 9 command groups. Next: Milestone 10 -- integration/.
 
 ### Iteration 13 -- 2026-05-26T23:28:27Z -- [Run](https://github.com/githubnext/apm/actions/runs/26481040888)
 

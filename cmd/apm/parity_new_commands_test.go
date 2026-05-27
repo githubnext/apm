@@ -365,7 +365,19 @@ func TestParityHarnessPreviewMissingArg(t *testing.T) {
 }
 
 func TestParityHarnessPreviewInTempRepo(t *testing.T) {
-	r := runBothInTempRepo(t, minimalApmYML, "preview", "build")
+	apmYML := `name: test-project
+version: 1.0.0
+description: Parity test project
+author: crane-test
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts:
+  build: echo build
+`
+	r := runBothInTempRepo(t, apmYML, "preview", "build")
 	if r.GoExitCode != 0 {
 		t.Errorf("apm preview build exited %d\nstderr: %s", r.GoExitCode, r.GoStderr)
 	}

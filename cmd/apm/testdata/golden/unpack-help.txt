@@ -1,0 +1,12 @@
+Usage: apm unpack [OPTIONS] BUNDLE_PATH
+
+  [Deprecated] Extract an APM bundle into the current project. Use 'apm
+  install <bundle-path>' instead -- this command will be removed in v0.14.
+
+Options:
+  -o, --output PATH  Target directory (default: current directory).
+  --skip-verify      Skip bundle completeness check.
+  --dry-run          Show what would be unpacked without writing
+  --force            Deploy despite critical hidden-character findings.
+  -v, --verbose      Show detailed unpacking information
+  --help             Show this message and exit.

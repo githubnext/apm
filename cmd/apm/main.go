@@ -98,24 +98,47 @@ func printCmdHelp(name string) {
 		fullDesc = desc
 	}
 	fmt.Printf("Usage: apm %s [OPTIONS]", canonical)
-	// Commands with positional args.
+	// Commands with positional args -- match Python CLI usage strings exactly.
 	switch canonical {
-	case "install", "uninstall", "view", "search", "run":
-		fmt.Printf(" [ARGS]...")
+	case "install":
+		fmt.Printf(" [PACKAGES]...")
+	case "uninstall":
+		fmt.Printf(" PACKAGES...")
+	case "view":
+		fmt.Printf(" PACKAGE [FIELD]")
+	case "search":
+		fmt.Printf(" QUERY@MARKETPLACE")
+	case "run":
+		fmt.Printf(" [SCRIPT_NAME]")
+	case "audit":
+		fmt.Printf(" [PACKAGE]")
+	case "unpack":
+		fmt.Printf(" BUNDLE_PATH")
 	case "init":
 		fmt.Printf(" [PROJECT_NAME]")
+	case "targets":
+		fmt.Printf(" COMMAND [ARGS]...")
 	}
 	fmt.Println()
 	fmt.Println()
-	fmt.Printf("  %s\n", fullDesc)
+	// Print full description: indent each line with two spaces.
+	for _, line := range strings.Split(fullDesc, "\n") {
+		if line == "" {
+			fmt.Println()
+		} else {
+			fmt.Printf("  %s\n", line)
+		}
+	}
 	fmt.Println()
 	fmt.Println("Options:")
 	if opts, ok := commandOptions[canonical]; ok {
 		for _, opt := range opts {
 			fmt.Println(opt)
 		}
+	} else {
+		// Default: only --help option.
+		fmt.Println("  --help  Show this message and exit.")
 	}
-	fmt.Println("  --help  Show this message and exit.")
 }
 
 func run(args []string) int {

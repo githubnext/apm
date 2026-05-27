@@ -174,6 +174,10 @@ func runPreview(args []string) int {
 		return 1
 	}
 	fmt.Printf("[*] Previewing script '%s' in project '%s'\n", script, proj.Name)
+	if _, ok := proj.Scripts[script]; !ok {
+		fmt.Fprintf(os.Stderr, "[x] Script '%s' not found\n", script)
+		return 1
+	}
 	fmt.Println("[i] No compiled output available.")
 	return 0
 }

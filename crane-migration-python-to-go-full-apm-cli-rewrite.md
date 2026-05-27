@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-05-27T01:24:20Z |
-| Iteration Count | 15 |
-| Best Metric | 0.8411 |
+| Last Run | 2026-05-27T02:34:45Z |
+| Iteration Count | 16 |
+| Best Metric | 0.8742 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -24,7 +24,7 @@
 | Completed | false |
 | Completed Reason | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -104,7 +104,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 8b | install/ cache_pin + sources | internal/install/cache_pin.go, sources.go types | parity tests pass for cache pin and source types | done |
 | 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | done |
 | 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | done |
-| 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | todo |
+| 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | done |
 | 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | todo |
 | 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | todo |
 | 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | todo |
@@ -115,7 +115,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Milestone 11 -- compilation/**: Port the compilation pipeline to internal/compilation/; parity tests for the core compilation types and pipeline logic.
+**Milestone 12 -- runtime/ + adapters/**: Port internal/runtime and internal/adapters; parity tests for runtime adapters.
 
 ---
 
@@ -148,15 +148,23 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
-### Iteration 15 -- 2026-05-27T01:24:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26485015099)
+### Iteration 16 -- 2026-05-27T02:34:45Z -- [Run](https://github.com/githubnext/apm/actions/runs/26487235118)
 
 - **Status**: [+] Accepted
+- **Milestone**: Milestones 9+10+11 -- commands/, integration/, compilation/ (re-committed + compilation added)
+- **Change**: Added internal/compilation/ (17 TestParity* tests), internal/commands/ (11 TestParity* tests), internal/integration/ (10 TestParity* tests), cobra v1.10.2 in go.mod. Corrected state: iter 15 code was never committed to branch.
+- **Score**: 0.8742 (previous committed best: 0.7483, delta: +0.1259)
+- **Progress**: 264/302
+- **Commit**: 2c9fb33
+- **Notes**: Iter 15 state file recorded 0.8411 but code was never pushed. This iteration fixes that and advances to compilation/. Next: Milestone 12 -- runtime/ + adapters/.
+
+### Iteration 15 -- 2026-05-27T01:24:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/26485015099)
+
+- **Status**: [x] Rejected (code never committed to branch -- state file artifact only)
 - **Milestone**: Milestones 9+10 -- commands/ cobra stubs + integration/ package
-- **Change**: Added internal/commands/ (22 cobra commands, 12 TestParity* tests) and internal/integration/ (IntegrationResult, TargetProfile, PrimitiveMapping, PrimitiveDispatch, NormalizeRepoURL -- 16 TestParity* tests); cobra v1.10.2 added to go.mod; 28 new TestParity* tests total
-- **Score**: 0.8411 (previous best: 0.7483, delta: +0.0928)
-- **Progress**: 254/302
-- **Commit**: 83d8176
-- **Notes**: Milestones 9 and 10 both completed in this iteration. The state file had an unverified iteration 14 entry (commands, score 0.8146) that was never committed to the branch -- this iteration properly commits both commands and integration. Next: Milestone 11 -- compilation/.
+- **Change**: State file updated but code was not committed to branch (likely push failure)
+- **Score**: 0.8411 (recorded but not verified against branch)
+- **Notes**: See iteration 16 for the actual commit.
 
 ### Iteration 14 -- 2026-05-27T00:03:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/26482295207)
 

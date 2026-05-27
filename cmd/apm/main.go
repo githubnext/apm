@@ -176,6 +176,12 @@ func run(args []string) int {
 		}
 	}
 
+	// Dispatch to implemented commands.
+	switch cmd {
+	case "init":
+		return runInit(rest)
+	}
+
 	// Commands not yet fully wired to Go business logic.
 	fmt.Fprintf(os.Stderr, "apm: %s is not yet fully implemented in the Go rewrite.\n", cmd)
 	fmt.Fprintf(os.Stderr, "Run 'apm --help' for usage.\n")

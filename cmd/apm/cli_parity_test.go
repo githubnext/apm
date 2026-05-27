@@ -502,3 +502,111 @@ func TestParityGoldenHelpStructure(t *testing.T) {
 		}
 	}
 }
+
+// --- apm init command parity tests ---
+
+// TestParityInitCreatesApmYML verifies that `apm init --yes` creates apm.yml
+// in a fresh directory with the expected YAML keys.
+func TestParityInitCreatesApmYML(t *testing.T) {
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+dir := t.TempDir()
+stdout, stderr, code := runGoInDir(t, dir, "init", "--yes")
+if code != 0 {
+t.Fatalf("apm init --yes exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
+}
+
+data, err := os.ReadFile(filepath.Join(dir, "apm.yml"))
+if err != nil {
+t.Fatalf("apm.yml not created: %v", err)
+}
+content := string(data)
+for _, key := range []string{"name:", "version:", "description:", "author:", "dependencies:"} {
+if !strings.Contains(content, key) {
+t.Errorf("apm.yml missing key %q\nContent:\n%s", key, content)
+}
+}
+}
+
+// TestParityInitExitCode verifies `apm init --yes` exits 0.
+func TestParityInitExitCode(t *testing.T) {
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+dir := t.TempDir()
+_, _, code := runGoInDir(t, dir, "init", "--yes")
+if code != 0 {
+t.Errorf("apm init --yes exit code = %d, want 0", code)
+}
+}
+
+// TestParityInitIdempotent verifies `apm init --yes` succeeds when apm.yml already exists.
+func TestParityInitIdempotent(t *testing.T) {
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+dir := t.TempDir()
+// First run.
+_, _, code := runGoInDir(t, dir, "init", "--yes")
+if code != 0 {
+t.Fatalf("first apm init --yes exited %d", code)
+}
+// Second run: should succeed (not error on existing apm.yml).
+_, _, code2 := runGoInDir(t, dir, "init", "--yes")
+if code2 != 0 {
+t.Errorf("second apm init --yes (idempotent) exited %d, want 0", code2)
+}
+}
+
+// TestParityInitProjectName verifies `apm init --yes myproject` creates a subdir.
+func TestParityInitProjectName(t *testing.T) {
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+dir := t.TempDir()
+stdout, stderr, code := runGoInDir(t, dir, "init", "--yes", "myproject")
+if code != 0 {
+t.Fatalf("apm init --yes myproject exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
+}
+if _, err := os.Stat(filepath.Join(dir, "myproject", "apm.yml")); err != nil {
+t.Errorf("myproject/apm.yml not created: %v", err)
+}
+}
+
+// TestParityInitOutputContainsSuccess verifies the success message is printed.
+func TestParityInitOutputContainsSuccess(t *testing.T) {
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+dir := t.TempDir()
+stdout, _, code := runGoInDir(t, dir, "init", "--yes")
+if code != 0 {
+t.Fatalf("apm init --yes exited %d", code)
+}
+if !strings.Contains(stdout, "initialized") && !strings.Contains(stdout, "apm.yml") {
+t.Errorf("expected success output, got: %q", stdout)
+}
+}
+
+// runGoInDir executes the Go binary from a given working directory.
+func runGoInDir(t *testing.T, dir string, args ...string) (stdout, stderr string, exitCode int) {
+t.Helper()
+if goBinPath == "" {
+t.Skip("Go binary not built; skipping")
+}
+var outBuf, errBuf bytes.Buffer
+cmd := exec.Command(goBinPath, args...)
+cmd.Dir = dir
+cmd.Stdout = &outBuf
+cmd.Stderr = &errBuf
+err := cmd.Run()
+if err != nil {
+if exitErr, ok := err.(*exec.ExitError); ok {
+exitCode = exitErr.ExitCode()
+} else {
+exitCode = -1
+}
+}
+return outBuf.String(), errBuf.String(), exitCode
+}

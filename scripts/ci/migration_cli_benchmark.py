@@ -60,6 +60,7 @@ def _measure(
     label: str,
     env: dict[str, str],
 ) -> dict[str, object]:
+    base.mkdir(parents=True, exist_ok=True)
     samples: list[dict[str, object]] = []
     for index in range(repeats):
         cwd = _workspace(base, label, index) if mutates_workspace else base
@@ -75,22 +76,33 @@ def _measure(
     }
 
 
+def _speed_label(ratio: float) -> str:
+    if ratio == 0:
+        return "n/a"
+    if ratio < 1:
+        return f"{1 / ratio:.2f}x faster"
+    if ratio > 1:
+        return f"{ratio:.2f}x slower"
+    return "same"
+
+
 def _markdown(results: list[dict[str, object]], max_ratio: float) -> str:
     lines = [
         "## Migration CLI Benchmark",
         "",
         f"Max allowed Go/Python median ratio: `{max_ratio:.2f}`",
         "",
-        "| Command | Python median | Go median | Go/Python | Return codes |",
-        "|---|---:|---:|---:|---|",
+        "| Command | Python median | Go median | Go/Python | Result | Return codes |",
+        "|---|---:|---:|---:|---|---|",
     ]
     for row in results:
         lines.append(
-            "| {command} | {python:.4f}s | {go:.4f}s | {ratio:.2f}x | {codes} |".format(
+            "| {command} | {python:.4f}s | {go:.4f}s | {ratio:.2f}x | {result} | {codes} |".format(
                 command=row["command"],
                 python=row["python_median_seconds"],
                 go=row["go_median_seconds"],
                 ratio=row["ratio"],
+                result=_speed_label(float(row["ratio"])),
                 codes=row["returncodes"],
             )
         )

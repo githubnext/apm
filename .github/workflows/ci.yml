@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    branches: [main]
+    types: [checks_requested]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Ruff lint
+        run: uv run --extra dev ruff check src/ tests/
+
+      - name: Ruff format check
+        run: uv run --extra dev ruff format --check src/ tests/
+
+  python-tests:
+    name: Python Unit Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Run unit tests
+        run: uv run pytest tests/unit tests/test_console.py -n auto --dist worksteal
+
+  go-tests:
+    name: Go Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-go@v5
+        if: hashFiles('go.mod') != ''
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install Python reference CLI
+        if: hashFiles('go.mod') != ''
+        run: |
+          uv sync --extra dev
+          test -x "$GITHUB_WORKSPACE/.venv/bin/apm"
+          echo "APM_PYTHON_BIN=$GITHUB_WORKSPACE/.venv/bin/apm" >> "$GITHUB_ENV"
+
+      - name: Run Go tests
+        if: hashFiles('go.mod') != ''
+        run: go test ./...

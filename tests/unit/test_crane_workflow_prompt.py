@@ -29,4 +29,3 @@ def test_crane_commit_guidance_provides_structured_summary_fallback() -> None:
     assert "Changes:" in text
     assert "Run: {run_url}" in text
     assert text.index("Changes:") < text.index("Run: {run_url}")
-

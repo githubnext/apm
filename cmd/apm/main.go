@@ -75,7 +75,7 @@ func printHelp() {
 // isGroupCmd returns true for commands that have subcommands and manage their own --help.
 func isGroupCmd(name string) bool {
 	switch name {
-	case "cache", "deps", "marketplace", "mcp", "policy", "runtime", "plugin", "experimental":
+	case "cache", "deps", "marketplace", "mcp", "policy", "runtime", "plugin", "experimental", "config":
 		return true
 	}
 	return false
@@ -109,6 +109,8 @@ func printCmdHelp(name string) {
 	case "search":
 		fmt.Printf(" QUERY@MARKETPLACE")
 	case "run":
+		fmt.Printf(" [SCRIPT_NAME]")
+	case "preview":
 		fmt.Printf(" [SCRIPT_NAME]")
 	case "audit":
 		fmt.Printf(" [PACKAGE]")

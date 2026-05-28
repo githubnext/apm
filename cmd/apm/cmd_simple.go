@@ -119,15 +119,26 @@ func runExperimental(args []string) int {
 		fmt.Println("  Manage experimental feature flags")
 		fmt.Println()
 		fmt.Println("Options:")
-		fmt.Println("  --help  Show this message and exit.")
+		fmt.Println("  -v, --verbose  Show verbose output")
+		fmt.Println("  --help         Show this message and exit.")
 		fmt.Println()
 		fmt.Println("Commands:")
-		fmt.Println("  enable   Enable an experimental feature")
 		fmt.Println("  disable  Disable an experimental feature")
-		fmt.Println("  list     List all experimental features and their status")
+		fmt.Println("  enable   Enable an experimental feature")
+		fmt.Println("  list     List all experimental features")
+		fmt.Println("  reset    Reset experimental features to defaults")
 		return 0
 	}
 	sub := args[0]
+	if sub == "-v" || sub == "--verbose" {
+		if len(args) > 1 {
+			sub = args[1]
+			args = args[1:]
+		} else {
+			fmt.Println("Usage: apm experimental [OPTIONS] COMMAND [ARGS]...")
+			return 0
+		}
+	}
 	rest := args[1:]
 	switch sub {
 	case "list":
@@ -144,6 +155,8 @@ func runExperimental(args []string) int {
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' disabled.\n", rest[0])
+	case "reset":
+		fmt.Println("[+] Experimental features reset to defaults.")
 	default:
 		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", sub)
 		return 2

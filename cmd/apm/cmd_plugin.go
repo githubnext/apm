@@ -8,7 +8,7 @@ import (
 )
 
 var pluginSubcommands = []struct{ name, desc string }{
-	{"init", "Scaffold a new plugin (plugin.json + apm.yml)"},
+	{"init", "Scaffold a plugin (creates plugin.json + apm.yml)"},
 }
 
 func printPluginHelp() {
@@ -21,7 +21,7 @@ func printPluginHelp() {
 	fmt.Println()
 	fmt.Println("Commands:")
 	for _, sub := range pluginSubcommands {
-		fmt.Printf("  %-14s%s\n", sub.name, sub.desc)
+		fmt.Printf("  %-6s%s\n", sub.name, sub.desc)
 	}
 }
 

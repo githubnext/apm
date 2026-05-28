@@ -24,7 +24,17 @@ func configPath() string {
 func runConfig(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			printCmdHelp("config")
+			fmt.Println("Usage: apm config [OPTIONS] COMMAND [ARGS]...")
+			fmt.Println()
+			fmt.Println("  Configure APM CLI")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println()
+			fmt.Println("Commands:")
+			fmt.Println("  get    Get a configuration value")
+			fmt.Println("  set    Set a configuration value")
+			fmt.Println("  unset  Unset a configuration value")
 			return 0
 		}
 	}

@@ -8,9 +8,9 @@ import (
 )
 
 var runtimeSubcommands = []struct{ name, desc string }{
-	{"setup", "Set up a runtime"},
 	{"list", "List available and installed runtimes"},
 	{"remove", "Remove an installed runtime"},
+	{"setup", "Set up a runtime"},
 	{"status", "Show active runtime and preference order"},
 }
 
@@ -24,7 +24,7 @@ func printRuntimeHelp() {
 	fmt.Println()
 	fmt.Println("Commands:")
 	for _, sub := range runtimeSubcommands {
-		fmt.Printf("  %-14s%s\n", sub.name, sub.desc)
+		fmt.Printf("  %-8s%s\n", sub.name, sub.desc)
 	}
 }
 

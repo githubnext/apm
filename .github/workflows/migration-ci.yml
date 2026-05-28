@@ -1,0 +1,138 @@
+name: Migration Parity and Benchmarks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".crane/**"
+      - ".github/workflows/migration-ci.yml"
+      - "cmd/**"
+      - "internal/**"
+      - "pkg/**"
+      - "go.mod"
+      - "go.sum"
+      - "pyproject.toml"
+      - "scripts/ci/**"
+      - "src/**"
+      - "tests/benchmarks/**"
+      - "tests/unit/test_crane_score.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  parity:
+    name: Python-vs-Go Parity Gate
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install Python reference CLI
+        run: |
+          uv sync --extra dev
+          test -x "$GITHUB_WORKSPACE/.venv/bin/apm"
+          echo "APM_PYTHON_BIN=$GITHUB_WORKSPACE/.venv/bin/apm" >> "$GITHUB_ENV"
+
+      - name: Run Go parity tests
+        run: go test ./...
+
+      - name: Compute migration score
+        run: |
+          go test -json ./... | tee "$RUNNER_TEMP/go-test-events.json" | go run .crane/scripts/score.go | tee "$RUNNER_TEMP/migration-score.json"
+          python - "$RUNNER_TEMP/migration-score.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as fh:
+              score = json.load(fh)
+
+          print(json.dumps(score, indent=2, sort_keys=True))
+          if score.get("migration_score") != 1.0:
+              raise SystemExit("migration_score must be 1.0 for completion parity")
+          PY
+
+      - name: Upload parity evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-parity-evidence
+          path: |
+            ${{ runner.temp }}/go-test-events.json
+            ${{ runner.temp }}/migration-score.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+  benchmarks:
+    name: Migration Benchmarks
+    needs: [parity]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Build Go CLI
+        run: go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
+
+      - name: Run Python performance guards
+        run: |
+          uv run pytest tests/benchmarks/test_scaling_guards.py -v
+          uv run pytest tests/benchmarks -v --tb=short -m benchmark
+
+      - name: Run Python-vs-Go CLI benchmark
+        run: |
+          python scripts/ci/migration_cli_benchmark.py \
+            --python-bin "$GITHUB_WORKSPACE/.venv/bin/apm" \
+            --go-bin "$RUNNER_TEMP/apm-go" \
+            --json-out "$RUNNER_TEMP/migration-cli-benchmark.json" \
+            --markdown-out "$RUNNER_TEMP/migration-cli-benchmark.md" \
+            --max-ratio 5.0
+
+      - name: Add benchmark summary
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/migration-cli-benchmark.md" ]; then
+            cat "$RUNNER_TEMP/migration-cli-benchmark.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-benchmark-evidence
+          path: |
+            ${{ runner.temp }}/migration-cli-benchmark.json
+            ${{ runner.temp }}/migration-cli-benchmark.md
+          if-no-files-found: ignore
+          retention-days: 14

@@ -367,16 +367,12 @@ func TestParityStdoutAuditInTempRepoExitCode(t *testing.T) {
 	assertPythonVsGoExitCode(t, r)
 }
 
-// TestParityStdoutOutdatedExitCode verifies `apm outdated` exits 0 when no lockfile is needed.
-// Note: Python exits 1 when lockfile is missing; Go exits 0 (approved exception).
-// This test only checks Go exit code. Python vs Go comparison is logged as exception.
+// TestParityStdoutOutdatedExitCode verifies `apm outdated` exits 1 when no lockfile is found.
+// Both Python and Go exit 1 when apm.lock.yaml is absent -- this is the correct behavior.
 func TestParityStdoutOutdatedExitCode(t *testing.T) {
 	r := runBothInTempRepo(t, minimalApmYML, "outdated")
-	assertGoExitCode(t, r, 0)
-	// Python exits 1 for missing lockfile; approved exception documented in TestParityStdoutKnownExceptions.
-	if !r.PyMissing && r.PyExitCode != r.GoExitCode {
-		t.Logf("APPROVED-EXCEPTION: outdated exit code -- Python=%d Go=%d (Python requires lockfile, Go tolerates missing lockfile)", r.PyExitCode, r.GoExitCode)
-	}
+	assertGoExitCode(t, r, 1)
+	assertPythonVsGoExitCode(t, r)
 }
 
 // TestParityStdoutPreviewInTempRepoExitCode verifies `apm preview SCRIPT` exits non-zero for missing script.
@@ -408,7 +404,6 @@ func TestParityStdoutKnownExceptions(t *testing.T) {
 		{"apm experimental --help", "Python experimental shows subcommands; Go uses inline subcommand handling. Approved."},
 		{"apm marketplace --help", "Python has additional subcommand descriptions; Go is simplified. Approved truncation."},
 		{"apm mcp --help", "Python MCP subcommand descriptions differ in detail. Approved truncation."},
-		{"apm outdated (no lockfile)", "Python exits 1 when lockfile is missing; Go exits 0. Approved exception: Go is more lenient for missing lockfile."},
 		{"apm preview (missing script)", "Python exits 1 for missing script; Go exits 1 after fix. Both now agree on exit code."},
 		{"apm plugin --help", "Python plugin subcommand descriptions differ. Approved truncation."},
 		{"apm policy --help", "Python policy subcommand descriptions differ. Approved truncation."},

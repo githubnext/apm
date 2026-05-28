@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // runSearch implements `apm search QUERY@MARKETPLACE`.
@@ -72,6 +73,13 @@ func runOutdated(args []string) int {
 	proj, err := parseApmYML(ymlPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
+		return 1
+	}
+	// Check for lockfile; Python exits 1 if no lockfile found.
+	dir := filepath.Dir(ymlPath)
+	lockPath := filepath.Join(dir, "apm.lock.yaml")
+	if _, statErr := os.Stat(lockPath); os.IsNotExist(statErr) {
+		fmt.Fprintf(os.Stderr, "[x] No lockfile found in current directory\n")
 		return 1
 	}
 	fmt.Printf("[*] Checking for outdated dependencies in project '%s'\n", proj.Name)

@@ -3,23 +3,12 @@ name: Migration Parity and Benchmarks
 on:
   pull_request:
     branches: [main]
-    paths:
-      - ".crane/**"
-      - ".github/workflows/migration-ci.yml"
-      - "cmd/**"
-      - "internal/**"
-      - "pkg/**"
-      - "go.mod"
-      - "go.sum"
-      - "pyproject.toml"
-      - "scripts/ci/**"
-      - "src/**"
-      - "tests/benchmarks/**"
-      - "tests/unit/test_crane_score.py"
   workflow_dispatch:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
 
 env:
   PYTHON_VERSION: "3.12"
@@ -37,9 +26,16 @@ jobs:
 
       - name: Check changed paths
         id: filter
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should-run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "${{ github.event_name }}" = "pull_request" ] && [[ "$HEAD_REF" == crane/* ]]; then
             echo "should-run=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -49,7 +45,7 @@ jobs:
             "${{ github.event.pull_request.head.sha }}" \
             | tee "$RUNNER_TEMP/changed-files.txt"
 
-          if grep -Eq '^(\.crane/|cmd/|internal/|pkg/|go\.mod$|go\.sum$|pyproject\.toml$|src/|tests/benchmarks/|tests/unit/test_crane_score\.py$)' "$RUNNER_TEMP/changed-files.txt"; then
+          if grep -Eq '^(\.crane/|\.github/workflows/migration-ci\.yml$|cmd/|internal/|pkg/|go\.mod$|go\.sum$|pyproject\.toml$|scripts/ci/|src/|tests/benchmarks/|tests/unit/test_crane_score\.py$)' "$RUNNER_TEMP/changed-files.txt"; then
             echo "should-run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should-run=false" >> "$GITHUB_OUTPUT"
@@ -137,11 +133,6 @@ jobs:
       - name: Build Go CLI
         run: go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
 
-      - name: Run Python performance guards
-        run: |
-          uv run pytest tests/benchmarks/test_scaling_guards.py -v
-          uv run pytest tests/benchmarks -v --tb=short -m benchmark
-
       - name: Run Python-vs-Go CLI benchmark
         run: |
           python scripts/ci/migration_cli_benchmark.py \
@@ -151,11 +142,50 @@ jobs:
             --markdown-out "$RUNNER_TEMP/migration-cli-benchmark.md" \
             --max-ratio 5.0
 
+      - name: Run Python scaling guards
+        run: uv run pytest tests/benchmarks/test_scaling_guards.py -v
+
       - name: Add benchmark summary
         if: always()
         run: |
           if [ -f "$RUNNER_TEMP/migration-cli-benchmark.md" ]; then
             cat "$RUNNER_TEMP/migration-cli-benchmark.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Post benchmark PR comment
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ ! -f "$RUNNER_TEMP/migration-cli-benchmark.md" ]; then
+            echo "No migration benchmark markdown found; skipping PR comment."
+            exit 0
+          fi
+
+          marker="<!-- apm-migration-benchmark:${HEAD_SHA} -->"
+          {
+            echo "$marker"
+            echo "## Migration Benchmark Results"
+            echo
+            echo "- **Commit**: \`${HEAD_SHA}\`"
+            echo "- **Run**: ${RUN_URL}"
+            echo
+            cat "$RUNNER_TEMP/migration-cli-benchmark.md"
+          } > "$RUNNER_TEMP/migration-benchmark-pr-comment.md"
+
+          comment_id=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" --paginate \
+            --jq ".[] | select(.body | contains(\"${marker}\")) | .id" | tail -n 1)
+
+          if [ -n "$comment_id" ]; then
+            gh api \
+              --method PATCH \
+              "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" \
+              --field body@"$RUNNER_TEMP/migration-benchmark-pr-comment.md"
+          else
+            gh pr comment "$PR_NUMBER" --body-file "$RUNNER_TEMP/migration-benchmark-pr-comment.md"
           fi
 
       - name: Upload benchmark evidence

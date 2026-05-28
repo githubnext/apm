@@ -5,7 +5,7 @@
 // Usage:
 //   APM_PYTHON_BIN=/path/to/apm go test -count=1 -json ./... | go run .crane/scripts/score.go
 //
-// This script implements the deletion-grade framework from issue #96.
+// This script implements the deletion-grade framework from issues #78 and #96.
 // migration_score = 1.0 only when ALL of the following gates pass:
 //
 //   Gate 1 -- python_reference_required: APM_PYTHON_BIN must be set and valid.
@@ -15,18 +15,28 @@
 //   Gate 2 -- go_tests_pass: every Go test in the module must pass. A single
 //             failing non-parity test voids the gate.
 //
-//   Gate 3 -- help_parity: TestParityCompletionCommandMatrix must pass.
-//             Every public command must respond to --help with exit 0.
+//   Gate 3 -- surface_parity: TestParityCompletionSurfaceParity must pass.
+//             Python and Go command/option/subcommand inventories must match.
 //
-//   Gate 4 -- version_parity: TestParityCompletionVersionEquivalent must pass.
+//   Gate 4 -- help_parity: TestParityCompletionCommandMatrix and
+//             TestParityCompletionHelpIdentical must pass. Every public help
+//             and invalid-usage path must match Python.
 //
-//   Gate 5 -- init_parity: TestParityCompletionInitParity must pass.
-//             The init command must produce apm.yml equivalent to Python.
+//   Gate 5 -- functional_contracts: TestParityCompletionFunctionalContracts
+//             must pass. Supported command behavior must be covered by
+//             black-box Python-vs-Go contracts.
 //
-//   Gate 6 -- error_parity: TestParityCompletionErrorParity must pass.
-//             Unknown commands must produce matching non-zero exit codes.
+//   Gate 6 -- state_diff_contracts: TestParityCompletionStateDiffContracts
+//             must pass. Mutating commands must match Python filesystem,
+//             lockfile, config, cache, and generated-artifact effects.
 //
-//   Gate 7 -- no_known_exceptions: the test output must not contain any
+//   Gate 7 -- python_tests_pass: TestParityCompletionPythonSuite must pass.
+//             The original Python reference test suite must still be green.
+//
+//   Gate 8 -- benchmarks_pass: TestParityCompletionBenchmarks must pass.
+//             Migration benchmarks must run and satisfy the configured guard.
+//
+//   Gate 9 -- no_known_exceptions: the test output must not contain any
 //             "approved exception" log line. Final cutover requires zero exceptions.
 //
 // If Gate 1 fails, migration_score is forced to 0.0 regardless of other gates.
@@ -73,13 +83,16 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Buffer(make([]byte, 4*1024*1024), 4*1024*1024)
 
-	// Deletion-grade gate test names (exact or prefix).
+	// Deletion-grade gate test names.
 	const (
-		gateHardGate      = "TestParityCompletionHardGate"
-		gateCmdMatrix     = "TestParityCompletionCommandMatrix"
-		gateVersionParity = "TestParityCompletionVersionEquivalent"
-		gateInitParity    = "TestParityCompletionInitParity"
-		gateErrorParity   = "TestParityCompletionErrorParity"
+		gateHardGate            = "TestParityCompletionHardGate"
+		gateSurfaceParity       = "TestParityCompletionSurfaceParity"
+		gateCommandMatrix       = "TestParityCompletionCommandMatrix"
+		gateHelpIdentical       = "TestParityCompletionHelpIdentical"
+		gateFunctionalContracts = "TestParityCompletionFunctionalContracts"
+		gateStateDiffContracts  = "TestParityCompletionStateDiffContracts"
+		gatePythonSuite         = "TestParityCompletionPythonSuite"
+		gateBenchmarks          = "TestParityCompletionBenchmarks"
 	)
 
 	// Track per-test pass/fail.
@@ -151,64 +164,39 @@ func main() {
 		gate2.Reason = fmt.Sprintf("%d/%d tests passing", passingTests, totalTests)
 	}
 
-	// Gate 3: help_parity (command matrix)
-	gate3 := GateResult{Name: "help_parity"}
-	if testPassed[gateCmdMatrix] && !testFailed[gateCmdMatrix] {
-		gate3.Passing = true
-	} else if testFailed[gateCmdMatrix] {
-		gate3.Passing = false
-		gate3.Reason = "TestParityCompletionCommandMatrix failed"
-	} else {
-		gate3.Passing = false
-		gate3.Reason = "TestParityCompletionCommandMatrix not found"
-	}
+	// Gate 3: surface_parity
+	gate3 := singleTestGate("surface_parity", gateSurfaceParity, testPassed, testFailed)
 
-	// Gate 4: version_parity
-	gate4 := GateResult{Name: "version_parity"}
-	if testPassed[gateVersionParity] && !testFailed[gateVersionParity] {
-		gate4.Passing = true
-	} else if testFailed[gateVersionParity] {
-		gate4.Passing = false
-		gate4.Reason = "TestParityCompletionVersionEquivalent failed"
-	} else {
-		gate4.Passing = false
-		gate4.Reason = "TestParityCompletionVersionEquivalent not found"
-	}
+	// Gate 4: help_parity
+	gate4 := multiTestGate(
+		"help_parity",
+		[]string{gateCommandMatrix, gateHelpIdentical},
+		testPassed,
+		testFailed,
+	)
 
-	// Gate 5: init_parity
-	gate5 := GateResult{Name: "init_parity"}
-	if testPassed[gateInitParity] && !testFailed[gateInitParity] {
-		gate5.Passing = true
-	} else if testFailed[gateInitParity] {
-		gate5.Passing = false
-		gate5.Reason = "TestParityCompletionInitParity failed"
-	} else {
-		gate5.Passing = false
-		gate5.Reason = "TestParityCompletionInitParity not found"
-	}
+	// Gate 5: functional_contracts
+	gate5 := singleTestGate("functional_contracts", gateFunctionalContracts, testPassed, testFailed)
 
-	// Gate 6: error_parity
-	gate6 := GateResult{Name: "error_parity"}
-	if testPassed[gateErrorParity] && !testFailed[gateErrorParity] {
-		gate6.Passing = true
-	} else if testFailed[gateErrorParity] {
-		gate6.Passing = false
-		gate6.Reason = "TestParityCompletionErrorParity failed"
-	} else {
-		gate6.Passing = false
-		gate6.Reason = "TestParityCompletionErrorParity not found"
-	}
+	// Gate 6: state_diff_contracts
+	gate6 := singleTestGate("state_diff_contracts", gateStateDiffContracts, testPassed, testFailed)
 
-	// Gate 7: no_known_exceptions
-	gate7 := GateResult{Name: "no_known_exceptions"}
+	// Gate 7: python_tests_pass
+	gate7 := singleTestGate("python_tests_pass", gatePythonSuite, testPassed, testFailed)
+
+	// Gate 8: benchmarks_pass
+	gate8 := singleTestGate("benchmarks_pass", gateBenchmarks, testPassed, testFailed)
+
+	// Gate 9: no_known_exceptions
+	gate9 := GateResult{Name: "no_known_exceptions"}
 	if knownExceptionsFound {
-		gate7.Passing = false
-		gate7.Reason = "output contains 'approved exception' -- all exceptions must be resolved for cutover"
+		gate9.Passing = false
+		gate9.Reason = "output contains 'approved exception' -- all exceptions must be resolved for cutover"
 	} else {
-		gate7.Passing = true
+		gate9.Passing = true
 	}
 
-	gates := []GateResult{gate1, gate2, gate3, gate4, gate5, gate6, gate7}
+	gates := []GateResult{gate1, gate2, gate3, gate4, gate5, gate6, gate7, gate8, gate9}
 
 	// Count parity tests (any test with "Parity" in name from cmd/apm).
 	parityPassing, parityTotal := 0, 0
@@ -256,4 +244,36 @@ func main() {
 
 	out, _ := json.MarshalIndent(score, "", "  ")
 	fmt.Println(string(out))
+}
+
+func singleTestGate(name, testName string, testPassed, testFailed map[string]bool) GateResult {
+	return multiTestGate(name, []string{testName}, testPassed, testFailed)
+}
+
+func multiTestGate(name string, testNames []string, testPassed, testFailed map[string]bool) GateResult {
+	for _, testName := range testNames {
+		if testFailed[testName] {
+			return GateResult{
+				Name:    name,
+				Passing: false,
+				Reason:  testName + " failed",
+			}
+		}
+	}
+
+	var missing []string
+	for _, testName := range testNames {
+		if !testPassed[testName] {
+			missing = append(missing, testName)
+		}
+	}
+	if len(missing) > 0 {
+		return GateResult{
+			Name:    name,
+			Passing: false,
+			Reason:  strings.Join(missing, ", ") + " not found",
+		}
+	}
+
+	return GateResult{Name: name, Passing: true}
 }

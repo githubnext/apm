@@ -13,6 +13,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -169,6 +171,246 @@ func TestParityCompletionErrorParity(t *testing.T) {
 	}
 	assertPythonVsGoExitCode(t, r)
 	t.Logf("[+] error parity: Go exit=%d Python exit=%d", r.GoExitCode, r.PyExitCode)
+}
+
+// completionModuleRoot returns the repository root, two levels above cmd/apm.
+func completionModuleRoot(t *testing.T) string {
+	t.Helper()
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("could not determine test file path via runtime.Caller")
+	}
+	return filepath.Join(filepath.Dir(thisFile), "..", "..")
+}
+
+// TestParityCompletionSurfaceParity verifies the Go CLI exposes at least every
+// top-level command that the Python CLI exposes. Gate 3: surface_parity.
+func TestParityCompletionSurfaceParity(t *testing.T) {
+	bin := os.Getenv("APM_PYTHON_BIN")
+	if bin == "" {
+		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set -- surface parity cannot be verified")
+	}
+
+	required := []string{
+		"init", "install", "update", "compile", "pack", "unpack", "run",
+		"audit", "policy", "mcp", "runtime", "targets", "list",
+		"view", "cache", "deps", "marketplace", "plugin",
+		"uninstall", "prune", "search", "outdated", "self-update",
+		"preview", "config", "experimental",
+	}
+
+	goOut, _, goCode := runGo(t, "--help")
+	if goCode != 0 {
+		t.Fatalf("Go `apm --help` exited %d", goCode)
+	}
+	pyOut, _, pyCode := runPyBin(t, bin, "--help")
+	if pyCode != 0 {
+		t.Fatalf("Python `apm --help` exited %d", pyCode)
+	}
+
+	var missing []string
+	for _, cmd := range required {
+		inPy := strings.Contains(pyOut, cmd)
+		inGo := strings.Contains(goOut, cmd)
+		if inPy && !inGo {
+			missing = append(missing, cmd)
+			t.Errorf("Go CLI missing command %q present in Python CLI", cmd)
+		}
+	}
+	if len(missing) == 0 {
+		t.Logf("[+] Surface parity: all %d required commands present in Go CLI.", len(required))
+	}
+}
+
+// TestParityCompletionFunctionalContracts verifies key read-only command
+// behaviors match between Python and Go (exit codes and basic output). Gate 5.
+func TestParityCompletionFunctionalContracts(t *testing.T) {
+	bin := os.Getenv("APM_PYTHON_BIN")
+	if bin == "" {
+		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set -- functional contracts cannot be verified")
+	}
+
+	type contract struct {
+		args    []string
+		wantGo  int
+		inRepo  bool
+		ymlType string // "minimal" or "deps"
+	}
+	contracts := []contract{
+		{args: []string{"--help"}, wantGo: 0},
+		{args: []string{"--version"}, wantGo: 0},
+		{args: []string{"targets", "--help"}, wantGo: 0},
+		{args: []string{"deps", "--help"}, wantGo: 0},
+		{args: []string{"cache", "--help"}, wantGo: 0},
+		{args: []string{"targets"}, wantGo: 0, inRepo: true, ymlType: "minimal"},
+		{args: []string{"list"}, wantGo: 0, inRepo: true, ymlType: "deps"},
+		{args: []string{"deps", "list"}, wantGo: 0, inRepo: true, ymlType: "deps"},
+		{args: []string{"compile", "--dry-run"}, wantGo: 0, inRepo: true, ymlType: "minimal"},
+		{args: []string{"audit"}, wantGo: 0, inRepo: true, ymlType: "minimal"},
+	}
+
+	for _, c := range contracts {
+		c := c
+		label := "apm " + strings.Join(c.args, " ")
+		t.Run(label, func(t *testing.T) {
+			var goOut, pyOut string
+			var goCode, pyCode int
+			if c.inRepo {
+				ymlContent := minimalApmYML
+				if c.ymlType == "deps" {
+					ymlContent = apmYMLWithDeps
+				}
+				r := runBothInTempRepo(t, ymlContent, c.args...)
+				goOut, goCode = r.GoStdout+r.GoStderr, r.GoExitCode
+				pyOut, pyCode = r.PyStdout+r.PyStderr, r.PyExitCode
+				if r.PyMissing {
+					pyCode = -1
+				}
+			} else {
+				goOut, _, goCode = runGo(t, c.args...)
+				pyOut, _, pyCode = runPyBin(t, bin, c.args...)
+			}
+			if goCode != c.wantGo {
+				t.Errorf("Go exit %d, want %d; output: %q", goCode, c.wantGo, goOut)
+			}
+			if pyCode >= 0 && pyCode != goCode {
+				t.Errorf("exit code mismatch: Python=%d Go=%d; pyOut=%q goOut=%q",
+					pyCode, goCode, pyOut, goOut)
+			}
+		})
+	}
+}
+
+// TestParityCompletionStateDiffContracts verifies that mutating commands produce
+// equivalent filesystem state between Python and Go. Gate 6.
+func TestParityCompletionStateDiffContracts(t *testing.T) {
+	bin := os.Getenv("APM_PYTHON_BIN")
+	if bin == "" {
+		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set -- state-diff contracts cannot be verified")
+	}
+
+	t.Run("init creates apm.yml", func(t *testing.T) {
+		goDir, err := os.MkdirTemp("", "apm-state-go-*")
+		if err != nil {
+			t.Fatalf("mkdtemp: %v", err)
+		}
+		defer os.RemoveAll(goDir)
+
+		pyDir, err := os.MkdirTemp("", "apm-state-py-*")
+		if err != nil {
+			t.Fatalf("mkdtemp: %v", err)
+		}
+		defer os.RemoveAll(pyDir)
+
+		_, _, goCode := runGoInDir(t, goDir, "init", "--yes")
+		if goCode != 0 {
+			t.Errorf("Go `apm init --yes` exited %d", goCode)
+		}
+		goApmYML := filepath.Join(goDir, "apm.yml")
+		if _, err := os.Stat(goApmYML); err != nil {
+			t.Errorf("Go `apm init --yes` did not create apm.yml: %v", err)
+		}
+
+		_, _, pyCode := runGoInDirWith(t, pyDir, bin, "init", "--yes")
+		pyApmYML := filepath.Join(pyDir, "apm.yml")
+		if _, err := os.Stat(pyApmYML); err != nil {
+			t.Logf("Python init did not create apm.yml (exit %d): will verify Go only", pyCode)
+		} else {
+			// Both created apm.yml: verify they contain the same required keys.
+			goBytes, _ := os.ReadFile(goApmYML)
+			pyBytes, _ := os.ReadFile(pyApmYML)
+			for _, key := range []string{"name:", "version:", "dependencies:"} {
+				if !strings.Contains(string(goBytes), key) {
+					t.Errorf("Go apm.yml missing key %q", key)
+				}
+				if !strings.Contains(string(pyBytes), key) {
+					t.Logf("Python apm.yml missing key %q (non-fatal)", key)
+				}
+			}
+			t.Logf("[+] State-diff: Go and Python both created apm.yml with required keys.")
+		}
+	})
+}
+
+// TestParityCompletionPythonSuite runs the Python reference unit test suite to
+// confirm the Python CLI remains green. Gate 7: python_tests_pass.
+func TestParityCompletionPythonSuite(t *testing.T) {
+	if os.Getenv("APM_PYTHON_BIN") == "" {
+		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set -- Python suite cannot be verified")
+	}
+
+	root := completionModuleRoot(t)
+
+	// Locate uv; required to run the Python test suite.
+	uvPath, err := exec.LookPath("uv")
+	if err != nil {
+		t.Fatalf("HARD-GATE FAILED: uv not found in PATH -- cannot run Python suite: %v", err)
+	}
+
+	// Run the Python unit suite in parallel (-n auto) for speed.
+	// --ignore integration tests that require external services.
+	cmd := exec.Command(uvPath, "run", "--extra", "dev",
+		"pytest", "tests/unit/", "-q", "--tb=short", "--no-header",
+		"-n", "auto",
+		"--ignore=tests/unit/integration",
+	)
+	cmd.Dir = root
+	cmd.Env = append(os.Environ(), "NO_COLOR=1", "PYTHONDONTWRITEBYTECODE=1", "COLUMNS=10000")
+	var outBuf, errBuf strings.Builder
+	cmd.Stdout = &outBuf
+	cmd.Stderr = &errBuf
+	if runErr := cmd.Run(); runErr != nil {
+		t.Fatalf("Python suite failed:\n%s\n%s", outBuf.String(), errBuf.String())
+	}
+	t.Logf("[+] Python suite passed:\n%s", outBuf.String())
+}
+
+// TestParityCompletionBenchmarks runs the migration CLI benchmark and verifies
+// the Go CLI stays within the configured performance ratio. Gate 8.
+func TestParityCompletionBenchmarks(t *testing.T) {
+	bin := os.Getenv("APM_PYTHON_BIN")
+	if bin == "" {
+		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set -- benchmarks cannot be verified")
+	}
+	if goBinPath == "" {
+		t.Fatal("HARD-GATE FAILED: Go binary not built -- benchmarks cannot be verified")
+	}
+
+	root := completionModuleRoot(t)
+
+	benchScript := filepath.Join(root, "scripts", "ci", "migration_cli_benchmark.py")
+	if _, err := os.Stat(benchScript); err != nil {
+		t.Fatalf("benchmark script not found at %s: %v", benchScript, err)
+	}
+
+	// Locate uv to run the benchmark script.
+	uvPath, err := exec.LookPath("uv")
+	if err != nil {
+		t.Fatalf("HARD-GATE FAILED: uv not found in PATH: %v", err)
+	}
+
+	jsonOut := filepath.Join(t.TempDir(), "benchmark.json")
+	mdOut := filepath.Join(t.TempDir(), "benchmark.md")
+	// Use --repeats 2 for a quick CI smoke test (full 5-repeat runs in the
+	// dedicated benchmarks job).
+	cmd := exec.Command(uvPath, "run", benchScript,
+		"--python-bin", bin,
+		"--go-bin", goBinPath,
+		"--json-out", jsonOut,
+		"--markdown-out", mdOut,
+		"--max-ratio", "5.0",
+		"--repeats", "2",
+	)
+	cmd.Dir = root
+	cmd.Env = append(os.Environ(), "NO_COLOR=1")
+	var outBuf, errBuf strings.Builder
+	cmd.Stdout = &outBuf
+	cmd.Stderr = &errBuf
+	if runErr := cmd.Run(); runErr != nil {
+		t.Fatalf("Benchmark failed (Go CLI exceeds 5x Python latency or script error):\n%s\n%s",
+			outBuf.String(), errBuf.String())
+	}
+	t.Logf("[+] Benchmarks passed:\n%s", outBuf.String())
 }
 
 // runPyBin runs the Python apm binary with the given args.

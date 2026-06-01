@@ -517,9 +517,12 @@ def add(repo, name, branch, host, verbose):
             display_name = repo_name
             if manifest_name and not _is_valid_alias(manifest_name):
                 logger.warning(
-                    f"Manifest declares name '{manifest_name}' which is not a "
-                    f"valid alias (must match [a-zA-Z0-9._-]+). "
-                    f"Falling back to repo name.",
+                    f"Manifest declares name '{manifest_name}' which is not a"
+                    f" valid alias (must match [a-zA-Z0-9._-]+).",
+                    symbol="warning",
+                )
+                logger.warning(
+                    "Falling back to repo name.",
                     symbol="warning",
                 )
                 alias_source = f"repo name (manifest.name '{manifest_name}' invalid)"

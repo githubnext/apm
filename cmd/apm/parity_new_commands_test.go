@@ -310,8 +310,9 @@ func TestParityHarnessOutdatedHelp(t *testing.T) {
 
 func TestParityHarnessOutdatedInTempRepo(t *testing.T) {
 	r := runBothInTempRepo(t, minimalApmYML, "outdated")
-	if r.GoExitCode != 0 {
-		t.Errorf("apm outdated exited %d\nstderr: %s", r.GoExitCode, r.GoStderr)
+	// Both Python and Go exit 1 when lockfile is missing -- this is correct parity.
+	if r.GoExitCode != 1 {
+		t.Errorf("apm outdated expected exit 1 (no lockfile), got %d\nstderr: %s", r.GoExitCode, r.GoStderr)
 	}
 	assertNoPythonUnimplemented(t, r)
 }

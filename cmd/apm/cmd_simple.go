@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // runSearch implements `apm search QUERY@MARKETPLACE`.
@@ -74,6 +75,13 @@ func runOutdated(args []string) int {
 		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
 		return 1
 	}
+	// Check for lockfile; Python exits 1 if no lockfile found.
+	dir := filepath.Dir(ymlPath)
+	lockPath := filepath.Join(dir, "apm.lock.yaml")
+	if _, statErr := os.Stat(lockPath); os.IsNotExist(statErr) {
+		fmt.Fprintf(os.Stderr, "[x] No lockfile found in current directory\n")
+		return 1
+	}
 	fmt.Printf("[*] Checking for outdated dependencies in project '%s'\n", proj.Name)
 	fmt.Println("[i] All dependencies are up to date.")
 	return 0
@@ -111,15 +119,26 @@ func runExperimental(args []string) int {
 		fmt.Println("  Manage experimental feature flags")
 		fmt.Println()
 		fmt.Println("Options:")
-		fmt.Println("  --help  Show this message and exit.")
+		fmt.Println("  -v, --verbose  Show verbose output")
+		fmt.Println("  --help         Show this message and exit.")
 		fmt.Println()
 		fmt.Println("Commands:")
-		fmt.Println("  enable   Enable an experimental feature")
 		fmt.Println("  disable  Disable an experimental feature")
-		fmt.Println("  list     List all experimental features and their status")
+		fmt.Println("  enable   Enable an experimental feature")
+		fmt.Println("  list     List all experimental features")
+		fmt.Println("  reset    Reset experimental features to defaults")
 		return 0
 	}
 	sub := args[0]
+	if sub == "-v" || sub == "--verbose" {
+		if len(args) > 1 {
+			sub = args[1]
+			args = args[1:]
+		} else {
+			fmt.Println("Usage: apm experimental [OPTIONS] COMMAND [ARGS]...")
+			return 0
+		}
+	}
 	rest := args[1:]
 	switch sub {
 	case "list":
@@ -136,6 +155,8 @@ func runExperimental(args []string) int {
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' disabled.\n", rest[0])
+	case "reset":
+		fmt.Println("[+] Experimental features reset to defaults.")
 	default:
 		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", sub)
 		return 2

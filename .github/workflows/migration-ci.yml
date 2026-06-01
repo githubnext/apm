@@ -111,7 +111,8 @@ jobs:
 
   benchmarks:
     name: Migration Benchmarks
-    needs: [parity]
+    needs: [detect-changes, parity]
+    if: always() && needs.detect-changes.outputs.should-run == 'true'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

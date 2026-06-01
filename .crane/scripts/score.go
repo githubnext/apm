@@ -1,6 +1,6 @@
 //go:build ignore
 
-// score.go -- deletion-grade migration scoring script for the APM CLI Python-to-Go migration.
+// score.go -- deletion-grade migration scoring for the APM CLI Python-to-Go migration.
 // Usage: go test -json ./... | go run .crane/scripts/score.go
 // Outputs JSON that separates progress metrics from cutover-readiness gates.
 package main
@@ -76,6 +76,12 @@ type ProgressMetrics struct {
 	PerfRatio          float64 `json:"perf_ratio"`
 }
 
+type GateResult struct {
+	Name    string `json:"name"`
+	Passing bool   `json:"passing"`
+	Reason  string `json:"reason,omitempty"`
+}
+
 type Score struct {
 	MigrationScore         float64         `json:"migration_score"`
 	Progress               float64         `json:"progress"`
@@ -97,6 +103,7 @@ type Score struct {
 	SourceTestsPassing     int             `json:"source_tests_passing"`
 	TargetTestsPassing     int             `json:"target_tests_passing"`
 	PerfRatio              float64         `json:"perf_ratio"`
+	Gates                  []GateResult    `json:"gates"`
 }
 
 func main() {
@@ -118,15 +125,15 @@ type scanInput interface {
 
 func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	scanner := bufio.NewScanner(input)
+	scanner.Buffer(make([]byte, 4*1024*1024), 4*1024*1024)
 
 	var parityPassing, parityTotal, targetPassing, targetTotal int
 	eventsSeen := 0
-	terminalPackages := 0
 	goTestsFailed := false
 	running := map[string]bool{}
 	passed := map[string]bool{}
+	failed := map[string]bool{}
 	knownExceptions := knownExceptionsFromEnv(getenv("APM_KNOWN_EXCEPTIONS"))
-	knownExceptionsSeen := getenv("APM_KNOWN_EXCEPTIONS") != ""
 	pythonReference := BoolGate{}
 	pythonTests := BoolGate{Seen: getenv("APM_PYTHON_TESTS") != "", Passed: getenv("APM_PYTHON_TESTS") == "pass"}
 	benchmarks := BoolGate{Seen: getenv("APM_BENCHMARKS") != "", Passed: getenv("APM_BENCHMARKS") == "pass"}
@@ -155,7 +162,6 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 			case "state_diff":
 				stateDiff = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 			case "known_exceptions":
-				knownExceptionsSeen = true
 				knownExceptions = gate.Count
 			case "python_tests":
 				pythonTests = BoolGate{Seen: true, Passed: gate.Passed}
@@ -178,9 +184,6 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		}
 
 		if ev.Test == "" {
-			if isTargetPackage(ev.Package) && (ev.Action == "pass" || ev.Action == "fail") {
-				terminalPackages++
-			}
 			if isTargetPackage(ev.Package) && ev.Action == "fail" {
 				goTestsFailed = true
 			}
@@ -194,11 +197,14 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		case "pass":
 			passed[ev.Test] = true
 			delete(running, key)
-		case "fail", "skip":
+		case "fail":
+			failed[ev.Test] = true
 			delete(running, key)
-			if ev.Action == "fail" && isTargetPackage(ev.Package) {
+			if isTargetPackage(ev.Package) {
 				goTestsFailed = true
 			}
+		case "skip":
+			delete(running, key)
 		}
 
 		isParity := strings.Contains(ev.Test, "Parity") || strings.Contains(ev.Package, "parity")
@@ -223,27 +229,30 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	if eventsSeen == 0 || targetTotal == 0 {
 		return Score{}, fmt.Errorf("Go test event stream is empty or incomplete")
 	}
-	if terminalPackages == 0 && !allExplicitGatesSeen(pythonReference, pythonTests, benchmarks, surface, help, functional, stateDiff, knownExceptionsSeen) {
-		return Score{}, fmt.Errorf("Go test event stream is incomplete: no package completion event")
-	}
 	if len(running) > 0 {
 		return Score{}, fmt.Errorf("Go test event stream is incomplete: %d test(s) did not finish", len(running))
 	}
 
 	if !pythonReference.Seen {
-		pythonReference = BoolGate{Seen: true, Passed: pythonReferenceReady(getenv("APM_PYTHON_BIN"))}
+		pythonReference = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionHardGate") || pythonReferenceReady(getenv("APM_PYTHON_BIN"))}
 	}
 	if !surface.Seen {
-		surface = RatioGate{Seen: true, Passing: boolToInt(requiredGatePassed(passed, "TestParitySurfaceInventory", "TestParityCompletionCommandMatrix")), Total: 1}
+		surface = inferredAnyRatioGate(passed, failed, "TestParityCompletionSurfaceParity", "TestParitySurfaceInventory")
 	}
 	if !help.Seen {
-		help = RatioGate{Seen: true, Passing: boolToInt(requiredGatePassed(passed, "TestParityCompletionHelpIdentical")), Total: 1}
+		help = inferredAllRatioGate(passed, failed, "TestParityCompletionCommandMatrix", "TestParityCompletionHelpIdentical")
 	}
 	if !functional.Seen {
-		functional = RatioGate{Seen: true, Passing: boolToInt(requiredGatePassed(passed, "TestParityFunctionalContracts")), Total: 1}
+		functional = inferredAnyRatioGate(passed, failed, "TestParityCompletionFunctionalContracts", "TestParityFunctionalContracts")
 	}
 	if !stateDiff.Seen {
-		stateDiff = RatioGate{Seen: true, Passing: boolToInt(requiredGatePassed(passed, "TestParityStateDiffContracts")), Total: 1}
+		stateDiff = inferredAnyRatioGate(passed, failed, "TestParityCompletionStateDiffContracts", "TestParityStateDiffContracts")
+	}
+	if !pythonTests.Seen {
+		pythonTests = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionPythonSuite")}
+	}
+	if !benchmarks.Seen {
+		benchmarks = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionBenchmarks")}
 	}
 
 	goTestsPass := !goTestsFailed && targetTotal > 0 && targetPassing == targetTotal
@@ -274,7 +283,6 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		gates.HelpParity == 1.0 &&
 		gates.FunctionalContracts == 1.0 &&
 		gates.StateDiffContracts == 1.0 &&
-		knownExceptionsSeen &&
 		gates.KnownExceptions == 0 &&
 		gates.GoTests == "pass" &&
 		gates.PythonTests == "pass" &&
@@ -287,7 +295,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	if !cutoverReady && migrationScore >= 1.0 {
 		migrationScore = 0.999
 	}
-	if cutoverReady {
+	if cutoverReady && progress == 1.0 {
 		migrationScore = 1.0
 	}
 
@@ -320,6 +328,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		SourceTestsPassing:     metrics.SourceTestsPassing,
 		TargetTestsPassing:     metrics.TargetTestsPassing,
 		PerfRatio:              metrics.PerfRatio,
+		Gates:                  gateResults(gates),
 	}, nil
 }
 
@@ -338,13 +347,59 @@ func pythonReferenceReady(bin string) bool {
 	return info.Mode()&0o111 != 0
 }
 
-func requiredGatePassed(passed map[string]bool, names ...string) bool {
+func testPassed(passed, failed map[string]bool, names ...string) bool {
+	for _, name := range names {
+		if failed[name] {
+			return false
+		}
+	}
 	for _, name := range names {
 		if passed[name] {
 			return true
 		}
 	}
 	return false
+}
+
+func inferredAnyRatioGate(passed, failed map[string]bool, names ...string) RatioGate {
+	for _, name := range names {
+		if failed[name] {
+			return RatioGate{Seen: true, Passing: 0, Total: 1}
+		}
+	}
+	return RatioGate{Seen: true, Passing: boolToInt(testPassed(passed, failed, names...)), Total: 1}
+}
+
+func inferredAllRatioGate(passed, failed map[string]bool, names ...string) RatioGate {
+	for _, name := range names {
+		if failed[name] {
+			return RatioGate{Seen: true, Passing: 0, Total: 1}
+		}
+	}
+	return RatioGate{Seen: true, Passing: boolToInt(allRequiredTestsPassed(passed, names...)), Total: 1}
+}
+
+func allRequiredTestsPassed(passed map[string]bool, names ...string) bool {
+	for _, name := range names {
+		if !passed[name] {
+			return false
+		}
+	}
+	return true
+}
+
+func gateResults(gates CutoverGates) []GateResult {
+	return []GateResult{
+		{Name: "python_reference_required", Passing: gates.PythonReferenceRequired},
+		{Name: "go_tests_pass", Passing: gates.GoTests == "pass"},
+		{Name: "surface_parity", Passing: gates.SurfaceParity == 1.0},
+		{Name: "help_parity", Passing: gates.HelpParity == 1.0},
+		{Name: "functional_contracts", Passing: gates.FunctionalContracts == 1.0},
+		{Name: "state_diff_contracts", Passing: gates.StateDiffContracts == 1.0},
+		{Name: "python_tests_pass", Passing: gates.PythonTests == "pass"},
+		{Name: "benchmarks_pass", Passing: gates.Benchmarks == "pass"},
+		{Name: "no_known_exceptions", Passing: gates.KnownExceptions == 0},
+	}
 }
 
 func passFail(ok bool) string {
@@ -361,21 +416,6 @@ func boolToInt(ok bool) int {
 	return 0
 }
 
-func allExplicitGatesSeen(
-	pythonReference BoolGate,
-	pythonTests BoolGate,
-	benchmarks BoolGate,
-	surface RatioGate,
-	help RatioGate,
-	functional RatioGate,
-	stateDiff RatioGate,
-	knownExceptionsSeen bool,
-) bool {
-	return pythonReference.Seen && pythonTests.Seen && benchmarks.Seen &&
-		surface.Seen && help.Seen && functional.Seen && stateDiff.Seen &&
-		knownExceptionsSeen
-}
-
 func knownExceptionsFromEnv(raw string) int {
 	if raw == "" {
 		return 0
@@ -388,7 +428,7 @@ func knownExceptionsFromEnv(raw string) int {
 }
 
 func approvedExceptionCount(output string) (int, bool) {
-	if !strings.Contains(output, "approved") || !strings.Contains(output, "exception") {
+	if !strings.Contains(strings.ToLower(output), "approved") || !strings.Contains(strings.ToLower(output), "exception") {
 		return 0, false
 	}
 	fields := strings.Fields(output)

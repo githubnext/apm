@@ -238,10 +238,11 @@ def _render_table(report: dict[str, Any]) -> None:
             table = Table(
                 title="APM Policy Status",
                 show_header=True,
-                header_style="bold cyan",
+                title_style="",
+                header_style="",
             )
-            table.add_column("Field", style="bold white", no_wrap=True)
-            table.add_column("Value", style="white")
+            table.add_column("Field", style="", no_wrap=True)
+            table.add_column("Value", style="")
             for field_name, value in rows:
                 table.add_row(field_name, value)
             console.print(table)

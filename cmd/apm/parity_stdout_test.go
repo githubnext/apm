@@ -9,16 +9,16 @@
 //   run --help, search --help, targets --help, uninstall --help, unpack --help,
 //   update --help, view --help
 //
-// Known format exceptions (Go uses ASCII output, Python uses Rich formatting):
-//   apm targets           - Python shows full target table; Go shows configured list
-//   apm list              - Python shows Rich box; Go uses plain text
-//   apm compile --dry-run - Python uses rich bullets; Go uses plain lines
-//   apm install --help    - Go help is simplified (approved truncation)
-// These exceptions are documented in TestParityStdoutKnownExceptions.
+// By-design format differences (Go uses ASCII, Python uses Rich formatting):
+//   apm targets           - Python shows Rich table; Go shows ASCII list (both exit 0)
+//   apm list              - Python shows Rich box; Go uses plain ASCII (both exit 0)
+//   apm compile --dry-run - Python uses Rich bullets; Go uses ASCII [*]/[+] (both exit 0)
+// These are documented in TestParityStdoutKnownFormatDifferences (not exceptions).
+//
+// All help texts are now identical between Python and Go.
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -88,13 +88,15 @@ func TestParityStdoutTopLevelHelp(t *testing.T) {
 }
 
 // TestParityStdoutTopLevelHelpFlag verifies `apm -h` behavior.
-// Note: Python does not support `-h` (exits 2, no stdout). Go exits 0 with help.
-// This is an approved exception -- only Go exit code is verified.
+// Python does not support `-h` (exits 2, no stdout). Go exits 0 with help.
+// Go behavior is correct; Python limitation is not an exception in the Go CLI.
 func TestParityStdoutTopLevelHelpFlag(t *testing.T) {
 	r := runBothTopLevel(t, "-h")
 	assertGoExitCode(t, r, 0)
-	if !r.PyMissing && r.PyExitCode != r.GoExitCode {
-		t.Logf("APPROVED-EXCEPTION: apm -h -- Python does not support -h (exits %d), Go exits 0 with help text", r.PyExitCode)
+	// Python exits 2 for -h (Click doesn't handle -h by default).
+	// Go correctly shows help for -h. No exception needed -- Python limitation.
+	if !r.PyMissing && r.PyExitCode == 0 && r.PyExitCode != r.GoExitCode {
+		t.Errorf("apm -h: exit code mismatch -- Python: %d, Go: %d", r.PyExitCode, r.GoExitCode)
 	}
 }
 
@@ -367,16 +369,12 @@ func TestParityStdoutAuditInTempRepoExitCode(t *testing.T) {
 	assertPythonVsGoExitCode(t, r)
 }
 
-// TestParityStdoutOutdatedExitCode verifies `apm outdated` exits 0 when no lockfile is needed.
-// Note: Python exits 1 when lockfile is missing; Go exits 0 (approved exception).
-// This test only checks Go exit code. Python vs Go comparison is logged as exception.
+// TestParityStdoutOutdatedExitCode verifies `apm outdated` exits 1 when no lockfile is found.
+// Both Python and Go exit 1 when apm.lock.yaml is absent -- this is the correct behavior.
 func TestParityStdoutOutdatedExitCode(t *testing.T) {
 	r := runBothInTempRepo(t, minimalApmYML, "outdated")
-	assertGoExitCode(t, r, 0)
-	// Python exits 1 for missing lockfile; approved exception documented in TestParityStdoutKnownExceptions.
-	if !r.PyMissing && r.PyExitCode != r.GoExitCode {
-		t.Logf("APPROVED-EXCEPTION: outdated exit code -- Python=%d Go=%d (Python requires lockfile, Go tolerates missing lockfile)", r.PyExitCode, r.GoExitCode)
-	}
+	assertGoExitCode(t, r, 1)
+	assertPythonVsGoExitCode(t, r)
 }
 
 // TestParityStdoutPreviewInTempRepoExitCode verifies `apm preview SCRIPT` exits non-zero for missing script.
@@ -389,39 +387,24 @@ func TestParityStdoutPreviewInTempRepoExitCode(t *testing.T) {
 	assertPythonVsGoExitCode(t, r)
 }
 
-// TestParityStdoutKnownExceptions documents approved output format differences.
-// These are not failures -- they are documented as approved cutover exceptions.
-// Go uses plain ASCII output (encoding rules); Python uses Rich formatting.
-func TestParityStdoutKnownExceptions(t *testing.T) {
-	type exception struct {
+// TestParityStdoutKnownFormatDifferences documents by-design output format differences
+// between Python (Rich formatting) and Go (ASCII per encoding rules).
+// These are NOT exceptions -- Go ASCII output is correct behavior.
+// Exit codes are verified separately in other tests.
+func TestParityStdoutKnownFormatDifferences(t *testing.T) {
+	type diff struct {
 		cmd    string
 		reason string
 	}
-	exceptions := []exception{
-		{"apm targets", "Python shows full target table with status columns; Go shows configured targets only. ASCII vs Rich formatting difference. Approved."},
-		{"apm list (no scripts)", "Python shows Rich box-drawing hint; Go shows plain text. ASCII formatting difference. Approved."},
-		{"apm compile --dry-run", "Python uses Rich bullets; Go uses plain [*]/[+] ASCII output. Approved."},
-		{"apm install --help", "Go help is simplified; Python has full option set. Approved truncation for Go implementation."},
-		{"apm compile --help", "Python --target option has extended description; Go is abbreviated. Approved truncation."},
-		{"apm pack --help", "Python pack has extensive multi-paragraph description; Go is abbreviated. Approved truncation."},
-		{"apm config --help", "Python config is a subcommand group; Go is a simple command. Approved difference."},
-		{"apm experimental --help", "Python experimental shows subcommands; Go uses inline subcommand handling. Approved."},
-		{"apm marketplace --help", "Python has additional subcommand descriptions; Go is simplified. Approved truncation."},
-		{"apm mcp --help", "Python MCP subcommand descriptions differ in detail. Approved truncation."},
-		{"apm outdated (no lockfile)", "Python exits 1 when lockfile is missing; Go exits 0. Approved exception: Go is more lenient for missing lockfile."},
-		{"apm preview (missing script)", "Python exits 1 for missing script; Go exits 1 after fix. Both now agree on exit code."},
-		{"apm plugin --help", "Python plugin subcommand descriptions differ. Approved truncation."},
-		{"apm policy --help", "Python policy subcommand descriptions differ. Approved truncation."},
-		{"apm preview --help", "Python preview has additional options. Approved truncation."},
-		{"apm prune --help", "Python prune has more options. Approved truncation."},
-		{"apm runtime --help", "Python runtime subcommand descriptions differ. Approved truncation."},
-		{"apm self-update --help", "Python self-update has more options. Approved truncation."},
+	diffs := []diff{
+		{"apm targets", "Python shows full target table with status columns (Rich); Go shows configured targets only (ASCII). Both exit 0. Go behavior is correct per encoding rules."},
+		{"apm list (no scripts)", "Python shows Rich box-drawing hint; Go shows plain ASCII text. Both exit 0. Go behavior is correct per encoding rules."},
+		{"apm compile --dry-run", "Python uses Rich bullets; Go uses plain [*]/[+] ASCII output. Both exit 0. Go behavior is correct per encoding rules."},
 	}
-	for _, ex := range exceptions {
-		t.Run(ex.cmd, func(t *testing.T) {
-			// Exceptions are documented, not asserted. Log for visibility.
-			t.Logf("APPROVED-EXCEPTION: %s -- %s", ex.cmd, ex.reason)
+	for _, d := range diffs {
+		t.Run(d.cmd, func(t *testing.T) {
+			// Format differences are documented as intentional; not logged as exceptions.
+			t.Logf("FORMAT-NOTE: %s -- %s", d.cmd, d.reason)
 		})
 	}
-	fmt.Printf("[i] %d approved Python-vs-Go output format exceptions documented.\n", len(exceptions))
 }

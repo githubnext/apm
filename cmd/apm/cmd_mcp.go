@@ -8,10 +8,10 @@ import (
 )
 
 var mcpSubcommands = []struct{ name, desc string }{
-	{"install", "Install an MCP server"},
-	{"search", "Search MCP servers in registry"},
-	{"inspect", "Show detailed MCP server information"},
+	{"install", "Add an MCP server to apm.yml."},
 	{"list", "List all available MCP servers"},
+	{"search", "Search MCP servers in registry"},
+	{"show", "Show detailed MCP server information"},
 }
 
 func printMCPHelp() {
@@ -24,7 +24,7 @@ func printMCPHelp() {
 	fmt.Println()
 	fmt.Println("Commands:")
 	for _, sub := range mcpSubcommands {
-		fmt.Printf("  %-14s%s\n", sub.name, sub.desc)
+		fmt.Printf("  %-9s%s\n", sub.name, sub.desc)
 	}
 }
 
@@ -42,7 +42,7 @@ func runMCP(args []string) int {
 		return runMCPInstall(rest)
 	case "search":
 		return runMCPSearch(rest)
-	case "inspect":
+	case "inspect", "show":
 		return runMCPInspect(rest)
 	case "list":
 		return runMCPList(rest)
@@ -106,7 +106,7 @@ func runMCPSearch(args []string) int {
 func runMCPInspect(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm mcp inspect [OPTIONS] NAME")
+			fmt.Println("Usage: apm mcp show [OPTIONS] NAME")
 			fmt.Println()
 			fmt.Println("  Show detailed MCP server information")
 			fmt.Println()

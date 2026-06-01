@@ -33,14 +33,25 @@ def _run_score(input_lines: list[str]) -> dict[str, object]:
     return json.loads(result.stdout)
 
 
-def _go_pass(test: str, package: str = "github.com/githubnext/apm/internal/parity") -> list[str]:
+def _go_pass(test: str, package: str = "github.com/githubnext/apm/cmd/apm") -> list[str]:
     return [
         json.dumps({"Action": "run", "Package": package, "Test": test}),
         json.dumps({"Action": "pass", "Package": package, "Test": test}),
     ]
 
 
-def _package_pass(package: str = "github.com/githubnext/apm/internal/parity") -> str:
+def _event(action: str, test: str, *, output: str = "") -> str:
+    return json.dumps(
+        {
+            "Action": action,
+            "Package": "github.com/githubnext/apm/cmd/apm",
+            "Test": test,
+            "Output": output,
+        }
+    )
+
+
+def _package_pass(package: str = "github.com/githubnext/apm/cmd/apm") -> str:
     return json.dumps({"Action": "pass", "Package": package})
 
 
@@ -66,6 +77,26 @@ def _deletion_gates() -> list[str]:
         '{"crane":"gate","name":"python_tests","passed":true}',
         '{"crane":"gate","name":"benchmarks","passed":true}',
     ]
+
+
+def _completion_gate_events() -> list[str]:
+    tests = [
+        "TestParityCompletionHardGate",
+        "TestParityCompletionSurfaceParity",
+        "TestParityCompletionCommandMatrix",
+        "TestParityCompletionHelpIdentical",
+        "TestParityCompletionFunctionalContracts",
+        "TestParityCompletionStateDiffContracts",
+        "TestParityCompletionPythonSuite",
+        "TestParityCompletionBenchmarks",
+    ]
+    return [line for test in tests for line in _go_pass(test)]
+
+
+def _gates(score: dict[str, object]) -> dict[str, dict[str, object]]:
+    gates = score["gates"]
+    assert isinstance(gates, list)
+    return {gate["name"]: gate for gate in gates}
 
 
 def test_crane_score_counts_parity_events() -> None:
@@ -183,3 +214,29 @@ def test_crane_score_rejects_empty_event_stream() -> None:
 
     assert result.returncode != 0
     assert "empty or incomplete" in result.stderr
+
+
+def test_crane_score_infers_cutover_gates_from_completion_tests() -> None:
+    score = _run_score([*_parity_passes(294), *_completion_gate_events(), _package_pass()])
+
+    assert score["migration_score"] == 1.0
+    assert score["progress"] == 1.0
+    assert score["deletion_grade_ready"] is True
+    assert all(gate["passing"] for gate in _gates(score).values())
+
+
+def test_crane_score_blocks_known_exceptions() -> None:
+    score = _run_score(
+        [
+            *_parity_passes(294),
+            *_completion_gate_events(),
+            _event("output", "TestParityCompletionHelpIdentical", output="APPROVED-EXCEPTION: no"),
+            _package_pass(),
+        ]
+    )
+
+    gates = _gates(score)
+
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert gates["no_known_exceptions"]["passing"] is False

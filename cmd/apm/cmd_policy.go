@@ -8,7 +8,7 @@ import (
 )
 
 var policySubcommands = []struct{ name, desc string }{
-	{"status", "Show current policy status and source"},
+	{"status", "Show the current policy posture (discovery, cache, rules)"},
 }
 
 func printPolicyHelp() {
@@ -21,7 +21,7 @@ func printPolicyHelp() {
 	fmt.Println()
 	fmt.Println("Commands:")
 	for _, sub := range policySubcommands {
-		fmt.Printf("  %-14s%s\n", sub.name, sub.desc)
+		fmt.Printf("  %-8s%s\n", sub.name, sub.desc)
 	}
 }
 

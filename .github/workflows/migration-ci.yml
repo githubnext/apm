@@ -45,7 +45,7 @@ jobs:
             "${{ github.event.pull_request.head.sha }}" \
             | tee "$RUNNER_TEMP/changed-files.txt"
 
-          if grep -Eq '^(\.crane/|\.github/workflows/migration-ci\.yml$|cmd/|internal/|pkg/|go\.mod$|go\.sum$|pyproject\.toml$|scripts/ci/|src/|tests/benchmarks/|tests/unit/test_crane_score\.py$)' "$RUNNER_TEMP/changed-files.txt"; then
+          if grep -Eq '^(\.crane/|\.github/workflows/migration-ci\.yml$|cmd/|internal/|pkg/|go\.mod$|go\.sum$|pyproject\.toml$|scripts/ci/|src/|tests/benchmarks/|tests/parity/|tests/unit/test_crane_score\.py$)' "$RUNNER_TEMP/changed-files.txt"; then
             echo "should-run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should-run=false" >> "$GITHUB_OUTPUT"
@@ -78,12 +78,40 @@ jobs:
           test -x "$GITHUB_WORKSPACE/.venv/bin/apm"
           echo "APM_PYTHON_BIN=$GITHUB_WORKSPACE/.venv/bin/apm" >> "$GITHUB_ENV"
 
+      - name: Extract Python behavior contracts
+        run: |
+          uv run python scripts/ci/python_behavior_contracts.py extract \
+            --output "$RUNNER_TEMP/python-behavior-contracts.json"
+          echo "APM_PYTHON_CONTRACT_INVENTORY=$RUNNER_TEMP/python-behavior-contracts.json" >> "$GITHUB_ENV"
+
+      - name: Run CLI-agnostic Python behavior tests
+        shell: bash
+        run: |
+          go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
+          set +e
+          APM_GO_BIN="$RUNNER_TEMP/apm-go" \
+            uv run pytest tests/parity/test_python_behavior_contracts.py -q --tb=short \
+            | tee "$RUNNER_TEMP/python-cli-contract-tests.txt"
+          status=${PIPESTATUS[0]}
+          set -e
+          echo "PYTHON_CLI_CONTRACT_STATUS=$status" >> "$GITHUB_ENV"
+
       - name: Run Go parity tests
-        run: go test ./...
+        shell: bash
+        run: |
+          set +e
+          go test -json ./... | tee "$RUNNER_TEMP/go-test-events.json"
+          status=${PIPESTATUS[0]}
+          set -e
+          echo "GO_TEST_STATUS=$status" >> "$GITHUB_ENV"
 
       - name: Compute migration score
         run: |
-          go test -json ./... | tee "$RUNNER_TEMP/go-test-events.json" | go run .crane/scripts/score.go | tee "$RUNNER_TEMP/migration-score.json"
+          go run .crane/scripts/score.go < "$RUNNER_TEMP/go-test-events.json" | tee "$RUNNER_TEMP/migration-score.json"
+          uv run python scripts/ci/python_behavior_contracts.py check \
+            --inventory "$RUNNER_TEMP/python-behavior-contracts.json" \
+            --coverage tests/parity/python_contract_coverage.yml \
+            --summary "$RUNNER_TEMP/python-contract-coverage.md" || true
           python - "$RUNNER_TEMP/migration-score.json" <<'PY'
           import json
           import sys
@@ -95,6 +123,8 @@ jobs:
           if score.get("migration_score") != 1.0:
               raise SystemExit("migration_score must be 1.0 for completion parity")
           PY
+          test "${PYTHON_CLI_CONTRACT_STATUS:-1}" = "0"
+          test "${GO_TEST_STATUS:-1}" = "0"
 
       - name: Upload parity evidence
         if: always()
@@ -104,6 +134,9 @@ jobs:
           path: |
             ${{ runner.temp }}/go-test-events.json
             ${{ runner.temp }}/migration-score.json
+            ${{ runner.temp }}/python-behavior-contracts.json
+            ${{ runner.temp }}/python-contract-coverage.md
+            ${{ runner.temp }}/python-cli-contract-tests.txt
           if-no-files-found: ignore
           retention-days: 14
 

@@ -62,6 +62,7 @@ def _all_required_gate_events() -> list[str]:
         "TestParityCompletionStateDiffContracts",
         "TestParityCompletionPythonSuite",
         "TestParityCompletionBenchmarks",
+        "TestParityCompletionPythonBehaviorContracts",
     ]
     return [line for test in tests for line in _pass(test)]
 
@@ -90,6 +91,7 @@ def test_crane_score_blocks_help_only_completion() -> None:
     assert gates["state_diff_contracts"]["passing"] is False
     assert gates["python_tests_pass"]["passing"] is False
     assert gates["benchmarks_pass"]["passing"] is False
+    assert gates["python_behavior_contracts"]["passing"] is False
 
 
 def test_crane_score_reaches_one_only_when_all_deletion_grade_gates_pass() -> None:
@@ -110,6 +112,7 @@ def test_crane_score_forces_zero_without_python_reference() -> None:
             *_pass("TestParityCompletionStateDiffContracts"),
             *_pass("TestParityCompletionPythonSuite"),
             *_pass("TestParityCompletionBenchmarks"),
+            *_pass("TestParityCompletionPythonBehaviorContracts"),
         ]
     )
 

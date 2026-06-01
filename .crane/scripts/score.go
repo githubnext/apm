@@ -36,7 +36,12 @@
 //   Gate 8 -- benchmarks_pass: TestParityCompletionBenchmarks must pass.
 //             Migration benchmarks must run and satisfy the configured guard.
 //
-//   Gate 9 -- no_known_exceptions: the test output must not contain any
+//   Gate 9 -- python_behavior_contracts:
+//             TestParityCompletionPythonBehaviorContracts must pass. Every
+//             extracted Python command and existing Python test must be mapped
+//             to Go tests and CLI-agnostic parity tests.
+//
+//   Gate 10 -- no_known_exceptions: the test output must not contain any
 //             "approved exception" log line. Final cutover requires zero exceptions.
 //
 // If Gate 1 fails, migration_score is forced to 0.0 regardless of other gates.
@@ -93,6 +98,7 @@ func main() {
 		gateStateDiffContracts  = "TestParityCompletionStateDiffContracts"
 		gatePythonSuite         = "TestParityCompletionPythonSuite"
 		gateBenchmarks          = "TestParityCompletionBenchmarks"
+		gateBehaviorContracts   = "TestParityCompletionPythonBehaviorContracts"
 	)
 
 	// Track per-test pass/fail.
@@ -187,16 +193,19 @@ func main() {
 	// Gate 8: benchmarks_pass
 	gate8 := singleTestGate("benchmarks_pass", gateBenchmarks, testPassed, testFailed)
 
-	// Gate 9: no_known_exceptions
-	gate9 := GateResult{Name: "no_known_exceptions"}
+	// Gate 9: python_behavior_contracts
+	gate9 := singleTestGate("python_behavior_contracts", gateBehaviorContracts, testPassed, testFailed)
+
+	// Gate 10: no_known_exceptions
+	gate10 := GateResult{Name: "no_known_exceptions"}
 	if knownExceptionsFound {
-		gate9.Passing = false
-		gate9.Reason = "output contains 'approved exception' -- all exceptions must be resolved for cutover"
+		gate10.Passing = false
+		gate10.Reason = "output contains 'approved exception' -- all exceptions must be resolved for cutover"
 	} else {
-		gate9.Passing = true
+		gate10.Passing = true
 	}
 
-	gates := []GateResult{gate1, gate2, gate3, gate4, gate5, gate6, gate7, gate8, gate9}
+	gates := []GateResult{gate1, gate2, gate3, gate4, gate5, gate6, gate7, gate8, gate9, gate10}
 
 	// Count parity tests (any test with "Parity" in name from cmd/apm).
 	parityPassing, parityTotal := 0, 0

@@ -1,0 +1,12 @@
+schema_version: 1
+status: intentionally-incomplete
+description: >
+  Exhaustive coverage manifest for the Python-to-Go migration. Every public
+  Python CLI command and every existing Python test must be mapped here before
+  the migration can be considered deletion-grade.
+
+commands: {}
+
+python_tests:
+  covered: {}
+  obsolete: []

@@ -12,7 +12,7 @@
 |-------|-------|
 | Last Run | 2026-06-02T05:50:48Z |
 | Iteration Count | 31 |
-| Best Metric | 1.0 |
+| Best Metric | 0.999 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -21,8 +21,8 @@
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached -- all 9 deletion-grade gates passing (verified) |
+| Completed | false |
+| Completed Reason | -- |
 | Consecutive Errors | 0 |
 | Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
@@ -85,7 +85,12 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**COMPLETED** -- migration_score=1.0 achieved in iteration 31 (verified). All 9 gates pass.
+**Milestone 19 -- Exhaustive Python behavior-contract coverage**: Complete the
+`tests/parity/python_contract_coverage.yml` mapping so every extracted Python
+command and every existing Python test has explicit Go and/or CLI-agnostic
+parity evidence. Current strict checker evidence reports 69 missing command
+coverage entries, 24,156 missing Python test mappings, and 24,225 total missing
+coverage findings, so migration_score must remain below 1.0.
 
 ---
 
@@ -105,6 +110,10 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - All 26 commands wired to Go handlers; group commands (cache,deps,marketplace,mcp,policy,runtime,plugin,experimental) handle own --help via isGroupCmd().
 - cobra not available (protected go.mod); use stdlib flag + Click-style formatting.
 - runBothInTempRepo() is the reusable parity harness for black-box Python-vs-Go comparison.
+- PR #100 invalidated the previous completion claim: `status: intentionally-incomplete`
+  in `tests/parity/python_contract_coverage.yml` is tracking metadata only. It
+  may produce report-only summaries, but it must not satisfy deletion-grade
+  completion or allow `migration_score=1.0`.
 
 ---
 

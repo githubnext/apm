@@ -404,7 +404,16 @@ def cmd_check(args: argparse.Namespace) -> int:
         Path(args.summary).write_text(summary, encoding="utf-8")
     print(summary)
     if coverage.get("status") == "intentionally-incomplete":
-        # Manifest explicitly declared incomplete; report findings without failing.
+        if not args.allow_intentionally_incomplete:
+            print(
+                "coverage manifest declares status: intentionally-incomplete; "
+                "remove that status only after all findings are resolved",
+                file=sys.stderr,
+            )
+            return 1
+        # Report-only mode for progress summaries. Completion checks must not
+        # use this flag, because an intentionally incomplete manifest is not
+        # deletion-grade evidence.
         return 0
     return 1 if findings else 0
 
@@ -425,6 +434,11 @@ def main(argv: list[str] | None = None) -> int:
         help="coverage manifest path",
     )
     check.add_argument("--summary", help="write markdown coverage summary to this path")
+    check.add_argument(
+        "--allow-intentionally-incomplete",
+        action="store_true",
+        help="report findings without failing when the manifest is marked incomplete",
+    )
     check.set_defaults(func=cmd_check)
 
     args = parser.parse_args(argv)

@@ -95,6 +95,22 @@ def _completion_gate_events() -> list[str]:
     return [line for test in tests for line in _go_pass(test)]
 
 
+def _behavior_contract_gate_output(passing: int, total: int) -> str:
+    return _event(
+        "output",
+        "TestParityCompletionPythonBehaviorContracts",
+        output=json.dumps(
+            {
+                "crane": "gate",
+                "name": "python_behavior_contracts",
+                "passing": passing,
+                "total": total,
+            }
+        )
+        + "\n",
+    )
+
+
 def _gates(score: dict[str, object]) -> dict[str, dict[str, object]]:
     gates = score["gates"]
     assert isinstance(gates, list)
@@ -220,13 +236,47 @@ def test_crane_score_rejects_empty_event_stream() -> None:
     assert "empty or incomplete" in result.stderr
 
 
-def test_crane_score_infers_cutover_gates_from_completion_tests() -> None:
-    score = _run_score([*_parity_passes(293), *_completion_gate_events(), _package_pass()])
+def test_crane_score_reaches_one_with_completion_tests_and_explicit_behavior_gate() -> None:
+    score = _run_score(
+        [
+            *_parity_passes(293),
+            *_completion_gate_events(),
+            _behavior_contract_gate_output(1, 1),
+            _package_pass(),
+        ]
+    )
 
     assert score["migration_score"] == 1.0
     assert score["progress"] == 1.0
     assert score["deletion_grade_ready"] is True
     assert all(gate["passing"] for gate in _gates(score).values())
+
+
+def test_crane_score_does_not_infer_behavior_contracts_from_test_name() -> None:
+    score = _run_score([*_parity_passes(293), *_completion_gate_events(), _package_pass()])
+    gates = _gates(score)
+
+    assert score["progress"] == 1.0
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert gates["python_behavior_contracts"]["passing"] is False
+
+
+def test_crane_score_blocks_incomplete_behavior_contract_gate() -> None:
+    score = _run_score(
+        [
+            *_parity_passes(293),
+            *_completion_gate_events(),
+            _behavior_contract_gate_output(0, 1),
+            _package_pass(),
+        ]
+    )
+    gates = _gates(score)
+
+    assert score["progress"] == 1.0
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert gates["python_behavior_contracts"]["passing"] is False
 
 
 def test_crane_score_blocks_known_exceptions() -> None:

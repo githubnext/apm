@@ -111,6 +111,7 @@ jobs:
           uv run python scripts/ci/python_behavior_contracts.py check \
             --inventory "$RUNNER_TEMP/python-behavior-contracts.json" \
             --coverage tests/parity/python_contract_coverage.yml \
+            --allow-intentionally-incomplete \
             --summary "$RUNNER_TEMP/python-contract-coverage.md" || true
           python - "$RUNNER_TEMP/migration-score.json" <<'PY'
           import json

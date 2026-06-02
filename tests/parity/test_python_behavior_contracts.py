@@ -142,6 +142,14 @@ def test_every_python_command_rejects_unknown_option_consistently(
 def test_python_contract_coverage_manifest_is_complete(inventory: dict[str, object]) -> None:
     coverage = _load_coverage(ROOT / "tests" / "parity" / "python_contract_coverage.yml")
     if coverage.get("status") == "intentionally-incomplete":
-        pytest.skip("Coverage manifest is intentionally incomplete; remove status field to enforce")
+        if os.environ.get("APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS") != "1":
+            pytest.xfail(
+                "Coverage manifest is intentionally incomplete; completion gate "
+                "is reported by migration_score"
+            )
+        pytest.fail(
+            "Coverage manifest is intentionally incomplete; remove status field "
+            "only after all contracts are mapped"
+        )
     findings = check_coverage(inventory, coverage)
     assert not findings, render_summary(inventory, findings)

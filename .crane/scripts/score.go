@@ -149,29 +149,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		if !strings.HasPrefix(line, "{") {
 			continue
 		}
-		var gate GateEvent
-		if err := json.Unmarshal([]byte(line), &gate); err == nil && gate.Crane == "gate" {
+		if gate, ok := parseGateEvent(line); ok {
 			eventsSeen++
-			switch gate.Name {
-			case "python_reference":
-				pythonReference = BoolGate{Seen: true, Passed: gate.Passed}
-			case "surface":
-				surface = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
-			case "help":
-				help = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
-			case "functional":
-				functional = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
-			case "state_diff":
-				stateDiff = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
-			case "python_behavior_contracts":
-				behaviorContracts = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
-			case "known_exceptions":
-				knownExceptions = gate.Count
-			case "python_tests":
-				pythonTests = BoolGate{Seen: true, Passed: gate.Passed}
-			case "benchmarks":
-				benchmarks = BoolGate{Seen: true, Passed: gate.Passed}
-			}
+			applyGateEvent(gate, &pythonReference, &surface, &help, &functional, &stateDiff, &behaviorContracts, &knownExceptions, &pythonTests, &benchmarks)
 			continue
 		}
 
@@ -182,6 +162,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		eventsSeen++
 
 		if ev.Output != "" {
+			if gate, ok := parseGateEvent(ev.Output); ok {
+				applyGateEvent(gate, &pythonReference, &surface, &help, &functional, &stateDiff, &behaviorContracts, &knownExceptions, &pythonTests, &benchmarks)
+			}
 			if n, ok := approvedExceptionCount(ev.Output); ok && n > knownExceptions {
 				knownExceptions = n
 			}
@@ -253,7 +236,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		stateDiff = inferredAnyRatioGate(passed, failed, "TestParityCompletionStateDiffContracts", "TestParityStateDiffContracts")
 	}
 	if !behaviorContracts.Seen {
-		behaviorContracts = inferredAnyRatioGate(passed, failed, "TestParityCompletionPythonBehaviorContracts")
+		behaviorContracts = RatioGate{Seen: true, Passing: 0, Total: 1}
 	}
 	if !pythonTests.Seen {
 		pythonTests = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionPythonSuite")}
@@ -339,6 +322,52 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		PerfRatio:              metrics.PerfRatio,
 		Gates:                  gateResults(gates),
 	}, nil
+}
+
+func parseGateEvent(line string) (GateEvent, bool) {
+	line = strings.TrimSpace(line)
+	if !strings.HasPrefix(line, "{") {
+		return GateEvent{}, false
+	}
+	var gate GateEvent
+	if err := json.Unmarshal([]byte(line), &gate); err != nil || gate.Crane != "gate" {
+		return GateEvent{}, false
+	}
+	return gate, true
+}
+
+func applyGateEvent(
+	gate GateEvent,
+	pythonReference *BoolGate,
+	surface *RatioGate,
+	help *RatioGate,
+	functional *RatioGate,
+	stateDiff *RatioGate,
+	behaviorContracts *RatioGate,
+	knownExceptions *int,
+	pythonTests *BoolGate,
+	benchmarks *BoolGate,
+) {
+	switch gate.Name {
+	case "python_reference":
+		*pythonReference = BoolGate{Seen: true, Passed: gate.Passed}
+	case "surface":
+		*surface = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "help":
+		*help = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "functional":
+		*functional = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "state_diff":
+		*stateDiff = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "python_behavior_contracts":
+		*behaviorContracts = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "known_exceptions":
+		*knownExceptions = gate.Count
+	case "python_tests":
+		*pythonTests = BoolGate{Seen: true, Passed: gate.Passed}
+	case "benchmarks":
+		*benchmarks = BoolGate{Seen: true, Passed: gate.Passed}
+	}
 }
 
 func isTargetPackage(pkg string) bool {

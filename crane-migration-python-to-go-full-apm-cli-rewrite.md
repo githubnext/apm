@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-02T21:38:15Z |
-| Iteration Count | 33 |
+| Last Run | 2026-06-02T22:28:58Z |
+| Iteration Count | 34 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -24,7 +24,7 @@
 | Completed | true |
 | Completed Reason | target metric 1.0 reached with value 1.0 |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -110,6 +110,7 @@ on PR #102; migration is fully done.
 - runBothInTempRepo() is the reusable parity harness.
 - python_behavior_contracts gate (iter 32): must NOT use t.Skip. Require APM_PYTHON_BIN, auto-extract inventory. python_contract_coverage.yml: 2.6MB, 24161 obsolete Python tests. All Python reference tests are legitimately obsolete -- parity evidence comes from Go contract tests.
 - PR #100 invalidated prior completion: status:intentionally-incomplete blocks score=1.0.
+- uv fallback path (iter 34): exec.LookPath("uv") fails in Crane sandbox where astral installer puts uv in ~/.local/bin but PATH is not updated. Use lookPathUV() helper that checks common fallback locations.
 
 ---
 
@@ -128,6 +129,16 @@ on PR #102; migration is fully done.
 ---
 
 ## [chart] Iteration History
+
+### Iteration 34 -- 2026-06-02T22:28:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26851734533)
+
+- **Status**: [+] Accepted (COMPLETED)
+- **Milestone**: Fix uv fallback path lookup in completion gates
+- **Change**: Added lookPathUV() helper to parity_completion_test.go; checks ~/.local/bin/uv and other common locations when uv is not on PATH. Fixes go_tests/python_tests/benchmarks gates failing in Crane sandboxes where astral uv installer puts binary in ~/.local/bin but PATH is not updated.
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Progress**: 846/846 parity tests, 868 Go tests, 247 Python tests
+- **Commit**: ebe8b84
+- **Notes**: All 10/10 deletion-grade gates pass with fresh verification. The uv PATH issue only affected Crane sandbox runs; CI already had uv in PATH. Migration confirmed complete.
 
 ### Iteration 33 -- 2026-06-02T21:38:15Z -- [Run](https://github.com/githubnext/apm/actions/runs/26849513627)
 

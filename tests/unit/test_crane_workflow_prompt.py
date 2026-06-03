@@ -36,5 +36,29 @@ def test_crane_prompt_blocks_stale_completed_state_from_finishing() -> None:
 
     assert "stale_completed_state" in text
     assert "active label wins" in text
-    assert "Never mark completed from stored `best_metric` alone" in text
-    assert "the current run must produce and accept a verification score" in text
+    assert "ignore any pre-existing `Completed: true`" in text
+    assert "Restore the issue to active migration state" in text
+    assert "`crane-completed` but the scheduler selected it in `stale_completed_state`" in text
+    assert "deterministic completion gate passes on the pushed PR head" in text
+    assert "same-run sandbox score is only evidence" in text
+
+
+def test_crane_completion_is_two_phase_and_pr_head_gated() -> None:
+    text = _workflow_text()
+
+    assert "Reaching the target metric does **not** complete the migration in this run" in text
+    assert "Completion Candidate: true" in text
+    assert "Completion Gate: pr-head-checks" in text
+    assert "leave the `crane-migration` label on the issue" in text
+    assert "current PR head checks pass" in text
+    assert "every check for the current PR head is terminal success" in text
+    assert "Completion Gate Status: passed:<sha>" in text
+
+
+def test_crane_state_template_tracks_completion_candidate_gate() -> None:
+    text = _workflow_text()
+
+    assert "| Completion Candidate | false |" in text
+    assert "| Completion Gate | pr-head-checks |" in text
+    assert "| Completion Gate Status | -- |" in text
+    assert "Whether the target metric has been reached and the migration is waiting" in text

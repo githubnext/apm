@@ -337,9 +337,46 @@ def _scan_bare_migrations():
     return sorted(glob.glob(os.path.join(MIGRATIONS_DIR, "*.md")))
 
 
+def _issue_has_label(issue, label):
+    """Return True if a GitHub issue payload contains ``label``."""
+    for raw_label in issue.get("labels") or []:
+        if isinstance(raw_label, dict):
+            name = raw_label.get("name")
+        else:
+            name = raw_label
+        if name == label:
+            return True
+    return False
+
+
+def _fetch_open_issues_with_label(repo, github_token, label):
+    """Fetch open issues with one label. Returns issue payloads."""
+    next_url = (
+        "https://api.github.com/repos/{}/issues"
+        "?labels={}&state=open&per_page=100".format(repo, urllib.parse.quote(label, safe=""))
+    )
+    headers = {
+        "Authorization": "token {}".format(github_token),
+        "Accept": "application/vnd.github.v3+json",
+    }
+    issues = []
+    while next_url:
+        req = urllib.request.Request(next_url, headers=headers)
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            page = json.loads(resp.read().decode())
+            link_header = resp.headers.get("link") or resp.headers.get("Link")
+        issues.extend(page)
+        next_url = parse_link_header(link_header)
+    return issues
+
+
 def _fetch_issue_migrations(repo, github_token):
-    """Fetch open issues with the ``crane-migration`` label and write their
-    bodies to ``ISSUE_MIGRATIONS_DIR``. Returns ``(migration_files, issue_migrations)``.
+    """Fetch open Crane-labelled issues and write their bodies to
+    ``ISSUE_MIGRATIONS_DIR``. Returns ``(migration_files, issue_migrations)``.
+
+    Crane primarily runs issues with ``crane-migration``. It also reads open
+    ``crane-completed`` issues so a stale completion can be recovered when the
+    deterministic PR-head gate did not pass.
 
     Errors are swallowed (with a warning) so a transient API failure doesn't
     block the run for non-issue-based migrations.
@@ -347,24 +384,12 @@ def _fetch_issue_migrations(repo, github_token):
     migration_files = []
     issue_migrations = {}
     os.makedirs(ISSUE_MIGRATIONS_DIR, exist_ok=True)
-    next_url = (
-        "https://api.github.com/repos/{}/issues"
-        "?labels=crane-migration&state=open&per_page=100".format(repo)
-    )
-    headers = {
-        "Authorization": "token {}".format(github_token),
-        "Accept": "application/vnd.github.v3+json",
-    }
-    issues = []
     try:
-        while next_url:
-            req = urllib.request.Request(next_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                page = json.loads(resp.read().decode())
-                link_header = resp.headers.get("link") or resp.headers.get("Link")
-            issues.extend(page)
-            next_url = parse_link_header(link_header)
-        for issue in issues:
+        issues_by_number = {}
+        for label in ("crane-migration", "crane-completed"):
+            for issue in _fetch_open_issues_with_label(repo, github_token, label):
+                issues_by_number[issue.get("number")] = issue
+        for issue in issues_by_number.values():
             if issue.get("pull_request"):
                 continue  # skip PRs
             body = issue.get("body") or ""
@@ -383,8 +408,21 @@ def _fetch_issue_migrations(repo, github_token):
             with open(issue_file, "w") as f:
                 f.write(body)
             migration_files.append(issue_file)
-            issue_migrations[slug] = {"issue_number": number, "file": issue_file, "title": title}
-            print("  Found issue-based migration: '{}' (issue #{})".format(slug, number))
+            active = _issue_has_label(issue, "crane-migration")
+            completed_label = _issue_has_label(issue, "crane-completed")
+            issue_migrations[slug] = {
+                "issue_number": number,
+                "file": issue_file,
+                "title": title,
+                "active": active,
+                "completed_label": completed_label,
+            }
+            label_status = "active" if active else "completed-label"
+            print(
+                "  Found issue-based migration: '{}' (issue #{}, {})".format(
+                    slug, number, label_status
+                )
+            )
     except Exception as e:  # noqa: BLE001 -- best-effort; logged below
         print("  Warning: could not fetch issue-based migrations: {}".format(e))
     return migration_files, issue_migrations
@@ -482,6 +520,62 @@ def find_existing_pr_for_branch(repo, migration_name, github_token, http_get_jso
                 return pr.get("number")
         next_url = parse_link_header(link_header)
     return None
+
+
+def get_pr_head_check_gate(repo, pr_number, github_token, http_get_json=_http_get_json):
+    """Return ``(passed, reason)`` for the deterministic PR-head check gate.
+
+    ``passed`` is:
+        True  - the current PR head has at least one check run and all are success
+        False - the PR exists, but checks are missing, pending, or failing
+        None  - the API could not provide enough data to decide
+    """
+    if not repo or not pr_number or not github_token:
+        return None, "missing-pr-or-token"
+    headers = {
+        "Authorization": "token {}".format(github_token),
+        "Accept": "application/vnd.github.v3+json",
+    }
+    pr_url = "https://api.github.com/repos/{}/pulls/{}".format(repo, pr_number)
+    pr_body, _ = http_get_json(pr_url, headers)
+    if not isinstance(pr_body, dict):
+        return None, "pr-unavailable"
+    head = pr_body.get("head") or {}
+    head_sha = head.get("sha") if isinstance(head, dict) else None
+    if not head_sha:
+        return None, "pr-head-sha-unavailable"
+
+    check_runs = []
+    next_url = "https://api.github.com/repos/{}/commits/{}/check-runs?per_page=100".format(
+        repo, head_sha
+    )
+    while next_url:
+        body, link_header = http_get_json(next_url, headers)
+        if not isinstance(body, dict):
+            return None, "checks-unavailable:{}".format(head_sha[:12])
+        page_runs = body.get("check_runs")
+        if not isinstance(page_runs, list):
+            return None, "checks-malformed:{}".format(head_sha[:12])
+        check_runs.extend(page_runs)
+        next_url = parse_link_header(link_header)
+
+    if not check_runs:
+        return False, "missing-checks:{}".format(head_sha[:12])
+
+    not_success = []
+    for run in check_runs:
+        if not isinstance(run, dict):
+            not_success.append("unknown:malformed")
+            continue
+        name = run.get("name") or "unknown"
+        status = run.get("status")
+        conclusion = run.get("conclusion")
+        if status != "completed" or conclusion != "success":
+            not_success.append("{}:{}:{}".format(name, status or "unknown", conclusion or "none"))
+
+    if not_success:
+        return False, "failing:{}:{}".format(head_sha[:12], ";".join(not_success[:5]))
+    return True, "passed:{}".format(head_sha[:12])
 
 
 # ---------------------------------------------------------------------------
@@ -629,7 +723,9 @@ def main():
 
     for pf in migration_files:
         name = get_migration_name(pf)
-        issue_active = name in issue_migrations
+        issue_info = issue_migrations.get(name) or {}
+        issue_active = bool(issue_info.get("active"))
+        issue_completed_label = bool(issue_info.get("completed_label"))
         all_migrations[name] = pf
         with open(pf) as f:
             content = f.read()
@@ -670,12 +766,51 @@ def main():
             print("  {}: no state found (first run)".format(name))
 
         has_stale_completed_state = issue_active and is_completed_state(state)
+        recovered_completed_issue = False
+        if issue_completed_label and is_completed_state(state) and not issue_active:
+            existing_pr_for_recovery = find_existing_pr_for_branch(repo, name, github_token)
+            if existing_pr_for_recovery:
+                gate_passed, gate_reason = get_pr_head_check_gate(
+                    repo, existing_pr_for_recovery, github_token
+                )
+                if gate_passed is False:
+                    has_stale_completed_state = True
+                    recovered_completed_issue = True
+                    print(
+                        "  {}: crane-completed label is stale; PR #{} gate is {}".format(
+                            name, existing_pr_for_recovery, gate_reason
+                        )
+                    )
+                elif gate_passed is True:
+                    print(
+                        "  {}: crane-completed label confirmed by PR #{} gate {}".format(
+                            name, existing_pr_for_recovery, gate_reason
+                        )
+                    )
+                else:
+                    print(
+                        "  {}: could not evaluate completed-label recovery for PR #{} ({})".format(
+                            name, existing_pr_for_recovery, gate_reason
+                        )
+                    )
+            else:
+                print(
+                    "  {}: crane-completed label present, but no open migration PR was found".format(
+                        name
+                    )
+                )
         if has_stale_completed_state:
             stale_completed_state.append(name)
-            print(
-                f"  {name}: issue still has crane-migration label; treating "
-                "Completed=true as stale until fresh verification passes"
-            )
+            if issue_active:
+                print(
+                    f"  {name}: issue still has crane-migration label; treating "
+                    "Completed=true as stale until fresh verification passes"
+                )
+            if recovered_completed_issue:
+                print(
+                    f"  {name}: completed label will be treated as stale until "
+                    "the deterministic completion gate passes"
+                )
 
         last_run = None
         lr = state.get("last_run")
@@ -685,9 +820,24 @@ def main():
             except ValueError:
                 pass
 
-        should_skip, reason = check_skip_conditions(state, issue_active=issue_active)
+        should_skip, reason = check_skip_conditions(
+            state,
+            issue_active=issue_active or recovered_completed_issue,
+        )
         if should_skip:
             skipped.append({"name": name, "reason": reason})
+            continue
+
+        if has_stale_completed_state:
+            due.append({
+                "name": name,
+                "last_run": lr,
+                "file": pf,
+                "target_metric": target_metric,
+                "metric_direction": metric_direction,
+                "strategy": strategy,
+                "stale_completed_state": has_stale_completed_state,
+            })
             continue
 
         # Check if due based on per-migration schedule

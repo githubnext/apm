@@ -13,7 +13,12 @@ via PyInstaller packaging and `pip install apm-cli`.
 The Go CLI currently implements:
 - `apm --help` / `apm --version` (full parity with Python)
 - `apm init [--yes] [PROJECT_NAME]` (functional, creates apm.yml)
-- Per-command `--help` for all 26 commands (golden-file verified)
+- Per-command `--help` for all 26 commands (initial golden-file coverage)
+
+The checked-in `cmd/apm/testdata/golden/` files are the start of the
+cutover corpus, not final completion proof. Final completion requires the
+full command matrix below to be represented as committed fixtures and replayed
+by Go without invoking the Python runtime.
 
 Remaining commands return a "not yet fully implemented" message.
 
@@ -28,8 +33,18 @@ are true:
    `policy`, `mcp`, `runtime`, `targets`, `list`, `view`, `cache`,
    `deps`, `marketplace`, `uninstall`, `prune`
 3. Python-vs-Go parity tests pass for all commands in the matrix
-4. `go build ./cmd/apm` produces a single static binary
-5. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
+4. The final Python-reference parity run has been frozen into a committed,
+   versioned golden fixture corpus. The corpus must include CLI inventory,
+   help and usage output, error output, exit codes, generated files, lockfiles,
+   config files, managed-file manifests, deterministic cache/config layout, and
+   audit artifacts for the full command matrix.
+5. An all-Go golden replay passes against that corpus with no live Python
+   oracle. The replay must build `cmd/apm` and compare only the Go binary
+   against checked-in fixtures.
+6. A no-Python-runtime check passes: `APM_PYTHON_BIN` is unset, the Python CLI
+   is hidden or unavailable to the replay, and the golden replay still passes.
+7. `go build ./cmd/apm` produces a single static binary
+8. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
 
 ## Cutover Steps
 
@@ -46,13 +61,14 @@ When conditions are met:
 
 ## Python Compatibility Shim
 
-Until all commands are implemented in Go, the Python CLI remains the
-authoritative `apm` command. The Go binary is available as `apm-go`
-for testing.
+Until all commands are implemented in Go and the golden replay gate passes, the
+Python CLI remains the authoritative `apm` command. The Go binary is available
+as `apm-go` for testing.
 
-The shim removal plan: once the command matrix passes functional tests,
-the Python entrypoint is replaced by the Go binary in the same PR that
-passes the final parity tests.
+The shim removal plan: once the command matrix passes functional tests, the
+final Python-reference behavior is frozen into golden fixtures. Only after the
+all-Go replay passes without a Python runtime can the Python entrypoint be
+replaced by the Go binary.
 
 ## Timeline
 

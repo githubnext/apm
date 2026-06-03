@@ -102,8 +102,8 @@ func runPython(args ...string) (stdout, stderr string, exitCode int) {
 }
 
 // noPython returns true when the Python CLI is not available.
-// Tests that require Python use this to return a vacuous pass rather than skip,
-// so they do not reduce the correctness gate score.
+// These optional progress tests skip Python comparison when it is unavailable;
+// final completion is enforced by the explicit scorer gates instead.
 func noPython() bool {
 	return pythonBin() == ""
 }
@@ -248,10 +248,10 @@ func TestParityCLISelfUpdateAlias(t *testing.T) {
 // --- Python-vs-Go parity tests (require APM_PYTHON_BIN) ---
 
 // TestPythonVsGoVersionExitCode compares exit codes for --version.
-// When APM_PYTHON_BIN is not set the test passes vacuously (no Python to compare).
+// When APM_PYTHON_BIN is not set, this optional comparison is not completion evidence.
 func TestPythonVsGoVersionExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("--version")
@@ -264,7 +264,7 @@ func TestPythonVsGoVersionExitCode(t *testing.T) {
 // TestParityPythonVsGoHelpExitCode compares --help exit codes.
 func TestPythonVsGoHelpExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("--help")
@@ -277,7 +277,7 @@ func TestPythonVsGoHelpExitCode(t *testing.T) {
 // TestParityPythonVsGoUnknownCommandExitCode verifies both fail on unknown cmd.
 func TestPythonVsGoUnknownCommandExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("totally-unknown-xyz")
@@ -290,7 +290,7 @@ func TestPythonVsGoUnknownCommandExitCode(t *testing.T) {
 // TestParityPythonVsGoHelpCommandList verifies Go help lists all Python commands.
 func TestPythonVsGoHelpCommandList(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	pyOut, _, _ := runPython("--help")
@@ -324,7 +324,7 @@ func TestPythonVsGoHelpCommandList(t *testing.T) {
 // TestParityPythonVsGoSubcommandHelpExitCodes compares <cmd> --help exit codes.
 func TestPythonVsGoSubcommandHelpExitCodes(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	cmds := []string{
@@ -359,17 +359,20 @@ func goldenDir(t *testing.T) string {
 }
 
 // readGolden reads a golden file and returns its contents.
-// Returns "" if the file does not exist (test passes vacuously).
+// Golden fixtures are cutover evidence; missing fixtures must fail instead of
+// passing without evidence.
 func readGolden(t *testing.T, name string) string {
 	t.Helper()
 	p := filepath.Join(goldenDir(t), name)
 	b, err := os.ReadFile(p)
 	if err != nil {
-		// Golden file absent: vacuous pass (framework not yet set up).
-		t.Logf("golden file %s not found; skipping comparison", name)
-		return ""
+		t.Fatalf("golden fixture %s is required but was not found: %v", name, err)
 	}
-	return string(b)
+	content := string(b)
+	if strings.TrimSpace(content) == "" {
+		t.Fatalf("golden fixture %s is empty", name)
+	}
+	return content
 }
 
 // normalizeHelpOutput removes lines that vary between runs or versions:

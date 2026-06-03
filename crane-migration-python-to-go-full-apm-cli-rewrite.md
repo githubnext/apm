@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-03T17:44:09Z |
-| Iteration Count | 36 |
-| Best Metric | 1.0 |
+| Last Run | 2026-06-03T23:35:23Z |
+| Iteration Count | 37 |
+| Best Metric | 0.999 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -21,13 +21,13 @@
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached; PR #104 head 2699b7d checks passed (6/6 green: Lint, Go Tests, Python Unit Tests, Python-vs-Go Parity Gate, Migration Benchmarks, Detect Migration Changes) |
+| Completed | false |
+| Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | passed:2699b7d |
+| Completion Gate Status | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -84,14 +84,21 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 17 | Deletion-grade framework reset | Update score.go to 7-gate deletion-grade framework; reset Completed=false per issue #78 updated requirements | score.go implements gates, 0.857 with Python | done |
 | 18 | Resolve approved exceptions | Fix 17 remaining APPROVED-EXCEPTION items in parity_stdout_test.go | no_known_exceptions gate passes (gate 7), score = 1.0 | done |
 | 19 | Complete python_behavior_contracts gate | Populate python_contract_coverage.yml; fix TestParityCompletionPythonBehaviorContracts to auto-extract | python_behavior_contracts gate passes, migration_score = 1.0 | done |
+| 20 | Golden fixture framework | Add score.go gates 10-12 (golden_fixture_corpus, all_go_golden_tests, no_python_runtime_dependency); add parity_golden_test.go; create scripts/capture_golden_fixtures.sh | score.go accepts the 3 new gates, TestParityNoPythonRuntimeDependency passes | done |
+| 21 | Golden corpus capture | Run capture_golden_fixtures.sh with APM_PYTHON_BIN to generate tests/parity/golden/corpus/ with 50+ scenarios; commit corpus to crane branch | TestParityGoldenFixtureCorpus passes (manifest.json present, scenario_count >= 50) | todo |
+| 22 | All-Go golden replay | Verify Go CLI passes TestParityAllGoGoldenTests against committed corpus with no Python; cutoverReady=true; migration_score=1.0 | TestParityAllGoGoldenTests passes; all 13 gates green; score=1.0 | todo |
 
 ---
 
 ## [target] Current Focus
 
-**[+] COMPLETED** -- All 10/10 deletion-grade gates pass. PR #104 head 2699b7d passed all 6 CI checks.
-Migration finalized 2026-06-03. The Go CLI is deletion-grade complete. Python source may now be removed
-once the team is ready for cutover.
+**Milestone 21 -- Golden corpus capture**: Run `scripts/capture_golden_fixtures.sh` with
+`APM_PYTHON_BIN` set to capture Go CLI outputs as golden fixtures in `tests/parity/golden/corpus/`.
+The corpus needs 50+ scenarios covering all core commands. Once captured and committed, CI will
+run `TestParityGoldenFixtureCorpus` and `TestParityAllGoGoldenTests` without Python.
+
+Human steering (mrjf, 2026-06-03): "final completion requires Go-vs-golden tests passing
+with no Python runtime dependency available."
 
 ---
 
@@ -113,6 +120,8 @@ once the team is ready for cutover.
 - python_behavior_contracts gate (iter 32): must NOT use t.Skip. Require APM_PYTHON_BIN, auto-extract inventory. python_contract_coverage.yml: 2.6MB, 24161 obsolete Python tests. All Python reference tests are legitimately obsolete -- parity evidence comes from Go contract tests.
 - PR #100 invalidated prior completion: status:intentionally-incomplete blocks score=1.0.
 - uv fallback path (iter 34): exec.LookPath("uv") fails in Crane sandbox where astral installer puts uv in ~/.local/bin but PATH is not updated. Use lookPathUV() helper that checks common fallback locations.
+- Golden fixture cutover framework (iter 37): migration_score=1.0 requires 13/13 gates. New gates 11-13 (golden_fixture_corpus, all_go_golden_tests, no_python_runtime_dependency) are inferred from TestParityGoldenFixtureCorpus, TestParityAllGoGoldenTests, TestParityNoPythonRuntimeDependency. Tests FAIL (not skip) when corpus absent. TestParityNoPythonRuntimeDependency already passes without corpus.
+- Human maintainer override (iter 37): mrjf explicitly reset completion because prior claim was based on Python-vs-Go parity, not Go-vs-golden. The final gate must use only Go + committed fixtures, with no Python runtime available.
 
 ---
 
@@ -132,10 +141,19 @@ once the team is ready for cutover.
 
 ## [chart] Iteration History
 
+### Iteration 37 -- 2026-06-03T23:35:23Z -- [Run](https://github.com/githubnext/apm/actions/runs/26919788100)
+
+- **Status**: [+] Accepted
+- **Milestone**: Milestone 20 -- Golden fixture framework
+- **Change**: Added 3 new score.go gates (golden_fixture_corpus, all_go_golden_tests, no_python_runtime_dependency); created parity_golden_test.go; golden README; capture script
+- **Score**: 0.999 (previous best: 1.0 [stale per human override], delta: see notes)
+- **Commit**: d827d69
+- **Notes**: Human maintainer mrjf reset completion; prior score=1.0 was based on Python-vs-Go parity, not Go-vs-golden. This iteration installs the 3 new gates. TestParityNoPythonRuntimeDependency passes immediately; corpus gates fail until milestone 21 completes.
+
 ### Iteration 36 -- 2026-06-03T17:44:09Z -- [Run](https://github.com/githubnext/apm/actions/runs/26902385002)
 
-- **Status**: [+] Completed
-- **Change**: PR #104 head 2699b7d: all 6 CI checks passed. Migration finalized.
+- **Status**: [+] Accepted (completion later overridden by human)
+- **Change**: PR #104 head 2699b7d: all 6 CI checks passed. Migration finalized (10/10 gates).
 - **Score**: 1.0 (best: 1.0, delta: +0.0)
 
 ### Iters 29-35 -- 2026-05-28 to 2026-06-03 -- [+] (score 0.857->1.0, milestones 17-19 done): Deletion-grade framework reset; fixed gate failures (COLUMNS, markdown-out, ANSI, Rich wrapping, uv PATH, t.Skip vs return); populated python_contract_coverage.yml (24161 tests); registered PR #103 tests. All 10/10 gates pass.

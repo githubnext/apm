@@ -220,11 +220,7 @@ def test_crane_score_full_parity_without_golden_cutover_gates_cannot_reach_one()
         "all_go_golden_tests",
         "no_python_runtime_dependency",
     }
-    gates = [
-        line
-        for line in _deletion_gates()
-        if json.loads(line)["name"] not in omitted_gates
-    ]
+    gates = [line for line in _deletion_gates() if json.loads(line)["name"] not in omitted_gates]
 
     score = _run_score([*_parity_passes(302), _package_pass(), *gates])
     gates_by_name = _gates(score)

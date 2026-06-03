@@ -332,6 +332,27 @@ func TestParityCompletionStateDiffContracts(t *testing.T) {
 	})
 }
 
+// lookPathUV resolves the uv binary, checking PATH first, then common fallback
+// locations (~/.local/bin/uv, /usr/local/bin/uv) so Crane sandbox runs succeed
+// even when uv was installed by the astral installer but PATH was not updated.
+func lookPathUV() (string, error) {
+	if p, err := exec.LookPath("uv"); err == nil {
+		return p, nil
+	}
+	home, _ := os.UserHomeDir()
+	candidates := []string{
+		filepath.Join(home, ".local", "bin", "uv"),
+		"/usr/local/bin/uv",
+		"/usr/bin/uv",
+	}
+	for _, c := range candidates {
+		if _, err := os.Stat(c); err == nil {
+			return c, nil
+		}
+	}
+	return "", fmt.Errorf("uv not found in PATH or common fallback locations")
+}
+
 // TestParityCompletionPythonSuite runs the Python reference unit test suite to
 // confirm the Python CLI remains green. Gate 7: python_tests_pass.
 func TestParityCompletionPythonSuite(t *testing.T) {
@@ -342,7 +363,7 @@ func TestParityCompletionPythonSuite(t *testing.T) {
 	root := completionModuleRoot(t)
 
 	// Locate uv; required to run the Python test suite.
-	uvPath, err := exec.LookPath("uv")
+	uvPath, err := lookPathUV()
 	if err != nil {
 		t.Fatalf("HARD-GATE FAILED: uv not found in PATH -- cannot run Python suite: %v", err)
 	}
@@ -384,7 +405,7 @@ func TestParityCompletionBenchmarks(t *testing.T) {
 	}
 
 	// Locate uv to run the benchmark script.
-	uvPath, err := exec.LookPath("uv")
+	uvPath, err := lookPathUV()
 	if err != nil {
 		t.Fatalf("HARD-GATE FAILED: uv not found in PATH: %v", err)
 	}

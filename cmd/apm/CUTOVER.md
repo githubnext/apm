@@ -15,7 +15,59 @@ The Go CLI currently implements:
 - `apm init [--yes] [PROJECT_NAME]` (functional, creates apm.yml)
 - Per-command `--help` for all 26 commands (golden-file verified)
 
-Remaining commands return a "not yet fully implemented" message.
+Most remaining commands are wired at the CLI surface. That is not enough for
+cutover. A command that prints success without writing the expected files,
+mutating `apm.yml`, updating `apm.lock.yaml`, executing a script, or detecting a
+planted failure is still incomplete.
+
+## Real Criteria
+
+Every completion criterion must be backed by real command execution. The scorer
+does not infer completion from test names for `surface`, `help`, `functional`,
+`state_diff`, `python_behavior_contracts`, or `benchmarks`; each one must emit an
+explicit ratio gate.
+
+Crane must run `go test ./cmd/apm -run TestParityRealFunctionalAndStateDiffContracts -json`.
+That fixture-backed test executes the built Go `apm` binary in temporary
+projects and emits the existing completion gates directly:
+
+```json
+{"crane":"gate","name":"functional","passing":N,"total":N}
+{"crane":"gate","name":"state_diff","passing":N,"total":N}
+```
+
+Crane must also run the migration benchmark test. It executes fixture-backed
+Python-vs-Go benchmark workloads and emits:
+
+```json
+{"crane":"gate","name":"benchmarks","passing":N,"total":N}
+```
+
+A legacy boolean such as `{"name":"benchmarks","passed":true}` is not enough.
+The benchmark report must prove that every benchmarked command produced the
+expected real artifact or output evidence.
+
+The completion criteria are command-specific:
+
+| Command area | Required proof |
+| --- | --- |
+| `init` | Creates a real `apm.yml` manifest. |
+| `install` | Installs a local package, writes `apm.lock.yaml`, and materializes installed content under `apm_modules/` or target paths. |
+| `update` | Mutates the lockfile when a dependency changes and reports a real no-op when nothing changed. |
+| `compile` | Writes target artifacts such as `.github/copilot-instructions.md` from fixture project state. |
+| `pack` / `unpack` | Writes a non-empty distributable bundle and can extract it back into a temp project. |
+| `run` / `preview` / `list` | Reads project scripts, executes or previews the selected script, and reflects the actual manifest contents. |
+| `audit` / `policy` | Fails on planted hidden Unicode, missing lockfile state, or policy violations instead of always reporting success. |
+| `mcp` / `runtime` / `plugin` / `marketplace` | Persist real manifest or config changes, not just status text. |
+| `cache` | Removes cache entries while respecting the configured cache root. |
+| `prune` / `uninstall` | Removes only files owned by stale dependencies and proves the removed paths are gone. |
+| `deps` / `outdated` / `view` / `search` | Read lockfile, marketplace, or registry fixtures and report fixture-derived results. |
+| `self-update` / `experimental` / `config` | Persist or validate real configuration state where the Python command does. |
+
+Each new command implementation should add or extend functional, state-diff, and
+benchmark fixture coverage before Crane can claim it moved the migration
+forward. Shims, dry-runs, mocks, and help-only assertions do not count as command
+completion.
 
 ## Cutover Trigger Conditions
 
@@ -27,9 +79,13 @@ are true:
    `init`, `install`, `update`, `compile`, `pack`, `run`, `audit`,
    `policy`, `mcp`, `runtime`, `targets`, `list`, `view`, `cache`,
    `deps`, `marketplace`, `uninstall`, `prune`
-3. Python-vs-Go parity tests pass for all commands in the matrix
-4. `go build ./cmd/apm` produces a single static binary
-5. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
+3. `TestParityRealFunctionalAndStateDiffContracts` passes every fixture-backed
+   real-command scenario and emits passing `functional` and `state_diff` gates
+4. Python-vs-Go parity tests pass for all commands in the matrix
+5. Migration benchmarks pass real fixture-backed command workloads and emit a
+   passing counted `benchmarks` gate
+6. `go build ./cmd/apm` produces a single static binary
+7. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
 
 ## Cutover Steps
 

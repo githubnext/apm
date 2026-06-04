@@ -454,6 +454,10 @@ class TestRunMcpInstallNoRuntimes:
                 return_value=None,
             ),
             patch(
+                "apm_cli.integration.mcp_integrator_install.find_runtime_binary",
+                return_value=None,
+            ),
+            patch(
                 "apm_cli.integration.mcp_integrator.MCPIntegrator._gate_project_scoped_runtimes",
                 side_effect=lambda rts, **kw: rts,
             ),

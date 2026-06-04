@@ -20219,12 +20219,18 @@ python_tests:
   - tests/unit/test_crane_score.py::test_crane_score_reaches_one_with_completion_tests_and_explicit_behavior_gate
   - tests/unit/test_crane_score.py::test_crane_score_does_not_infer_behavior_contracts_from_test_name
   - tests/unit/test_crane_score.py::test_crane_score_blocks_incomplete_behavior_contract_gate
+  - tests/unit/test_crane_score.py::test_crane_score_reaches_one_with_completion_tests_and_explicit_real_gates
+  - tests/unit/test_crane_score.py::test_crane_score_does_not_infer_completion_gates_from_test_names
+  - tests/unit/test_crane_score.py::test_crane_score_blocks_incomplete_real_functional_gate
+  - tests/unit/test_crane_score.py::test_crane_score_blocks_legacy_benchmark_bool_without_real_counts
   - tests/unit/test_crane_score.py::test_crane_score_blocks_known_exceptions
   - tests/unit/test_crane_workflow_prompt.py::test_crane_acceptance_requires_shared_iteration_summary_for_pr_updates
   - tests/unit/test_crane_workflow_prompt.py::test_crane_commit_guidance_provides_structured_summary_fallback
   - tests/unit/test_crane_workflow_prompt.py::test_crane_prompt_blocks_stale_completed_state_from_finishing
   - tests/unit/test_crane_workflow_prompt.py::test_crane_completion_is_two_phase_and_pr_head_gated
   - tests/unit/test_crane_workflow_prompt.py::test_crane_state_template_tracks_completion_candidate_gate
+  - tests/unit/test_migration_ci_workflow.py::test_migration_ci_enforces_completion_for_crane_prs_and_explicit_manual_runs
+  - tests/unit/test_migration_ci_workflow.py::test_migration_ci_collects_incomplete_evidence_for_non_crane_prs
   - tests/unit/test_cursor_mcp.py::TestCursorClientFactory::test_create_cursor_client
   - tests/unit/test_cursor_mcp.py::TestCursorClientFactory::test_create_cursor_client_case_insensitive
   - tests/unit/test_cursor_mcp.py::TestCursorClientAdapter::test_config_path_is_repo_local

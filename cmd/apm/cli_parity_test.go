@@ -102,8 +102,8 @@ func runPython(args ...string) (stdout, stderr string, exitCode int) {
 }
 
 // noPython returns true when the Python CLI is not available.
-// Tests that require Python use this to return a vacuous pass rather than skip,
-// so they do not reduce the correctness gate score.
+// These optional progress tests skip Python comparison when it is unavailable;
+// final completion is enforced by the explicit scorer gates instead.
 func noPython() bool {
 	return pythonBin() == ""
 }
@@ -248,10 +248,10 @@ func TestParityCLISelfUpdateAlias(t *testing.T) {
 // --- Python-vs-Go parity tests (require APM_PYTHON_BIN) ---
 
 // TestPythonVsGoVersionExitCode compares exit codes for --version.
-// When APM_PYTHON_BIN is not set the test passes vacuously (no Python to compare).
+// When APM_PYTHON_BIN is not set, this optional comparison is not completion evidence.
 func TestPythonVsGoVersionExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("--version")
@@ -264,7 +264,7 @@ func TestPythonVsGoVersionExitCode(t *testing.T) {
 // TestParityPythonVsGoHelpExitCode compares --help exit codes.
 func TestPythonVsGoHelpExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("--help")
@@ -277,7 +277,7 @@ func TestPythonVsGoHelpExitCode(t *testing.T) {
 // TestParityPythonVsGoUnknownCommandExitCode verifies both fail on unknown cmd.
 func TestPythonVsGoUnknownCommandExitCode(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	_, _, pyCode := runPython("totally-unknown-xyz")
@@ -290,7 +290,7 @@ func TestPythonVsGoUnknownCommandExitCode(t *testing.T) {
 // TestParityPythonVsGoHelpCommandList verifies Go help lists all Python commands.
 func TestPythonVsGoHelpCommandList(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	pyOut, _, _ := runPython("--help")
@@ -324,7 +324,7 @@ func TestPythonVsGoHelpCommandList(t *testing.T) {
 // TestParityPythonVsGoSubcommandHelpExitCodes compares <cmd> --help exit codes.
 func TestPythonVsGoSubcommandHelpExitCodes(t *testing.T) {
 	if noPython() {
-		t.Log("APM_PYTHON_BIN not set; skipping Python-vs-Go comparison (vacuous pass)")
+		t.Log("APM_PYTHON_BIN not set; skipping optional Python-vs-Go comparison")
 		return
 	}
 	cmds := []string{
@@ -359,17 +359,20 @@ func goldenDir(t *testing.T) string {
 }
 
 // readGolden reads a golden file and returns its contents.
-// Returns "" if the file does not exist (test passes vacuously).
+// Golden fixtures are cutover evidence; missing fixtures must fail instead of
+// passing without evidence.
 func readGolden(t *testing.T, name string) string {
 	t.Helper()
 	p := filepath.Join(goldenDir(t), name)
 	b, err := os.ReadFile(p)
 	if err != nil {
-		// Golden file absent: vacuous pass (framework not yet set up).
-		t.Logf("golden file %s not found; skipping comparison", name)
-		return ""
+		t.Fatalf("golden fixture %s is required but was not found: %v", name, err)
 	}
-	return string(b)
+	content := string(b)
+	if strings.TrimSpace(content) == "" {
+		t.Fatalf("golden fixture %s is empty", name)
+	}
+	return content
 }
 
 // normalizeHelpOutput removes lines that vary between runs or versions:
@@ -508,105 +511,105 @@ func TestParityGoldenHelpStructure(t *testing.T) {
 // TestParityInitCreatesApmYML verifies that `apm init --yes` creates apm.yml
 // in a fresh directory with the expected YAML keys.
 func TestParityInitCreatesApmYML(t *testing.T) {
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-dir := t.TempDir()
-stdout, stderr, code := runGoInDir(t, dir, "init", "--yes")
-if code != 0 {
-t.Fatalf("apm init --yes exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
-}
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	dir := t.TempDir()
+	stdout, stderr, code := runGoInDir(t, dir, "init", "--yes")
+	if code != 0 {
+		t.Fatalf("apm init --yes exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
+	}
 
-data, err := os.ReadFile(filepath.Join(dir, "apm.yml"))
-if err != nil {
-t.Fatalf("apm.yml not created: %v", err)
-}
-content := string(data)
-for _, key := range []string{"name:", "version:", "description:", "author:", "dependencies:"} {
-if !strings.Contains(content, key) {
-t.Errorf("apm.yml missing key %q\nContent:\n%s", key, content)
-}
-}
+	data, err := os.ReadFile(filepath.Join(dir, "apm.yml"))
+	if err != nil {
+		t.Fatalf("apm.yml not created: %v", err)
+	}
+	content := string(data)
+	for _, key := range []string{"name:", "version:", "description:", "author:", "dependencies:"} {
+		if !strings.Contains(content, key) {
+			t.Errorf("apm.yml missing key %q\nContent:\n%s", key, content)
+		}
+	}
 }
 
 // TestParityInitExitCode verifies `apm init --yes` exits 0.
 func TestParityInitExitCode(t *testing.T) {
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-dir := t.TempDir()
-_, _, code := runGoInDir(t, dir, "init", "--yes")
-if code != 0 {
-t.Errorf("apm init --yes exit code = %d, want 0", code)
-}
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	dir := t.TempDir()
+	_, _, code := runGoInDir(t, dir, "init", "--yes")
+	if code != 0 {
+		t.Errorf("apm init --yes exit code = %d, want 0", code)
+	}
 }
 
 // TestParityInitIdempotent verifies `apm init --yes` succeeds when apm.yml already exists.
 func TestParityInitIdempotent(t *testing.T) {
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-dir := t.TempDir()
-// First run.
-_, _, code := runGoInDir(t, dir, "init", "--yes")
-if code != 0 {
-t.Fatalf("first apm init --yes exited %d", code)
-}
-// Second run: should succeed (not error on existing apm.yml).
-_, _, code2 := runGoInDir(t, dir, "init", "--yes")
-if code2 != 0 {
-t.Errorf("second apm init --yes (idempotent) exited %d, want 0", code2)
-}
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	dir := t.TempDir()
+	// First run.
+	_, _, code := runGoInDir(t, dir, "init", "--yes")
+	if code != 0 {
+		t.Fatalf("first apm init --yes exited %d", code)
+	}
+	// Second run: should succeed (not error on existing apm.yml).
+	_, _, code2 := runGoInDir(t, dir, "init", "--yes")
+	if code2 != 0 {
+		t.Errorf("second apm init --yes (idempotent) exited %d, want 0", code2)
+	}
 }
 
 // TestParityInitProjectName verifies `apm init --yes myproject` creates a subdir.
 func TestParityInitProjectName(t *testing.T) {
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-dir := t.TempDir()
-stdout, stderr, code := runGoInDir(t, dir, "init", "--yes", "myproject")
-if code != 0 {
-t.Fatalf("apm init --yes myproject exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
-}
-if _, err := os.Stat(filepath.Join(dir, "myproject", "apm.yml")); err != nil {
-t.Errorf("myproject/apm.yml not created: %v", err)
-}
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	dir := t.TempDir()
+	stdout, stderr, code := runGoInDir(t, dir, "init", "--yes", "myproject")
+	if code != 0 {
+		t.Fatalf("apm init --yes myproject exited %d\nstdout: %s\nstderr: %s", code, stdout, stderr)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "myproject", "apm.yml")); err != nil {
+		t.Errorf("myproject/apm.yml not created: %v", err)
+	}
 }
 
 // TestParityInitOutputContainsSuccess verifies the success message is printed.
 func TestParityInitOutputContainsSuccess(t *testing.T) {
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-dir := t.TempDir()
-stdout, _, code := runGoInDir(t, dir, "init", "--yes")
-if code != 0 {
-t.Fatalf("apm init --yes exited %d", code)
-}
-if !strings.Contains(stdout, "initialized") && !strings.Contains(stdout, "apm.yml") {
-t.Errorf("expected success output, got: %q", stdout)
-}
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	dir := t.TempDir()
+	stdout, _, code := runGoInDir(t, dir, "init", "--yes")
+	if code != 0 {
+		t.Fatalf("apm init --yes exited %d", code)
+	}
+	if !strings.Contains(stdout, "initialized") && !strings.Contains(stdout, "apm.yml") {
+		t.Errorf("expected success output, got: %q", stdout)
+	}
 }
 
 // runGoInDir executes the Go binary from a given working directory.
 func runGoInDir(t *testing.T, dir string, args ...string) (stdout, stderr string, exitCode int) {
-t.Helper()
-if goBinPath == "" {
-t.Skip("Go binary not built; skipping")
-}
-var outBuf, errBuf bytes.Buffer
-cmd := exec.Command(goBinPath, args...)
-cmd.Dir = dir
-cmd.Stdout = &outBuf
-cmd.Stderr = &errBuf
-err := cmd.Run()
-if err != nil {
-if exitErr, ok := err.(*exec.ExitError); ok {
-exitCode = exitErr.ExitCode()
-} else {
-exitCode = -1
-}
-}
-return outBuf.String(), errBuf.String(), exitCode
+	t.Helper()
+	if goBinPath == "" {
+		t.Skip("Go binary not built; skipping")
+	}
+	var outBuf, errBuf bytes.Buffer
+	cmd := exec.Command(goBinPath, args...)
+	cmd.Dir = dir
+	cmd.Stdout = &outBuf
+	cmd.Stderr = &errBuf
+	err := cmd.Run()
+	if err != nil {
+		if exitErr, ok := err.(*exec.ExitError); ok {
+			exitCode = exitErr.ExitCode()
+		} else {
+			exitCode = -1
+		}
+	}
+	return outBuf.String(), errBuf.String(), exitCode
 }

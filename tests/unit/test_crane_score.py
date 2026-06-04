@@ -74,6 +74,9 @@ def _deletion_gates() -> list[str]:
         '{"crane":"gate","name":"functional","passing":1,"total":1}',
         '{"crane":"gate","name":"state_diff","passing":1,"total":1}',
         '{"crane":"gate","name":"python_behavior_contracts","passing":1,"total":1}',
+        '{"crane":"gate","name":"golden_fixture_corpus","passed":true}',
+        '{"crane":"gate","name":"all_go_golden_tests","passed":true}',
+        '{"crane":"gate","name":"no_python_runtime_dependency","passed":true}',
         '{"crane":"gate","name":"known_exceptions","count":0}',
         '{"crane":"gate","name":"python_tests","passed":true}',
         '{"crane":"gate","name":"benchmarks","passing":1,"total":1}',
@@ -182,6 +185,9 @@ def test_crane_score_can_reach_one_with_all_deletion_grade_gates() -> None:
         "state_diff_contracts": 1.0,
         "python_behavior_contracts": 1.0,
         "known_exceptions": 0,
+        "golden_fixture_corpus": "pass",
+        "all_go_golden_tests": "pass",
+        "no_python_runtime_dependency": "pass",
         "go_tests": "pass",
         "python_tests": "pass",
         "benchmarks": "pass",
@@ -197,6 +203,9 @@ def test_crane_score_can_reach_one_with_all_deletion_grade_gates() -> None:
         '{"crane":"gate","name":"functional","passing":0,"total":1}',
         '{"crane":"gate","name":"state_diff","passing":0,"total":1}',
         '{"crane":"gate","name":"python_behavior_contracts","passing":0,"total":1}',
+        '{"crane":"gate","name":"golden_fixture_corpus","passed":false}',
+        '{"crane":"gate","name":"all_go_golden_tests","passed":false}',
+        '{"crane":"gate","name":"no_python_runtime_dependency","passed":false}',
         '{"crane":"gate","name":"known_exceptions","count":1}',
         '{"crane":"gate","name":"python_tests","passed":false}',
         '{"crane":"gate","name":"benchmarks","passing":0,"total":1}',
@@ -219,6 +228,27 @@ def test_crane_score_full_parity_but_missing_deletion_gates_cannot_reach_one() -
 
     assert score["migration_score"] < 1.0
     assert score["deletion_grade_ready"] is False
+
+
+def test_crane_score_full_parity_without_golden_cutover_gates_cannot_reach_one() -> None:
+    omitted_gates = {
+        "golden_fixture_corpus",
+        "all_go_golden_tests",
+        "no_python_runtime_dependency",
+    }
+    gates = [line for line in _deletion_gates() if json.loads(line)["name"] not in omitted_gates]
+
+    score = _run_score([*_parity_passes(302), _package_pass(), *gates])
+    gates_by_name = _gates(score)
+
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert score["golden_fixture_corpus"] is False
+    assert score["all_go_golden_tests"] is False
+    assert score["no_python_runtime_dependency"] is False
+    assert gates_by_name["golden_fixture_corpus"]["passing"] is False
+    assert gates_by_name["all_go_golden_tests"]["passing"] is False
+    assert gates_by_name["no_python_runtime_dependency"]["passing"] is False
 
 
 def test_crane_score_package_level_go_failure_blocks_one() -> None:

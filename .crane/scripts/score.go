@@ -63,6 +63,9 @@ type CutoverGates struct {
 	FunctionalContracts     float64 `json:"functional_contracts"`
 	StateDiffContracts      float64 `json:"state_diff_contracts"`
 	PythonBehaviorContracts float64 `json:"python_behavior_contracts"`
+	GoldenFixtureCorpus     string  `json:"golden_fixture_corpus"`
+	AllGoGoldenTests        string  `json:"all_go_golden_tests"`
+	NoPythonRuntime         string  `json:"no_python_runtime_dependency"`
 	KnownExceptions         int     `json:"known_exceptions"`
 	GoTests                 string  `json:"go_tests"`
 	PythonTests             string  `json:"python_tests"`
@@ -99,6 +102,9 @@ type Score struct {
 	PythonTestsPassing     bool            `json:"python_tests_passing"`
 	GoTestsPassing         bool            `json:"go_tests_passing"`
 	BenchmarksPassing      bool            `json:"benchmarks_passing"`
+	GoldenFixtureCorpus    bool            `json:"golden_fixture_corpus"`
+	AllGoGoldenTests       bool            `json:"all_go_golden_tests"`
+	NoPythonRuntime        bool            `json:"no_python_runtime_dependency"`
 	ParityPassing          int             `json:"parity_passing"`
 	ParityTotal            int             `json:"parity_total"`
 	SourceTestsPassing     int             `json:"source_tests_passing"`
@@ -143,6 +149,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	functional := RatioGate{}
 	stateDiff := RatioGate{}
 	behaviorContracts := RatioGate{}
+	goldenFixtureCorpus := BoolGate{}
+	allGoGoldenTests := BoolGate{}
+	noPythonRuntime := BoolGate{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -151,7 +160,21 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		}
 		if gate, ok := parseGateEvent(line); ok {
 			eventsSeen++
-			applyGateEvent(gate, &pythonReference, &surface, &help, &functional, &stateDiff, &behaviorContracts, &knownExceptions, &pythonTests, &benchmarks)
+			applyGateEvent(
+				gate,
+				&pythonReference,
+				&surface,
+				&help,
+				&functional,
+				&stateDiff,
+				&behaviorContracts,
+				&goldenFixtureCorpus,
+				&allGoGoldenTests,
+				&noPythonRuntime,
+				&knownExceptions,
+				&pythonTests,
+				&benchmarks,
+			)
 			continue
 		}
 
@@ -163,7 +186,21 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 
 		if ev.Output != "" {
 			if gate, ok := parseGateEvent(ev.Output); ok {
-				applyGateEvent(gate, &pythonReference, &surface, &help, &functional, &stateDiff, &behaviorContracts, &knownExceptions, &pythonTests, &benchmarks)
+				applyGateEvent(
+					gate,
+					&pythonReference,
+					&surface,
+					&help,
+					&functional,
+					&stateDiff,
+					&behaviorContracts,
+					&goldenFixtureCorpus,
+					&allGoGoldenTests,
+					&noPythonRuntime,
+					&knownExceptions,
+					&pythonTests,
+					&benchmarks,
+				)
 			}
 			if n, ok := approvedExceptionCount(ev.Output); ok && n > knownExceptions {
 				knownExceptions = n
@@ -253,6 +290,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		FunctionalContracts:     functional.Percent(),
 		StateDiffContracts:      stateDiff.Percent(),
 		PythonBehaviorContracts: behaviorContracts.Percent(),
+		GoldenFixtureCorpus:     passFail(goldenFixtureCorpus.OK()),
+		AllGoGoldenTests:        passFail(allGoGoldenTests.OK()),
+		NoPythonRuntime:         passFail(noPythonRuntime.OK()),
 		KnownExceptions:         knownExceptions,
 		GoTests:                 passFail(goTestsPass),
 		PythonTests:             passFail(pythonTests.OK()),
@@ -275,6 +315,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		gates.FunctionalContracts == 1.0 &&
 		gates.StateDiffContracts == 1.0 &&
 		gates.PythonBehaviorContracts == 1.0 &&
+		gates.GoldenFixtureCorpus == "pass" &&
+		gates.AllGoGoldenTests == "pass" &&
+		gates.NoPythonRuntime == "pass" &&
 		gates.KnownExceptions == 0 &&
 		gates.GoTests == "pass" &&
 		gates.PythonTests == "pass" &&
@@ -315,6 +358,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		PythonTestsPassing:     gates.PythonTests == "pass",
 		GoTestsPassing:         gates.GoTests == "pass",
 		BenchmarksPassing:      gates.Benchmarks == "pass",
+		GoldenFixtureCorpus:    gates.GoldenFixtureCorpus == "pass",
+		AllGoGoldenTests:       gates.AllGoGoldenTests == "pass",
+		NoPythonRuntime:        gates.NoPythonRuntime == "pass",
 		ParityPassing:          metrics.ParityPassing,
 		ParityTotal:            metrics.ParityTotal,
 		SourceTestsPassing:     metrics.SourceTestsPassing,
@@ -344,6 +390,9 @@ func applyGateEvent(
 	functional *RatioGate,
 	stateDiff *RatioGate,
 	behaviorContracts *RatioGate,
+	goldenFixtureCorpus *BoolGate,
+	allGoGoldenTests *BoolGate,
+	noPythonRuntime *BoolGate,
 	knownExceptions *int,
 	pythonTests *BoolGate,
 	benchmarks *RatioGate,
@@ -361,6 +410,12 @@ func applyGateEvent(
 		*stateDiff = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "python_behavior_contracts":
 		*behaviorContracts = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "golden_fixture_corpus":
+		*goldenFixtureCorpus = BoolGate{Seen: true, Passed: gate.Passed}
+	case "all_go_golden_tests":
+		*allGoGoldenTests = BoolGate{Seen: true, Passed: gate.Passed}
+	case "no_python_runtime_dependency":
+		*noPythonRuntime = BoolGate{Seen: true, Passed: gate.Passed}
 	case "known_exceptions":
 		*knownExceptions = gate.Count
 	case "python_tests":
@@ -412,6 +467,9 @@ func gateResults(gates CutoverGates) []GateResult {
 		{Name: "functional_contracts", Passing: gates.FunctionalContracts == 1.0},
 		{Name: "state_diff_contracts", Passing: gates.StateDiffContracts == 1.0},
 		{Name: "python_behavior_contracts", Passing: gates.PythonBehaviorContracts == 1.0},
+		{Name: "golden_fixture_corpus", Passing: gates.GoldenFixtureCorpus == "pass"},
+		{Name: "all_go_golden_tests", Passing: gates.AllGoGoldenTests == "pass"},
+		{Name: "no_python_runtime_dependency", Passing: gates.NoPythonRuntime == "pass"},
 		{Name: "python_tests_pass", Passing: gates.PythonTests == "pass"},
 		{Name: "benchmarks_pass", Passing: gates.Benchmarks == "pass"},
 		{Name: "no_known_exceptions", Passing: gates.KnownExceptions == 0},

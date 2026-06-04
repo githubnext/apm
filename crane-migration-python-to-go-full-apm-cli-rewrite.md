@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-04T04:03:15Z |
-| Iteration Count | 41 |
+| Last Run | 2026-06-04T06:01:58Z |
+| Iteration Count | 42 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -21,13 +21,13 @@
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | false |
-| Completed Reason | -- |
-| Completion Candidate | true |
+| Completed | true |
+| Completed Reason | target metric 1.0 reached; PR #104 head 2699b7d checks passed (all 6 checks success, run 26900689925) |
+| Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending:2699b7d -- all 6 PR #104 checks passed in run 26900689925; awaiting next-run deterministic gate |
+| Completion Gate Status | passed:2699b7d |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -91,7 +91,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**Completion gate pending**: Score 1.0 confirmed via CI evidence. Completion Candidate=true. Next iteration will run deterministic gate (PR #104 HEAD checks) and finalize migration.
+**[+] Migration complete.** All 6 PR #104 head checks passed (2699b7d). 42 iterations. Python -> Go greenfield rewrite of APM CLI finalized.
 
 ---
 
@@ -128,6 +128,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 42 -- 2026-06-04T06:01:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26933907888)
+
+- **Status**: [+] Accepted -- Migration Complete
+- **Milestone**: Completion gate finalized
+- **Change**: Deterministic PR-head completion gate passed. All 6 CI checks for PR #104 HEAD 2699b7d confirmed success (run 26900689925). Completed=true set.
+- **Score**: 1.0 (best: 1.0, delta: 0.0)
+- **Notes**: All 10/10 deletion-grade gates passing. Python -> Go full APM CLI rewrite finalized after 42 iterations. crane-migration label removed, crane-completed label added.
 
 ### Iteration 41 -- 2026-06-04T04:03:15Z -- [Run](https://github.com/githubnext/apm/actions/runs/26929768062)
 

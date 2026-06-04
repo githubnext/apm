@@ -61,10 +61,20 @@ Maintainers can dispatch the migration workflow manually:
 gh workflow run migration-ci.yml --repo githubnext/apm --ref main
 ```
 
+That default manual run collects parity and benchmark evidence without treating
+known migration gaps as a CI failure. To run the deterministic hard completion
+gate, opt in explicitly:
+
+```bash
+gh workflow run migration-ci.yml --repo githubnext/apm --ref main -f enforce_completion=true
+```
+
 After it runs, open the **Migration Benchmarks** job summary for the timing
 table. The same run uploads the `migration-benchmark-evidence` artifact with
 JSON and Markdown copies of the benchmark data. In the benchmark table, the
 `Go/Python` ratio is the Go median duration divided by the Python median
-duration: values below `1.00x` mean Go is faster. Recent smoke benchmark
-evidence for startup/help/init-style commands shows the Go CLI roughly
-`327x`-`370x` faster than the Python CLI.
+duration: values below `1.00x` mean Go is faster. The benchmark includes
+fixture-backed commands that read, write, execute, or fail against realistic APM
+project state: `apm.yml`, `apm.lock.yaml`, installed `apm_modules`, local
+`.apm` primitives, target directories, deployed prompt files, and sample source
+files.

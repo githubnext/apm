@@ -22,7 +22,8 @@ def test_readme_documents_go_cli_migration_usage() -> None:
         "gh workflow run migration-ci.yml --repo githubnext/apm --ref main",
         "`migration-benchmark-evidence`",
         "`Go/Python` ratio is the Go median duration divided by the Python median",
-        "`327x`-`370x` faster",
+        "fixture-backed commands that read, write, execute, or fail against realistic APM",
+        "`apm.yml`, `apm.lock.yaml`, installed `apm_modules`",
     ]
 
     for snippet in required_snippets:

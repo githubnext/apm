@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-04T17:55:46Z |
-| Iteration Count | 45 |
+| Last Run | 2026-06-04T18:06:15Z |
+| Iteration Count | 46 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -60,32 +60,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [ladder] Milestones
 
-| # | Milestone | Scope | Acceptance | Status |
-|---|-----------|-------|------------|--------|
-| 0 | Planning | Inventory, plan, score.go scaffold | Plan committed, score.go in .crane/scripts/ | done |
-| 1 | Build scaffolding | go.mod, cmd/apm/main.go stub, CI wiring | `go build ./...` passes, CI green | done |
-| 2 | Go test/parity harness | Acceptance tests calling Python binary, parity framework | score.go returns valid JSON, parity_total >= 10 | done |
-| 3 | utils/ + constants + config | internal/utils, internal/constants, internal/config | parity tests pass for all util functions | done |
-| 4 | models/ + primitives/ | internal/models, internal/primitives | parity tests pass for data structures | done |
-| 5 | deps/ | internal/deps -- dependency resolution | parity tests pass for dep resolution | done |
-| 6 | cache/ | internal/cache -- HTTP/git caching | parity tests pass for cache layer | done |
-| 7 | core/ | internal/core -- auth, target detection, orchestration | parity tests pass for core | done |
-| 8 | install/ (partial) | internal/install -- errors, plan types, context, request | parity tests pass for install errors/plan/context/request | done |
-| 8b | install/ cache_pin + sources | internal/install/cache_pin.go, sources.go types | parity tests pass for cache pin and source types | done |
-| 9 | commands/ | internal/commands -- cobra replacing click | all commands respond correctly | done |
-| 10 | integration/ | internal/integration -- file integrators | parity tests pass for integrators | done |
-| 11 | compilation/ | internal/compilation -- compilation pipeline | parity tests pass for compilation | done |
-| 12 | runtime/ + adapters/ | internal/runtime, internal/adapters | parity tests pass | done |
-| 12b | commands/ + integration/ + compilation/ | internal/commands, internal/integration, internal/compilation | parity tests pass | done |
-| 13 | policy/ + security/ | internal/policy, internal/security | parity tests pass | done |
-| 14 | marketplace/ + registry/ | internal/marketplace, internal/registry | parity tests pass | done |
-| 15 | bundle/ + output/ | internal/bundle, internal/output | parity tests pass | done |
-| 16 | CLI entry point wiring | cmd/apm/ final wiring | full CLI parity, migration_score = 1.0 | done |
-| 17 | Deletion-grade framework reset | Update score.go to 7-gate deletion-grade framework; reset Completed=false per issue #78 updated requirements | score.go implements gates, 0.857 with Python | done |
-| 18 | Resolve approved exceptions | Fix 17 remaining APPROVED-EXCEPTION items in parity_stdout_test.go | no_known_exceptions gate passes (gate 7), score = 1.0 | done |
-| 19 | Complete python_behavior_contracts gate | Populate python_contract_coverage.yml; fix TestParityCompletionPythonBehaviorContracts to auto-extract | python_behavior_contracts gate passes, migration_score = 1.0 | done |
-| 20 | Golden fixture framework | Add score.go gates 10-12 (golden_fixture_corpus, all_go_golden_tests, no_python_runtime_dependency); add parity_golden_test.go; create 22-scenario corpus in cmd/apm/testdata/golden/corpus/ | score.go accepts the 3 new gates, all 3 tests pass locally | done |
-| 21 | All-Go golden replay in CI | Verify CI passes all 13 gates including golden tests; migration_score=1.0 | All 13 gates green in CI; score=1.0; Completion Candidate=true | done |
+| # | Milestone | Status |
+|---|-----------|--------|
+| 0-16 | Planning through CLI entry point wiring | done |
+| 17 | Deletion-grade framework reset (score.go 7-gate) | done |
+| 18 | Resolve approved exceptions (zero known_exceptions) | done |
+| 19 | Complete python_behavior_contracts gate | done |
+| 20 | Golden fixture framework (gates 10-12) | done |
+| 21 | All-Go golden replay in CI; migration_score=1.0 | done |
 
 ---
 
@@ -129,29 +111,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
-### Iteration 45 -- 2026-06-04T17:55:46Z -- [Run](https://github.com/githubnext/apm/actions/runs/26969654788)
-
-- **Status**: [+] Accepted (verification pass)
-- **Milestone**: Completed -- verification only
-- **Change**: No code changes. Migration confirmed complete. PR #104 merged. Issue #78 has crane-completed label.
-- **Score**: 1.0 (best: 1.0, delta: 0.0)
-- **Notes**: Pre-step selected completed migration again. All 10/10 deletion-grade gates remain green.
-
-### Iteration 44 -- 2026-06-04T17:06:09Z -- [Run](https://github.com/githubnext/apm/actions/runs/26967039681)
-
-- **Status**: [+] Accepted (verification pass)
-- **Milestone**: Completed -- verification only
-- **Change**: No code changes. Migration confirmed complete. PR #104 merged by mrjf at 2026-06-04T16:42:18Z. Issue #78 has crane-completed label.
-- **Score**: 1.0 (best: 1.0, delta: 0.0)
-- **Notes**: Pre-step selected completed migration again. PR #104 is merged into main. All 10/10 deletion-grade gates remain green.
-
-### Iteration 43 -- 2026-06-04T15:51:48Z -- [Run](https://github.com/githubnext/apm/actions/runs/26963011607)
-
-- **Status**: [+] Accepted (verification pass)
-- **Milestone**: Completed -- verification only
-- **Change**: No code changes. Verified completed state: PR #104 HEAD 2699b7d has all 6 CI checks passing. Completed=true confirmed.
-- **Score**: 1.0 (best: 1.0, delta: 0.0)
-- **Notes**: Pre-step selected this completed migration for a final verification pass. All gates confirmed.
+### Iters 43-46 -- [+] Verification passes (score 1.0, no code changes): Pre-step re-selects completed migration on every 5m tick; each iter confirms Completed=true, PR #104 merged to main, 10/10 gates green.
 
 ### Iteration 42 -- 2026-06-04T06:01:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26933907888)
 

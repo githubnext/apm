@@ -143,7 +143,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	knownExceptions := knownExceptionsFromEnv(getenv("APM_KNOWN_EXCEPTIONS"))
 	pythonReference := BoolGate{}
 	pythonTests := BoolGate{Seen: getenv("APM_PYTHON_TESTS") != "", Passed: getenv("APM_PYTHON_TESTS") == "pass"}
-	benchmarks := BoolGate{Seen: getenv("APM_BENCHMARKS") != "", Passed: getenv("APM_BENCHMARKS") == "pass"}
+	benchmarks := RatioGate{}
 	surface := RatioGate{}
 	help := RatioGate{}
 	functional := RatioGate{}
@@ -261,25 +261,25 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		pythonReference = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionHardGate") || pythonReferenceReady(getenv("APM_PYTHON_BIN"))}
 	}
 	if !surface.Seen {
-		surface = inferredAnyRatioGate(passed, failed, "TestParityCompletionSurfaceParity", "TestParitySurfaceInventory")
+		surface = missingRatioGate()
 	}
 	if !help.Seen {
-		help = inferredAllRatioGate(passed, failed, "TestParityCompletionCommandMatrix", "TestParityCompletionHelpIdentical")
+		help = missingRatioGate()
 	}
 	if !functional.Seen {
-		functional = inferredAnyRatioGate(passed, failed, "TestParityCompletionFunctionalContracts", "TestParityFunctionalContracts")
+		functional = missingRatioGate()
 	}
 	if !stateDiff.Seen {
-		stateDiff = inferredAnyRatioGate(passed, failed, "TestParityCompletionStateDiffContracts", "TestParityStateDiffContracts")
+		stateDiff = missingRatioGate()
 	}
 	if !behaviorContracts.Seen {
-		behaviorContracts = RatioGate{Seen: true, Passing: 0, Total: 1}
+		behaviorContracts = missingRatioGate()
 	}
 	if !pythonTests.Seen {
 		pythonTests = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionPythonSuite")}
 	}
 	if !benchmarks.Seen {
-		benchmarks = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionBenchmarks")}
+		benchmarks = missingRatioGate()
 	}
 
 	goTestsPass := !goTestsFailed && targetTotal > 0 && targetPassing == targetTotal
@@ -395,7 +395,7 @@ func applyGateEvent(
 	noPythonRuntime *BoolGate,
 	knownExceptions *int,
 	pythonTests *BoolGate,
-	benchmarks *BoolGate,
+	benchmarks *RatioGate,
 ) {
 	switch gate.Name {
 	case "python_reference":
@@ -421,7 +421,7 @@ func applyGateEvent(
 	case "python_tests":
 		*pythonTests = BoolGate{Seen: true, Passed: gate.Passed}
 	case "benchmarks":
-		*benchmarks = BoolGate{Seen: true, Passed: gate.Passed}
+		*benchmarks = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	}
 }
 
@@ -454,31 +454,8 @@ func testPassed(passed, failed map[string]bool, names ...string) bool {
 	return false
 }
 
-func inferredAnyRatioGate(passed, failed map[string]bool, names ...string) RatioGate {
-	for _, name := range names {
-		if failed[name] {
-			return RatioGate{Seen: true, Passing: 0, Total: 1}
-		}
-	}
-	return RatioGate{Seen: true, Passing: boolToInt(testPassed(passed, failed, names...)), Total: 1}
-}
-
-func inferredAllRatioGate(passed, failed map[string]bool, names ...string) RatioGate {
-	for _, name := range names {
-		if failed[name] {
-			return RatioGate{Seen: true, Passing: 0, Total: 1}
-		}
-	}
-	return RatioGate{Seen: true, Passing: boolToInt(allRequiredTestsPassed(passed, names...)), Total: 1}
-}
-
-func allRequiredTestsPassed(passed map[string]bool, names ...string) bool {
-	for _, name := range names {
-		if !passed[name] {
-			return false
-		}
-	}
-	return true
+func missingRatioGate() RatioGate {
+	return RatioGate{Seen: true, Passing: 0, Total: 1}
 }
 
 func gateResults(gates CutoverGates) []GateResult {
@@ -504,13 +481,6 @@ func passFail(ok bool) string {
 		return "pass"
 	}
 	return "fail"
-}
-
-func boolToInt(ok bool) int {
-	if ok {
-		return 1
-	}
-	return 0
 }
 
 func knownExceptionsFromEnv(raw string) int {

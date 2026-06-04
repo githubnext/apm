@@ -79,7 +79,7 @@ def _deletion_gates() -> list[str]:
         '{"crane":"gate","name":"no_python_runtime_dependency","passed":true}',
         '{"crane":"gate","name":"known_exceptions","count":0}',
         '{"crane":"gate","name":"python_tests","passed":true}',
-        '{"crane":"gate","name":"benchmarks","passed":true}',
+        '{"crane":"gate","name":"benchmarks","passing":1,"total":1}',
     ]
 
 
@@ -106,6 +106,22 @@ def _behavior_contract_gate_output(passing: int, total: int) -> str:
             {
                 "crane": "gate",
                 "name": "python_behavior_contracts",
+                "passing": passing,
+                "total": total,
+            }
+        )
+        + "\n",
+    )
+
+
+def _ratio_gate_output(test: str, name: str, passing: int, total: int) -> str:
+    return _event(
+        "output",
+        test,
+        output=json.dumps(
+            {
+                "crane": "gate",
+                "name": name,
                 "passing": passing,
                 "total": total,
             }
@@ -192,7 +208,7 @@ def test_crane_score_can_reach_one_with_all_deletion_grade_gates() -> None:
         '{"crane":"gate","name":"no_python_runtime_dependency","passed":false}',
         '{"crane":"gate","name":"known_exceptions","count":1}',
         '{"crane":"gate","name":"python_tests","passed":false}',
-        '{"crane":"gate","name":"benchmarks","passed":false}',
+        '{"crane":"gate","name":"benchmarks","passing":0,"total":1}',
     ],
 )
 def test_crane_score_full_parity_but_bad_deletion_gate_cannot_reach_one(
@@ -266,15 +282,12 @@ def test_crane_score_rejects_empty_event_stream() -> None:
     assert "empty or incomplete" in result.stderr
 
 
-def test_crane_score_reaches_one_with_completion_tests_and_explicit_behavior_gate() -> None:
+def test_crane_score_reaches_one_with_completion_tests_and_explicit_real_gates() -> None:
     score = _run_score(
         [
             *_parity_passes(293),
             *_completion_gate_events(),
-            _behavior_contract_gate_output(1, 1),
-            '{"crane":"gate","name":"golden_fixture_corpus","passed":true}',
-            '{"crane":"gate","name":"all_go_golden_tests","passed":true}',
-            '{"crane":"gate","name":"no_python_runtime_dependency","passed":true}',
+            *_deletion_gates(),
             _package_pass(),
         ]
     )
@@ -285,21 +298,30 @@ def test_crane_score_reaches_one_with_completion_tests_and_explicit_behavior_gat
     assert all(gate["passing"] for gate in _gates(score).values())
 
 
-def test_crane_score_does_not_infer_behavior_contracts_from_test_name() -> None:
+def test_crane_score_does_not_infer_completion_gates_from_test_names() -> None:
     score = _run_score([*_parity_passes(293), *_completion_gate_events(), _package_pass()])
     gates = _gates(score)
 
     assert score["progress"] == 1.0
     assert score["migration_score"] < 1.0
     assert score["deletion_grade_ready"] is False
+    assert gates["functional_contracts"]["passing"] is False
+    assert gates["state_diff_contracts"]["passing"] is False
     assert gates["python_behavior_contracts"]["passing"] is False
+    assert gates["benchmarks_pass"]["passing"] is False
 
 
 def test_crane_score_blocks_incomplete_behavior_contract_gate() -> None:
+    gates = [
+        line
+        for line in _deletion_gates()
+        if json.loads(line)["name"] != "python_behavior_contracts"
+    ]
     score = _run_score(
         [
             *_parity_passes(293),
             *_completion_gate_events(),
+            *gates,
             _behavior_contract_gate_output(0, 1),
             _package_pass(),
         ]
@@ -312,11 +334,55 @@ def test_crane_score_blocks_incomplete_behavior_contract_gate() -> None:
     assert gates["python_behavior_contracts"]["passing"] is False
 
 
+def test_crane_score_blocks_incomplete_real_functional_gate() -> None:
+    gates = [line for line in _deletion_gates() if json.loads(line)["name"] != "functional"]
+    score = _run_score(
+        [
+            *_parity_passes(293),
+            *_completion_gate_events(),
+            *gates,
+            _ratio_gate_output(
+                "TestParityRealFunctionalAndStateDiffContracts",
+                "functional",
+                0,
+                1,
+            ),
+            _package_pass(),
+        ]
+    )
+    gates = _gates(score)
+
+    assert score["progress"] == 1.0
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert gates["functional_contracts"]["passing"] is False
+
+
+def test_crane_score_blocks_legacy_benchmark_bool_without_real_counts() -> None:
+    gates = [line for line in _deletion_gates() if json.loads(line)["name"] != "benchmarks"]
+    score = _run_score(
+        [
+            *_parity_passes(293),
+            *_completion_gate_events(),
+            *gates,
+            '{"crane":"gate","name":"benchmarks","passed":true}',
+            _package_pass(),
+        ]
+    )
+    gates = _gates(score)
+
+    assert score["progress"] == 1.0
+    assert score["migration_score"] < 1.0
+    assert score["deletion_grade_ready"] is False
+    assert gates["benchmarks_pass"]["passing"] is False
+
+
 def test_crane_score_blocks_known_exceptions() -> None:
     score = _run_score(
         [
             *_parity_passes(293),
             *_completion_gate_events(),
+            *_deletion_gates(),
             _event("output", "TestParityCompletionHelpIdentical", output="APPROVED-EXCEPTION: no"),
             _package_pass(),
         ]

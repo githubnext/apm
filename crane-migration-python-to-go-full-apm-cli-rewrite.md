@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-04T17:06:09Z |
-| Iteration Count | 44 |
+| Last Run | 2026-06-04T17:55:46Z |
+| Iteration Count | 45 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -27,7 +27,7 @@
 | Completion Gate | pr-head-checks |
 | Completion Gate Status | passed:2699b7d |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -128,6 +128,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 45 -- 2026-06-04T17:55:46Z -- [Run](https://github.com/githubnext/apm/actions/runs/26969654788)
+
+- **Status**: [+] Accepted (verification pass)
+- **Milestone**: Completed -- verification only
+- **Change**: No code changes. Migration confirmed complete. PR #104 merged. Issue #78 has crane-completed label.
+- **Score**: 1.0 (best: 1.0, delta: 0.0)
+- **Notes**: Pre-step selected completed migration again. All 10/10 deletion-grade gates remain green.
 
 ### Iteration 44 -- 2026-06-04T17:06:09Z -- [Run](https://github.com/githubnext/apm/actions/runs/26967039681)
 

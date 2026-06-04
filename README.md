@@ -61,6 +61,14 @@ Maintainers can dispatch the migration workflow manually:
 gh workflow run migration-ci.yml --repo githubnext/apm --ref main
 ```
 
+That default manual run collects parity and benchmark evidence without treating
+known migration gaps as a CI failure. To run the deterministic hard completion
+gate, opt in explicitly:
+
+```bash
+gh workflow run migration-ci.yml --repo githubnext/apm --ref main -f enforce_completion=true
+```
+
 After it runs, open the **Migration Benchmarks** job summary for the timing
 table. The same run uploads the `migration-benchmark-evidence` artifact with
 JSON and Markdown copies of the benchmark data. In the benchmark table, the

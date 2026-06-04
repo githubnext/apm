@@ -10,14 +10,15 @@ def _workflow_text() -> str:
     return WORKFLOW.read_text(encoding="utf-8")
 
 
-def test_migration_ci_enforces_completion_for_crane_prs_and_manual_runs() -> None:
+def test_migration_ci_enforces_completion_for_crane_prs_and_explicit_manual_runs() -> None:
     text = _workflow_text()
 
+    assert "enforce_completion:" in text
     assert "MIGRATION_COMPLETION_ENFORCED=$enforce_completion" in text
     assert "APM_ENFORCE_COMPLETION_GATES=1" in text
-    assert 'github.event_name }}" = "workflow_dispatch"' in text
+    assert "inputs.enforce_completion == true" in text
     assert 'github.event.pull_request.head.ref }}" == crane/*' in text
-    assert "completion gates are enforced only for crane/* PRs and manual runs" in text
+    assert "manual runs with enforce_completion=true" in text
 
 
 def test_migration_ci_collects_incomplete_evidence_for_non_crane_prs() -> None:

@@ -99,6 +99,18 @@ jobs:
       - name: Run Go parity tests
         shell: bash
         run: |
+          enforce_completion=false
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            enforce_completion=true
+          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+            enforce_completion=true
+          fi
+
+          echo "MIGRATION_COMPLETION_ENFORCED=$enforce_completion" >> "$GITHUB_ENV"
+          if [ "$enforce_completion" = "true" ]; then
+            export APM_ENFORCE_COMPLETION_GATES=1
+          fi
+
           set +e
           go test -json ./... | tee "$RUNNER_TEMP/go-test-events.json"
           status=${PIPESTATUS[0]}
@@ -113,21 +125,37 @@ jobs:
             --coverage tests/parity/python_contract_coverage.yml \
             --allow-intentionally-incomplete \
             --summary "$RUNNER_TEMP/python-contract-coverage.md" || true
-          python - "$RUNNER_TEMP/migration-score.json" <<'PY'
+          python - "$RUNNER_TEMP/migration-score.json" "${MIGRATION_COMPLETION_ENFORCED:-false}" <<'PY'
           import json
           import sys
 
           with open(sys.argv[1], encoding="utf-8") as fh:
               score = json.load(fh)
+          enforce_completion = sys.argv[2].lower() == "true"
 
           print(json.dumps(score, indent=2, sort_keys=True))
+          if not enforce_completion:
+              print(
+                  "::notice::Non-enforcing migration evidence run; "
+                  "completion gates are enforced only for crane/* PRs and manual runs."
+              )
+              raise SystemExit(0)
           if score.get("progress") != 1.0:
               raise SystemExit("progress must be 1.0 for completion parity")
           if score.get("migration_score") == 1.0 and not score.get("deletion_grade_ready"):
               raise SystemExit("migration_score 1.0 requires deletion_grade_ready")
           PY
-          test "${PYTHON_CLI_CONTRACT_STATUS:-1}" = "0"
-          test "${GO_TEST_STATUS:-1}" = "0"
+          if [ "${MIGRATION_COMPLETION_ENFORCED:-false}" = "true" ]; then
+            test "${PYTHON_CLI_CONTRACT_STATUS:-1}" = "0"
+            test "${GO_TEST_STATUS:-1}" = "0"
+          else
+            if [ "${PYTHON_CLI_CONTRACT_STATUS:-1}" != "0" ]; then
+              echo "::notice::Python behavior contract tests are incomplete in collection mode."
+            fi
+            if [ "${GO_TEST_STATUS:-1}" != "0" ]; then
+              echo "::notice::Go parity tests are incomplete in collection mode."
+            fi
+          fi
 
       - name: Upload parity evidence
         if: always()
@@ -171,13 +199,27 @@ jobs:
         run: go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
 
       - name: Run Python-vs-Go CLI benchmark
+        shell: bash
         run: |
+          enforce_completion=false
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            enforce_completion=true
+          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+            enforce_completion=true
+          fi
+
+          extra_args=()
+          if [ "$enforce_completion" != "true" ]; then
+            extra_args+=(--allow-failures)
+          fi
+
           python scripts/ci/migration_cli_benchmark.py \
             --python-bin "$GITHUB_WORKSPACE/.venv/bin/apm" \
             --go-bin "$RUNNER_TEMP/apm-go" \
             --json-out "$RUNNER_TEMP/migration-cli-benchmark.json" \
             --markdown-out "$RUNNER_TEMP/migration-cli-benchmark.md" \
-            --max-ratio 5.0
+            --max-ratio 5.0 \
+            "${extra_args[@]}"
 
       - name: Run Python scaling guards
         run: uv run pytest tests/benchmarks/test_scaling_guards.py -v

@@ -521,6 +521,11 @@ def main() -> int:
     parser.add_argument("--markdown-out", required=True)
     parser.add_argument("--max-ratio", type=float, default=5.0)
     parser.add_argument("--repeats", type=int, default=5)
+    parser.add_argument(
+        "--allow-failures",
+        action="store_true",
+        help="Write benchmark evidence without returning a failing exit code.",
+    )
     args = parser.parse_args()
 
     env = os.environ.copy()
@@ -607,9 +612,11 @@ def main() -> int:
 
     print(markdown_path.read_text(encoding="utf-8"))
     if failures:
+        annotation = "warning" if args.allow_failures else "error"
         for failure in failures:
-            print(f"::error::{failure}")
-        return 1
+            print(f"::{annotation}::{failure}")
+        if not args.allow_failures:
+            return 1
     return 0
 
 

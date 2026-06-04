@@ -23,82 +23,118 @@ class BenchmarkCommand:
     args: list[str]
     fixture: FixtureName
     workload: str
+    required_paths: tuple[str, ...] = ()
+    stdout_contains: tuple[str, ...] = ()
+    file_contains: tuple[tuple[str, str], ...] = ()
+    expect_nonzero: bool = False
 
 
 COMMANDS: list[BenchmarkCommand] = [
-    BenchmarkCommand(
-        name="startup help",
-        args=["--help"],
-        fixture="none",
-        workload="Cold CLI startup and top-level help rendering.",
-    ),
-    BenchmarkCommand(
-        name="startup version",
-        args=["--version"],
-        fixture="none",
-        workload="Cold CLI startup and version rendering.",
-    ),
     BenchmarkCommand(
         name="init scaffold",
         args=["init", "--yes"],
         fixture="empty-project",
         workload="Creates a new apm.yml in an otherwise empty project directory.",
+        required_paths=("apm.yml",),
+        file_contains=(("apm.yml", "dependencies:"),),
     ),
     BenchmarkCommand(
         name="targets json",
         args=["targets", "--json"],
         fixture="installed-project",
         workload="Reads configured project targets from apm.yml and emits machine output.",
+        stdout_contains=("copilot",),
     ),
     BenchmarkCommand(
         name="script list",
         args=["list"],
         fixture="installed-project",
         workload="Reads apm.yml scripts and renders the runnable script inventory.",
+        stdout_contains=("build",),
     ),
     BenchmarkCommand(
         name="deps list",
         args=["deps", "list"],
         fixture="installed-project",
         workload="Scans apm_modules package directories and apm.lock.yaml metadata.",
+        stdout_contains=("microsoft/apm-package-alpha",),
     ),
     BenchmarkCommand(
         name="deps tree",
         args=["deps", "tree"],
         fixture="installed-project",
         workload="Builds a dependency tree from apm.lock.yaml and installed package metadata.",
+        stdout_contains=("agent-toolkit",),
     ),
     BenchmarkCommand(
-        name="install dry-run",
-        args=["install", "--dry-run", "--no-policy"],
-        fixture="installed-project",
-        workload="Builds an offline install preview from manifest dependencies.",
+        name="install local package",
+        args=["install", "--no-policy", "./packages/local-tools"],
+        fixture="local-install-project",
+        workload="Installs a local package and materializes lock/module state.",
+        required_paths=("apm.lock.yaml", "apm_modules"),
+        file_contains=(("apm.lock.yaml", "local-tools"),),
     ),
     BenchmarkCommand(
-        name="compile dry-run",
-        args=["compile", "--dry-run", "--all", "--local-only"],
-        fixture="installed-project",
-        workload="Discovers local primitives and plans compilation for all targets without writes.",
+        name="compile copilot target",
+        args=["compile", "--target", "copilot"],
+        fixture="compilation-project",
+        workload="Discovers local primitives and writes the Copilot target artifact.",
+        required_paths=(".github/copilot-instructions.md",),
+        file_contains=((".github/copilot-instructions.md", "Benchmark Instruction"),),
     ),
     BenchmarkCommand(
-        name="pack dry-run",
-        args=["pack", "--dry-run", "--offline", "--marketplace", "none"],
+        name="pack output",
+        args=["pack", "--output", "dist"],
         fixture="installed-project",
-        workload="Resolves local package contents and bundle metadata without writing artifacts.",
+        workload="Resolves local package contents and writes a distributable artifact.",
+        required_paths=("dist",),
     ),
     BenchmarkCommand(
-        name="audit file scan",
-        args=["audit", "--file", ".apm/instructions/bench-00.instructions.md"],
-        fixture="installed-project",
-        workload="Scans a real prompt instruction file for hidden Unicode content.",
+        name="run script",
+        args=["run", "stamp"],
+        fixture="runnable-project",
+        workload="Executes a project script and writes the script's side-effect file.",
+        required_paths=("run-stamp.txt",),
+        file_contains=(("run-stamp.txt", "real-run"),),
+    ),
+    BenchmarkCommand(
+        name="audit hidden unicode",
+        args=["audit", "--ci"],
+        fixture="audit-finding-project",
+        workload="Scans a real installed file and fails on planted hidden Unicode.",
+        expect_nonzero=True,
     ),
 ]
 
 
-def _run_once(binary: str, args: list[str], cwd: Path, env: dict[str, str]) -> dict[str, object]:
+def _check_run(command: BenchmarkCommand, cwd: Path, stdout: str) -> list[str]:
+    failures: list[str] = []
+    for relpath in command.required_paths:
+        if not (cwd / relpath).exists():
+            failures.append(f"missing expected path: {relpath}")
+    for needle in command.stdout_contains:
+        if needle not in stdout:
+            failures.append(f"stdout missing {needle!r}")
+    for relpath, needle in command.file_contains:
+        path = cwd / relpath
+        if not path.exists():
+            failures.append(f"missing expected file: {relpath}")
+            continue
+        content = path.read_text(encoding="utf-8", errors="replace")
+        if needle not in content:
+            failures.append(f"{relpath} missing {needle!r}")
+    return failures
+
+
+def _run_once(
+    binary: str,
+    command: BenchmarkCommand,
+    cwd: Path,
+    env: dict[str, str],
+) -> dict[str, object]:
     start = time.perf_counter()
     proc = subprocess.run(  # noqa: S603 -- benchmark intentionally executes supplied CLIs.
-        [binary, *args],
+        [binary, *command.args],
         cwd=cwd,
         env=env,
         text=True,
@@ -107,11 +143,14 @@ def _run_once(binary: str, args: list[str], cwd: Path, env: dict[str, str]) -> d
         check=False,
     )
     elapsed = time.perf_counter() - start
+    check_failures = _check_run(command, cwd, proc.stdout)
     return {
         "elapsed_seconds": elapsed,
         "returncode": proc.returncode,
         "stdout_bytes": len(proc.stdout.encode("utf-8")),
         "stderr_bytes": len(proc.stderr.encode("utf-8")),
+        "checks_passed": not check_failures,
+        "check_failures": check_failures,
     }
 
 
@@ -270,6 +309,108 @@ Installed dependency instruction used by migration benchmarks.
         )
 
 
+def _write_compilation_project(workdir: Path) -> None:
+    _write_empty_project(workdir)
+    _write(
+        workdir / "apm.yml",
+        """name: compilation-project
+version: 1.0.0
+description: Compilation benchmark fixture
+author: benchmark
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts: {}
+includes: auto
+""",
+    )
+    _write(
+        workdir / ".apm/instructions/bench.instructions.md",
+        """---
+applyTo: "**/*"
+description: Benchmark Instruction
+---
+# Benchmark Instruction
+
+This content must be compiled into a target artifact.
+""",
+    )
+
+
+def _write_local_install_project(workdir: Path) -> None:
+    _write_empty_project(workdir)
+    _write(
+        workdir / "apm.yml",
+        """name: local-install-project
+version: 1.0.0
+description: Local install benchmark fixture
+author: benchmark
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts: {}
+""",
+    )
+    package_dir = workdir / "packages" / "local-tools"
+    _write(
+        package_dir / "apm.yml",
+        """name: local-tools
+version: 1.0.0
+description: Local tools package
+author: benchmark
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts: {}
+""",
+    )
+    _write(package_dir / ".apm/instructions/tool.instructions.md", "# Local tools\n")
+
+
+def _write_runnable_project(workdir: Path) -> None:
+    _write_empty_project(workdir)
+    _write(
+        workdir / "apm.yml",
+        """name: runnable-project
+version: 1.0.0
+description: Runnable benchmark fixture
+author: benchmark
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts:
+  stamp: "printf real-run > run-stamp.txt"
+""",
+    )
+
+
+def _write_audit_finding_project(workdir: Path) -> None:
+    _write_installed_project(workdir)
+    _write(
+        workdir / "apm_modules/unicode-package/SKILL.md",
+        "safe text \u202eevil text\n",
+    )
+    _write(
+        workdir / "apm.lock.yaml",
+        """lockfile_version: "1"
+dependencies:
+  - repo_url: local/unicode-package
+    resolved_commit: fixture
+    deployed_files:
+      - apm_modules/unicode-package/SKILL.md
+    deployed_file_hashes: {}
+""",
+    )
+
+
 def _workspace(base: Path, command: BenchmarkCommand, run_index: int) -> Path:
     if command.fixture == "none":
         return base
@@ -281,6 +422,14 @@ def _workspace(base: Path, command: BenchmarkCommand, run_index: int) -> Path:
         _write_empty_project(workdir)
     elif command.fixture == "installed-project":
         _write_installed_project(workdir)
+    elif command.fixture == "compilation-project":
+        _write_compilation_project(workdir)
+    elif command.fixture == "local-install-project":
+        _write_local_install_project(workdir)
+    elif command.fixture == "runnable-project":
+        _write_runnable_project(workdir)
+    elif command.fixture == "audit-finding-project":
+        _write_audit_finding_project(workdir)
     else:
         raise ValueError(f"unknown benchmark fixture: {command.fixture}")
 
@@ -299,7 +448,7 @@ def _measure(
     samples: list[dict[str, object]] = []
     for index in range(repeats):
         cwd = _workspace(base, command, index)
-        samples.append(_run_once(binary, command.args, cwd, env))
+        samples.append(_run_once(binary, command, cwd, env))
 
     elapsed = [float(sample["elapsed_seconds"]) for sample in samples]
     return {
@@ -307,6 +456,12 @@ def _measure(
         "min_seconds": min(elapsed),
         "max_seconds": max(elapsed),
         "returncodes": sorted({int(sample["returncode"]) for sample in samples}),
+        "checks_passed": all(bool(sample["checks_passed"]) for sample in samples),
+        "check_failures": [
+            failure
+            for sample in samples
+            for failure in sample.get("check_failures", [])
+        ],
         "samples": samples,
     }
 
@@ -325,7 +480,8 @@ def _markdown(results: list[dict[str, object]], max_ratio: float) -> str:
     lines = [
         "## Migration CLI Benchmark",
         "",
-        "Includes startup baselines plus fixture-backed real-world commands. "
+        "Includes fixture-backed commands that must read, write, execute, or fail "
+        "against real project state. "
         "The installed-project fixture contains apm.yml, apm.lock.yaml, "
         "apm_modules packages, local .apm primitives, target directories, "
         "deployed prompt files, and sample source files.",
@@ -403,6 +559,25 @@ def main() -> int:
                 "python": python_result["returncodes"],
                 "go": go_result["returncodes"],
             }
+            row_failures: list[str] = []
+            if python_result["returncodes"] != go_result["returncodes"]:
+                row_failures.append(f"return codes differ: {returncodes}")
+            if ratio > args.max_ratio:
+                row_failures.append(
+                    f"Go median {ratio:.2f}x slower than Python "
+                    f"(limit {args.max_ratio:.2f}x)"
+                )
+            if not python_result["checks_passed"]:
+                row_failures.append(
+                    f"Python artifact checks failed: {python_result['check_failures']}"
+                )
+            if not go_result["checks_passed"]:
+                row_failures.append(f"Go artifact checks failed: {go_result['check_failures']}")
+            if command.expect_nonzero:
+                if all(code == 0 for code in python_result["returncodes"]):
+                    row_failures.append("Python returned success for expected failure workload")
+                if all(code == 0 for code in go_result["returncodes"]):
+                    row_failures.append("Go returned success for expected failure workload")
 
             row = {
                 "name": command.name,
@@ -415,16 +590,13 @@ def main() -> int:
                 "go_median_seconds": go_median,
                 "ratio": ratio,
                 "returncodes": returncodes,
+                "passed": not row_failures,
+                "failures": row_failures,
             }
             results.append(row)
 
-            if python_result["returncodes"] != go_result["returncodes"]:
-                failures.append(f"{command.name}: return codes differ: {returncodes}")
-            if ratio > args.max_ratio:
-                failures.append(
-                    f"{command.name}: Go median {ratio:.2f}x slower than Python "
-                    f"(limit {args.max_ratio:.2f}x)"
-                )
+            for failure in row_failures:
+                failures.append(f"{command.name}: {failure}")
 
     json_path = Path(args.json_out)
     markdown_path = Path(args.markdown_out)

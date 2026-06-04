@@ -10,6 +10,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -428,10 +429,40 @@ func TestParityCompletionBenchmarks(t *testing.T) {
 	cmd.Stdout = &outBuf
 	cmd.Stderr = &errBuf
 	if runErr := cmd.Run(); runErr != nil {
+		passing, total := benchmarkGateCounts(t, jsonOut)
+		emitCraneRatioGate("benchmarks", passing, total)
 		t.Fatalf("Benchmark failed (Go CLI exceeds 5x Python latency or script error):\n%s\n%s",
 			outBuf.String(), errBuf.String())
 	}
+	passing, total := benchmarkGateCounts(t, jsonOut)
+	emitCraneRatioGate("benchmarks", passing, total)
+	if passing != total {
+		t.Fatalf("Benchmark artifact checks incomplete: %d/%d passed\n%s", passing, total, outBuf.String())
+	}
 	t.Logf("[+] Benchmarks passed:\n%s", outBuf.String())
+}
+
+func benchmarkGateCounts(t *testing.T, path string) (int, int) {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return 0, 1
+	}
+	var report struct {
+		Results []struct {
+			Passed bool `json:"passed"`
+		} `json:"results"`
+	}
+	if err := json.Unmarshal(data, &report); err != nil || len(report.Results) == 0 {
+		return 0, 1
+	}
+	passing := 0
+	for _, result := range report.Results {
+		if result.Passed {
+			passing++
+		}
+	}
+	return passing, len(report.Results)
 }
 
 // runPyBin runs the Python apm binary with the given args.

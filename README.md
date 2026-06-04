@@ -66,7 +66,7 @@ table. The same run uploads the `migration-benchmark-evidence` artifact with
 JSON and Markdown copies of the benchmark data. In the benchmark table, the
 `Go/Python` ratio is the Go median duration divided by the Python median
 duration: values below `1.00x` mean Go is faster. The benchmark includes
-startup baselines plus fixture-backed commands that read or write realistic APM
+fixture-backed commands that read, write, execute, or fail against realistic APM
 project state: `apm.yml`, `apm.lock.yaml`, installed `apm_modules`, local
 `.apm` primitives, target directories, deployed prompt files, and sample source
 files.

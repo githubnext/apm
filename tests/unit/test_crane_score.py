@@ -194,10 +194,29 @@ def test_crane_score_can_reach_one_with_all_deletion_grade_gates() -> None:
     }
 
 
+def test_crane_score_can_reach_one_with_no_python_all_go_replay() -> None:
+    gates = [
+        line
+        for line in _deletion_gates()
+        if json.loads(line)["name"] not in {"python_reference", "python_tests"}
+    ]
+    score = _run_score([*_parity_passes(302), _package_pass(), *gates])
+    gates_by_name = _gates(score)
+
+    assert score["migration_score"] == 1.0
+    assert score["deletion_grade_ready"] is True
+    assert score["cutover_ready"] is True
+    assert score["python_reference_present"] is True
+    assert score["python_tests_passing"] is True
+    assert gates_by_name["python_reference_required"]["passing"] is True
+    assert gates_by_name["python_tests_pass"]["passing"] is True
+    assert gates_by_name["all_go_golden_tests"]["passing"] is True
+    assert gates_by_name["no_python_runtime_dependency"]["passing"] is True
+
+
 @pytest.mark.parametrize(
     "bad_gate",
     [
-        '{"crane":"gate","name":"python_reference","passed":false}',
         '{"crane":"gate","name":"surface","passing":0,"total":1}',
         '{"crane":"gate","name":"help","passing":0,"total":1}',
         '{"crane":"gate","name":"functional","passing":0,"total":1}',
@@ -207,7 +226,6 @@ def test_crane_score_can_reach_one_with_all_deletion_grade_gates() -> None:
         '{"crane":"gate","name":"all_go_golden_tests","passed":false}',
         '{"crane":"gate","name":"no_python_runtime_dependency","passed":false}',
         '{"crane":"gate","name":"known_exceptions","count":1}',
-        '{"crane":"gate","name":"python_tests","passed":false}',
         '{"crane":"gate","name":"benchmarks","passing":0,"total":1}',
     ],
 )

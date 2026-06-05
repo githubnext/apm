@@ -17,7 +17,7 @@ type realBehaviorCase struct {
 	verify func(t *testing.T, dir, stdout, stderr string, code int) bool
 }
 
-func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
+func TestGoCutoverRealFunctionalAndStateDiffContracts(t *testing.T) {
 	cases := []realBehaviorCase{
 		{
 			name: "init creates manifest",
@@ -40,6 +40,17 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 			},
 		},
 		{
+			name:  "update refreshes lockfile from changed local dependency",
+			args:  []string{"update"},
+			setup: realBehaviorSetupUpdateAvailable,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.lock.yaml"), "2.0.0") && ok
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm.lock.yaml"), "1.0.0") && ok
+				return ok
+			},
+		},
+		{
 			name:  "compile writes copilot target",
 			args:  []string{"compile", "--target", "copilot"},
 			setup: realBehaviorSetupProject,
@@ -56,6 +67,17 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
 				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
 				ok = realBehaviorExpectDirHasEntries(t, filepath.Join(dir, "dist")) && ok
+				return ok
+			},
+		},
+		{
+			name:  "unpack extracts bundle contents",
+			args:  []string{"unpack", "fixture-bundle"},
+			setup: realBehaviorSetupBundle,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "bundle-fixture") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, ".apm", "prompts", "bundle.md"), "bundle prompt") && ok
 				return ok
 			},
 		},
@@ -82,12 +104,34 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 			},
 		},
 		{
+			name:  "policy status fails on denied dependency",
+			args:  []string{"policy", "status"},
+			setup: realBehaviorSetupPolicyViolation,
+			verify: func(t *testing.T, _ string, stdout, stderr string, code int) bool {
+				if code == 0 {
+					realBehaviorFailure(t, "expected non-zero exit for denied policy dependency\nstdout: %s\nstderr: %s", stdout, stderr)
+					return false
+				}
+				return true
+			},
+		},
+		{
 			name:  "mcp install persists manifest dependency",
 			args:  []string{"mcp", "install", "example-server"},
 			setup: realBehaviorSetupProject,
 			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
 				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
 				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "example-server") && ok
+				return ok
+			},
+		},
+		{
+			name: "runtime setup persists runtime config",
+			args: []string{"runtime", "setup", "codex"},
+			env:  map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "codex") && ok
 				return ok
 			},
 		},
@@ -102,11 +146,33 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 			},
 		},
 		{
+			name: "marketplace add persists registry entry",
+			args: []string{"marketplace", "add", "local", "file://./marketplace.json"},
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "marketplace:") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "local") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "file://./marketplace.json") && ok
+				return ok
+			},
+		},
+		{
 			name: "marketplace init writes marketplace block",
 			args: []string{"marketplace", "init"},
 			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
 				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
 				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm.yml"), "marketplace:") && ok
+				return ok
+			},
+		},
+		{
+			name: "config set persists configuration value",
+			args: []string{"config", "set", "install.parallel_downloads", "8"},
+			env:  map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "parallel_downloads") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "8") && ok
 				return ok
 			},
 		},
@@ -124,6 +190,17 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 			},
 		},
 		{
+			name:  "uninstall removes package-owned files and lock entries",
+			args:  []string{"uninstall", "local-tools"},
+			setup: realBehaviorSetupInstalledLocalPackage,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectPathMissing(t, filepath.Join(dir, "apm_modules", "local-tools")) && ok
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm.lock.yaml"), "local-tools") && ok
+				return ok
+			},
+		},
+		{
 			name:  "prune removes unreferenced module",
 			args:  []string{"prune"},
 			setup: realBehaviorSetupStaleModule,
@@ -131,6 +208,29 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
 				ok = realBehaviorExpectPathMissing(t, filepath.Join(dir, "apm_modules", "stale-package")) && ok
 				return ok
+			},
+		},
+		{
+			name:  "deps clean removes dependency state",
+			args:  []string{"deps", "clean"},
+			setup: realBehaviorSetupInstalledLocalPackage,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectPathMissing(t, filepath.Join(dir, "apm_modules", "local-tools")) && ok
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm.lock.yaml"), "local-tools") && ok
+				return ok
+			},
+		},
+		{
+			name:  "view rejects package path traversal",
+			args:  []string{"view", "../../escape"},
+			setup: realBehaviorSetupViewTraversal,
+			verify: func(t *testing.T, _ string, stdout, stderr string, code int) bool {
+				if code == 0 {
+					realBehaviorFailure(t, "expected non-zero exit for package path traversal\nstdout: %s\nstderr: %s", stdout, stderr)
+					return false
+				}
+				return true
 			},
 		},
 	}
@@ -158,17 +258,9 @@ func TestParityRealFunctionalAndStateDiffContracts(t *testing.T) {
 	}
 }
 
-func realBehaviorCompletionGatesEnforced() bool {
-	return os.Getenv("APM_ENFORCE_COMPLETION_GATES") == "1"
-}
-
 func realBehaviorFailure(t *testing.T, format string, args ...any) {
 	t.Helper()
-	if realBehaviorCompletionGatesEnforced() {
-		t.Errorf(format, args...)
-		return
-	}
-	t.Logf(format, args...)
+	t.Errorf(format, args...)
 }
 
 func realBehaviorRunGoInDir(t *testing.T, dir string, env map[string]string, args ...string) (string, string, int) {
@@ -226,6 +318,62 @@ local_deployed_file_hashes: {}
 `)
 }
 
+func realBehaviorSetupInstalledLocalPackage(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorSetupProjectWithLock(t, dir)
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm_modules", "local-tools", "apm.yml"), `name: local-tools
+version: 1.0.0
+description: Installed local tools package
+author: Crane
+`)
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm_modules", "local-tools", ".apm", "prompts", "tool.md"), "installed prompt\n")
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm.lock.yaml"), `lockfile_version: "1"
+dependencies:
+  - name: local-tools
+    version: 1.0.0
+    repo_url: local/local-tools
+    install_path: apm_modules/local-tools
+    deployed_files:
+      - apm_modules/local-tools/.apm/prompts/tool.md
+    deployed_file_hashes: {}
+`)
+}
+
+func realBehaviorSetupUpdateAvailable(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorSetupLocalPackage(t, dir)
+	realBehaviorWriteFile(t, filepath.Join(dir, "packages", "local-tools", "apm.yml"), `name: local-tools
+version: 2.0.0
+description: Local tools package
+author: Crane
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+scripts: {}
+`)
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm.lock.yaml"), `lockfile_version: "1"
+dependencies:
+  - name: local-tools
+    version: 1.0.0
+    repo_url: ./packages/local-tools
+    install_path: apm_modules/local-tools
+`)
+}
+
+func realBehaviorSetupBundle(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "fixture-bundle", "apm.yml"), `name: bundle-fixture
+version: 1.0.0
+description: Bundle fixture
+dependencies:
+  apm: []
+  mcp: []
+`)
+	realBehaviorWriteFile(t, filepath.Join(dir, "fixture-bundle", ".apm", "prompts", "bundle.md"), "bundle prompt\n")
+}
+
 func realBehaviorSetupRunnableProject(t *testing.T, dir string) {
 	t.Helper()
 	realBehaviorWriteFile(t, filepath.Join(dir, "apm.yml"), `name: runnable
@@ -274,6 +422,21 @@ dependencies:
 `)
 }
 
+func realBehaviorSetupPolicyViolation(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm.yml"), `name: policy-fixture
+version: 1.0.0
+dependencies:
+  apm:
+    - denied/package
+  mcp: []
+policy:
+  dependencies:
+    deny:
+      - denied/package
+`)
+}
+
 func realBehaviorSetupCacheRoot(t *testing.T, dir string) {
 	t.Helper()
 	realBehaviorWriteFile(t, filepath.Join(dir, "cache-root", "http_v1", "old", "body"), "cached\n")
@@ -283,6 +446,14 @@ func realBehaviorSetupStaleModule(t *testing.T, dir string) {
 	t.Helper()
 	realBehaviorSetupProjectWithLock(t, dir)
 	realBehaviorWriteFile(t, filepath.Join(dir, "apm_modules", "stale-package", "README.md"), "stale\n")
+}
+
+func realBehaviorSetupViewTraversal(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "escape", "apm.yml"), `name: escaped
+version: 9.9.9
+description: This package is outside .apm/packages and must not be readable.
+`)
 }
 
 func realBehaviorWriteFile(t *testing.T, path, content string) {
@@ -313,6 +484,20 @@ func realBehaviorExpectFileContains(t *testing.T, path, needle string) bool {
 	}
 	if !strings.Contains(string(content), needle) {
 		realBehaviorFailure(t, "expected %s to contain %q, got:\n%s", path, needle, string(content))
+		return false
+	}
+	return true
+}
+
+func realBehaviorExpectFileNotContains(t *testing.T, path, needle string) bool {
+	t.Helper()
+	content, err := os.ReadFile(path)
+	if err != nil {
+		realBehaviorFailure(t, "expected file %s to exist: %v", path, err)
+		return false
+	}
+	if strings.Contains(string(content), needle) {
+		realBehaviorFailure(t, "expected %s not to contain %q, got:\n%s", path, needle, string(content))
 		return false
 	}
 	return true

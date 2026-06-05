@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "description": "Go cutover coverage manifest. Every legacy Python pytest node under tests/ (except tests/parity/) must appear here with one or more Go test names before the Go CLI can be declared a 100% migration.",
+  "converted_python_tests": {}
+}

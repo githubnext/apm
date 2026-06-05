@@ -118,10 +118,25 @@ jobs:
           fi
 
           set +e
-          go test -json ./... | tee "$RUNNER_TEMP/go-test-events.json"
+          go test -json -skip '^TestGoCutover' ./... | tee "$RUNNER_TEMP/go-test-events.json"
           status=${PIPESTATUS[0]}
           set -e
           echo "GO_TEST_STATUS=$status" >> "$GITHUB_ENV"
+
+      - name: Run Go-only cutover gate
+        shell: bash
+        run: |
+          set +e
+          APM_PYTHON_BIN= \
+          APM_PYTHON_CONTRACT_INVENTORY= \
+          PYTHONPATH= \
+          VIRTUAL_ENV= \
+            go test -json ./cmd/apm -run '^TestGoCutover' \
+            | tee "$RUNNER_TEMP/go-cutover-events.json"
+          status=${PIPESTATUS[0]}
+          set -e
+          cat "$RUNNER_TEMP/go-cutover-events.json" >> "$RUNNER_TEMP/go-test-events.json"
+          echo "GO_CUTOVER_STATUS=$status" >> "$GITHUB_ENV"
 
       - name: Compute migration score
         run: |
@@ -155,12 +170,16 @@ jobs:
           if [ "${MIGRATION_COMPLETION_ENFORCED:-false}" = "true" ]; then
             test "${PYTHON_CLI_CONTRACT_STATUS:-1}" = "0"
             test "${GO_TEST_STATUS:-1}" = "0"
+            test "${GO_CUTOVER_STATUS:-1}" = "0"
           else
             if [ "${PYTHON_CLI_CONTRACT_STATUS:-1}" != "0" ]; then
               echo "::notice::Python behavior contract tests are incomplete in collection mode."
             fi
             if [ "${GO_TEST_STATUS:-1}" != "0" ]; then
               echo "::notice::Go parity tests are incomplete in collection mode."
+            fi
+            if [ "${GO_CUTOVER_STATUS:-1}" != "0" ]; then
+              echo "::notice::Go-only cutover gate is incomplete in collection mode."
             fi
           fi
 
@@ -171,6 +190,7 @@ jobs:
           name: migration-parity-evidence
           path: |
             ${{ runner.temp }}/go-test-events.json
+            ${{ runner.temp }}/go-cutover-events.json
             ${{ runner.temp }}/migration-score.json
             ${{ runner.temp }}/python-behavior-contracts.json
             ${{ runner.temp }}/python-contract-coverage.md

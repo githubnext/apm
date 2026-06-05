@@ -32,14 +32,26 @@ does not infer completion from test names for `surface`, `help`, `functional`,
 `state_diff`, `python_behavior_contracts`, or `benchmarks`; each one must emit an
 explicit ratio gate.
 
-Crane must run `go test ./cmd/apm -run TestParityRealFunctionalAndStateDiffContracts -json`.
-That fixture-backed test executes the built Go `apm` binary in temporary
-projects and emits the existing completion gates directly:
+Crane must run `APM_PYTHON_BIN= go test ./cmd/apm -run TestGoCutover -json`.
+These fixture-backed tests execute the built Go `apm` binary in temporary
+projects without access to the Python CLI and emit the completion gates
+directly:
 
 ```json
 {"crane":"gate","name":"functional","passing":N,"total":N}
 {"crane":"gate","name":"state_diff","passing":N,"total":N}
+{"crane":"gate","name":"python_behavior_contracts","passing":N,"total":N}
+{"crane":"gate","name":"golden_fixture_corpus","passed":true}
+{"crane":"gate","name":"all_go_golden_tests","passed":true}
+{"crane":"gate","name":"no_python_runtime_dependency","passed":true}
 ```
+
+`python_behavior_contracts` is not allowed to mean "the Python CLI was
+available." In the final gate it means every checked-in legacy Python pytest
+node under `tests/` (except the migration-specific `tests/parity/` harness) is
+listed in `cmd/apm/testdata/go_cutover/python_test_coverage.json` with one or
+more Go test names that replace it. An empty or partial manifest is a hard
+failure.
 
 Crane must also run the migration benchmark test. It executes fixture-backed
 Python-vs-Go benchmark workloads and emits:
@@ -84,23 +96,27 @@ are true:
    `init`, `install`, `update`, `compile`, `pack`, `run`, `audit`,
    `policy`, `mcp`, `runtime`, `targets`, `list`, `view`, `cache`,
    `deps`, `marketplace`, `uninstall`, `prune`
-3. `TestParityRealFunctionalAndStateDiffContracts` passes every fixture-backed
-   real-command scenario and emits passing `functional` and `state_diff` gates
-4. Python-vs-Go parity tests pass for all commands in the matrix
-5. Migration benchmarks pass real fixture-backed command workloads and emit a
+3. `TestGoCutoverRealFunctionalAndStateDiffContracts` passes every
+   fixture-backed real-command scenario and emits passing `functional` and
+   `state_diff` gates
+4. `TestGoCutoverPythonTestConversionCoverage` proves every legacy Python test
+   has an explicit Go replacement in the cutover coverage manifest
+5. Python-vs-Go parity tests pass for all commands in the matrix while the
+   Python reference is still available
+6. Migration benchmarks pass real fixture-backed command workloads and emit a
    passing counted `benchmarks` gate
-6. The final Python-reference parity run has been frozen into a committed,
+7. The final Python-reference parity run has been frozen into a committed,
    versioned golden fixture corpus. The corpus must include CLI inventory,
    help and usage output, error output, exit codes, generated files, lockfiles,
    config files, managed-file manifests, deterministic cache/config layout, and
    audit artifacts for the full command matrix.
-7. An all-Go golden replay passes against that corpus with no live Python
+8. An all-Go golden replay passes against that corpus with no live Python
    oracle. The replay must build `cmd/apm` and compare only the Go binary
    against checked-in fixtures.
-8. A no-Python-runtime check passes: `APM_PYTHON_BIN` is unset, the Python CLI
+9. A no-Python-runtime check passes: `APM_PYTHON_BIN` is unset, the Python CLI
    is hidden or unavailable to the replay, and the golden replay still passes.
-9. `go build ./cmd/apm` produces a single static binary
-10. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
+10. `go build ./cmd/apm` produces a single static binary
+11. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
 
 ## Cutover Steps
 

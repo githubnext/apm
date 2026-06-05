@@ -27,6 +27,10 @@ permissions: read-all
 
 timeout-minutes: 45
 
+concurrency:
+  group: crane-${{ github.repository }}
+  cancel-in-progress: false
+
 network:
   allowed:
   - defaults

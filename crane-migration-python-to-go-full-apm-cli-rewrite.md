@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-05T09:34:48Z |
-| Iteration Count | 61 |
+| Last Run | 2026-06-05T10:55:57Z |
+| Iteration Count | 62 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -111,15 +111,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [chart] Iteration History
 
-### Iteration 61 -- 2026-06-05T09:34:48Z -- [Run](https://github.com/githubnext/apm/actions/runs/27007223561)
-
-- **Status**: [+] Verification pass
-- **Milestone**: Completed -- verification only
-- **Change**: No code changes. Migration confirmed complete. PR #104 merged into `main`. Issue #78 has `crane-completed` label.
-- **Score**: 1.0 (best: 1.0, delta: 0.0)
-- **Notes**: Completed state persists. All 10/10 deletion-grade gates green. No human steering input detected.
-
-### Iters 43-60 -- [+] Verification passes (score 1.0, no code changes): Pre-step re-selects completed migration on every 5m tick; each iter confirms Completed=true, PR #104 merged to main, 10/10 gates green.
+### Iters 43-62 -- [+] Verification passes (score 1.0, no code changes): Pre-step re-selects completed migration on every 5m tick; each iter confirms Completed=true, PR #104 merged to main, 10/10 gates green.
 
 ### Iteration 42 -- 2026-06-04T06:01:58Z -- [Run](https://github.com/githubnext/apm/actions/runs/26933907888)
 

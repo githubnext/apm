@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-05T16:10:36Z |
-| Iteration Count | 67 |
-| Best Metric | 1.0 |
+| Last Run | 2026-06-05T18:00:00Z |
+| Iteration Count | 68 |
+| Best Metric | pending CI |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #104 |
+| PR | pending |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached; PR #104 head 2699b7d checks passed (all 6 checks success, run 26900689925) |
+| Completed | false |
+| Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | passed:2699b7d |
+| Completion Gate Status | pending |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -110,6 +110,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 68 -- 2026-06-05T18:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27029714320)
+
+- **Status**: [+] Accepted -- Stale completion reset, new gates implemented
+- **Milestone**: Reset stale state; implement 3 new deletion-grade gates
+- **Change**: (1) Populated `python_test_coverage.json` with 23,769 mappings fixing `golden_fixture_corpus`, `all_go_golden_tests`, `python_behavior_contracts` gates. (2) Implemented 20 Go CLI commands so `TestGoCutoverRealFunctionalAndStateDiffContracts` passes 20/20 (was 1/20). (3) Added `surface_parity` and `help_parity` gate emissions to `parity_completion_test.go`. (4) Added `cmd_lockfile.go` with shared helpers.
+- **Score**: pending CI (local: functional 20/20, state_diff 20/20, coverage 23769/23769)
+- **Notes**: Stale `Completed: true` reset. PRs #105-#110 added 3 new gates after old completion. All 13 gates expected green after CI runs on this branch.
 
 ### Iters 43-67 -- [+] Verification passes (score 1.0, no code changes): Pre-step re-selects completed migration on every 5m tick; each iter confirms Completed=true, PR #104 merged to main, 10/10 gates green.
 

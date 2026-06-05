@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
@@ -52,7 +53,37 @@ func runRun(args []string) int {
 		fmt.Fprintln(os.Stderr, `Try 'apm run --help' for help.`)
 		return 2
 	}
+
+	cwd, _ := os.Getwd()
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[!] No apm.yml found. Run 'apm init' to create one.\n")
+		return 1
+	}
+	proj, err := parseApmYML(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
+		return 1
+	}
+
+	scriptCmd, ok := proj.Scripts[script]
+	if !ok {
+		fmt.Fprintf(os.Stderr, "[x] Unknown script: %s\n", script)
+		return 1
+	}
+
 	fmt.Printf("[*] Running script: %s\n", script)
+	cmd := exec.Command("sh", "-c", scriptCmd)
+	cmd.Dir = cwd
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		if exitErr, ok2 := err.(*exec.ExitError); ok2 {
+			return exitErr.ExitCode()
+		}
+		fmt.Fprintf(os.Stderr, "[x] Script failed: %v\n", err)
+		return 1
+	}
 	return 0
 }
 

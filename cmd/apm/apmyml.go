@@ -21,6 +21,7 @@ type ApmProject struct {
 	Deps        []ApmDep
 	MCPDeps     []ApmDep
 	Marketplaces []ApmMarketplace
+	PolicyDeny  []string
 }
 
 // ApmDep is a single dependency entry (owner/repo or owner/repo@ref).
@@ -66,6 +67,7 @@ func parseApmYML(path string) (*ApmProject, error) {
 
 	var section string
 	var depSection string // "apm" or "mcp"
+	var policySubSection string // "dependencies.deny" etc
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -104,6 +106,8 @@ func parseApmYML(path string) (*ApmProject, error) {
 					depSection = ""
 				case "marketplace":
 					section = "marketplace"
+				case "policy":
+					section = "policy"
 				default:
 					section = key
 				}
@@ -156,6 +160,16 @@ func parseApmYML(path string) (*ApmProject, error) {
 				if key != "" && val != "" && !strings.HasPrefix(key, "-") {
 					p.Marketplaces = append(p.Marketplaces, ApmMarketplace{Name: key, URL: unquote(val)})
 				}
+			}
+		case "policy":
+			if trimmed == "deny:" {
+				policySubSection = "deny"
+			} else if trimmed == "dependencies:" {
+				policySubSection = "dependencies"
+			} else if policySubSection == "deny" && strings.HasPrefix(trimmed, "- ") {
+				p.PolicyDeny = append(p.PolicyDeny, unquote(strings.TrimSpace(trimmed[2:])))
+			} else if !strings.HasPrefix(trimmed, "- ") && !strings.Contains(trimmed, ":") {
+				policySubSection = ""
 			}
 		}
 	}

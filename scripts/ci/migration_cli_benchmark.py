@@ -326,13 +326,22 @@ scripts: {}
 includes: auto
 """,
     )
+    # Global instruction (no applyTo) -- Python compile includes these in
+    # .github/copilot-instructions.md for the copilot target.
     _write(
         workdir / ".apm/instructions/bench.instructions.md",
         """---
-applyTo: "**/*"
 description: Benchmark Instruction
 ---
 # Benchmark Instruction
+
+This content must be compiled into a target artifact.
+""",
+    )
+    # Go compile reads .apm/prompts/ for the copilot target.
+    _write(
+        workdir / ".apm/prompts/bench.md",
+        """# Benchmark Instruction
 
 This content must be compiled into a target artifact.
 """,

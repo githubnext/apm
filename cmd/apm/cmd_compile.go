@@ -4,7 +4,10 @@ package main
 
 import (
 	"fmt"
+	"io/fs"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 // runCompile implements `apm compile [OPTIONS]`.
@@ -102,11 +105,17 @@ func runCompile(args []string) int {
 		}
 		switch t {
 		case "copilot":
-			fmt.Println("    [+] .github/copilot-instructions.md")
+			if code := compileCopilot(cwd, flagVerbose); code != 0 {
+				return code
+			}
 		case "claude":
-			fmt.Println("    [+] CLAUDE.md")
+			if code := compileClaude(cwd, flagVerbose); code != 0 {
+				return code
+			}
 		case "cursor":
-			fmt.Println("    [+] .cursor/rules/AGENTS.md")
+			if code := compileCursor(cwd, flagVerbose); code != 0 {
+				return code
+			}
 		default:
 			fmt.Printf("    [+] AGENTS.md (target: %s)\n", t)
 		}
@@ -117,5 +126,84 @@ func runCompile(args []string) int {
 	}
 
 	fmt.Println("[+] Compilation complete.")
+	return 0
+}
+
+// compileCopilot writes .github/copilot-instructions.md from .apm/prompts/*.md.
+func compileCopilot(cwd string, verbose bool) int {
+	promptsDir := filepath.Join(cwd, ".apm", "prompts")
+	var content strings.Builder
+	_ = filepath.WalkDir(promptsDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(d.Name(), ".md") {
+			return nil
+		}
+		data, readErr := os.ReadFile(path)
+		if readErr != nil {
+			return nil
+		}
+		content.Write(data)
+		if !strings.HasSuffix(string(data), "\n") {
+			content.WriteString("\n")
+		}
+		return nil
+	})
+	out := filepath.Join(cwd, ".github", "copilot-instructions.md")
+	if err := os.MkdirAll(filepath.Dir(out), 0o755); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to create .github/: %v\n", err)
+		return 1
+	}
+	if err := os.WriteFile(out, []byte(content.String()), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to write %s: %v\n", out, err)
+		return 1
+	}
+	if verbose {
+		fmt.Printf("    [+] .github/copilot-instructions.md (%d bytes)\n", content.Len())
+	} else {
+		fmt.Println("    [+] .github/copilot-instructions.md")
+	}
+	return 0
+}
+
+// compileClaude writes CLAUDE.md from .apm/prompts/*.md.
+func compileClaude(cwd string, verbose bool) int {
+	return compileTarget(cwd, filepath.Join(cwd, "CLAUDE.md"), verbose)
+}
+
+// compileCursor writes .cursor/rules/AGENTS.md from .apm/prompts/*.md.
+func compileCursor(cwd string, verbose bool) int {
+	return compileTarget(cwd, filepath.Join(cwd, ".cursor", "rules", "AGENTS.md"), verbose)
+}
+
+func compileTarget(cwd, out string, verbose bool) int {
+	promptsDir := filepath.Join(cwd, ".apm", "prompts")
+	var content strings.Builder
+	_ = filepath.WalkDir(promptsDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(d.Name(), ".md") {
+			return nil
+		}
+		data, readErr := os.ReadFile(path)
+		if readErr != nil {
+			return nil
+		}
+		content.Write(data)
+		if !strings.HasSuffix(string(data), "\n") {
+			content.WriteString("\n")
+		}
+		return nil
+	})
+	if err := os.MkdirAll(filepath.Dir(out), 0o755); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to create output dir: %v\n", err)
+		return 1
+	}
+	if err := os.WriteFile(out, []byte(content.String()), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to write %s: %v\n", out, err)
+		return 1
+	}
+	rel, _ := filepath.Rel(cwd, out)
+	if verbose {
+		fmt.Printf("    [+] %s (%d bytes)\n", rel, content.Len())
+	} else {
+		fmt.Printf("    [+] %s\n", rel)
+	}
 	return 0
 }

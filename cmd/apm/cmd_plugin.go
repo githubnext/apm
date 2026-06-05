@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 var pluginSubcommands = []struct{ name, desc string }{
@@ -58,6 +59,43 @@ func runPluginInit(args []string) int {
 	}
 	cwd, _ := os.Getwd()
 	fmt.Printf("[*] Scaffolding plugin in: %s\n", cwd)
+
+	pluginJSON := `{
+  "name": "my-plugin",
+  "version": "0.1.0",
+  "description": "APM plugin",
+  "main": "index.js"
+}
+`
+	pluginPath := filepath.Join(cwd, "plugin.json")
+	if err := os.WriteFile(pluginPath, []byte(pluginJSON), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to write plugin.json: %v\n", err)
+		return 1
+	}
+
+	apmYML := `name: my-plugin
+version: 0.1.0
+description: APM plugin
+type: plugin
+targets:
+  - copilot
+dependencies:
+  apm: []
+  mcp: []
+`
+	apmPath := filepath.Join(cwd, "apm.yml")
+	if _, statErr := os.Stat(apmPath); os.IsNotExist(statErr) {
+		if err := os.WriteFile(apmPath, []byte(apmYML), 0o644); err != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to write apm.yml: %v\n", err)
+			return 1
+		}
+	} else {
+		if err := appendToApmYML(apmPath, "type: plugin"); err != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to update apm.yml: %v\n", err)
+			return 1
+		}
+	}
+
 	fmt.Println("[+] Plugin scaffolded.")
 	return 0
 }

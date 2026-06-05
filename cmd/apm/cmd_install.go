@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // runInstall implements `apm install [OPTIONS] [PACKAGES...]`.
@@ -102,6 +103,33 @@ func runInstall(args []string) int {
 		}
 	}
 
+	cwd, _ = os.Getwd()
+
+	// Install specified local packages.
+	if len(packages) > 0 {
+		if flagVerbose {
+			fmt.Printf("[*] Installing packages%s\n", scope)
+		} else {
+			fmt.Printf("[*] Installing packages%s\n", scope)
+		}
+		lockPath := filepath.Join(cwd, "apm.lock.yaml")
+		existingDeps, _ := readLockfileDeps(lockPath)
+
+		for _, pkg := range packages {
+			dep, code := installLocalPackage(cwd, pkg, flagVerbose)
+			if code != 0 {
+				return code
+			}
+			existingDeps = appendOrReplaceDep(existingDeps, dep)
+		}
+		if err := writeLockfile(lockPath, existingDeps); err != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to write lockfile: %v\n", err)
+			return 1
+		}
+		fmt.Println("[+] Install complete.")
+		return 0
+	}
+
 	if ymlPath != "" {
 		proj, err := parseApmYML(ymlPath)
 		if err != nil {
@@ -117,14 +145,66 @@ func runInstall(args []string) int {
 		}
 	} else {
 		fmt.Printf("[*] Installing packages%s\n", scope)
-		for _, p := range packages {
-			fmt.Printf("    [>] %s\n", p)
-		}
 	}
 
 	_ = flagForce
 	fmt.Println("[+] Install complete.")
 	return 0
+}
+
+// installLocalPackage installs a package from a local path and returns the LockDep.
+func installLocalPackage(cwd, pkg string, verbose bool) (LockDep, int) {
+	pkgPath := pkg
+	if !filepath.IsAbs(pkg) {
+		pkgPath = filepath.Join(cwd, pkg)
+	}
+	pkgPath = filepath.Clean(pkgPath)
+
+	pkgYML := filepath.Join(pkgPath, "apm.yml")
+	pkgProj, err := parseApmYML(pkgYML)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to read package apm.yml at %s: %v\n", pkgYML, err)
+		return LockDep{}, 1
+	}
+
+	installPath := filepath.Join("apm_modules", pkgProj.Name)
+	installDst := filepath.Join(cwd, installPath)
+
+	if verbose {
+		fmt.Printf("    [>] Installing %s@%s -> %s\n", pkgProj.Name, pkgProj.Version, installPath)
+	}
+
+	if err := copyDirTree(pkgPath, installDst); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to copy package: %v\n", err)
+		return LockDep{}, 1
+	}
+
+	deployedFiles, _ := walkDeployedFiles(installDst, cwd)
+
+	rel, _ := filepath.Rel(cwd, pkgPath)
+	rel = filepath.ToSlash(rel)
+	if !startsWith(rel, ".") {
+		rel = "./" + rel
+	}
+
+	return LockDep{
+		Name:          pkgProj.Name,
+		Version:       pkgProj.Version,
+		RepoURL:       rel,
+		InstallPath:   filepath.ToSlash(installPath),
+		DeployedFiles: deployedFiles,
+	}, 0
+}
+
+// appendOrReplaceDep replaces an existing dep with the same name or appends.
+func appendOrReplaceDep(deps []LockDep, dep LockDep) []LockDep {
+	for i, d := range deps {
+		if d.Name == dep.Name {
+			deps[i] = dep
+			return deps
+		}
+	}
+	return append(deps, dep)
 }
 
 // runUninstall implements `apm uninstall [OPTIONS] PACKAGES...`.
@@ -178,10 +258,46 @@ func runUninstall(args []string) int {
 		return 0
 	}
 
-	fmt.Printf("[*] Uninstalling packages%s\n", scope)
-	for _, p := range packages {
-		fmt.Printf("    [>] Removing %s\n", p)
+	cwd, _ := os.Getwd()
+	lockPath := filepath.Join(cwd, "apm.lock.yaml")
+	deps, err := readLockfileDeps(lockPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to read lockfile: %v\n", err)
+		return 1
 	}
+
+	removeSet := make(map[string]bool, len(packages))
+	for _, p := range packages {
+		removeSet[p] = true
+	}
+
+	fmt.Printf("[*] Uninstalling packages%s\n", scope)
+	var remaining []LockDep
+	for _, dep := range deps {
+		if removeSet[dep.Name] {
+			fmt.Printf("    [>] Removing %s\n", dep.Name)
+			if dep.InstallPath != "" {
+				installDir := filepath.Join(cwd, filepath.FromSlash(dep.InstallPath))
+				_ = os.RemoveAll(installDir)
+			}
+		} else {
+			remaining = append(remaining, dep)
+		}
+	}
+
+	// Also try removing by direct apm_modules path for packages not in lockfile.
+	for _, pkg := range packages {
+		pkgDir := filepath.Join(cwd, "apm_modules", pkg)
+		if _, statErr := os.Stat(pkgDir); statErr == nil {
+			_ = os.RemoveAll(pkgDir)
+		}
+	}
+
+	if err := writeLockfile(lockPath, remaining); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update lockfile: %v\n", err)
+		return 1
+	}
+
 	fmt.Println("[+] Uninstall complete.")
 	return 0
 }

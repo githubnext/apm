@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 var mcpSubcommands = []struct{ name, desc string }{
@@ -75,6 +76,33 @@ func runMCPInstall(args []string) int {
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
 		return 2
 	}
+
+	cwd, _ := os.Getwd()
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[!] No apm.yml found. Run 'apm init' to create one.\n")
+		return 1
+	}
+
+	data, err := os.ReadFile(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to read apm.yml: %v\n", err)
+		return 1
+	}
+	content := string(data)
+	if strings.Contains(content, "mcp: []") {
+		content = strings.Replace(content, "mcp: []", "mcp:\n  - "+name, 1)
+	} else if strings.Contains(content, "\nmcp:\n") {
+		// Append to existing mcp section
+		content = strings.Replace(content, "\nmcp:\n", "\nmcp:\n  - "+name+"\n", 1)
+	} else {
+		content = strings.TrimRight(content, "\n") + "\nmcp:\n  - " + name + "\n"
+	}
+	if err := os.WriteFile(ymlPath, []byte(content), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update apm.yml: %v\n", err)
+		return 1
+	}
+
 	fmt.Printf("[*] Installing MCP server: %s\n", name)
 	fmt.Printf("[+] MCP server '%s' installed.\n", name)
 	return 0

@@ -5,6 +5,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 // runUpdate implements `apm update [OPTIONS]`.
@@ -62,6 +64,35 @@ func runUpdate(args []string) int {
 	}
 
 	fmt.Printf("[*] Updating dependencies for project '%s'\n", proj.Name)
+
+	// Update local package versions in lockfile.
+	lockPath := filepath.Join(cwd, "apm.lock.yaml")
+	deps, readErr := readLockfileDeps(lockPath)
+	if readErr == nil && len(deps) > 0 {
+		updated := false
+		for i, dep := range deps {
+			if dep.RepoURL == "" || (!startsWith(dep.RepoURL, "./") && !startsWith(dep.RepoURL, "../")) {
+				continue
+			}
+			localPath := filepath.Join(cwd, filepath.FromSlash(dep.RepoURL))
+			localYML := filepath.Join(localPath, "apm.yml")
+			localProj, parseErr := parseApmYML(localYML)
+			if parseErr != nil {
+				continue
+			}
+			if localProj.Version != dep.Version {
+				if flagVerbose {
+					fmt.Printf("    [>] %s: %s -> %s\n", dep.Name, dep.Version, localProj.Version)
+				}
+				deps[i].Version = localProj.Version
+				updated = true
+			}
+		}
+		if updated {
+			_ = writeLockfile(lockPath, deps)
+		}
+	}
+
 	if flagVerbose {
 		fmt.Printf("    APM deps: %d\n", len(proj.Deps))
 	}
@@ -114,6 +145,36 @@ func runPrune(args []string) int {
 	}
 
 	fmt.Printf("[*] Pruning project '%s'\n", proj.Name)
+
+	// Find packages referenced in lockfile.
+	lockPath := filepath.Join(cwd, "apm.lock.yaml")
+	deps, _ := readLockfileDeps(lockPath)
+	referencedPaths := make(map[string]bool)
+	for _, dep := range deps {
+		if dep.InstallPath != "" {
+			// Normalize: get just the package dir name.
+			parts := strings.Split(filepath.ToSlash(dep.InstallPath), "/")
+			if len(parts) > 0 {
+				referencedPaths[parts[len(parts)-1]] = true
+			}
+		}
+	}
+
+	// Remove apm_modules entries not referenced in lockfile.
+	modulesDir := filepath.Join(cwd, "apm_modules")
+	entries, err := os.ReadDir(modulesDir)
+	if err == nil {
+		for _, entry := range entries {
+			if !referencedPaths[entry.Name()] {
+				stale := filepath.Join(modulesDir, entry.Name())
+				if flagVerbose {
+					fmt.Printf("    [>] Removing stale: %s\n", entry.Name())
+				}
+				_ = os.RemoveAll(stale)
+			}
+		}
+	}
+
 	fmt.Println("[+] Prune complete.")
 	return 0
 }

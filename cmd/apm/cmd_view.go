@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // runView implements `apm view [OPTIONS] PACKAGE [FIELD]`.
@@ -41,6 +42,12 @@ func runView(args []string) int {
 	var field string
 	if len(posArgs) > 1 {
 		field = posArgs[1]
+	}
+
+	// Reject path traversal or absolute paths.
+	if strings.Contains(filepath.Clean(pkg), "..") || filepath.IsAbs(pkg) {
+		fmt.Fprintf(os.Stderr, "[x] Invalid package path: %q (path traversal not allowed)\n", pkg)
+		return 2
 	}
 
 	// Resolve install directory.

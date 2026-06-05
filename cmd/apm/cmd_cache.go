@@ -114,9 +114,24 @@ func runCacheClean(args []string) int {
 		}
 	}
 	dir := cacheDir()
-	if err := os.RemoveAll(dir); err != nil {
-		fmt.Fprintf(os.Stderr, "[x] Failed to clean cache: %v\n", err)
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			if mkErr := os.MkdirAll(dir, 0o755); mkErr != nil {
+				fmt.Fprintf(os.Stderr, "[x] Failed to create cache dir: %v\n", mkErr)
+				return 1
+			}
+			fmt.Printf("[+] Cache cleared: %s\n", dir)
+			return 0
+		}
+		fmt.Fprintf(os.Stderr, "[x] Failed to read cache dir: %v\n", err)
 		return 1
+	}
+	for _, entry := range entries {
+		if rmErr := os.RemoveAll(filepath.Join(dir, entry.Name())); rmErr != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to remove cache entry %s: %v\n", entry.Name(), rmErr)
+			return 1
+		}
 	}
 	fmt.Printf("[+] Cache cleared: %s\n", dir)
 	return 0

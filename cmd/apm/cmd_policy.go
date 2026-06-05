@@ -66,24 +66,69 @@ func runPolicyStatus(args []string) int {
 	}
 
 	cwd, _ := os.Getwd()
-	_, err := findApmYML(cwd)
-
-	if flagJSON {
-		if err != nil {
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		if flagJSON {
 			fmt.Println(`{"policy_enabled":false,"source":null,"rules":0}`)
 		} else {
-			fmt.Println(`{"policy_enabled":false,"source":null,"rules":0}`)
+			fmt.Println("[i] No apm.yml found. Policy not configured.")
 		}
 		return 0
 	}
 
+	proj, err := parseApmYML(ymlPath)
 	if err != nil {
-		fmt.Println("[i] No apm.yml found. Policy not configured.")
+		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
+		return 1
+	}
+
+	if len(proj.PolicyDeny) == 0 {
+		if flagJSON {
+			fmt.Println(`{"policy_enabled":false,"source":null,"rules":0}`)
+		} else {
+			fmt.Println("[i] Policy status: no policy configured")
+			fmt.Println("    Source: none")
+			fmt.Println("    Rules:  0")
+		}
 		return 0
 	}
 
-	fmt.Println("[i] Policy status: no policy configured")
-	fmt.Println("    Source: none")
-	fmt.Println("    Rules:  0")
+	// Check deps against deny list.
+	denySet := make(map[string]bool, len(proj.PolicyDeny))
+	for _, d := range proj.PolicyDeny {
+		denySet[d] = true
+	}
+
+	var violations []string
+	for _, dep := range proj.Deps {
+		if denySet[dep.Package] {
+			violations = append(violations, dep.Package)
+		}
+	}
+	for _, dep := range proj.MCPDeps {
+		if denySet[dep.Package] {
+			violations = append(violations, dep.Package)
+		}
+	}
+
+	if len(violations) > 0 {
+		if flagJSON {
+			fmt.Printf(`{"policy_enabled":true,"violations":%d}`, len(violations))
+			fmt.Println()
+		} else {
+			fmt.Printf("[x] Policy violation: %d denied package(s) found\n", len(violations))
+			for _, v := range violations {
+				fmt.Printf("    [x] Denied: %s\n", v)
+			}
+		}
+		return 1
+	}
+
+	if flagJSON {
+		fmt.Printf(`{"policy_enabled":true,"rules":%d,"violations":0}`, len(proj.PolicyDeny))
+		fmt.Println()
+	} else {
+		fmt.Printf("[+] Policy OK: %d rules, no violations\n", len(proj.PolicyDeny))
+	}
 	return 0
 }

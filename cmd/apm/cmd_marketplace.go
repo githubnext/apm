@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 // runMarketplace implements `apm marketplace [SUBCOMMAND] [OPTIONS]`.
@@ -122,7 +123,7 @@ func runMarketplaceList(args []string) int {
 func runMarketplaceAdd(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm marketplace add [OPTIONS]")
+			fmt.Println("Usage: apm marketplace add [OPTIONS] NAME URL")
 			fmt.Println()
 			fmt.Println("  Register a marketplace")
 			fmt.Println()
@@ -131,11 +132,39 @@ func runMarketplaceAdd(args []string) int {
 			return 0
 		}
 	}
-	if len(args) < 2 {
+
+	var posArgs []string
+	for _, a := range args {
+		if !startsWith(a, "-") {
+			posArgs = append(posArgs, a)
+		}
+	}
+	if len(posArgs) < 2 {
 		fmt.Fprintln(os.Stderr, "Error: Missing NAME and URL arguments.")
 		return 2
 	}
-	fmt.Printf("[+] Marketplace '%s' registered.\n", args[0])
+	name, url := posArgs[0], posArgs[1]
+
+	cwd, _ := os.Getwd()
+	ymlPath, _ := findApmYML(cwd)
+	if ymlPath == "" {
+		ymlPath = cwd + "/apm.yml"
+	}
+
+	data, _ := os.ReadFile(ymlPath)
+	content := string(data)
+	marketplaceEntry := "marketplace:\n  " + name + ": " + url + "\n"
+	if strings.Contains(content, "marketplace:") {
+		content = strings.TrimRight(content, "\n") + "\n  " + name + ": " + url + "\n"
+	} else {
+		content = strings.TrimRight(content, "\n") + "\n" + marketplaceEntry
+	}
+	if err := os.WriteFile(ymlPath, []byte(content), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update apm.yml: %v\n", err)
+		return 1
+	}
+
+	fmt.Printf("[+] Marketplace '%s' registered.\n", name)
 	return 0
 }
 
@@ -177,6 +206,20 @@ func runMarketplaceValidate(_ []string) int {
 }
 
 func runMarketplaceInit(_ []string) int {
+	cwd, _ := os.Getwd()
+	ymlPath, _ := findApmYML(cwd)
+	if ymlPath == "" {
+		ymlPath = cwd + "/apm.yml"
+	}
+	data, _ := os.ReadFile(ymlPath)
+	content := string(data)
+	if !strings.Contains(content, "marketplace:") {
+		content = strings.TrimRight(content, "\n") + "\nmarketplace: {}\n"
+		if err := os.WriteFile(ymlPath, []byte(content), 0o644); err != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to update apm.yml: %v\n", err)
+			return 1
+		}
+	}
 	fmt.Println("[*] Scaffolding marketplace block in apm.yml...")
 	fmt.Println("[+] Done. Edit the 'marketplace:' block in apm.yml.")
 	return 0

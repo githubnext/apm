@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // runPack implements `apm pack [OPTIONS]`.
@@ -67,11 +68,28 @@ func runPack(args []string) int {
 	}
 
 	if flagJSON {
-		fmt.Printf(`{"project":%q,"output":%q,"artifacts":[]}`, proj.Name, output)
+		fmt.Printf(`{"project":%q,"output":%q,"artifacts":[%q]}`, proj.Name, output, filepath.Join(output, proj.Name+"-"+proj.Version+".apm"))
 		fmt.Println()
 	} else {
 		fmt.Printf("[*] Packing project '%s'\n", proj.Name)
 		fmt.Printf("    Output: %s\n", output)
+	}
+
+	// Create output directory and write a bundle manifest.
+	outDir := filepath.Join(cwd, output)
+	if err := os.MkdirAll(outDir, 0o755); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to create output dir: %v\n", err)
+		return 1
+	}
+	bundleName := proj.Name + "-" + proj.Version + ".apm"
+	bundlePath := filepath.Join(outDir, bundleName)
+	bundleContent := "name: " + proj.Name + "\nversion: " + proj.Version + "\n"
+	if err := os.WriteFile(bundlePath, []byte(bundleContent), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to write bundle: %v\n", err)
+		return 1
+	}
+
+	if !flagJSON {
 		fmt.Println("[+] Pack complete.")
 	}
 	return 0
@@ -112,6 +130,18 @@ func runUnpack(args []string) int {
 	}
 
 	fmt.Printf("[*] Unpacking bundle: %s\n", bundle)
+
+	cwd, _ := os.Getwd()
+	bundleAbs := bundle
+	if !filepath.IsAbs(bundle) {
+		bundleAbs = filepath.Join(cwd, bundle)
+	}
+
+	if err := copyDirTree(bundleAbs, cwd); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to unpack: %v\n", err)
+		return 1
+	}
+
 	fmt.Println("[+] Unpack complete.")
 	return 0
 }

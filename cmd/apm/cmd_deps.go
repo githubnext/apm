@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // runDeps implements `apm deps [SUBCOMMAND] [OPTIONS]`.
@@ -174,7 +175,26 @@ func runDepsClean(args []string) int {
 			return 0
 		}
 	}
+
+	cwd, _ := os.Getwd()
 	fmt.Println("[*] Cleaning dependencies...")
+
+	// Remove apm_modules directory entirely.
+	modulesDir := filepath.Join(cwd, "apm_modules")
+	if err := os.RemoveAll(modulesDir); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to remove apm_modules: %v\n", err)
+		return 1
+	}
+
+	// Clear lockfile dependencies.
+	lockPath := filepath.Join(cwd, "apm.lock.yaml")
+	if _, statErr := os.Stat(lockPath); statErr == nil {
+		if err := writeLockfile(lockPath, nil); err != nil {
+			fmt.Fprintf(os.Stderr, "[x] Failed to update lockfile: %v\n", err)
+			return 1
+		}
+	}
+
 	fmt.Println("[+] Dependencies cleaned.")
 	return 0
 }

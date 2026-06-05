@@ -121,6 +121,7 @@ func TestParityCompletionHelpIdentical(t *testing.T) {
 	if bin == "" {
 		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set")
 	}
+	t.Cleanup(func() { emitCraneBoolGate("help", !t.Failed()) })
 
 	r := runBothTopLevel(t, "--help")
 	if r.GoExitCode != 0 {
@@ -235,6 +236,7 @@ func TestParityCompletionSurfaceParity(t *testing.T) {
 			t.Errorf("Go CLI missing command %q present in Python CLI", cmd)
 		}
 	}
+	emitCraneRatioGate("surface", len(required)-len(missing), len(required))
 	if len(missing) == 0 {
 		t.Logf("[+] Surface parity: all %d required commands present in Go CLI.", len(required))
 	}

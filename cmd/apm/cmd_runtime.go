@@ -79,6 +79,17 @@ func runRuntimeSetup(args []string) int {
 		fmt.Fprintln(os.Stderr, `Try 'apm runtime setup --help' for help.`)
 		return 2
 	}
+
+	cfgPath := configPath()
+	if cfgPath == "" {
+		fmt.Fprintf(os.Stderr, "[x] Could not determine config path.\n")
+		return 1
+	}
+	if err := writeConfigKey(cfgPath, "runtime", runtime); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to write config: %v\n", err)
+		return 1
+	}
+
 	fmt.Printf("[*] Setting up runtime: %s\n", runtime)
 	fmt.Printf("[+] Runtime '%s' configured.\n", runtime)
 	return 0

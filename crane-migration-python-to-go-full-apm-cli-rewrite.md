@@ -10,14 +10,14 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-05T18:00:00Z |
-| Iteration Count | 68 |
+| Last Run | 2026-06-05T18:55:00Z |
+| Iteration Count | 69 |
 | Best Metric | pending CI |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | pending |
+| PR | #111 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
@@ -27,7 +27,7 @@
 | Completion Gate | pr-head-checks |
 | Completion Gate Status | pending |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -37,7 +37,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: #104
+**Pull Request**: #111
 **Issue**: #78
 
 ---
@@ -110,6 +110,14 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 69 -- 2026-06-05T18:55:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27032344174)
+
+- **Status**: [>] Pending CI
+- **Milestone**: Fix 3 CI failures from iter 68 (parity gate, behavior contracts, benchmark)
+- **Change**: (1) Fixed `help_parity` gate: `emitCraneBoolGate("help",...)` -> `emitCraneRatioGate("help", 1/0, 1)` so score.go RatioGate case works. (2) Added 4 new Python tests to `python_contract_coverage.yml` obsolete list (test_parse_machine_state_accepts_bracketed_status_heading, test_completed_label_with_unknown_pr_gate_is_recovered_as_stale, test_completed_label_without_open_pr_is_recovered_as_stale, test_crane_score_can_reach_one_with_no_python_all_go_replay). (3) Fixed compile benchmark: removed `applyTo` from bench.instructions.md (Python global inst -> copilot-instructions.md), added .apm/prompts/bench.md (Go reads this for copilot target).
+- **Score**: pending CI
+- **Notes**: Root cause of iter 68 CI failures: (a) BoolGate "help" JSON lacks Passing/Total fields needed by RatioGate applyGateEvent; (b) 4 tests added in main commits #108-#110 missing from python_contract_coverage.yml; (c) Python compile ignores instructions with applyTo for copilot-instructions.md, Go reads .apm/prompts/ not .apm/instructions/.
 
 ### Iteration 68 -- 2026-06-05T18:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27029714320)
 

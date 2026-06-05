@@ -20209,6 +20209,9 @@ python_tests:
   - tests/unit/test_crane_scheduler.py::test_machine_state_completed_string_is_recognized
   - tests/unit/test_crane_scheduler.py::test_pr_head_gate_fails_when_any_check_is_not_success
   - tests/unit/test_crane_scheduler.py::test_pr_head_gate_passes_only_when_all_checks_succeed
+  - tests/unit/test_crane_scheduler.py::test_parse_machine_state_accepts_bracketed_status_heading
+  - tests/unit/test_crane_scheduler.py::test_completed_label_with_unknown_pr_gate_is_recovered_as_stale
+  - tests/unit/test_crane_scheduler.py::test_completed_label_without_open_pr_is_recovered_as_stale
   - tests/unit/test_crane_score.py::test_crane_score_counts_parity_events
   - tests/unit/test_crane_score.py::test_crane_score_applies_target_correctness_gate
   - tests/unit/test_crane_score.py::test_crane_score_can_reach_one_with_all_deletion_grade_gates
@@ -20225,6 +20228,7 @@ python_tests:
   - tests/unit/test_crane_score.py::test_crane_score_blocks_incomplete_real_functional_gate
   - tests/unit/test_crane_score.py::test_crane_score_blocks_legacy_benchmark_bool_without_real_counts
   - tests/unit/test_crane_score.py::test_crane_score_blocks_known_exceptions
+  - tests/unit/test_crane_score.py::test_crane_score_can_reach_one_with_no_python_all_go_replay
   - tests/unit/test_crane_workflow_prompt.py::test_crane_acceptance_requires_shared_iteration_summary_for_pr_updates
   - tests/unit/test_crane_workflow_prompt.py::test_crane_completion_is_two_phase_and_pr_head_gated
   - tests/unit/test_crane_workflow_prompt.py::test_crane_commit_guidance_provides_structured_summary_fallback

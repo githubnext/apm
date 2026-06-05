@@ -121,7 +121,13 @@ func TestParityCompletionHelpIdentical(t *testing.T) {
 	if bin == "" {
 		t.Fatal("HARD-GATE FAILED: APM_PYTHON_BIN not set")
 	}
-	t.Cleanup(func() { emitCraneBoolGate("help", !t.Failed()) })
+	t.Cleanup(func() {
+		if !t.Failed() {
+			emitCraneRatioGate("help", 1, 1)
+		} else {
+			emitCraneRatioGate("help", 0, 1)
+		}
+	})
 
 	r := runBothTopLevel(t, "--help")
 	if r.GoExitCode != 0 {

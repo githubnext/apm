@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-05T19:08:00Z |
-| Iteration Count | 70 |
+| Last Run | 2026-06-06T00:00:00Z |
+| Iteration Count | 71 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #111 |
+| PR | pending (iteration 71) |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached; PR #111 head ce02a62 checks passed (6/6: Lint, Go Tests, Python Unit Tests, Python-vs-Go Parity Gate, Migration Benchmarks, Detect Migration Changes) |
-| Completion Candidate | false |
+| Completed | false |
+| Completed Reason | -- |
+| Completion Candidate | true |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | passed:ce02a62 |
+| Completion Gate Status | pending:38b588b |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -134,7 +134,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - **Commit**: 4b86f9c
 - **Notes**: Fixes to iter 68 CI failures. CI confirmed green in iter 70.
 
-### Iteration 68 -- 2026-06-05T18:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27029714320)
+### Iteration 71 -- 2026-06-06T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27041238237)
+
+- **Status**: [+] Accepted (completion candidate; CI pending)
+- **Milestone**: Fix stale completion -- restore migration_score=1.0 after benchmark gate regression
+- **Change**: (1) `src/apm_cli/commands/deps/cli.py`: pass `height=24` to `Console()` so Rich 14.x honours explicit width even when TERM=dumb. (2) `scripts/ci/migration_cli_benchmark.py`: added `COLUMNS=10000` as belt-and-suspenders guard. Root cause: Rich `Console.size` only uses `_width` when both `_width` and `_height` are set; without `height=`, TERM=dumb overrides to 80 cols, truncating "microsoft/apm-package-alpha" in the deps table.
+- **Score**: 1.0 (all 13 gates: benchmarks gate now 10/10)
+- **Commit**: 38b588b
+- **Notes**: Stale completion reset (iter 68-70 CI had passed on ce02a62, but that commit fell off the crane branch after PR #111 merged). Fresh score confirmed locally: migration_score=1.0, deletion_grade_ready=true, all gates pass.
+
+
 
 - **Status**: [+] Accepted -- Stale completion reset, new gates implemented
 - **Milestone**: Reset stale state; implement 3 new deletion-grade gates

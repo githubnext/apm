@@ -44,12 +44,79 @@ def test_machine_state_completed_string_is_recognized() -> None:
     assert crane_scheduler.is_completed_state({"completed": "true"}) is True
 
 
+def test_parse_machine_state_accepts_bracketed_status_heading() -> None:
+    state = crane_scheduler.parse_machine_state(
+        """# Crane: sample
+
+## [*] Machine State
+
+| Field | Value |
+|-------|-------|
+| Last Run | 2026-06-05T16:10:36Z |
+| Iteration Count | 67 |
+| PR | #104 |
+| Completed | true |
+| Recent Statuses | accepted, rejected |
+
+---
+
+## [list] Migration Info
+"""
+    )
+
+    assert state["last_run"] == "2026-06-05T16:10:36Z"
+    assert state["iteration_count"] == 67
+    assert state["completed"] is True
+    assert state["recent_statuses"] == ["accepted", "rejected"]
+    assert "-------" not in state
+
+
 def test_issue_label_detection_accepts_github_label_payloads() -> None:
     issue = {"labels": [{"name": "crane-completed"}, "automation"]}
 
     assert crane_scheduler._issue_has_label(issue, "crane-completed") is True
     assert crane_scheduler._issue_has_label(issue, "automation") is True
     assert crane_scheduler._issue_has_label(issue, "crane-migration") is False
+
+
+def test_completed_label_without_open_pr_is_recovered_as_stale() -> None:
+    stale, recovered, event = crane_scheduler.evaluate_completed_label_recovery(
+        "crane-migration-python-to-go-full-apm-cli-rewrite",
+        {"completed": True},
+        issue_active=False,
+        issue_completed_label=True,
+        repo="githubnext/apm",
+        github_token="token",
+        find_pr=lambda *_args: None,
+    )
+
+    assert stale is True
+    assert recovered is True
+    assert event == ("stale_no_pr", None, "no-open-migration-pr")
+
+    should_skip, reason = crane_scheduler.check_skip_conditions(
+        {"completed": True},
+        issue_active=recovered,
+    )
+    assert should_skip is False
+    assert reason is None
+
+
+def test_completed_label_with_unknown_pr_gate_is_recovered_as_stale() -> None:
+    stale, recovered, event = crane_scheduler.evaluate_completed_label_recovery(
+        "crane-migration-python-to-go-full-apm-cli-rewrite",
+        {"completed": True},
+        issue_active=False,
+        issue_completed_label=True,
+        repo="githubnext/apm",
+        github_token="token",
+        find_pr=lambda *_args: 104,
+        check_gate=lambda *_args: (None, "checks-unavailable:2699b7d"),
+    )
+
+    assert stale is True
+    assert recovered is True
+    assert event == ("stale_gate", 104, "checks-unavailable:2699b7d")
 
 
 def test_pr_head_gate_fails_when_any_check_is_not_success() -> None:

@@ -71,14 +71,18 @@ STATE_FILE_MAX_BYTES = 40960
 def parse_machine_state(content):
     """Parse the [*] Machine State table from a state file. Returns a dict."""
     state = {}
-    m = re.search(r"## [*] Machine State.*?\n(.*?)(?=\n## |\Z)", content, re.DOTALL)
+    m = re.search(
+        r"##\s+(?:\[\*\]|\*)\s+Machine State.*?\n(.*?)(?=\n## |\Z)",
+        content,
+        re.DOTALL,
+    )
     if not m:
         return state
     section = m.group(0)
     for row in re.finditer(r"\|\s*(.+?)\s*\|\s*(.+?)\s*\|", section):
         raw_key = row.group(1).strip()
         raw_val = row.group(2).strip()
-        if raw_key.lower() in ("field", "---", ":---", ":---:", "---:"):
+        if raw_key.lower() == "field" or re.fullmatch(r":?-+:?", raw_key):
             continue
         key = raw_key.lower().replace(" ", "_")
         val = None if raw_val in ("--", "-", "") else raw_val
@@ -229,6 +233,60 @@ def check_skip_conditions(state, issue_active=False):
     if len(recent) >= 5 and all(s == "rejected" for s in recent):
         return True, "plateau: 5 consecutive rejections"
     return False, None
+
+
+def evaluate_completed_label_recovery(
+    name,
+    state,
+    issue_active,
+    issue_completed_label,
+    repo,
+    github_token,
+    find_pr=None,
+    check_gate=None,
+):
+    """Return stale-completion recovery state for issue-based migrations.
+
+    Completed-label issues are only trustworthy when Crane can positively
+    confirm the current PR-head gate. A missing PR, pending checks, failing
+    checks, or unavailable gate evidence means the completed state is stale and
+    the migration should be selected again.
+    """
+    if find_pr is None:
+        find_pr = find_existing_pr_for_branch
+    if check_gate is None:
+        check_gate = get_pr_head_check_gate
+
+    has_stale_completed_state = issue_active and is_completed_state(state)
+    recovered_completed_issue = False
+    recovery_event = None
+
+    if issue_completed_label and is_completed_state(state) and not issue_active:
+        existing_pr_for_recovery = find_pr(repo, name, github_token)
+        if existing_pr_for_recovery:
+            gate_passed, gate_reason = check_gate(
+                repo, existing_pr_for_recovery, github_token
+            )
+            if gate_passed is True:
+                recovery_event = (
+                    "confirmed",
+                    existing_pr_for_recovery,
+                    gate_reason,
+                )
+            else:
+                has_stale_completed_state = True
+                recovered_completed_issue = True
+                recovery_event = (
+                    "stale_gate",
+                    existing_pr_for_recovery,
+                    gate_reason or "gate-unavailable",
+                )
+        else:
+            has_stale_completed_state = True
+            recovered_completed_issue = True
+            recovery_event = ("stale_no_pr", None, "no-open-migration-pr")
+
+    return has_stale_completed_state, recovered_completed_issue, recovery_event
 
 
 # ---------------------------------------------------------------------------
@@ -765,37 +823,33 @@ def main():
         else:
             print("  {}: no state found (first run)".format(name))
 
-        has_stale_completed_state = issue_active and is_completed_state(state)
-        recovered_completed_issue = False
-        if issue_completed_label and is_completed_state(state) and not issue_active:
-            existing_pr_for_recovery = find_existing_pr_for_branch(repo, name, github_token)
-            if existing_pr_for_recovery:
-                gate_passed, gate_reason = get_pr_head_check_gate(
-                    repo, existing_pr_for_recovery, github_token
-                )
-                if gate_passed is False:
-                    has_stale_completed_state = True
-                    recovered_completed_issue = True
-                    print(
-                        "  {}: crane-completed label is stale; PR #{} gate is {}".format(
-                            name, existing_pr_for_recovery, gate_reason
-                        )
-                    )
-                elif gate_passed is True:
-                    print(
-                        "  {}: crane-completed label confirmed by PR #{} gate {}".format(
-                            name, existing_pr_for_recovery, gate_reason
-                        )
-                    )
-                else:
-                    print(
-                        "  {}: could not evaluate completed-label recovery for PR #{} ({})".format(
-                            name, existing_pr_for_recovery, gate_reason
-                        )
-                    )
-            else:
+        has_stale_completed_state, recovered_completed_issue, recovery_event = (
+            evaluate_completed_label_recovery(
+                name,
+                state,
+                issue_active,
+                issue_completed_label,
+                repo,
+                github_token,
+            )
+        )
+        if recovery_event:
+            event_kind, recovery_pr, gate_reason = recovery_event
+            if event_kind == "confirmed":
                 print(
-                    "  {}: crane-completed label present, but no open migration PR was found".format(
+                    "  {}: crane-completed label confirmed by PR #{} gate {}".format(
+                        name, recovery_pr, gate_reason
+                    )
+                )
+            elif event_kind == "stale_gate":
+                print(
+                    "  {}: crane-completed label is stale; PR #{} gate is {}".format(
+                        name, recovery_pr, gate_reason
+                    )
+                )
+            elif event_kind == "stale_no_pr":
+                print(
+                    "  {}: crane-completed label is stale; no open migration PR was found".format(
                         name
                     )
                 )

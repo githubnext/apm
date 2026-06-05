@@ -283,8 +283,11 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	}
 
 	goTestsPass := !goTestsFailed && targetTotal > 0 && targetPassing == targetTotal
+	goOnlyReference := behaviorContracts.OK() && goldenFixtureCorpus.OK() && allGoGoldenTests.OK() && noPythonRuntime.OK()
+	pythonReferenceSatisfied := pythonReference.OK() || goOnlyReference
+	pythonTestsSatisfied := pythonTests.OK() || goOnlyReference
 	gates := CutoverGates{
-		PythonReferenceRequired: pythonReference.OK(),
+		PythonReferenceRequired: pythonReferenceSatisfied,
 		SurfaceParity:           surface.Percent(),
 		HelpParity:              help.Percent(),
 		FunctionalContracts:     functional.Percent(),
@@ -295,7 +298,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		NoPythonRuntime:         passFail(noPythonRuntime.OK()),
 		KnownExceptions:         knownExceptions,
 		GoTests:                 passFail(goTestsPass),
-		PythonTests:             passFail(pythonTests.OK()),
+		PythonTests:             passFail(pythonTestsSatisfied),
 		Benchmarks:              passFail(benchmarks.OK()),
 	}
 

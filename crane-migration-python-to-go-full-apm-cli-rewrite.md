@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-06T00:00:00Z |
-| Iteration Count | 71 |
+| Last Run | 2026-06-06T01:20:28Z |
+| Iteration Count | 72 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | pending (iteration 71) |
+| PR | #112 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | false |
-| Completed Reason | -- |
-| Completion Candidate | true |
+| Completed | true |
+| Completed Reason | target metric 1.0 reached; PR #112 head fcf829b checks passed (6/6: Lint, Go Tests, Python Unit Tests, Python-vs-Go Parity Gate, Migration Benchmarks, Detect Migration Changes) |
+| Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending:38b588b |
+| Completion Gate Status | passed:fcf829b |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted |
 
 ---
 
@@ -37,7 +37,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: #111
+**Pull Request**: #112
 **Issue**: #78
 
 ---
@@ -73,7 +73,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 
 ## [target] Current Focus
 
-**[+] Migration complete.** All 21 milestones done. All 13 deletion-grade gates passing (migration_score=1.0, parity 846/846). PR #111 head ce02a62 all CI checks green. Completed after 70 iterations.
+**[+] Migration complete.** All 21 milestones done. All 13 deletion-grade gates passing (migration_score=1.0, parity 846/846). PR #112 head fcf829b all 6 CI checks green. Completed after 72 iterations.
 
 ---
 
@@ -114,6 +114,16 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 72 -- 2026-06-06T01:20:28Z -- [Run](https://github.com/githubnext/apm/actions/runs/27048547724)
+
+- **Status**: [+] Accepted -- Migration Complete
+- **Milestone**: Completion gate finalized (PR #112 head fcf829b)
+- **Change**: Deterministic completion gate verified on PR #112. All 6 CI checks passed: Lint, Go Tests, Python Unit Tests, Python-vs-Go Parity Gate, Migration Benchmarks, Detect Migration Changes.
+- **Score**: 1.0 (best: 1.0, delta: 0.0)
+- **Progress**: 846/846 parity passing
+- **Parity**: 846/846
+- **Notes**: All 13 deletion-grade gates passing. migration_score=1.0. PR #112 head fcf829b all CI green. crane-migration label removed, crane-completed added. Migration finalized after 72 iterations.
 
 ### Iteration 70 -- 2026-06-05T19:08:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27034526048)
 

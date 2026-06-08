@@ -167,12 +167,12 @@ func TestGoCutoverRealFunctionalAndStateDiffContracts(t *testing.T) {
 		},
 		{
 			name: "config set persists configuration value",
-			args: []string{"config", "set", "install.parallel_downloads", "8"},
+			args: []string{"config", "set", "auto-integrate", "false"},
 			env:  map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
 			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
 				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
-				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "parallel_downloads") && ok
-				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "8") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "auto-integrate") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "false") && ok
 				return ok
 			},
 		},

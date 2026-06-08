@@ -384,6 +384,54 @@ func TestParityHarnessGoConfigHelp(t *testing.T) {
 	assertNoPythonUnimplemented(t, ParityResult{GoStdout: out})
 }
 
+// TestParityHarnessGoConfigGetHelp verifies `apm config get --help` exits 0.
+func TestParityHarnessGoConfigGetHelp(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "get", "--help")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessGoConfigSetHelp verifies `apm config set --help` exits 0.
+func TestParityHarnessGoConfigSetHelp(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "set", "--help")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessGoConfigUnsetHelp verifies `apm config unset --help` exits 0.
+func TestParityHarnessGoConfigUnsetHelp(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "unset", "--help")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessConfigGetInvalidKey verifies that `apm config get INVALID_KEY`
+// exits non-zero (Python exits 1; Go must not exit 0 for unknown keys).
+func TestParityHarnessConfigGetInvalidKey(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "get", "no-such-key")
+	if r.GoExitCode == 0 {
+		t.Errorf("apm config get no-such-key exited 0; want non-zero (unknown key)")
+	}
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessConfigGetAutoIntegrate verifies `apm config get auto-integrate` exits 0.
+func TestParityHarnessConfigGetAutoIntegrate(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "get", "auto-integrate")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessConfigSetInvalidKey verifies that `apm config set INVALID_KEY val`
+// exits non-zero.
+func TestParityHarnessConfigSetInvalidKey(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "config", "set", "no-such-key", "val")
+	if r.GoExitCode == 0 {
+		t.Errorf("apm config set no-such-key val exited 0; want non-zero (unknown key)")
+	}
+	assertPythonVsGoExitCode(t, r)
+}
+
 // TestParityHarnessGoMarketplaceHelp verifies `apm marketplace --help`.
 func TestParityHarnessGoMarketplaceHelp(t *testing.T) {
 	out, _, code := runGo(t, "marketplace", "--help")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -11,6 +12,95 @@ assert spec is not None
 crane_scheduler = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
 spec.loader.exec_module(crane_scheduler)
+
+
+def _write_migration(path: Path, *, schedule: str = "every 6h") -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "\n".join(
+            [
+                "---",
+                f"schedule: {schedule}",
+                "strategy: greenfield",
+                "source-language: python",
+                "target-languages: [go]",
+                "target-metric: 1.0",
+                "metric_direction: higher",
+                "---",
+                "# Test Migration",
+                "## Source",
+                "- python",
+                "## Target",
+                "- go",
+                "## Verification",
+                "run tests",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due(
+    tmp_path, monkeypatch
+) -> None:
+    _write_migration(tmp_path / ".crane" / "migrations" / "sample.md", schedule="weekly")
+    output_dir = tmp_path / "out"
+    github_output = tmp_path / "github-output.txt"
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(crane_scheduler, "OUTPUT_DIR", str(output_dir))
+    monkeypatch.setattr(crane_scheduler, "OUTPUT_FILE", str(output_dir / "crane.json"))
+    monkeypatch.setattr(crane_scheduler, "ISSUE_MIGRATIONS_DIR", str(tmp_path / "issues"))
+    monkeypatch.setattr(crane_scheduler, "_fetch_issue_migrations", lambda *_args: ([], {}))
+    monkeypatch.setattr(
+        crane_scheduler,
+        "read_migration_state",
+        lambda _name: {"last_run": "2026-06-05T16:10:36Z", "iteration_count": 72},
+    )
+    monkeypatch.setenv("GITHUB_OUTPUT", str(github_output))
+
+    assert crane_scheduler.main() == 0
+
+    result = json.loads((output_dir / "crane.json").read_text(encoding="utf-8"))
+    assert result["selected"] is None
+    assert result["not_due"] is True
+    assert result["skipped"] == [
+        {
+            "name": "sample",
+            "reason": "not due yet",
+            "next_due": "2026-06-12T16:10:36+00:00",
+        }
+    ]
+
+    outputs = github_output.read_text(encoding="utf-8").splitlines()
+    assert "has_work=false" in outputs
+    assert "not_due=true" in outputs
+    assert "no_migrations=false" in outputs
+
+
+def test_main_outputs_has_work_when_migration_is_due(tmp_path, monkeypatch) -> None:
+    _write_migration(tmp_path / ".crane" / "migrations" / "sample.md")
+    output_dir = tmp_path / "out"
+    github_output = tmp_path / "github-output.txt"
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(crane_scheduler, "OUTPUT_DIR", str(output_dir))
+    monkeypatch.setattr(crane_scheduler, "OUTPUT_FILE", str(output_dir / "crane.json"))
+    monkeypatch.setattr(crane_scheduler, "ISSUE_MIGRATIONS_DIR", str(tmp_path / "issues"))
+    monkeypatch.setattr(crane_scheduler, "_fetch_issue_migrations", lambda *_args: ([], {}))
+    monkeypatch.setattr(crane_scheduler, "read_migration_state", lambda _name: {})
+    monkeypatch.setenv("GITHUB_OUTPUT", str(github_output))
+
+    assert crane_scheduler.main() == 0
+
+    result = json.loads((output_dir / "crane.json").read_text(encoding="utf-8"))
+    assert result["selected"] == "sample"
+    assert result["not_due"] is False
+
+    outputs = github_output.read_text(encoding="utf-8").splitlines()
+    assert "has_work=true" in outputs
+    assert "selected=sample" in outputs
 
 
 def test_completed_state_skips_inactive_migration() -> None:

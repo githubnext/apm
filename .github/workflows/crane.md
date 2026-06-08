@@ -22,6 +22,69 @@ on:
         type: string
   slash_command:
     name: crane
+  permissions:
+    contents: read
+    issues: read
+    pull-requests: read
+    checks: read
+  steps:
+    - name: Checkout scheduler sources
+      uses: actions/checkout@v6.0.2
+      with:
+        persist-credentials: false
+        sparse-checkout: |
+          .github/workflows/scripts
+          .crane
+        fetch-depth: 1
+
+    - name: Clone repo-memory for scheduling
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_SERVER_URL: ${{ github.server_url }}
+      run: |
+        MEMORY_DIR="/tmp/gh-aw/repo-memory/crane"
+        BRANCH="memory/crane"
+        mkdir -p "$(dirname "$MEMORY_DIR")"
+        REPO_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+        AUTH_URL="$(echo "$REPO_URL" | sed "s|https://|https://x-access-token:${GH_TOKEN}@|")"
+        if git ls-remote --exit-code --heads "$AUTH_URL" "$BRANCH" > /dev/null 2>&1; then
+          git clone --single-branch --branch "$BRANCH" --depth 1 "$AUTH_URL" "$MEMORY_DIR" 2>&1
+          echo "Cloned repo-memory branch to $MEMORY_DIR"
+        else
+          mkdir -p "$MEMORY_DIR"
+          echo "No repo-memory branch found yet (first run). Created empty directory."
+        fi
+
+    - name: Check whether Crane has due work
+      id: crane_due
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        CRANE_MIGRATION: ${{ github.event.inputs.migration }}
+      run: |
+        python3 .github/workflows/scripts/crane_scheduler.py
+
+jobs:
+  pre-activation:
+    outputs:
+      crane_has_work: ${{ steps.crane_due.outputs.has_work }}
+      crane_not_due: ${{ steps.crane_due.outputs.not_due }}
+      crane_no_migrations: ${{ steps.crane_due.outputs.no_migrations }}
+
+if: >
+  needs.pre_activation.outputs.crane_has_work == 'true' &&
+  (
+    needs.pre_activation.outputs.matched_command == 'crane' ||
+    (
+      github.event_name != 'issues' &&
+      github.event_name != 'issue_comment' &&
+      github.event_name != 'pull_request' &&
+      github.event_name != 'pull_request_review_comment' &&
+      github.event_name != 'discussion' &&
+      github.event_name != 'discussion_comment'
+    )
+  )
 
 permissions: read-all
 

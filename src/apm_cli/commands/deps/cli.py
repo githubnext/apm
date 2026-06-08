@@ -405,7 +405,7 @@ def list_packages(global_, show_all, insecure_only):
         from rich.console import Console
 
         term_width = shutil.get_terminal_size((120, 24)).columns
-        console = Console(width=max(120, term_width))
+        console = Console(width=max(120, term_width), height=24)
         has_rich = True
     except ImportError:
         has_rich = False

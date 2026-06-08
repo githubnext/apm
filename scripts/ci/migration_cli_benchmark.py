@@ -543,6 +543,9 @@ def main() -> int:
             "NO_COLOR": "1",
             "TERM": "dumb",
             "PYTHONUNBUFFERED": "1",
+            # Prevent Rich from truncating long package names in table output.
+            # Matches the COLUMNS=10000 convention used in parity_completion_test.go.
+            "COLUMNS": "10000",
         }
     )
 

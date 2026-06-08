@@ -314,6 +314,43 @@ func TestParityHarnessGoDepsTreeInTempRepo(t *testing.T) {
 	assertGoOutputContains(t, r, "test-project")
 }
 
+// TestParityHarnessDepInfoHelp verifies `apm deps info --help` shows PACKAGE argument.
+func TestParityHarnessDepInfoHelp(t *testing.T) {
+	out, _, code := runGo(t, "deps", "info", "--help")
+	if code != 0 {
+		t.Fatalf("apm deps info --help exited %d, want 0", code)
+	}
+	if !strings.Contains(out, "PACKAGE") {
+		t.Errorf("apm deps info --help missing PACKAGE in output:\n%s", out)
+	}
+}
+
+// TestParityHarnessDepInfoMissingPackage checks both Python and Go exit non-zero
+// when no PACKAGE argument is supplied to `apm deps info`.
+// Python Click exits 2 with "Error: Missing argument 'PACKAGE'."
+func TestParityHarnessDepInfoMissingPackage(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "deps", "info")
+	if r.GoExitCode == 0 {
+		t.Errorf("apm deps info with no package should fail, got exit 0\nstdout: %s", r.GoStdout)
+	}
+	// Both CLIs must emit an error indication.
+	combined := r.GoStdout + r.GoStderr
+	if !strings.Contains(combined, "PACKAGE") && !strings.Contains(combined, "package") && !strings.Contains(combined, "Missing") {
+		t.Errorf("apm deps info missing-arg error must mention package: %s", combined)
+	}
+	assertPythonVsGoExitCode(t, r)
+}
+
+// TestParityHarnessDepInfoNotInstalled checks both CLIs exit non-zero when
+// the requested package is not installed in apm_modules/.
+func TestParityHarnessDepInfoNotInstalled(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "deps", "info", "missing/package")
+	if r.GoExitCode == 0 {
+		t.Errorf("apm deps info missing/package should fail, got exit 0\nstdout: %s", r.GoStdout)
+	}
+	assertPythonVsGoExitCode(t, r)
+}
+
 // TestParityHarnessGoCacheHelp verifies `apm cache --help` lists subcommands.
 func TestParityHarnessGoCacheHelp(t *testing.T) {
 	out, _, code := runGo(t, "cache", "--help")

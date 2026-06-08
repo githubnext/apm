@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // runDeps implements `apm deps [SUBCOMMAND] [OPTIONS]`.
@@ -18,11 +19,11 @@ func runDeps(args []string) int {
 	sub := args[0]
 	rest := args[1:]
 
-	for _, a := range args {
-		if a == "--help" || a == "-h" {
-			printDepsHelp()
-			return 0
-		}
+	// Only intercept --help when it is the first (and only meaningful) arg,
+	// not when it follows a subcommand name -- let the subcommand handle it.
+	if sub == "--help" || sub == "-h" {
+		printDepsHelp()
+		return 0
 	}
 
 	switch sub {
@@ -150,16 +151,62 @@ func runDepsTree(args []string) int {
 func runDepsInfo(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm deps info [OPTIONS]")
+			fmt.Println("Usage: apm deps info [OPTIONS] PACKAGE")
 			fmt.Println()
 			fmt.Println("  Show detailed package information")
+			fmt.Println()
+			fmt.Println("Arguments:")
+			fmt.Println("  PACKAGE  [required]")
 			fmt.Println()
 			fmt.Println("Options:")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
 	}
-	fmt.Println("[i] Use 'apm view <package>' to inspect a specific package.")
+
+	// Collect non-flag arguments as the package name.
+	var pkg string
+	for _, a := range args {
+		if !strings.HasPrefix(a, "-") {
+			pkg = a
+			break
+		}
+	}
+	if pkg == "" {
+		fmt.Fprintln(os.Stderr, "Error: Missing argument 'PACKAGE'.")
+		fmt.Fprintln(os.Stderr, `Try 'apm deps info --help' for help.`)
+		return 2
+	}
+
+	cwd, _ := os.Getwd()
+	pkgDir := filepath.Join(cwd, "apm_modules", pkg)
+	if _, err := os.Stat(pkgDir); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Package '%s' is not installed (no apm_modules/%s).\n", pkg, pkg)
+		fmt.Fprintf(os.Stderr, "[i] Run 'apm install' to install dependencies.\n")
+		return 1
+	}
+
+	ymlPath := filepath.Join(pkgDir, "apm.yml")
+	if _, err := os.Stat(ymlPath); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Package '%s' has no apm.yml in apm_modules/%s.\n", pkg, pkg)
+		return 1
+	}
+	meta, err := parseApmYML(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Could not read package metadata: %v\n", err)
+		return 1
+	}
+
+	fmt.Printf("Package: %s\n", meta.Name)
+	if meta.Version != "" {
+		fmt.Printf("Version: %s\n", meta.Version)
+	}
+	if len(meta.Deps) > 0 {
+		fmt.Println("Dependencies:")
+		for _, d := range meta.Deps {
+			fmt.Printf("  %s\n", d.Package)
+		}
+	}
 	return 0
 }
 

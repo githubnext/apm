@@ -15,10 +15,9 @@ Side effects:
     * Always writes ``/tmp/gh-aw/crane.json``.
 
 Exit codes:
-    0  - a migration was selected, or there are unconfigured migrations to
-         report on (the agent step should run).
-    1  - nothing to do this run (no due migrations, no unconfigured
-         migrations); the workflow should skip the agent step.
+    0  - scheduling completed successfully. ``has_work=false`` is emitted to
+         ``GITHUB_OUTPUT`` when no migration is due.
+    1  - invalid scheduler input or another hard scheduler error.
 
 Environment variables:
     GITHUB_TOKEN       - token used to query the issues API.
@@ -61,6 +60,20 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "crane.json")
 # ``workflows/crane.md``. Surfaced so the agent prompt can reason about the
 # rolling-compaction budget without re-parsing workflow frontmatter.
 STATE_FILE_MAX_BYTES = 40960
+
+
+def _write_github_outputs(**values):
+    """Write simple string outputs for GitHub Actions steps."""
+    output_path = os.environ.get("GITHUB_OUTPUT")
+    if not output_path:
+        return
+    with open(output_path, "a", encoding="utf-8") as f:
+        for key, value in values.items():
+            if isinstance(value, bool):
+                value = "true" if value else "false"
+            elif value is None:
+                value = ""
+            f.write("{}={}\n".format(key, value))
 
 
 # ---------------------------------------------------------------------------
@@ -765,12 +778,19 @@ def main():
                     "unconfigured": [],
                     "stale_completed_state": [],
                     "no_migrations": True,
+                    "not_due": False,
                     "head_branch": None,
                     "existing_pr": None,
                 },
                 f,
             )
-        sys.exit(0)
+        _write_github_outputs(
+            has_work=False,
+            no_migrations=True,
+            not_due=False,
+            selected="",
+        )
+        return 0
 
     now = datetime.now(timezone.utc)
     due = []
@@ -921,7 +941,7 @@ def main():
 
     if error:
         print("ERROR: {}".format(error))
-        sys.exit(1)
+        return 1
 
     if forced_migration and selected:
         print("FORCED: running migration '{}' (manual dispatch)".format(forced_migration))
@@ -936,6 +956,9 @@ def main():
         except Exception as e:  # noqa: BLE001 -- best-effort lookup
             print("  Warning: existing PR lookup failed for {}: {}".format(selected, e))
             existing_pr = None
+
+    has_work = bool(selected or unconfigured)
+    not_due = bool(migration_files and not has_work)
 
     result = {
         "selected": selected,
@@ -954,6 +977,7 @@ def main():
         "skipped": skipped,
         "unconfigured": unconfigured,
         "no_migrations": False,
+        "not_due": not_due,
         "head_branch": head_branch,
         "existing_pr": existing_pr,
     }
@@ -967,10 +991,20 @@ def main():
     print("Migrations skipped:      {}".format([s["name"] for s in skipped] or "(none)"))
     print("Migrations unconfigured: {}".format(unconfigured or "(none)"))
 
+    _write_github_outputs(
+        has_work=has_work,
+        no_migrations=False,
+        not_due=not_due,
+        selected=selected or "",
+        unconfigured_count=len(unconfigured),
+    )
+
     if not selected and not unconfigured:
-        print("\nNo migrations due this run. Exiting early.")
-        sys.exit(1)  # Non-zero exit skips the agent step
+        print("\nNo migrations due this run. Exiting successfully.")
+        return 0
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -10,14 +10,14 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-08T18:53:27Z |
-| Iteration Count | 75 |
+| Last Run | 2026-06-08T19:46:26Z |
+| Iteration Count | 76 |
 | Best Metric | -- |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | -- |
+| PR | #115 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending:755bf9b |
+| Completion Gate Status | pending:577f0ec |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted |
+| Recent Statuses | accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted |
 
 ---
 
@@ -37,7 +37,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: -- (new PR pending for this iteration)
+**Pull Request**: #115
 **Issue**: #78
 
 ---
@@ -72,7 +72,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Milestone 22**: Stale-completion reset (iter 75). New PR pending CI.
+**Milestone 22**: CI fix -- iter 76 pushed, pending CI for green gate.
 
 ---
 
@@ -80,6 +80,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 - score.go gate 1 (python_reference_required) is hard: score=0 if APM_PYTHON_BIN unset. emitCraneRatioGate (not Bool) for help_parity. python_test_coverage.json must be updated when new Python tests hit main. runBothInTempRepo() is the parity harness. go.mod/go.sum are protected files. lookPathUV() needed (not exec.LookPath). TestParityCompletionPythonSuite: COLUMNS=10000 prevents Rich wrapping. TestParityCompletionBenchmarks: requires both --json-out AND --markdown-out.
 - Stale completion resets (iters 73,75): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys (only auto-integrate, temp-dir valid); exit 1 for unknown keys. real_behavior_test.go must use valid keys only. compile benchmark: .apm/prompts/bench.md not copilot-instructions.md.
+- Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml.obsolete is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
 
 ---
 
@@ -99,6 +100,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 76 -- 2026-06-08T19:46:26Z -- [Run](https://github.com/githubnext/apm/actions/runs/27162585784)
+
+- **Status**: [*] Accepted (CI pending)
+- **Milestone**: CI fix for iter 75 -- add missing Python test coverage entries
+- **Change**: tests/parity/python_contract_coverage.yml: added test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due and test_main_outputs_has_work_when_migration_is_due to obsolete list; iter 75 had mapped them to python_test_coverage.json only (wrong file for TestParityCompletionPythonBehaviorContracts)
+- **Score**: pending CI
+- **Commit**: 577f0ec
+- **CI fix attempts**: 1 (fixing iter 75 CI failure: TestParityCompletionPythonBehaviorContracts)
+- **Notes**: Root cause: two different coverage tracking files exist. python_test_coverage.json is checked by TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml.obsolete is checked by TestParityCompletionPythonBehaviorContracts. Both must be updated when new Python tests land.
 
 ### Iteration 75 -- 2026-06-08T18:53:27Z -- [Run](https://github.com/githubnext/apm/actions/runs/27159736193)
 

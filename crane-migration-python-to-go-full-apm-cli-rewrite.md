@@ -10,9 +10,9 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-08T19:46:26Z |
-| Iteration Count | 76 |
-| Best Metric | -- |
+| Last Run | 2026-06-08T20:55:21Z |
+| Iteration Count | 77 |
+| Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
@@ -23,11 +23,11 @@
 | Pause Reason | -- |
 | Completed | false |
 | Completed Reason | -- |
-| Completion Candidate | false |
+| Completion Candidate | true |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending:577f0ec |
+| Completion Gate Status | pending:4ba58f5 |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted |
+| Recent Statuses | accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted |
 
 ---
 
@@ -44,9 +44,9 @@
 
 ## [map] Inventory
 
-**302 Python files** across 20 modules (install 49, commands 44, marketplace 28, deps 25, utils 20, integration 18, core 17, policy 14, compilation 14, adapters 14, models 9, runtime 8, cache 7, bundle 6, security 5, registry 4, primitives 4, output 4, workflow 4). All ported to Go under internal/.
+**302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 900 passing. **Python baseline**: 247 tests. **Parity**: 855/855 (100%). All 13 deletion-grade gates pass.
 
-**External consumers**: CLI binary only. **Go tests**: 891 passing. **Python baseline**: 247 tests.
+**External consumers**: CLI binary only. Cutover-ready.
 
 ---
 
@@ -67,12 +67,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 20 | Golden fixture framework (gates 10-12) | done |
 | 21 | All-Go golden replay in CI; migration_score=1.0 | done |
 | 22 | Re-verify all gates after stale-completion reset; fix deps info PACKAGE arg | done |
+| 23 | Update CUTOVER.md to deletion-grade ready; Completion Candidate pending CI | in-progress |
 
 ---
 
 ## [target] Current Focus
 
-**Milestone 22**: CI fix -- iter 76 pushed, pending CI for green gate.
+**Milestone 23 (Completion Candidate)**: All 13 deletion-grade gates pass; migration_score=1.0. Completion Candidate set. Waiting for PR head CI checks to pass before finalizing completion.
 
 ---
 
@@ -81,6 +82,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 - score.go gate 1 (python_reference_required) is hard: score=0 if APM_PYTHON_BIN unset. emitCraneRatioGate (not Bool) for help_parity. python_test_coverage.json must be updated when new Python tests hit main. runBothInTempRepo() is the parity harness. go.mod/go.sum are protected files. lookPathUV() needed (not exec.LookPath). TestParityCompletionPythonSuite: COLUMNS=10000 prevents Rich wrapping. TestParityCompletionBenchmarks: requires both --json-out AND --markdown-out.
 - Stale completion resets (iters 73,75): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys (only auto-integrate, temp-dir valid); exit 1 for unknown keys. real_behavior_test.go must use valid keys only. compile benchmark: .apm/prompts/bench.md not copilot-instructions.md.
 - Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml.obsolete is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
+- Completion Candidate path (iter 77): When best_metric was reset to "--" by stale-completion reset, any score > "--" counts as improvement. migration_score=1.0 with all 13 gates green re-establishes the completion candidate on the next accepted iteration. CUTOVER.md was updated to document deletion-grade ready state.
 
 ---
 
@@ -100,6 +102,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 77 -- 2026-06-08T20:55:21Z -- [Run](https://github.com/githubnext/apm/actions/runs/27166284809)
+
+- **Status**: [+] Accepted -- Completion Candidate
+- **Milestone**: 23 -- Update CUTOVER.md to deletion-grade ready; set Completion Candidate
+- **Change**: cmd/apm/CUTOVER.md: Updated Current State section from partial implementation to deletion-grade ready; added gate summary table (all 13 gates passing); added pre-cutover verification command; updated Timeline to reflect completion readiness.
+- **Score**: 1.0 (previous best: -- [reset], delta: +1.0)
+- **Progress**: 855/855 parity (100%), Go 900 tests, Python 247 tests
+- **Commit**: 4ba58f5
+- **Notes**: All 13 deletion-grade gates confirmed green locally (migration_score=1.0). Best metric re-established at 1.0 after stale-completion reset. Completion Candidate set; waiting for PR head CI to confirm before finalizing. CI checks for iter 76 head (5a56f81) were all green at time of this run.
 
 ### Iteration 76 -- 2026-06-08T19:46:26Z -- [Run](https://github.com/githubnext/apm/actions/runs/27162585784)
 

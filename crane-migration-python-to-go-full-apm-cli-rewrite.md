@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-06T01:20:28Z |
-| Iteration Count | 72 |
-| Best Metric | 1.0 |
+| Last Run | 2026-06-08T06:38:45Z |
+| Iteration Count | 73 |
+| Best Metric | -- |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #112 |
+| PR | -- |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached; PR #112 head fcf829b checks passed (6/6: Lint, Go Tests, Python Unit Tests, Python-vs-Go Parity Gate, Migration Benchmarks, Detect Migration Changes) |
+| Completed | false |
+| Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | passed:fcf829b |
+| Completion Gate Status | -- |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted, accepted |
+| Recent Statuses | pending (iter73), accepted (iter72), accepted (iter71), accepted (iter70), pending (iter69), accepted (iter68), accepted, accepted, accepted, accepted |
 
 ---
 
@@ -37,7 +37,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: #112
+**Pull Request**: -- (pending creation)
 **Issue**: #78
 
 ---
@@ -68,12 +68,15 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 | 19 | Complete python_behavior_contracts gate | done |
 | 20 | Golden fixture framework (gates 10-12) | done |
 | 21 | All-Go golden replay in CI; migration_score=1.0 | done |
+| 22 | Re-verify all gates after stale-completion reset; fix deps info PACKAGE arg | in-progress |
 
 ---
 
 ## [target] Current Focus
 
-**[+] Migration complete.** All 21 milestones done. All 13 deletion-grade gates passing (migration_score=1.0, parity 846/846). PR #112 head fcf829b all 6 CI checks green. Completed after 72 iterations.
+**Milestone 22**: Re-verify all deletion-grade gates on fresh CI run after stale-completion reset.
+
+Stale completion detected (PR #112 merged, no active PR). Stale Completed:true reset. Iteration 73 pushes deps info parity fix (PACKAGE arg requirement). CI must confirm migration_score=1.0 before setting Completion Candidate.
 
 ---
 
@@ -95,6 +98,7 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 - emitCraneBoolGate("help",...) must be emitCraneRatioGate with Passing/Total fields for score.go RatioGate case (iter 69).
 - python_contract_coverage.yml obsolete list must be updated whenever new Python tests are added to main (iter 69): 4 new tests from PRs #108-#110.
 - compile benchmark: Python reads copilot-instructions.md; Go reads .apm/prompts/bench.md -- fixture must match target semantics (iter 69).
+- Stale completion reset (iter 73): when stale_completed_state triggers, the previous completion (PR merged, no active crane branch) is invalidated. Reset state, restore crane-migration label, add new parity test, push new PR. `apm deps info` missing PACKAGE arg exits 0 in old Go code (bug); Python exits 2 (Click). Fixed in iter 73.
 
 ---
 
@@ -114,6 +118,15 @@ The Python version must stay runnable as the parity oracle throughout the migrat
 ---
 
 ## [chart] Iteration History
+
+### Iteration 73 -- 2026-06-08T06:38:45Z -- [Run](https://github.com/githubnext/apm/actions/runs/27120376316)
+
+- **Status**: [>] Pending CI (stale completion reset)
+- **Milestone**: 22 -- Re-verify gates after stale-completion reset
+- **Change**: (1) Reset stale Completed:true from iter 72 (PR #112 merged, no active PR). (2) `runDepsInfo` now requires PACKAGE arg (exits 2 without it, matching Python). (3) Fixed `apm deps info --help` routing (parent deps help was intercepting). (4) Added TestParityHarnessDepInfoHelp, TestParityHarnessDepInfoMissingPackage, TestParityHarnessDepInfoNotInstalled. (5) Updated 12 python_test_coverage.json mappings.
+- **Score**: -- (pending CI)
+- **Commit**: 77acb72
+- **Notes**: Stale completion was triggered because PR #112 merged to main and no active crane branch existed. Fresh crane branch created from main. CI must re-confirm migration_score=1.0 for all 13 deletion-grade gates.
 
 ### Iteration 72 -- 2026-06-06T01:20:28Z -- [Run](https://github.com/githubnext/apm/actions/runs/27048547724)
 

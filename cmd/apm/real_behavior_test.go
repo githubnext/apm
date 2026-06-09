@@ -177,6 +177,71 @@ func TestGoCutoverRealFunctionalAndStateDiffContracts(t *testing.T) {
 			},
 		},
 		{
+			name:  "config get reads persisted configuration value",
+			args:  []string{"config", "get", "auto-integrate"},
+			env:   map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
+			setup: realBehaviorSetupConfigValue,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectOutputContains(t, stdout+stderr, "false") && ok
+				ok = realBehaviorExpectFileContains(t, filepath.Join(dir, "apm-config.yml"), "auto-integrate") && ok
+				return ok
+			},
+		},
+		{
+			name:  "config unset removes persisted configuration value",
+			args:  []string{"config", "unset", "auto-integrate"},
+			env:   map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
+			setup: realBehaviorSetupConfigValue,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm-config.yml"), "auto-integrate") && ok
+				return ok
+			},
+		},
+		{
+			name:  "mcp list reads manifest MCP dependencies",
+			args:  []string{"mcp", "list"},
+			setup: realBehaviorSetupMCPProject,
+			verify: func(t *testing.T, _ string, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectOutputContains(t, stdout+stderr, "example-server") && ok
+				return ok
+			},
+		},
+		{
+			name:  "marketplace remove deletes registered marketplace",
+			args:  []string{"marketplace", "remove", "local"},
+			setup: realBehaviorSetupMarketplaceProject,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm.yml"), "file://./marketplace.json") && ok
+				return ok
+			},
+		},
+		{
+			name: "marketplace validate rejects missing registered marketplace",
+			args: []string{"marketplace", "validate", "missing"},
+			verify: func(t *testing.T, _ string, stdout, stderr string, code int) bool {
+				if code == 0 {
+					realBehaviorFailure(t, "expected non-zero exit for missing marketplace validation\nstdout: %s\nstderr: %s", stdout, stderr)
+					return false
+				}
+				return true
+			},
+		},
+		{
+			name:  "runtime remove deletes persisted runtime config",
+			args:  []string{"runtime", "remove", "codex"},
+			env:   map[string]string{"APM_CONFIG_PATH": "apm-config.yml"},
+			setup: realBehaviorSetupRuntimeConfig,
+			verify: func(t *testing.T, dir, stdout, stderr string, code int) bool {
+				ok := realBehaviorExpectExit(t, stdout, stderr, code, 0)
+				ok = realBehaviorExpectFileNotContains(t, filepath.Join(dir, "apm-config.yml"), "codex") && ok
+				return ok
+			},
+		},
+		{
 			name:  "cache clean removes entries but preserves cache root",
 			args:  []string{"cache", "clean"},
 			env:   map[string]string{"APM_CACHE_DIR": "cache-root"},
@@ -437,6 +502,39 @@ policy:
 `)
 }
 
+func realBehaviorSetupConfigValue(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm-config.yml"), "auto-integrate: false\n")
+}
+
+func realBehaviorSetupMCPProject(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm.yml"), `name: mcp-fixture
+version: 1.0.0
+dependencies:
+  apm: []
+  mcp:
+    - example-server
+`)
+}
+
+func realBehaviorSetupMarketplaceProject(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm.yml"), `name: marketplace-fixture
+version: 1.0.0
+dependencies:
+  apm: []
+  mcp: []
+marketplace:
+  local: file://./marketplace.json
+`)
+}
+
+func realBehaviorSetupRuntimeConfig(t *testing.T, dir string) {
+	t.Helper()
+	realBehaviorWriteFile(t, filepath.Join(dir, "apm-config.yml"), "runtime: codex\n")
+}
+
 func realBehaviorSetupCacheRoot(t *testing.T, dir string) {
 	t.Helper()
 	realBehaviorWriteFile(t, filepath.Join(dir, "cache-root", "http_v1", "old", "body"), "cached\n")
@@ -498,6 +596,15 @@ func realBehaviorExpectFileNotContains(t *testing.T, path, needle string) bool {
 	}
 	if strings.Contains(string(content), needle) {
 		realBehaviorFailure(t, "expected %s not to contain %q, got:\n%s", path, needle, string(content))
+		return false
+	}
+	return true
+}
+
+func realBehaviorExpectOutputContains(t *testing.T, output, needle string) bool {
+	t.Helper()
+	if !strings.Contains(output, needle) {
+		realBehaviorFailure(t, "expected command output to contain %q, got:\n%s", needle, output)
 		return false
 	}
 	return true

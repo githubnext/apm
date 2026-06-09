@@ -60,6 +60,7 @@ type CutoverGates struct {
 	PythonReferenceRequired bool    `json:"python_reference_required"`
 	SurfaceParity           float64 `json:"surface_parity"`
 	HelpParity              float64 `json:"help_parity"`
+	OptionParity            float64 `json:"option_parity"`
 	FunctionalContracts     float64 `json:"functional_contracts"`
 	StateDiffContracts      float64 `json:"state_diff_contracts"`
 	PythonBehaviorContracts float64 `json:"python_behavior_contracts"`
@@ -96,6 +97,7 @@ type Score struct {
 	PythonReferencePresent bool            `json:"python_reference_present"`
 	SurfaceParity          float64         `json:"surface_parity"`
 	HelpParity             float64         `json:"help_parity"`
+	OptionParity           float64         `json:"option_parity"`
 	FunctionalParity       float64         `json:"functional_parity"`
 	StateDiffParity        float64         `json:"state_diff_parity"`
 	KnownExceptions        int             `json:"known_exceptions"`
@@ -146,6 +148,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	benchmarks := RatioGate{}
 	surface := RatioGate{}
 	help := RatioGate{}
+	optionParity := RatioGate{}
 	functional := RatioGate{}
 	stateDiff := RatioGate{}
 	behaviorContracts := RatioGate{}
@@ -165,6 +168,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 				&pythonReference,
 				&surface,
 				&help,
+				&optionParity,
 				&functional,
 				&stateDiff,
 				&behaviorContracts,
@@ -191,6 +195,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 					&pythonReference,
 					&surface,
 					&help,
+					&optionParity,
 					&functional,
 					&stateDiff,
 					&behaviorContracts,
@@ -266,6 +271,9 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	if !help.Seen {
 		help = missingRatioGate()
 	}
+	if !optionParity.Seen {
+		optionParity = missingRatioGate()
+	}
 	if !functional.Seen {
 		functional = missingRatioGate()
 	}
@@ -290,6 +298,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		PythonReferenceRequired: pythonReferenceSatisfied,
 		SurfaceParity:           surface.Percent(),
 		HelpParity:              help.Percent(),
+		OptionParity:            optionParity.Percent(),
 		FunctionalContracts:     functional.Percent(),
 		StateDiffContracts:      stateDiff.Percent(),
 		PythonBehaviorContracts: behaviorContracts.Percent(),
@@ -315,6 +324,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	cutoverReady := gates.PythonReferenceRequired &&
 		gates.SurfaceParity == 1.0 &&
 		gates.HelpParity == 1.0 &&
+		gates.OptionParity == 1.0 &&
 		gates.FunctionalContracts == 1.0 &&
 		gates.StateDiffContracts == 1.0 &&
 		gates.PythonBehaviorContracts == 1.0 &&
@@ -355,6 +365,7 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		PythonReferencePresent: gates.PythonReferenceRequired,
 		SurfaceParity:          gates.SurfaceParity,
 		HelpParity:             gates.HelpParity,
+		OptionParity:           gates.OptionParity,
 		FunctionalParity:       gates.FunctionalContracts,
 		StateDiffParity:        gates.StateDiffContracts,
 		KnownExceptions:        gates.KnownExceptions,
@@ -390,6 +401,7 @@ func applyGateEvent(
 	pythonReference *BoolGate,
 	surface *RatioGate,
 	help *RatioGate,
+	optionParity *RatioGate,
 	functional *RatioGate,
 	stateDiff *RatioGate,
 	behaviorContracts *RatioGate,
@@ -407,6 +419,8 @@ func applyGateEvent(
 		*surface = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "help":
 		*help = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "option_parity":
+		*optionParity = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "functional":
 		*functional = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "state_diff":
@@ -467,6 +481,7 @@ func gateResults(gates CutoverGates) []GateResult {
 		{Name: "go_tests_pass", Passing: gates.GoTests == "pass"},
 		{Name: "surface_parity", Passing: gates.SurfaceParity == 1.0},
 		{Name: "help_parity", Passing: gates.HelpParity == 1.0},
+		{Name: "option_parity", Passing: gates.OptionParity == 1.0},
 		{Name: "functional_contracts", Passing: gates.FunctionalContracts == 1.0},
 		{Name: "state_diff_contracts", Passing: gates.StateDiffContracts == 1.0},
 		{Name: "python_behavior_contracts", Passing: gates.PythonBehaviorContracts == 1.0},

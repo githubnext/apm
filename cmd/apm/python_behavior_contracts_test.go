@@ -97,6 +97,23 @@ func contractHelpArgs(command pythonCommandContract) []string {
 	return args
 }
 
+func pythonCommandOptionNames(command pythonCommandContract) []string {
+	var options []string
+	for _, param := range command.Params {
+		if param.Type != "Option" {
+			continue
+		}
+		opts := append([]string{}, param.Opts...)
+		opts = append(opts, param.SecondaryOpts...)
+		for _, opt := range opts {
+			if opt != "" {
+				options = append(options, opt)
+			}
+		}
+	}
+	return options
+}
+
 func normalizeContractHelp(text string) string {
 	var lines []string
 	for _, line := range strings.Split(text, "\n") {
@@ -144,34 +161,67 @@ func TestParityPythonOptionsFromSource(t *testing.T) {
 		return
 	}
 	inv := loadPythonBehaviorInventory(t, false)
+	totalOptions := 0
+	missingOptions := 0
+	var missingDetails []string
+	defer func() {
+		passing := totalOptions - missingOptions
+		if totalOptions == 0 {
+			emitCraneRatioGate("option_parity", 0, 1)
+			return
+		}
+		emitCraneRatioGate("option_parity", passing, totalOptions)
+	}()
+
 	for _, command := range inv.Commands {
 		command := command
 		if command.Hidden {
 			continue
 		}
 		t.Run(command.ID, func(t *testing.T) {
+			commandOptions := pythonCommandOptionNames(command)
+			totalOptions += len(commandOptions)
 			goOut, goErr, goCode := runGo(t, contractHelpArgs(command)...)
 			if goCode != 0 {
+				missingOptions += len(commandOptions)
+				for _, opt := range commandOptions {
+					missingDetails = append(missingDetails, fmt.Sprintf("%s missing %s", command.ID, opt))
+				}
 				t.Fatalf("Go help for %s exited %d\nstdout:\n%s\nstderr:\n%s",
 					command.ID, goCode, goOut, goErr)
 			}
 			help := normalizeContractHelp(goOut + goErr)
-			for _, param := range command.Params {
-				if param.Type != "Option" {
-					continue
-				}
-				opts := append([]string{}, param.Opts...)
-				opts = append(opts, param.SecondaryOpts...)
-				for _, opt := range opts {
-					if opt == "" {
-						continue
-					}
-					if !strings.Contains(help, opt) {
-						t.Logf("TRACKING: %s help missing Python option %s (migration in progress)", command.ID, opt)
-					}
+			var commandMissing []string
+			for _, opt := range commandOptions {
+				if !strings.Contains(help, opt) {
+					missingOptions++
+					detail := fmt.Sprintf("%s missing %s", command.ID, opt)
+					commandMissing = append(commandMissing, detail)
+					missingDetails = append(missingDetails, detail)
 				}
 			}
+			if len(commandMissing) == 0 {
+				return
+			}
+			message := "Python option parity incomplete:\n" + formatCutoverMissing(commandMissing, 30)
+			if completionGatesEnforced() {
+				t.Error(message)
+			} else {
+				t.Logf("TRACKING: %s", message)
+			}
 		})
+	}
+	if totalOptions == 0 {
+		completionGateFailure(t, "HARD-GATE FAILED: Python inventory exposed no options; option parity cannot be verified")
+		return
+	}
+	if completionGatesEnforced() && missingOptions > 0 {
+		t.Fatalf(
+			"HARD-GATE FAILED: Go help is missing %d/%d Python CLI options.\nFirst missing options:\n%s",
+			missingOptions,
+			totalOptions,
+			formatCutoverMissing(missingDetails, 80),
+		)
 	}
 }
 

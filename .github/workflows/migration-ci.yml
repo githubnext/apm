@@ -94,6 +94,15 @@ jobs:
         shell: bash
         run: |
           go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
+          enforce_behavior_contracts=false
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.enforce_completion == true }}" = "true" ]; then
+            enforce_behavior_contracts=true
+          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+            enforce_behavior_contracts=true
+          fi
+          if [ "$enforce_behavior_contracts" = "true" ]; then
+            export APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1
+          fi
           set +e
           APM_GO_BIN="$RUNNER_TEMP/apm-go" \
             uv run pytest tests/parity/test_python_behavior_contracts.py -q --tb=short \
@@ -141,11 +150,22 @@ jobs:
       - name: Compute migration score
         run: |
           go run .crane/scripts/score.go < "$RUNNER_TEMP/go-test-events.json" | tee "$RUNNER_TEMP/migration-score.json"
+          coverage_args=(
+            --inventory "$RUNNER_TEMP/python-behavior-contracts.json"
+            --coverage tests/parity/python_contract_coverage.yml
+            --summary "$RUNNER_TEMP/python-contract-coverage.md"
+          )
+          if [ "${MIGRATION_COMPLETION_ENFORCED:-false}" != "true" ]; then
+            coverage_args+=(--allow-intentionally-incomplete --allow-obsolete-python-tests)
+          fi
+          set +e
           uv run python scripts/ci/python_behavior_contracts.py check \
-            --inventory "$RUNNER_TEMP/python-behavior-contracts.json" \
-            --coverage tests/parity/python_contract_coverage.yml \
-            --allow-intentionally-incomplete \
-            --summary "$RUNNER_TEMP/python-contract-coverage.md" || true
+            "${coverage_args[@]}"
+          coverage_status=$?
+          set -e
+          if [ "${MIGRATION_COMPLETION_ENFORCED:-false}" = "true" ] && [ "$coverage_status" != "0" ]; then
+            exit "$coverage_status"
+          fi
           python - "$RUNNER_TEMP/migration-score.json" "${MIGRATION_COMPLETION_ENFORCED:-false}" <<'PY'
           import json
           import sys

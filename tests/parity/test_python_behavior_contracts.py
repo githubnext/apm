@@ -161,8 +161,9 @@ def test_every_python_command_rejects_unknown_option_consistently(
 
 def test_python_contract_coverage_manifest_is_complete(inventory: dict[str, object]) -> None:
     coverage = _load_coverage(ROOT / "tests" / "parity" / "python_contract_coverage.yml")
+    enforce = os.environ.get("APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS") == "1"
     if coverage.get("status") == "intentionally-incomplete":
-        if os.environ.get("APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS") != "1":
+        if not enforce:
             pytest.xfail(
                 "Coverage manifest is intentionally incomplete; completion gate "
                 "is reported by migration_score"
@@ -172,4 +173,56 @@ def test_python_contract_coverage_manifest_is_complete(inventory: dict[str, obje
             "only after all contracts are mapped"
         )
     findings = check_coverage(inventory, coverage)
+    if findings and not enforce:
+        pytest.xfail(render_summary(inventory, findings))
     assert not findings, render_summary(inventory, findings)
+
+
+def test_python_contract_coverage_rejects_obsolete_tests_by_default() -> None:
+    inventory = {
+        "summary": {
+            "commands": 0,
+            "public_commands": 0,
+            "python_tests": 1,
+            "python_test_cases": 1,
+            "source_contracts": 0,
+        },
+        "commands": [],
+        "tests": [{"id": "tests/unit/test_example.py::test_real_behavior"}],
+        "source_contracts": [],
+    }
+    coverage = {
+        "commands": {},
+        "python_tests": {
+            "covered": {},
+            "obsolete": ["tests/unit/test_example.py::test_real_behavior"],
+        },
+    }
+
+    findings = check_coverage(inventory, coverage)
+
+    assert [finding.code for finding in findings] == ["obsolete-python-test-coverage"]
+
+
+def test_python_contract_coverage_can_allow_obsolete_tests_in_report_only_mode() -> None:
+    inventory = {
+        "summary": {
+            "commands": 0,
+            "public_commands": 0,
+            "python_tests": 1,
+            "python_test_cases": 1,
+            "source_contracts": 0,
+        },
+        "commands": [],
+        "tests": [{"id": "tests/unit/test_example.py::test_real_behavior"}],
+        "source_contracts": [],
+    }
+    coverage = {
+        "commands": {},
+        "python_tests": {
+            "covered": {},
+            "obsolete": ["tests/unit/test_example.py::test_real_behavior"],
+        },
+    }
+
+    assert check_coverage(inventory, coverage, allow_obsolete=True) == []

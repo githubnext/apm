@@ -299,7 +299,12 @@ def _has_tests(entry: dict[str, Any], key: str) -> bool:
     )
 
 
-def check_coverage(inventory: dict[str, Any], coverage: dict[str, Any]) -> list[Finding]:
+def check_coverage(
+    inventory: dict[str, Any],
+    coverage: dict[str, Any],
+    *,
+    allow_obsolete: bool = False,
+) -> list[Finding]:
     findings: list[Finding] = []
     command_coverage = coverage.get("commands") or {}
     if not isinstance(command_coverage, dict):
@@ -333,6 +338,15 @@ def check_coverage(inventory: dict[str, Any], coverage: dict[str, Any]) -> list[
     for test in inventory["tests"]:
         test_id = test["id"]
         if test_id in obsolete_tests:
+            if allow_obsolete:
+                continue
+            findings.append(
+                Finding(
+                    "obsolete-python-test-coverage",
+                    "Python test is marked obsolete instead of mapped to Go or CLI-agnostic tests",
+                    test_id,
+                )
+            )
             continue
         entry = test_coverage.get(test_id)
         if not isinstance(entry, dict):
@@ -398,7 +412,11 @@ def cmd_extract(args: argparse.Namespace) -> int:
 def cmd_check(args: argparse.Namespace) -> int:
     inventory = _load_inventory(Path(args.inventory) if args.inventory else None)
     coverage = _load_coverage(Path(args.coverage))
-    findings = check_coverage(inventory, coverage)
+    findings = check_coverage(
+        inventory,
+        coverage,
+        allow_obsolete=args.allow_obsolete_python_tests,
+    )
     summary = render_summary(inventory, findings)
     if args.summary:
         Path(args.summary).write_text(summary, encoding="utf-8")
@@ -438,6 +456,11 @@ def main(argv: list[str] | None = None) -> int:
         "--allow-intentionally-incomplete",
         action="store_true",
         help="report findings without failing when the manifest is marked incomplete",
+    )
+    check.add_argument(
+        "--allow-obsolete-python-tests",
+        action="store_true",
+        help="report-only mode: allow python_tests.obsolete entries instead of requiring conversion mappings",
     )
     check.set_defaults(func=cmd_check)
 

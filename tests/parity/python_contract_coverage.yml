@@ -1,7 +1,7 @@
 schema_version: 1
-description: Coverage manifest for the Python-to-Go CLI migration. All Python unit and integration tests are listed as obsolete
-  because they are reference implementation tests, not parity evidence. Parity evidence is provided by Go and CLI-agnostic
-  contract tests mapped in the commands section.
+description: Coverage manifest for the Python-to-Go CLI migration. Completion mode requires every Python test to be mapped
+  to behavior-backed Go or CLI-agnostic parity evidence. python_tests.obsolete is report-only debt and does not count toward
+  deletion-grade readiness.
 commands:
   apm:
     go_tests:

@@ -16,7 +16,13 @@ contracts to parity evidence. The completion scorer must not reach
 `migration_score = 1.0` while any extracted command or Python test lacks mapped
 coverage.
 
+Completion coverage must be behavior-backed. `python_tests.obsolete` is allowed
+only in report-only summaries, and a Python test mapped only to help, surface,
+Python-vs-Go completion, stale-name, or coverage bookkeeping tests does not
+count as converted.
+
 `status: intentionally-incomplete` is a progress marker only. It must make
 completion scoring fail; use `--allow-intentionally-incomplete` only for
-report-only summaries. Set `APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1` when a
-local or CI check should hard-fail instead of reporting incomplete progress.
+report-only summaries. Use `--allow-obsolete-python-tests` only for the same
+report-only mode. Set `APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1` when a local or
+CI check should hard-fail instead of reporting incomplete progress.

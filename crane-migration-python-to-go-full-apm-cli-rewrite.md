@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-09T21:35:12Z |
-| Iteration Count | 79 |
+| Last Run | 2026-06-09T21:59:48Z |
+| Iteration Count | 80 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | -- |
+| PR | #117 |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | false |
-| Completed Reason | -- |
-| Completion Candidate | true |
+| Completed | true |
+| Completed Reason | target metric 1.0 reached; PR #117 head f028472 checks all passed (6/6: Lint, Python Unit Tests, Go Tests, Detect Migration Changes, Python-vs-Go Parity Gate, Migration Benchmarks) |
+| Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending |
+| Completion Gate Status | passed:f028472 |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter79), completed (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71), accepted (iter70) |
+| Recent Statuses | completed (iter80), accepted (iter79), completed (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71) |
 
 ---
 
@@ -37,7 +37,7 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: -- (new PR being created for iter 79)
+**Pull Request**: #117
 **Issue**: #78
 
 ---
@@ -74,7 +74,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Completion Candidate**: migration_score=1.0 re-confirmed fresh (858/858 parity, 903 Go tests, 247 Python tests, all 13 gates). Waiting for CI on new PR head before finalizing completion.
+**[+] Migration Complete**: All 13 deletion-grade gates passed. PR #117 head f028472 CI checks all green (6/6). Migration finalized after 80 iterations.
 
 ---
 
@@ -104,6 +104,15 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 80 -- 2026-06-09T21:59:48Z -- [Run](https://github.com/githubnext/apm/actions/runs/27238532803)
+
+- **Status**: [+] Completed
+- **Milestone**: Completion Gate -- PR #117 head CI checks all green (6/6)
+- **Change**: Deterministic completion gate passed: all 6 checks green on PR #117 head f028472 (Lint, Python Unit Tests, Go Tests, Detect Migration Changes, Python-vs-Go Parity Gate, Migration Benchmarks).
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Progress**: 858/858 parity (100%), Go 903 tests, Python 247 tests
+- **Notes**: Migration finalized after 80 iterations. Python -> Go full CLI rewrite complete. All 13 deletion-grade gates confirmed. crane-migration label removed, crane-completed label added.
 
 ### Iteration 79 -- 2026-06-09T21:35:12Z -- [Run](https://github.com/githubnext/apm/actions/runs/27236411257)
 

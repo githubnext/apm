@@ -16,6 +16,8 @@ def test_migration_ci_enforces_completion_for_crane_prs_and_explicit_manual_runs
     assert "enforce_completion:" in text
     assert "MIGRATION_COMPLETION_ENFORCED=$enforce_completion" in text
     assert "APM_ENFORCE_COMPLETION_GATES=1" in text
+    assert "APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1" in text
+    assert "--allow-obsolete-python-tests" in text
     assert "inputs.enforce_completion == true" in text
     assert 'github.event.pull_request.head.ref }}" == crane/*' in text
     assert "manual runs with enforce_completion=true" in text

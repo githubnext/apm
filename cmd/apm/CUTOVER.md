@@ -6,32 +6,35 @@ framework in issue #78).
 
 ## Current State
 
-**Deletion-grade ready.** All 13 completion gates pass as of iteration 77.
+**Gate hardened; deletion-grade readiness is blocked.** The previous 13-gate
+score accepted representative behavior and help-only coverage mappings. The
+completion gate now requires strict option parity, behavior-backed Python test
+conversion mappings, and real Go-only command fixtures before the Go binary can
+be declared equivalent.
 
-The Go binary (`cmd/apm`) has full functional parity with the Python CLI.
-The Python CLI remains as the reference oracle until the explicit cutover
-steps below are executed, but it is no longer required for correctness.
+The Go binary (`cmd/apm`) is still evaluated against the Python CLI. It must not
+be treated as the shipped `apm` command until the strict gates below pass.
 
-Gate summary (all passing):
+Gate summary:
 
 | Gate | Status |
 |------|--------|
-| python_reference_required | pass |
-| surface_parity | 100% (855/855) |
-| help_parity | 100% |
-| functional_contracts | 100% |
-| state_diff_contracts | 100% |
-| python_behavior_contracts | 100% |
-| golden_fixture_corpus | pass |
-| all_go_golden_tests | pass |
-| no_python_runtime_dependency | pass |
-| known_exceptions | 0 |
-| go_tests | pass (900 tests) |
-| python_tests | pass (247 tests) |
-| benchmarks | pass |
+| python_reference_required | required |
+| surface_parity | required |
+| help_parity | required |
+| option_parity | required; every Python CLI option must appear in Go help |
+| functional_contracts | required |
+| state_diff_contracts | required |
+| python_behavior_contracts | required; no obsolete or help-only mappings |
+| golden_fixture_corpus | required |
+| all_go_golden_tests | required |
+| no_python_runtime_dependency | required |
+| known_exceptions | must be 0 |
+| go_tests | required |
+| python_tests | required, or superseded by the all-Go replay |
+| benchmarks | required |
 
-The Go binary is ready to replace Python as the shipped `apm` command once
-the cutover steps below are executed.
+The Go binary is ready to replace Python only when all rows above pass in CI.
 
 ### Pre-Cutover Verification
 
@@ -48,9 +51,9 @@ The output must show `"migration_score": 1` and `"cutover_ready": true`.
 ## Real Criteria
 
 Every completion criterion must be backed by real command execution. The scorer
-does not infer completion from test names for `surface`, `help`, `functional`,
-`state_diff`, `python_behavior_contracts`, or `benchmarks`; each one must emit an
-explicit ratio gate.
+does not infer completion from test names for `surface`, `help`,
+`option_parity`, `functional`, `state_diff`, `python_behavior_contracts`, or
+`benchmarks`; each one must emit an explicit ratio gate.
 
 Crane must run `APM_PYTHON_BIN= go test ./cmd/apm -run TestGoCutover -json`.
 These fixture-backed tests execute the built Go `apm` binary in temporary
@@ -66,12 +69,20 @@ directly:
 {"crane":"gate","name":"no_python_runtime_dependency","passed":true}
 ```
 
+The Python-vs-Go inventory tests must also emit:
+
+```json
+{"crane":"gate","name":"option_parity","passing":N,"total":N}
+```
+
 `python_behavior_contracts` is not allowed to mean "the Python CLI was
-available." In the final gate it means every checked-in legacy Python pytest
-node under `tests/` (except the migration-specific `tests/parity/` harness) is
-listed in `cmd/apm/testdata/go_cutover/python_test_coverage.json` with one or
-more Go test names that replace it. An empty or partial manifest is a hard
-failure.
+available" or "the test was declared obsolete." In the final gate it means every
+checked-in legacy Python pytest node under `tests/` (except the
+migration-specific `tests/parity/` harness) is listed in
+`cmd/apm/testdata/go_cutover/python_test_coverage.json` with one or more
+existing real Go-only cutover behavior tests that replace it. Empty mappings,
+partial mappings, stale Go test names, `python_tests.obsolete`, Python-vs-Go
+completion tests, and help-only/surface-only mappings are hard failures.
 
 Crane must also run the migration benchmark test. It executes fixture-backed
 Python-vs-Go benchmark workloads and emits:
@@ -111,7 +122,7 @@ completion.
 The Go binary becomes the shipped `apm` command when ALL of the following
 are true:
 
-1. All 26 commands respond correctly to `--help` (done)
+1. All public Python commands and options are present in Go help output
 2. The representative command matrix passes functional tests:
    `init`, `install`, `update`, `compile`, `pack`, `run`, `audit`,
    `policy`, `mcp`, `runtime`, `targets`, `list`, `view`, `cache`,
@@ -120,9 +131,11 @@ are true:
    fixture-backed real-command scenario and emits passing `functional` and
    `state_diff` gates
 4. `TestGoCutoverPythonTestConversionCoverage` proves every legacy Python test
-   has an explicit Go replacement in the cutover coverage manifest
-5. Python-vs-Go parity tests pass for all commands in the matrix while the
-   Python reference is still available
+   has an explicit existing Go-only behavior replacement in the cutover
+   coverage manifest; help-only, surface-only, coverage-only, obsolete, stale,
+   or Python-vs-Go completion mappings do not count
+5. Python-vs-Go parity tests pass for all commands, options, and unknown-option
+   paths while the Python reference is still available
 6. Migration benchmarks pass real fixture-backed command workloads and emit a
    passing counted `benchmarks` gate
 7. The final Python-reference parity run has been frozen into a committed,

@@ -26,27 +26,40 @@ type pythonClassContext struct {
 var (
 	pythonClassRE = regexp.MustCompile(`^class\s+(Test[A-Za-z0-9_]*)\b`)
 	pythonTestRE  = regexp.MustCompile(`^(?:async\s+)?def\s+(test_[A-Za-z0-9_]*)\b`)
+	goTestFuncRE  = regexp.MustCompile(`^func\s+(Test[A-Za-z0-9_]*)\s*\(`)
 )
 
 func TestGoCutoverPythonTestConversionCoverage(t *testing.T) {
 	root := completionModuleRoot(t)
 	pythonTests := discoverPythonTestsForCutover(t, root)
+	goTests := discoverGoTestsForCutover(t, root)
 	coverage := loadGoCutoverPythonTestCoverage(t, root)
 
-	converted := 0
+	behaviorBacked := 0
 	var missing []string
+	var unknown []string
+	var weak []string
 	for _, id := range pythonTests {
 		tests := coverage.ConvertedPythonTests[id]
 		if len(tests) == 0 {
 			missing = append(missing, id)
 			continue
 		}
-		converted++
+		for _, testName := range tests {
+			if _, ok := goTests[testName]; !ok {
+				unknown = append(unknown, fmt.Sprintf("%s -> %s", id, testName))
+			}
+		}
+		if !hasBehaviorBackedGoTest(tests, goTests) {
+			weak = append(weak, fmt.Sprintf("%s -> %s", id, strings.Join(tests, ", ")))
+			continue
+		}
+		behaviorBacked++
 	}
 
-	defer emitCraneRatioGate("python_behavior_contracts", converted, len(pythonTests))
-	defer emitCraneBoolGate("golden_fixture_corpus", converted == len(pythonTests) && len(pythonTests) > 0)
-	defer emitCraneBoolGate("all_go_golden_tests", converted == len(pythonTests) && len(pythonTests) > 0)
+	defer emitCraneRatioGate("python_behavior_contracts", behaviorBacked, len(pythonTests))
+	defer emitCraneBoolGate("golden_fixture_corpus", behaviorBacked == len(pythonTests) && len(pythonTests) > 0)
+	defer emitCraneBoolGate("all_go_golden_tests", behaviorBacked == len(pythonTests) && len(pythonTests) > 0)
 
 	if len(pythonTests) == 0 {
 		t.Fatal("no Python tests discovered under tests/; coverage gate cannot prove conversion")
@@ -57,10 +70,26 @@ func TestGoCutoverPythonTestConversionCoverage(t *testing.T) {
 	if len(missing) > 0 {
 		t.Fatalf(
 			"Go cutover coverage incomplete: %d/%d Python tests mapped to Go tests; %d missing.\nFirst missing tests:\n%s",
-			converted,
+			behaviorBacked,
 			len(pythonTests),
 			len(missing),
 			formatCutoverMissing(missing, 80),
+		)
+	}
+	if len(unknown) > 0 {
+		sort.Strings(unknown)
+		t.Fatalf(
+			"Go cutover coverage references Go tests that do not exist: %d stale mappings.\nFirst stale mappings:\n%s",
+			len(unknown),
+			formatCutoverMissing(unknown, 80),
+		)
+	}
+	if len(weak) > 0 {
+		t.Fatalf(
+			"Go cutover coverage is not behavior-backed: %d/%d Python tests do not map to a real Go-only cutover behavior test.\nFirst weak mappings:\n%s",
+			len(weak),
+			len(pythonTests),
+			formatCutoverMissing(weak, 80),
 		)
 	}
 }
@@ -166,6 +195,42 @@ func scanPythonTestFile(t *testing.T, root, path string) ([]string, error) {
 	return ids, nil
 }
 
+func discoverGoTestsForCutover(t *testing.T, root string) map[string]struct{} {
+	t.Helper()
+	tests := map[string]struct{}{}
+	err := filepath.WalkDir(filepath.Join(root, "cmd", "apm"), func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			return nil
+		}
+		if !strings.HasSuffix(entry.Name(), "_test.go") {
+			return nil
+		}
+		file, openErr := os.Open(path)
+		if openErr != nil {
+			return openErr
+		}
+		defer file.Close()
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			match := goTestFuncRE.FindStringSubmatch(strings.TrimSpace(scanner.Text()))
+			if match != nil {
+				tests[match[1]] = struct{}{}
+			}
+		}
+		return scanner.Err()
+	})
+	if err != nil {
+		t.Fatalf("discover Go tests: %v", err)
+	}
+	if len(tests) == 0 {
+		t.Fatal("no Go tests discovered under cmd/apm; coverage gate cannot prove conversion")
+	}
+	return tests
+}
+
 func loadGoCutoverPythonTestCoverage(t *testing.T, root string) goCutoverPythonTestCoverage {
 	t.Helper()
 	path := filepath.Join(root, "cmd", "apm", "testdata", "go_cutover", "python_test_coverage.json")
@@ -195,6 +260,19 @@ func formatCutoverMissing(missing []string, limit int) string {
 		lines = append(lines, fmt.Sprintf("  ... %d more", len(missing)-limit))
 	}
 	return strings.Join(lines, "\n")
+}
+
+func hasBehaviorBackedGoTest(names []string, existing map[string]struct{}) bool {
+	for _, name := range names {
+		if _, ok := existing[name]; ok && isBehaviorBackedGoTest(name) {
+			return true
+		}
+	}
+	return false
+}
+
+func isBehaviorBackedGoTest(name string) bool {
+	return strings.HasPrefix(name, "TestGoCutoverReal")
 }
 
 func leadingWhitespaceWidth(line string) int {

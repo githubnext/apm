@@ -20212,6 +20212,8 @@ python_tests:
   - tests/unit/test_crane_scheduler.py::test_parse_machine_state_accepts_bracketed_status_heading
   - tests/unit/test_crane_scheduler.py::test_completed_label_with_unknown_pr_gate_is_recovered_as_stale
   - tests/unit/test_crane_scheduler.py::test_completed_label_without_open_pr_is_recovered_as_stale
+  - tests/unit/test_crane_scheduler.py::test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due
+  - tests/unit/test_crane_scheduler.py::test_main_outputs_has_work_when_migration_is_due
   - tests/unit/test_crane_score.py::test_crane_score_counts_parity_events
   - tests/unit/test_crane_score.py::test_crane_score_applies_target_correctness_gate
   - tests/unit/test_crane_score.py::test_crane_score_can_reach_one_with_all_deletion_grade_gates

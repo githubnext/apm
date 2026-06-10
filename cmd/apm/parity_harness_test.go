@@ -375,6 +375,52 @@ func TestParityHarnessGoCacheInfo(t *testing.T) {
 	}
 }
 
+// TestParityHarnessGoCacheCleanHelp verifies `apm cache clean --help` routes
+// to the subcommand help (not the top-level cache help).
+func TestParityHarnessGoCacheCleanHelp(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "cache", "clean", "--help")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+	if !strings.Contains(r.GoStdout, "Usage: apm cache clean") {
+		t.Errorf("Go `apm cache clean --help` does not show subcommand help: %q", r.GoStdout)
+	}
+	if !strings.Contains(r.GoStdout, "--force") || !strings.Contains(r.GoStdout, "--yes") {
+		t.Errorf("Go `apm cache clean --help` missing --force/--yes flags: %q", r.GoStdout)
+	}
+}
+
+// TestParityHarnessGoCachePruneHelp verifies `apm cache prune --help` routes
+// to the subcommand help (not the top-level cache help).
+func TestParityHarnessGoCachePruneHelp(t *testing.T) {
+	r := runBothInTempRepo(t, minimalApmYML, "cache", "prune", "--help")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+	if !strings.Contains(r.GoStdout, "Usage: apm cache prune") {
+		t.Errorf("Go `apm cache prune --help` does not show subcommand help: %q", r.GoStdout)
+	}
+	if !strings.Contains(r.GoStdout, "--days") {
+		t.Errorf("Go `apm cache prune --help` missing --days flag: %q", r.GoStdout)
+	}
+}
+
+// TestParityHarnessGoCacheCleanOutputMessages verifies `apm cache clean --yes`
+// outputs the same messages as Python.
+func TestParityHarnessGoCacheCleanOutputMessages(t *testing.T) {
+	// Use an isolated temp cache dir so the test does not clear the user's real
+	// cache and both CLIs operate on the same fresh directory.
+	cacheDir := t.TempDir()
+	t.Setenv("APM_CACHE_DIR", cacheDir)
+	r := runBothInTempRepo(t, minimalApmYML, "cache", "clean", "--yes")
+	assertGoExitCode(t, r, 0)
+	assertPythonVsGoExitCode(t, r)
+	if !strings.Contains(r.GoStdout, "Cleaning cache") {
+		t.Errorf("Go `apm cache clean --yes` missing 'Cleaning cache' in stdout: %q", r.GoStdout)
+	}
+	if !strings.Contains(r.GoStdout, "Cache cleaned") {
+		t.Errorf("Go `apm cache clean --yes` missing 'Cache cleaned' in stdout: %q", r.GoStdout)
+	}
+}
+
 // TestParityHarnessGoConfigHelp verifies `apm config --help`.
 func TestParityHarnessGoConfigHelp(t *testing.T) {
 	out, _, code := runGo(t, "config", "--help")

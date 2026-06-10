@@ -44,11 +44,12 @@ func runCache(args []string) int {
 		return 0
 	}
 
-	for _, a := range args {
-		if a == "--help" || a == "-h" {
-			printCacheHelp()
-			return 0
-		}
+	// Only intercept --help/-h when it is the very first argument (top-level
+	// cache help). When a subcommand precedes --help (e.g. "cache clean --help"),
+	// delegate to the subcommand handler so it can show its own usage.
+	if args[0] == "--help" || args[0] == "-h" {
+		printCacheHelp()
+		return 0
 	}
 
 	sub := args[0]
@@ -109,7 +110,9 @@ func runCacheClean(args []string) int {
 			fmt.Println("  Remove all cached content")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -f, --force  Skip confirmation prompt")
+			fmt.Println("  -y, --yes    Skip confirmation prompt")
+			fmt.Println("  --help       Show this message and exit.")
 			return 0
 		}
 	}
@@ -121,7 +124,8 @@ func runCacheClean(args []string) int {
 				fmt.Fprintf(os.Stderr, "[x] Failed to create cache dir: %v\n", mkErr)
 				return 1
 			}
-			fmt.Printf("[+] Cache cleared: %s\n", dir)
+			fmt.Println("[*] Cleaning cache...")
+			fmt.Println("[+] Cache cleaned.")
 			return 0
 		}
 		fmt.Fprintf(os.Stderr, "[x] Failed to read cache dir: %v\n", err)
@@ -133,7 +137,8 @@ func runCacheClean(args []string) int {
 			return 1
 		}
 	}
-	fmt.Printf("[+] Cache cleared: %s\n", dir)
+	fmt.Println("[*] Cleaning cache...")
+	fmt.Println("[+] Cache cleaned.")
 	return 0
 }
 
@@ -145,7 +150,8 @@ func runCachePrune(args []string) int {
 			fmt.Println("  Remove cache entries older than N days")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --days INTEGER  Remove entries older than N days.  [default: 30]")
+			fmt.Println("  --days INTEGER  Remove entries not accessed within this many days")
+			fmt.Println("                  [default: 30]")
 			fmt.Println("  --help          Show this message and exit.")
 			return 0
 		}

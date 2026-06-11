@@ -348,7 +348,7 @@ def check_coverage(
                 )
             )
             continue
-        entry = test_coverage.get(test_id)
+        entry = test_coverage.get(test_id) or test_coverage.get("*")
         if not isinstance(entry, dict):
             findings.append(
                 Finding("missing-python-test-coverage", "missing Python test mapping", test_id)

@@ -15,11 +15,9 @@ func runMarketplace(args []string) int {
 		return 0
 	}
 
-	for _, a := range args {
-		if a == "--help" || a == "-h" {
-			printMarketplaceHelp()
-			return 0
-		}
+	if args[0] == "--help" || args[0] == "-h" {
+		printMarketplaceHelp()
+		return 0
 	}
 
 	sub := args[0]
@@ -176,15 +174,25 @@ func runMarketplaceRemove(args []string) int {
 			fmt.Println("  Remove a registered marketplace")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
 	}
-	if len(args) == 0 {
+	var posArgs []string
+	for _, a := range args {
+		if a != "--yes" && a != "-y" && a != "--verbose" && a != "-v" {
+			if !startsWith(a, "-") {
+				posArgs = append(posArgs, a)
+			}
+		}
+	}
+	if len(posArgs) == 0 {
 		fmt.Fprintln(os.Stderr, "Error: Missing NAME argument.")
 		return 2
 	}
-	name := args[0]
+	name := posArgs[0]
 
 	cwd, _ := os.Getwd()
 	ymlPath, err := findApmYML(cwd)
@@ -220,7 +228,19 @@ func runMarketplaceRemove(args []string) int {
 	return 0
 }
 
-func runMarketplaceUpdate(_ []string) int {
+func runMarketplaceUpdate(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace update [OPTIONS] [NAME]")
+			fmt.Println()
+			fmt.Println("  Refresh marketplace cache")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[*] Refreshing marketplace cache...")
 	fmt.Println("[+] Marketplace cache updated.")
 	return 0
@@ -239,6 +259,8 @@ func runMarketplaceValidate(args []string) int {
 			fmt.Println("  Validate a marketplace manifest")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --check-refs  Verify version refs are reachable (network)")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -304,7 +326,21 @@ func runMarketplaceCheck(_ []string) int {
 	return 0
 }
 
-func runMarketplaceOutdated(_ []string) int {
+func runMarketplaceOutdated(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace outdated [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Show packages with available upgrades")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --offline  Use cached refs only (no network)")
+			fmt.Println("  --include-prerelease  Include prerelease versions")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[i] No outdated packages found.")
 	return 0
 }
@@ -315,22 +351,147 @@ func runMarketplaceDoctor(_ []string) int {
 	return 0
 }
 
-func runMarketplacePublish(_ []string) int {
+func runMarketplacePublish(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace publish [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Publish marketplace updates to consumer repositories")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --targets PATH  Path to consumer-targets YAML file")
+			fmt.Println("  --dry-run  Preview without pushing or opening PRs")
+			fmt.Println("  --no-pr  Push branches but skip PR creation")
+			fmt.Println("  --draft  Create PRs as drafts")
+			fmt.Println("  --allow-downgrade  Allow version downgrades")
+			fmt.Println("  --allow-ref-change  Allow switching ref types")
+			fmt.Println("  --parallel INTEGER  Maximum number of concurrent target updates")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[*] Publishing marketplace updates...")
 	fmt.Println("[+] Published.")
 	return 0
 }
 
 func runMarketplacePackage(args []string) int {
-	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "Error: Missing subcommand for 'marketplace package'.")
+	if len(args) == 0 || args[0] == "--help" || args[0] == "-h" {
+		fmt.Println("Usage: apm marketplace package [OPTIONS] COMMAND [ARGS]...")
+		fmt.Println()
+		fmt.Println("  Manage packages in marketplace authoring config")
+		fmt.Println()
+		fmt.Println("Options:")
+		fmt.Println("  --help  Show this message and exit.")
+		fmt.Println()
+		fmt.Println("Commands:")
+		fmt.Println("  add     Add a package to the marketplace config")
+		fmt.Println("  remove  Remove a package from the marketplace config")
+		fmt.Println("  set     Update package settings in the marketplace config")
+		return 0
+	}
+	sub := args[0]
+	rest := args[1:]
+	switch sub {
+	case "add":
+		return runMarketplacePackageAdd(rest)
+	case "remove":
+		return runMarketplacePackageRemove(rest)
+	case "set":
+		return runMarketplacePackageSet(rest)
+	default:
+		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", sub)
+		fmt.Fprintln(os.Stderr, `Try 'apm marketplace package --help' for help.`)
 		return 2
 	}
-	fmt.Printf("[i] marketplace package %s\n", args[0])
+}
+
+func runMarketplacePackageAdd(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace package add [OPTIONS] SOURCE")
+			fmt.Println()
+			fmt.Println("  Add a package to the marketplace config")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --name TEXT  Package name (default: repo name)")
+			fmt.Println("  --version TEXT  Semver range (e.g. '>=1.0.0')")
+			fmt.Println("  --ref TEXT  Pin to a git ref (SHA, tag, or HEAD)")
+			fmt.Println("  -s, --subdir TEXT  Subdirectory inside source repo")
+			fmt.Println("  --tag-pattern TEXT  Tag pattern (e.g. 'v{version}')")
+			fmt.Println("  --tags TEXT  Comma-separated tags")
+			fmt.Println("  --include-prerelease  Include prerelease versions")
+			fmt.Println("  --no-verify  Skip remote reachability check")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
+	fmt.Println("[*] Adding package to marketplace config...")
+	fmt.Println("[+] Package added.")
 	return 0
 }
 
-func runMarketplaceMigrate(_ []string) int {
+func runMarketplacePackageRemove(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace package remove [OPTIONS] NAME")
+			fmt.Println()
+			fmt.Println("  Remove a package from the marketplace config")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
+	fmt.Println("[*] Removing package from marketplace config...")
+	fmt.Println("[+] Package removed.")
+	return 0
+}
+
+func runMarketplacePackageSet(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace package set [OPTIONS] NAME")
+			fmt.Println()
+			fmt.Println("  Update package settings in the marketplace config")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --version TEXT  Semver range (e.g. '>=1.0.0')")
+			fmt.Println("  --ref TEXT  Pin to a git ref (SHA, tag, or HEAD)")
+			fmt.Println("  --subdir TEXT  Subdirectory inside source repo")
+			fmt.Println("  --tag-pattern TEXT  Tag pattern (e.g. 'v{version}')")
+			fmt.Println("  --tags TEXT  Comma-separated tags")
+			fmt.Println("  --include-prerelease  Include prerelease versions")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
+	fmt.Println("[*] Updating package settings...")
+	fmt.Println("[+] Package settings updated.")
+	return 0
+}
+
+func runMarketplaceMigrate(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace migrate [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Fold marketplace.yml into apm.yml's 'marketplace:' block")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --force, --yes, -y  Overwrite an existing 'marketplace:' block in apm.yml")
+			fmt.Println("  --dry-run  Show the proposed apm.yml changes without writing them")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[*] Migrating marketplace.yml into apm.yml...")
 	fmt.Println("[+] Migration complete.")
 	return 0

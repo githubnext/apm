@@ -48,10 +48,10 @@ def test_crane_completion_is_two_phase_and_pr_head_gated() -> None:
 
     assert "Reaching the target metric does **not** complete the migration in this run" in text
     assert "Completion Candidate: true" in text
-    assert "Completion Gate: pr-head-checks" in text
+    assert "Completion Gate: up-to-date-pr-head-checks" in text
     assert "leave the `crane-migration` label on the issue" in text
-    assert "current PR head checks pass" in text
-    assert "every check for the current PR head is terminal success" in text
+    assert "current PR head contains the current base branch SHA" in text
+    assert "every check for the current up-to-date PR head is terminal success" in text
     assert "Completion Gate Status: passed:<sha>" in text
 
 
@@ -59,6 +59,6 @@ def test_crane_state_template_tracks_completion_candidate_gate() -> None:
     text = _workflow_text()
 
     assert "| Completion Candidate | false |" in text
-    assert "| Completion Gate | pr-head-checks |" in text
+    assert "| Completion Gate | up-to-date-pr-head-checks |" in text
     assert "| Completion Gate Status | -- |" in text
     assert "Whether the target metric has been reached and the migration is waiting" in text

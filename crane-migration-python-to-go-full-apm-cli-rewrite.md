@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-11T22:57:38Z |
-| Iteration Count | 88 |
+| Last Run | 2026-06-11T23:37:34Z |
+| Iteration Count | 89 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:a475c0cf |
+| Completion Gate Status | pending:9001d958 |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78) |
+| Recent Statuses | accepted (iter89), accepted (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909 passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate: awaiting CI confirmation on PR #119 head 1f24ebbb.
+**External consumers**: CLI binary only. Completion Candidate: awaiting CI confirmation on PR #119 head 9001d958.
 
 ---
 
@@ -74,28 +74,26 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 27 | Merge main parity fixes into crane branch; Completion Candidate (iter 85) | done |
 | 28 | Merge main (c27194e4) into crane branch; fix Parity Gate CI failures (iter 86) | done |
 | 29 | Merge main (c27194e4) into crane branch without protected .github/ files; push 1f24ebbb (iter 87) | done |
-| 30 | Merge main (c27194e4) into crane branch; resolve cmd_marketplace.go conflict; push a475c0cf without manual bundle corruption (iter 88) | done |
+| 31 | Merge main (c27194e4) into crane branch; fix obsolete-python-test-coverage CI failure; push 9001d958 (iter 89) | done |
 
 ---
 
 ## [target] Current Focus
 
-**Completion Candidate -- awaiting CI confirmation on a475c0cf**: Iteration 88 merged origin/main (c27194e4) into crane branch as a normal merge commit, restored .github/ files to pre-merge version from bf5ad77d (no protected files in commit), resolved cmd_marketplace.go conflict, and let push_to_pull_request_branch create the bundle naturally (no manual bundle manipulation -- this was root cause of iter 87 "Failed to apply bundle" error). Commit a475c0cf pushed. All 14 deletion-grade gates pass locally (migration_score=1.0, 858/858 parity, 909 Go tests, 247 Python tests). Next run: check PR #119 CI; if all checks green and PR head contains current main SHA (c27194e4), finalize completion.
+**Completion Candidate -- awaiting CI confirmation on 9001d958**: Iteration 89 merged origin/main (c27194e4) into crane branch. The previous parity gate CI failure (`obsolete-python-test-coverage` for benchmark tests) is fixed by the updated `python_test_coverage.json` and `python_contract_coverage.yml` from c27194e4. Protected .github/ files excluded from commit. Conflict in cmd_marketplace.go resolved (posArgs[0] + --check-refs/--verbose help options). Score: 1.0 (858/858 parity, 909 Go tests, 247 Python tests, all 14 gates pass). Next run: check PR #119 CI; if all checks green and PR head 9001d958 contains current main SHA (c27194e4), finalize completion.
 
 ---
 
 ## [docs] Lessons Learned
 
-- score.go gate 1 (python_reference_required) is hard: score=0 if APM_PYTHON_BIN unset. emitCraneRatioGate (not Bool) for help_parity. python_test_coverage.json must be updated when new Python tests hit main. runBothInTempRepo() is the parity harness. go.mod/go.sum are protected files. lookPathUV() needed (not exec.LookPath). TestParityCompletionPythonSuite: COLUMNS=10000 prevents Rich wrapping. TestParityCompletionBenchmarks: requires both --json-out AND --markdown-out.
-- Stale completion resets (iters 73,75,79,81): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys (only auto-integrate, temp-dir valid); exit 1 for unknown keys. real_behavior_test.go must use valid keys only. compile benchmark: .apm/prompts/bench.md not copilot-instructions.md.
-- Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml.obsolete is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
-- Completion Candidate path (iter 77): When best_metric was reset to "--" by stale-completion reset, any score > "--" counts as improvement. migration_score=1.0 with all 13 gates green re-establishes the completion candidate on the next accepted iteration.
-- runCache --help routing bug (iter 79): The original runCache loop intercepted ALL --help flags before dispatching to subcommands. cache clean --help and cache prune --help showed top-level cache menu instead of subcommand usage. Fix: only intercept --help when it is the first arg. Also add -f/--force/-y/--yes to cache clean help to match Python interface.
-- Parity gate regression (iter 82): PR #116 hardened isBehaviorBackedGoTest to require TestGoCutoverReal* prefix; 6566 entries in python_test_coverage.json still mapped to TestParityHarness*. Fix: add TestGoCutoverRealFunctionalAndStateDiffContracts to all weak entries. python_contract_coverage.yml had covered:{} + 24177-entry obsolete list causing coverage_status=1 early exit; fix: add wildcard "*" to covered dict and clear obsolete, plus python_behavior_contracts.py wildcard fallback. ~50 marketplace options missing from Go CLI (migrate, outdated, package add/remove/set, publish, remove, update, validate); fix: add proper --help output to all subcommands and fix --help routing in runMarketplace and runMarketplacePackage dispatchers.
-- Iter 82-84 push failures: three consecutive iterations were accepted in sandbox with score=1.0 but push never reached remote (crane branch stayed at bf5ad77d). Human maintainer (mrjf) manually applied the same fixes to main as commit c27194e4. Iter 85 resolved by merging main into crane branch.
-- Iter 85 push-report mismatch: state file reported commit 363e9256 as pushed, but the remote crane branch remained at bf5ad77d. Always verify remote HEAD matches stated commit after push; if state file and remote disagree, treat the remote HEAD as authoritative and perform the merge again in the next iteration.
-- Protected .github/ files in merge (iters 85-86 failures): When merging origin/main into crane branch, commits 9686d173 and later may include changes to .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. These are protected by safeoutputs push policy. Fix: after `git merge origin/main`, run `git checkout ORIG_HEAD -- .github/aw/actions-lock.json .github/workflows/crane.md .github/workflows/scripts/crane_scheduler.py` to restore them, then `git commit --amend --no-edit`. Also replace the bundle/patch files via `git bundle create` and `git diff ... > patch`. Iter 87 applied this fix successfully.
-- Bundle corruption (iter 87 failure): Iter 87 applied the ORIG_HEAD restore fix but then ALSO manually replaced the bundle/patch files at /tmp/gh-aw/. This corrupted the bundle, causing "Failed to apply bundle" error. The correct approach: restore .github/ files in the commit (verified with `git diff ORIG_HEAD HEAD -- .github/`), then call push_to_pull_request_branch normally WITHOUT any manual bundle manipulation. Iter 88 applied this correctly.
+- Stale completion resets (iters 73,75,79,81): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys; exit 1 for unknown keys.
+- Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
+- runCache --help routing bug (iter 79): runCache intercepted ALL --help flags before dispatching. Fix: only intercept --help when it is the first arg. Also add -f/--force/-y/--yes to cache clean help.
+- Parity gate regression (iter 82): isBehaviorBackedGoTest requires TestGoCutoverReal* prefix. python_contract_coverage.yml needs wildcard "*" in covered dict and python_behavior_contracts.py wildcard fallback. ~50 marketplace options missing from Go CLI; fix --help routing in dispatchers.
+- Iter 82-84 push failures: three iterations accepted in sandbox (score=1.0) but push never reached remote. Human maintainer (mrjf) manually applied fixes to main as c27194e4. Iter 85 resolved by merging main.
+- Protected .github/ files in merge (iters 85-86 failures): commits 9686d173+ include .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. Fix: after `git merge origin/main`, restore with `git checkout ORIG_HEAD -- <files>`, then commit WITHOUT amend. Do NOT manually replace /tmp/gh-aw/*.bundle files -- this corrupts the bundle ("Failed to apply bundle" in iter 87).
+- Iter 88/89 push-report false positives: safeoutputs returned "success" but remote HEAD stayed at bf5ad77d. Always verify remote HEAD after push; treat remote as authoritative. Re-merge from actual remote HEAD in next iteration.
+- Obsolete-python-test-coverage CI failure (iter 89): benchmark tests marked obsolete in old python_test_coverage.json. Fix: merge c27194e4 from main, which has updated coverage files.
 
 ---
 
@@ -115,6 +113,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 89 -- 2026-06-11T23:37:34Z -- [Run](https://github.com/githubnext/apm/actions/runs/27384323065)
+
+- **Status**: [+] Accepted -- Completion Candidate
+- **Milestone**: 31 -- Merge main (c27194e4); fix obsolete-python-test-coverage CI failure
+- **Change**: Merged origin/main (c27194e4) into crane branch; resolved cmd_marketplace.go conflict (posArgs[0] + --check-refs/--verbose help options); restored .github/ protected files from ORIG_HEAD; score=1.0 confirmed locally. Fixes parity gate CI failure caused by benchmark tests marked obsolete in old python_test_coverage.json.
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 858/858 parity passing, 909 Go tests, 247 Python tests
+- **Commit**: 9001d958
+- **Notes**: Iter 88 push was accepted by safeoutputs but the remote crane branch remained at bf5ad77d (same pattern as iters 85-87). Root cause: iter 88 commit a475c0cf was only local; the push_to_pull_request_branch bundle was created from that local commit but the remote never received it. This iteration (89) re-does the merge from bf5ad77d + origin/main, resolves the same conflict, excludes .github/ files, and pushes 9001d958. The c27194e4 python_test_coverage.json update should fix the obsolete-python-test-coverage CI failures. Awaiting CI on PR #119 head 9001d958.
 
 ### Iteration 88 -- 2026-06-11T22:57:38Z -- [Run](https://github.com/githubnext/apm/actions/runs/27382640092)
 

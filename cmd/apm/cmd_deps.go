@@ -68,6 +68,9 @@ func runDepsList(args []string) int {
 			fmt.Println("  List installed APM dependencies")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  -g, --global  List user-scope dependencies")
+			fmt.Println("  --all  Include all dependency scopes")
+			fmt.Println("  --insecure  Include insecure dependencies")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -121,6 +124,7 @@ func runDepsTree(args []string) int {
 			fmt.Println("  Show dependency tree structure")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  -g, --global  Show user-scope dependency tree")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -218,6 +222,8 @@ func runDepsClean(args []string) int {
 			fmt.Println("  Remove all APM dependencies")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --dry-run  Show what would be removed without removing")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -254,6 +260,12 @@ func runDepsUpdate(args []string) int {
 			fmt.Println("  Update APM dependencies to latest refs")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --force  Force dependency refresh")
+			fmt.Println("  --target, -t TARGET  Target harness to update")
+			fmt.Println("  --parallel-downloads INTEGER  Max concurrent downloads")
+			fmt.Println("  --global, -g  Update user-scope dependencies")
+			fmt.Println("  --legacy-skill-paths  Use legacy per-client skill paths")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}

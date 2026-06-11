@@ -120,6 +120,7 @@ func runRuntimeRemove(args []string) int {
 			fmt.Println("  Remove an installed runtime")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}

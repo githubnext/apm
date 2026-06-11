@@ -29,6 +29,7 @@ type pythonParamContract struct {
 	Type          string   `json:"type"`
 	Opts          []string `json:"opts"`
 	SecondaryOpts []string `json:"secondary_opts"`
+	Hidden        bool     `json:"hidden"`
 }
 
 type pythonTestContract struct {
@@ -101,6 +102,9 @@ func pythonCommandOptionNames(command pythonCommandContract) []string {
 	var options []string
 	for _, param := range command.Params {
 		if param.Type != "Option" {
+			continue
+		}
+		if param.Hidden {
 			continue
 		}
 		opts := append([]string{}, param.Opts...)

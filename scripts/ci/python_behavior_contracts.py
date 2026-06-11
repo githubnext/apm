@@ -75,6 +75,7 @@ def _param_contract(param: click.Parameter) -> dict[str, Any]:
             {
                 "opts": list(param.opts),
                 "secondary_opts": list(param.secondary_opts),
+                "hidden": bool(getattr(param, "hidden", False)),
                 "help": param.help or "",
                 "default": repr(param.default),
                 "is_flag": bool(param.is_flag),

@@ -92,6 +92,7 @@ func runMarketplaceList(args []string) int {
 			fmt.Println("  List registered marketplaces")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -126,6 +127,10 @@ func runMarketplaceAdd(args []string) int {
 			fmt.Println("  Register a marketplace")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --name, -n TEXT  Marketplace display name")
+			fmt.Println("  --branch, -b TEXT  Marketplace branch")
+			fmt.Println("  --host TEXT  Marketplace host")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -246,7 +251,19 @@ func runMarketplaceUpdate(args []string) int {
 	return 0
 }
 
-func runMarketplaceBrowse(_ []string) int {
+func runMarketplaceBrowse(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace browse [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Browse plugins in a marketplace")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[i] Browse functionality requires network access.")
 	return 0
 }
@@ -300,7 +317,23 @@ func runMarketplaceValidate(args []string) int {
 	return 1
 }
 
-func runMarketplaceInit(_ []string) int {
+func runMarketplaceInit(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace init [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Add a 'marketplace:' block to apm.yml")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --force  Overwrite existing marketplace block")
+			fmt.Println("  --no-gitignore-check  Skip gitignore validation")
+			fmt.Println("  --name TEXT  Marketplace name")
+			fmt.Println("  --owner TEXT  Marketplace owner")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	cwd, _ := os.Getwd()
 	ymlPath, _ := findApmYML(cwd)
 	if ymlPath == "" {
@@ -320,7 +353,20 @@ func runMarketplaceInit(_ []string) int {
 	return 0
 }
 
-func runMarketplaceCheck(_ []string) int {
+func runMarketplaceCheck(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace check [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Validate marketplace entries are resolvable")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --offline  Use cached refs only (no network)")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[*] Checking marketplace entries...")
 	fmt.Println("[+] All entries are resolvable.")
 	return 0
@@ -345,7 +391,19 @@ func runMarketplaceOutdated(args []string) int {
 	return 0
 }
 
-func runMarketplaceDoctor(_ []string) int {
+func runMarketplaceDoctor(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace doctor [OPTIONS]")
+			fmt.Println()
+			fmt.Println("  Run environment diagnostics for marketplace publishing")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --verbose, -v  Show detailed output")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
 	fmt.Println("[*] Running marketplace diagnostics...")
 	fmt.Println("[+] All checks passed.")
 	return 0

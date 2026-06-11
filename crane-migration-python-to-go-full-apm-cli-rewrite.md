@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-11T22:03:40Z |
-| Iteration Count | 87 |
+| Last Run | 2026-06-11T22:57:38Z |
+| Iteration Count | 88 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:1f24ebbb |
+| Completion Gate Status | pending:a475c0cf |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77) |
+| Recent Statuses | accepted (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78) |
 
 ---
 
@@ -74,12 +74,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 27 | Merge main parity fixes into crane branch; Completion Candidate (iter 85) | done |
 | 28 | Merge main (c27194e4) into crane branch; fix Parity Gate CI failures (iter 86) | done |
 | 29 | Merge main (c27194e4) into crane branch without protected .github/ files; push 1f24ebbb (iter 87) | done |
+| 30 | Merge main (c27194e4) into crane branch; resolve cmd_marketplace.go conflict; push a475c0cf without manual bundle corruption (iter 88) | done |
 
 ---
 
 ## [target] Current Focus
 
-**Completion Candidate -- awaiting CI confirmation**: Iteration 87 merged origin/main (c27194e4) into crane branch, restoring protected .github/ files to pre-merge version so push policy allows it. Commit 1f24ebbb pushed. All 14 deletion-grade gates pass locally (migration_score=1.0, 858/858 parity, 909 Go tests, 247 Python tests). Next run: check PR #119 CI; if all checks green and PR head contains current main SHA (c27194e4), finalize completion.
+**Completion Candidate -- awaiting CI confirmation on a475c0cf**: Iteration 88 merged origin/main (c27194e4) into crane branch as a normal merge commit, restored .github/ files to pre-merge version from bf5ad77d (no protected files in commit), resolved cmd_marketplace.go conflict, and let push_to_pull_request_branch create the bundle naturally (no manual bundle manipulation -- this was root cause of iter 87 "Failed to apply bundle" error). Commit a475c0cf pushed. All 14 deletion-grade gates pass locally (migration_score=1.0, 858/858 parity, 909 Go tests, 247 Python tests). Next run: check PR #119 CI; if all checks green and PR head contains current main SHA (c27194e4), finalize completion.
 
 ---
 
@@ -94,6 +95,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 - Iter 82-84 push failures: three consecutive iterations were accepted in sandbox with score=1.0 but push never reached remote (crane branch stayed at bf5ad77d). Human maintainer (mrjf) manually applied the same fixes to main as commit c27194e4. Iter 85 resolved by merging main into crane branch.
 - Iter 85 push-report mismatch: state file reported commit 363e9256 as pushed, but the remote crane branch remained at bf5ad77d. Always verify remote HEAD matches stated commit after push; if state file and remote disagree, treat the remote HEAD as authoritative and perform the merge again in the next iteration.
 - Protected .github/ files in merge (iters 85-86 failures): When merging origin/main into crane branch, commits 9686d173 and later may include changes to .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. These are protected by safeoutputs push policy. Fix: after `git merge origin/main`, run `git checkout ORIG_HEAD -- .github/aw/actions-lock.json .github/workflows/crane.md .github/workflows/scripts/crane_scheduler.py` to restore them, then `git commit --amend --no-edit`. Also replace the bundle/patch files via `git bundle create` and `git diff ... > patch`. Iter 87 applied this fix successfully.
+- Bundle corruption (iter 87 failure): Iter 87 applied the ORIG_HEAD restore fix but then ALSO manually replaced the bundle/patch files at /tmp/gh-aw/. This corrupted the bundle, causing "Failed to apply bundle" error. The correct approach: restore .github/ files in the commit (verified with `git diff ORIG_HEAD HEAD -- .github/`), then call push_to_pull_request_branch normally WITHOUT any manual bundle manipulation. Iter 88 applied this correctly.
 
 ---
 
@@ -113,6 +115,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 88 -- 2026-06-11T22:57:38Z -- [Run](https://github.com/githubnext/apm/actions/runs/27382640092)
+
+- **Status**: [+] Accepted -- Completion Candidate
+- **Milestone**: 30 -- Merge main (c27194e4) into crane branch; push without manual bundle corruption
+- **Change**: Merged origin/main into crane branch; restored .github/ protected files from ORIG_HEAD (bf5ad77d); resolved cmd_marketplace.go conflict (posArgs[0] + validate help options); pushed via push_to_pull_request_branch WITHOUT manual bundle manipulation (root cause fix for iter 87 "Failed to apply bundle").
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 858/858 parity passing, 909 Go tests, 247 Python tests
+- **Commit**: a475c0cf
+- **Notes**: Iter 87 failed with "Failed to apply bundle" because it manually replaced /tmp/gh-aw/*.bundle files after creating them via push_to_pull_request_branch. Iter 88 avoids this by letting the tool create the bundle normally. Protected .github/ files confirmed absent from commit (git diff bf5ad77d HEAD -- .github/ = 0 lines). Completion Candidate active; awaiting CI on PR #119 head a475c0cf.
 
 ### Iteration 87 -- 2026-06-11T22:03:40Z -- [Run](https://github.com/githubnext/apm/actions/runs/27380231667)
 

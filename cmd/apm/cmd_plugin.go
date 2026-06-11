@@ -53,6 +53,9 @@ func runPluginInit(args []string) int {
 			fmt.Println("  Scaffold a new plugin (plugin.json + apm.yml)")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --yes, -y  Skip confirmation prompt")
+			fmt.Println("  --target TEXT  Target harness")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}

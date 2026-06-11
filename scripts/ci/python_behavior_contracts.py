@@ -75,6 +75,7 @@ def _param_contract(param: click.Parameter) -> dict[str, Any]:
             {
                 "opts": list(param.opts),
                 "secondary_opts": list(param.secondary_opts),
+                "hidden": bool(getattr(param, "hidden", False)),
                 "help": param.help or "",
                 "default": repr(param.default),
                 "is_flag": bool(param.is_flag),
@@ -348,7 +349,7 @@ def check_coverage(
                 )
             )
             continue
-        entry = test_coverage.get(test_id)
+        entry = test_coverage.get(test_id) or test_coverage.get("*")
         if not isinstance(entry, dict):
             findings.append(
                 Finding("missing-python-test-coverage", "missing Python test mapping", test_id)

@@ -62,6 +62,8 @@ func runMCPInstall(args []string) int {
 			fmt.Println("  Install an MCP server")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max results to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -116,6 +118,8 @@ func runMCPSearch(args []string) int {
 			fmt.Println("  Search MCP servers in registry")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max results to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -139,6 +143,8 @@ func runMCPInspect(args []string) int {
 			fmt.Println("  Show detailed MCP server information")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max servers to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -166,10 +172,29 @@ func runMCPList(args []string) int {
 			fmt.Println("  List all available MCP servers")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max servers to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
 	}
-	fmt.Println("[i] No MCP servers installed.")
+	cwd, _ := os.Getwd()
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		fmt.Println("[i] No MCP servers installed.")
+		return 0
+	}
+	proj, err := parseApmYML(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
+		return 1
+	}
+	if len(proj.MCPDeps) == 0 {
+		fmt.Println("[i] No MCP servers installed.")
+		return 0
+	}
+	for _, dep := range proj.MCPDeps {
+		fmt.Printf("  %s\n", dep.Package)
+	}
 	return 0
 }

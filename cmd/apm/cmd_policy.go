@@ -53,6 +53,10 @@ func runPolicyStatus(args []string) int {
 			fmt.Println()
 			fmt.Println("Options:")
 			fmt.Println("  --json   Output as JSON")
+			fmt.Println("  --policy-source TEXT  Policy source")
+			fmt.Println("  --no-cache  Force fresh policy fetch")
+			fmt.Println("  -o, --output PATH  Write output to file")
+			fmt.Println("  --check  Exit non-zero when policy is not satisfied")
 			fmt.Println("  --help   Show this message and exit.")
 			return 0
 		}

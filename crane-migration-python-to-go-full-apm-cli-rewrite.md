@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-11T18:00:00Z |
-| Iteration Count | 83 |
+| Last Run | 2026-06-11T19:15:03Z |
+| Iteration Count | 84 |
 | Best Metric | -- |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | pending (iter 83 pushed, awaiting CI) |
+| Completion Gate Status | pending (iter 84 pushed, awaiting CI) |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73) |
+| Recent Statuses | accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Awaiting CI confirmation**: Iteration 83 re-applied and properly pushed all parity gate fixes (option_parity, python_behavior_contracts, golden_fixture_corpus, all_go_golden_tests). Iteration 82 was listed in state but was never actually pushed to the crane branch -- iter 83 is the real push. Merged origin/main (PR #118). Next run: check PR #119 CI status; if all 6 checks green including Python-vs-Go Parity Gate, set Completion Candidate.
+**Awaiting CI confirmation**: Iteration 84 merged origin/main (c27194e4) into crane branch, resolving the cmd_marketplace.go conflict by taking main's version. All 4 previously failing parity gates now pass locally: TestGoCutoverPythonTestConversionCoverage PASS (23772/23772), TestParityPythonOptionsFromSource PASS. Next run: check PR #119 CI; if Python-vs-Go Parity Gate + all checks green, set Completion Candidate.
 
 ---
 
@@ -108,7 +108,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 83 -- 2026-06-11T18:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27324795692)
+### Iteration 84 -- 2026-06-11T19:15:03Z -- [Run](https://github.com/githubnext/apm/actions/runs/27370568559)
+
+- **Status**: [+] Accepted (CI pending)
+- **Milestone**: 26 -- Fix all parity gate CI failures (completing what iter 83 attempted but failed to push)
+- **Change**: Merged origin/main (c27194e4) into crane branch. Resolved single conflict in cmd/apm/cmd_marketplace.go by taking main's version. All fixes from main now in crane branch: (1) cmd_marketplace.go --help routing fix + all missing options; (2) python_test_coverage.json all 23770 entries backed by TestGoCutoverReal*; (3) python_contract_coverage.yml wildcard coverage + empty obsolete list; (4) python_behavior_contracts.py wildcard fallback.
+- **Score**: -- (pending CI; local: TestGoCutoverPythonTestConversionCoverage PASS 23772/23772, TestParityPythonOptionsFromSource PASS)
+- **Commit**: 4f529ff2 (merge of origin/main at c27194e4 into crane branch)
+- **Notes**: Iter 83 state file claimed "accepted/pushed" but crane branch remote was still at bf5ad77d (iter 81). This run is the actual push of all parity gate fixes via merge from main.
+
+
 
 - **Status**: [+] Accepted (CI pending)
 - **Milestone**: 26 -- Fix all parity gate CI failures after PR #116 hardening (re-pushed; iter 82 was not actually committed to crane branch)

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-11T20:16:31Z |
-| Iteration Count | 85 |
+| Last Run | 2026-06-11T21:13:46Z |
+| Iteration Count | 86 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:363e9256 |
+| Completion Gate Status | pending:514e212a |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75) |
+| Recent Statuses | accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77), accepted-ci-pending (iter76) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909 passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate: awaiting CI confirmation on PR #119 head 363e9256.
+**External consumers**: CLI binary only. Completion Candidate: awaiting CI confirmation on PR #119 head 514e212a.
 
 ---
 
@@ -72,12 +72,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 25 | Stale-completion reset (iter81); fix 6 functional/state-diff contract regressions | done |
 | 26 | Fix all parity gate CI failures (option_parity, python_behavior_contracts, golden_fixture_corpus, all_go_golden_tests, coverage_status) | done |
 | 27 | Merge main parity fixes into crane branch; Completion Candidate (iter 85) | done |
+| 28 | Merge main (c27194e4) into crane branch; fix Parity Gate CI failures (iter 86) | done |
 
 ---
 
 ## [target] Current Focus
 
-**Completion Candidate -- awaiting CI confirmation**: Iteration 85 merged origin/main (c27194e4) into crane branch. All 14 deletion-grade gates pass locally (migration_score=1.0). PR #119 head 363e9256 pushed. Next run: check PR #119 CI; if all checks green and PR head contains current main SHA, finalize completion.
+**Completion Candidate -- awaiting CI confirmation**: Iteration 86 merged origin/main (c27194e4) into crane branch to fix Python-vs-Go Parity Gate CI failures (obsolete-python-test-coverage). All 14 deletion-grade gates pass locally (migration_score=1.0). PR #119 head 514e212a pushed. Next run: check PR #119 CI; if all checks green and PR head contains current main SHA, finalize completion.
 
 ---
 
@@ -90,6 +91,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 - runCache --help routing bug (iter 79): The original runCache loop intercepted ALL --help flags before dispatching to subcommands. cache clean --help and cache prune --help showed top-level cache menu instead of subcommand usage. Fix: only intercept --help when it is the first arg. Also add -f/--force/-y/--yes to cache clean help to match Python interface.
 - Parity gate regression (iter 82): PR #116 hardened isBehaviorBackedGoTest to require TestGoCutoverReal* prefix; 6566 entries in python_test_coverage.json still mapped to TestParityHarness*. Fix: add TestGoCutoverRealFunctionalAndStateDiffContracts to all weak entries. python_contract_coverage.yml had covered:{} + 24177-entry obsolete list causing coverage_status=1 early exit; fix: add wildcard "*" to covered dict and clear obsolete, plus python_behavior_contracts.py wildcard fallback. ~50 marketplace options missing from Go CLI (migrate, outdated, package add/remove/set, publish, remove, update, validate); fix: add proper --help output to all subcommands and fix --help routing in runMarketplace and runMarketplacePackage dispatchers.
 - Iter 82-84 push failures: three consecutive iterations were accepted in sandbox with score=1.0 but push never reached remote (crane branch stayed at bf5ad77d). Human maintainer (mrjf) manually applied the same fixes to main as commit c27194e4. Iter 85 resolved by merging main into crane branch.
+- Iter 85 push-report mismatch: state file reported commit 363e9256 as pushed, but the remote crane branch remained at bf5ad77d. Always verify remote HEAD matches stated commit after push; if state file and remote disagree, treat the remote HEAD as authoritative and perform the merge again in the next iteration.
 
 ---
 
@@ -109,6 +111,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 86 -- 2026-06-11T21:13:46Z -- [Run](https://github.com/githubnext/apm/actions/runs/27377565919)
+
+- **Status**: [+] Accepted -- Completion Candidate
+- **Milestone**: 28 -- Merge main (c27194e4) into crane branch; fix Python-vs-Go Parity Gate CI failures
+- **Change**: Merged origin/main (c27194e4) into crane branch. Resolved conflict in cmd_marketplace.go by taking main's version. Fixes obsolete-python-test-coverage failures (python_test_coverage.json + python_contract_coverage.yml from c27194e4).
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
+- **Progress**: 858/858 parity passing locally, 909 Go tests, 247 Python tests
+- **Commit**: 514e212a
+- **Notes**: Iter 85 state file claimed push succeeded (363e9256) but remote crane branch stayed at bf5ad77d. This iteration successfully pushed 514e212a. Completion Candidate active; awaiting CI on PR #119 head 514e212a.
 
 ### Iteration 85 -- 2026-06-11T20:16:31Z -- [Run](https://github.com/githubnext/apm/actions/runs/27374028911)
 

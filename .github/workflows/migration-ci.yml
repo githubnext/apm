@@ -64,6 +64,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -92,12 +94,16 @@ jobs:
 
       - name: Run CLI-agnostic Python behavior tests
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ENFORCE_COMPLETION_INPUT: ${{ inputs.enforce_completion }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           go build -o "$RUNNER_TEMP/apm-go" ./cmd/apm
           enforce_behavior_contracts=false
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.enforce_completion == true }}" = "true" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "${ENFORCE_COMPLETION_INPUT:-false}" = "true" ]; then
             enforce_behavior_contracts=true
-          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+          elif [ "$EVENT_NAME" = "pull_request" ] && [[ "${HEAD_REF:-}" == crane/* ]]; then
             enforce_behavior_contracts=true
           fi
           if [ "$enforce_behavior_contracts" = "true" ]; then
@@ -113,11 +119,15 @@ jobs:
 
       - name: Run Go parity tests
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ENFORCE_COMPLETION_INPUT: ${{ inputs.enforce_completion }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           enforce_completion=false
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.enforce_completion == true }}" = "true" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "${ENFORCE_COMPLETION_INPUT:-false}" = "true" ]; then
             enforce_completion=true
-          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+          elif [ "$EVENT_NAME" = "pull_request" ] && [[ "${HEAD_REF:-}" == crane/* ]]; then
             enforce_completion=true
           fi
 
@@ -136,16 +146,42 @@ jobs:
         shell: bash
         run: |
           set +e
-          APM_PYTHON_BIN= \
-          APM_PYTHON_CONTRACT_INVENTORY= \
-          PYTHONPATH= \
-          VIRTUAL_ENV= \
+          APM_PYTHON_BIN="" \
+          APM_PYTHON_CONTRACT_INVENTORY="" \
+          PYTHONPATH="" \
+          VIRTUAL_ENV="" \
             go test -json ./cmd/apm -run '^TestGoCutover' \
             | tee "$RUNNER_TEMP/go-cutover-events.json"
           status=${PIPESTATUS[0]}
           set -e
           cat "$RUNNER_TEMP/go-cutover-events.json" >> "$RUNNER_TEMP/go-test-events.json"
           echo "GO_CUTOVER_STATUS=$status" >> "$GITHUB_ENV"
+
+      - name: Check upstream APM contract coverage
+        shell: bash
+        run: |
+          git remote add upstream https://github.com/microsoft/apm.git 2>/dev/null || \
+            git remote set-url upstream https://github.com/microsoft/apm.git
+          git fetch upstream main --prune
+
+          upstream_args=(
+            --upstream-ref upstream/main
+            --head-ref HEAD
+            --coverage tests/parity/upstream_contract_coverage.yml
+            --summary "$RUNNER_TEMP/upstream-apm-contracts.md"
+          )
+          if [ "${MIGRATION_COMPLETION_ENFORCED:-false}" = "true" ]; then
+            upstream_args+=(--enforce)
+          fi
+
+          set +e
+          uv run python scripts/ci/upstream_apm_contracts.py check \
+            "${upstream_args[@]}" \
+            | tee "$RUNNER_TEMP/upstream-apm-contracts.txt"
+          status=${PIPESTATUS[0]}
+          set -e
+          cat "$RUNNER_TEMP/upstream-apm-contracts.txt" >> "$RUNNER_TEMP/go-test-events.json"
+          echo "UPSTREAM_APM_STATUS=$status" >> "$GITHUB_ENV"
 
       - name: Compute migration score
         run: |
@@ -191,6 +227,7 @@ jobs:
             test "${PYTHON_CLI_CONTRACT_STATUS:-1}" = "0"
             test "${GO_TEST_STATUS:-1}" = "0"
             test "${GO_CUTOVER_STATUS:-1}" = "0"
+            test "${UPSTREAM_APM_STATUS:-1}" = "0"
           else
             if [ "${PYTHON_CLI_CONTRACT_STATUS:-1}" != "0" ]; then
               echo "::notice::Python behavior contract tests are incomplete in collection mode."
@@ -200,6 +237,9 @@ jobs:
             fi
             if [ "${GO_CUTOVER_STATUS:-1}" != "0" ]; then
               echo "::notice::Go-only cutover gate is incomplete in collection mode."
+            fi
+            if [ "${UPSTREAM_APM_STATUS:-1}" != "0" ]; then
+              echo "::notice::Upstream APM freshness/contract coverage is incomplete in collection mode."
             fi
           fi
 
@@ -215,6 +255,8 @@ jobs:
             ${{ runner.temp }}/python-behavior-contracts.json
             ${{ runner.temp }}/python-contract-coverage.md
             ${{ runner.temp }}/python-cli-contract-tests.txt
+            ${{ runner.temp }}/upstream-apm-contracts.txt
+            ${{ runner.temp }}/upstream-apm-contracts.md
           if-no-files-found: ignore
           retention-days: 14
 
@@ -247,11 +289,15 @@ jobs:
 
       - name: Run Python-vs-Go CLI benchmark
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ENFORCE_COMPLETION_INPUT: ${{ inputs.enforce_completion }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           enforce_completion=false
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.enforce_completion == true }}" = "true" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "${ENFORCE_COMPLETION_INPUT:-false}" = "true" ]; then
             enforce_completion=true
-          elif [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.event.pull_request.head.ref }}" == crane/* ]]; then
+          elif [ "$EVENT_NAME" = "pull_request" ] && [[ "${HEAD_REF:-}" == crane/* ]]; then
             enforce_completion=true
           fi
 

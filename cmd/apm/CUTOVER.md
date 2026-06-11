@@ -26,6 +26,8 @@ Gate summary:
 | functional_contracts | required |
 | state_diff_contracts | required |
 | python_behavior_contracts | required; no obsolete or help-only mappings |
+| upstream_freshness | required; `HEAD` must contain the reviewed `microsoft/apm@main` SHA |
+| upstream_contracts | required; every upstream Python behavior delta must map to existing Go tests |
 | golden_fixture_corpus | required |
 | all_go_golden_tests | required |
 | no_python_runtime_dependency | required |
@@ -52,8 +54,10 @@ The output must show `"migration_score": 1` and `"cutover_ready": true`.
 
 Every completion criterion must be backed by real command execution. The scorer
 does not infer completion from test names for `surface`, `help`,
-`option_parity`, `functional`, `state_diff`, `python_behavior_contracts`, or
-`benchmarks`; each one must emit an explicit ratio gate.
+`option_parity`, `functional`, `state_diff`, `python_behavior_contracts`,
+`upstream_contracts`, or `benchmarks`; each ratio criterion must emit an
+explicit ratio gate. The `upstream_freshness` boolean gate must also pass before
+completion can be claimed.
 
 Crane must run `APM_PYTHON_BIN= go test ./cmd/apm -run TestGoCutover -json`.
 These fixture-backed tests execute the built Go `apm` binary in temporary
@@ -64,6 +68,8 @@ directly:
 {"crane":"gate","name":"functional","passing":N,"total":N}
 {"crane":"gate","name":"state_diff","passing":N,"total":N}
 {"crane":"gate","name":"python_behavior_contracts","passing":N,"total":N}
+{"crane":"gate","name":"upstream_freshness","passed":true}
+{"crane":"gate","name":"upstream_contracts","passing":N,"total":N}
 {"crane":"gate","name":"golden_fixture_corpus","passed":true}
 {"crane":"gate","name":"all_go_golden_tests","passed":true}
 {"crane":"gate","name":"no_python_runtime_dependency","passed":true}
@@ -117,6 +123,28 @@ benchmark fixture coverage before Crane can claim it moved the migration
 forward. Shims, dry-runs, mocks, and help-only assertions do not count as command
 completion.
 
+## Upstream Freshness Criteria
+
+The migration is incomplete if this repository is stale relative to upstream
+`microsoft/apm@main`. The scheduled `Upstream APM Sync` workflow fetches
+`microsoft/apm`, creates or updates an upstream merge PR, and requests
+merge-commit auto-merge so upstream history remains reachable.
+
+After each upstream merge, reviewers must inspect the upstream Python diff and
+advance `tests/parity/upstream_contract_coverage.yml` with a reviewed range from
+the previous upstream SHA to the new upstream SHA. Every changed public Python
+source contract under `src/apm_cli/` and every changed Python test under
+`tests/` must map to one or more existing Go tests. The checker emits:
+
+```json
+{"crane":"gate","name":"upstream_freshness","passed":true}
+{"crane":"gate","name":"upstream_contracts","passing":N,"total":N}
+```
+
+Both gates are deletion-grade completion gates. A stale upstream SHA, a missing
+reviewed range, a missing Go test mapping, or a stale Go test name blocks
+`migration_score = 1.0`.
+
 ## Cutover Trigger Conditions
 
 The Go binary becomes the shipped `apm` command when ALL of the following
@@ -138,18 +166,21 @@ are true:
    paths while the Python reference is still available
 6. Migration benchmarks pass real fixture-backed command workloads and emit a
    passing counted `benchmarks` gate
-7. The final Python-reference parity run has been frozen into a committed,
+7. `HEAD` contains the current reviewed `microsoft/apm@main` SHA, and every
+   upstream Python behavior delta since the upstream baseline has reviewed Go
+   test coverage in `tests/parity/upstream_contract_coverage.yml`
+8. The final Python-reference parity run has been frozen into a committed,
    versioned golden fixture corpus. The corpus must include CLI inventory,
    help and usage output, error output, exit codes, generated files, lockfiles,
    config files, managed-file manifests, deterministic cache/config layout, and
    audit artifacts for the full command matrix.
-8. An all-Go golden replay passes against that corpus with no live Python
+9. An all-Go golden replay passes against that corpus with no live Python
    oracle. The replay must build `cmd/apm` and compare only the Go binary
    against checked-in fixtures.
-9. A no-Python-runtime check passes: `APM_PYTHON_BIN` is unset, the Python CLI
+10. A no-Python-runtime check passes: `APM_PYTHON_BIN` is unset, the Python CLI
    is hidden or unavailable to the replay, and the golden replay still passes.
-10. `go build ./cmd/apm` produces a single static binary
-11. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
+11. `go build ./cmd/apm` produces a single static binary
+12. CI passes on the crane PR branch (`crane/crane-migration-python-to-go-full-apm-cli-rewrite`)
 
 ## Cutover Steps
 

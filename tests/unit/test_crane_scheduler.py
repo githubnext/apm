@@ -213,7 +213,12 @@ def test_pr_head_gate_fails_when_any_check_is_not_success() -> None:
     def fake_http_get_json(url, _headers, timeout=30):
         del timeout
         if url.endswith("/pulls/102"):
-            return {"head": {"sha": "abcdef1234567890"}}, None
+            return {
+                "base": {"sha": "1111111111111111"},
+                "head": {"sha": "abcdef1234567890"},
+            }, None
+        if "/compare/1111111111111111...abcdef1234567890" in url:
+            return {"status": "ahead"}, None
         if "/check-runs" in url:
             return {
                 "check_runs": [
@@ -239,7 +244,12 @@ def test_pr_head_gate_passes_only_when_all_checks_succeed() -> None:
     def fake_http_get_json(url, _headers, timeout=30):
         del timeout
         if url.endswith("/pulls/102"):
-            return {"head": {"sha": "abcdef1234567890"}}, None
+            return {
+                "base": {"sha": "1111111111111111"},
+                "head": {"sha": "abcdef1234567890"},
+            }, None
+        if "/compare/1111111111111111...abcdef1234567890" in url:
+            return {"status": "ahead"}, None
         if "/check-runs" in url:
             return {
                 "check_runs": [
@@ -258,3 +268,29 @@ def test_pr_head_gate_passes_only_when_all_checks_succeed() -> None:
 
     assert passed is True
     assert reason == "passed:abcdef123456"
+
+
+def test_pr_head_gate_fails_when_pr_head_does_not_contain_current_base() -> None:
+    def fake_http_get_json(url, _headers, timeout=30):
+        del timeout
+        if url.endswith("/pulls/117"):
+            return {
+                "base": {"sha": "e96b795d2540d4f991ee0c04cb4cfc67d8d74960"},
+                "head": {"sha": "f02847267a544d9700e885f6edebe15f4c4aa406"},
+            }, None
+        if (
+            "/compare/e96b795d2540d4f991ee0c04cb4cfc67d8d74960...f02847267a544d9700e885f6edebe15f4c4aa406"
+            in url
+        ):
+            return {"status": "diverged"}, None
+        raise AssertionError(f"unexpected URL: {url}")
+
+    passed, reason = crane_scheduler.get_pr_head_check_gate(
+        "githubnext/apm",
+        117,
+        "token",
+        http_get_json=fake_http_get_json,
+    )
+
+    assert passed is False
+    assert reason == "stale-base:f02847267a54:diverged:base:e96b795d2540"

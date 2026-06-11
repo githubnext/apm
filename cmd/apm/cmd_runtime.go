@@ -134,6 +134,17 @@ func runRuntimeRemove(args []string) int {
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'RUNTIME_NAME'.")
 		return 2
 	}
+
+	cfgPath := configPath()
+	if cfgPath == "" {
+		fmt.Fprintf(os.Stderr, "[x] Could not determine config path.\n")
+		return 1
+	}
+	if err := removeConfigKey(cfgPath, "runtime"); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update config: %v\n", err)
+		return 1
+	}
+
 	fmt.Printf("[*] Removing runtime: %s\n", runtime)
 	fmt.Printf("[+] Runtime '%s' removed.\n", runtime)
 	return 0

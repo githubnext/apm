@@ -271,3 +271,38 @@ func writeConfigKey(path, key, value string) error {
 	}
 	return os.WriteFile(path, []byte(newContent), 0o644)
 }
+
+// readConfigKey reads a top-level key from a simple YAML config file.
+// Returns the value and true if found, or empty string and false if not.
+func readConfigKey(path, key string) (string, bool) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", false
+	}
+	prefix := key + ":"
+	for _, line := range strings.Split(string(data), "\n") {
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, prefix) {
+			val := strings.TrimSpace(trimmed[len(prefix):])
+			return val, true
+		}
+	}
+	return "", false
+}
+
+// removeConfigKey removes a top-level key line from a simple YAML config file.
+func removeConfigKey(path, key string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil // nothing to remove if file doesn't exist
+	}
+	prefix := key + ":"
+	lines := strings.Split(string(data), "\n")
+	var out []string
+	for _, l := range lines {
+		if !strings.HasPrefix(strings.TrimSpace(l), prefix) {
+			out = append(out, l)
+		}
+	}
+	return os.WriteFile(path, []byte(strings.Join(out, "\n")), 0o644)
+}

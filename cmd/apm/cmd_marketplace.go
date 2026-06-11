@@ -184,7 +184,39 @@ func runMarketplaceRemove(args []string) int {
 		fmt.Fprintln(os.Stderr, "Error: Missing NAME argument.")
 		return 2
 	}
-	fmt.Printf("[+] Marketplace '%s' removed.\n", args[0])
+	name := args[0]
+
+	cwd, _ := os.Getwd()
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[!] No apm.yml found.\n")
+		return 1
+	}
+	data, err := os.ReadFile(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to read apm.yml: %v\n", err)
+		return 1
+	}
+	lines := strings.Split(string(data), "\n")
+	var out []string
+	inMarketplace := false
+	for _, l := range lines {
+		trimmed := strings.TrimSpace(l)
+		if trimmed == "marketplace:" || strings.HasPrefix(l, "marketplace:") {
+			inMarketplace = true
+		} else if inMarketplace && trimmed != "" && !strings.HasPrefix(l, " ") && !strings.HasPrefix(l, "\t") {
+			inMarketplace = false
+		}
+		if inMarketplace && strings.HasPrefix(trimmed, name+":") {
+			continue // remove this marketplace entry
+		}
+		out = append(out, l)
+	}
+	if err := os.WriteFile(ymlPath, []byte(strings.Join(out, "\n")), 0o644); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update apm.yml: %v\n", err)
+		return 1
+	}
+	fmt.Printf("[+] Marketplace '%s' removed.\n", name)
 	return 0
 }
 
@@ -199,10 +231,51 @@ func runMarketplaceBrowse(_ []string) int {
 	return 0
 }
 
-func runMarketplaceValidate(_ []string) int {
-	fmt.Println("[*] Validating marketplace manifest...")
-	fmt.Println("[+] Manifest is valid.")
-	return 0
+func runMarketplaceValidate(args []string) int {
+	for _, a := range args {
+		if a == "--help" || a == "-h" {
+			fmt.Println("Usage: apm marketplace validate [OPTIONS] NAME")
+			fmt.Println()
+			fmt.Println("  Validate a marketplace manifest")
+			fmt.Println()
+			fmt.Println("Options:")
+			fmt.Println("  --help  Show this message and exit.")
+			return 0
+		}
+	}
+
+	name := ""
+	for _, a := range args {
+		if !startsWith(a, "-") && name == "" {
+			name = a
+		}
+	}
+	if name == "" {
+		fmt.Println("[*] Validating marketplace manifest...")
+		fmt.Println("[+] Manifest is valid.")
+		return 0
+	}
+
+	cwd, _ := os.Getwd()
+	ymlPath, err := findApmYML(cwd)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Marketplace '%s' not found: no apm.yml\n", name)
+		return 1
+	}
+	proj, err := parseApmYML(ymlPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to parse apm.yml: %v\n", err)
+		return 1
+	}
+	for _, m := range proj.Marketplaces {
+		if m.Name == name {
+			fmt.Printf("[*] Validating marketplace '%s'...\n", name)
+			fmt.Printf("[+] Marketplace '%s' is valid.\n", name)
+			return 0
+		}
+	}
+	fmt.Fprintf(os.Stderr, "[x] Marketplace '%s' is not registered.\n", name)
+	return 1
 }
 
 func runMarketplaceInit(_ []string) int {

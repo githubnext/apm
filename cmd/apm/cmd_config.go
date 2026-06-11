@@ -111,6 +111,12 @@ func runConfigGet(args []string) int {
 		fmt.Fprintf(os.Stderr, "[>] Valid keys: auto-integrate, temp-dir\n")
 		return 1
 	}
+	path := configPath()
+	if val, found := readConfigKey(path, key); found {
+		fmt.Printf("%s: %s\n", key, val)
+		return 0
+	}
+	// Return default when key is not set in config file.
 	switch key {
 	case "auto-integrate":
 		fmt.Printf("auto-integrate: true\n")
@@ -138,6 +144,15 @@ func runConfigUnset(args []string) int {
 	if !validConfigKeys[key] {
 		fmt.Fprintf(os.Stderr, "[x] Unknown configuration key: '%s'\n", key)
 		fmt.Fprintf(os.Stderr, "[>] Valid keys: auto-integrate, temp-dir\n")
+		return 1
+	}
+	path := configPath()
+	if path == "" {
+		fmt.Fprintf(os.Stderr, "[x] Could not determine config path.\n")
+		return 1
+	}
+	if err := removeConfigKey(path, key); err != nil {
+		fmt.Fprintf(os.Stderr, "[x] Failed to update config: %v\n", err)
 		return 1
 	}
 	fmt.Printf("[+] Config unset: %s\n", key)

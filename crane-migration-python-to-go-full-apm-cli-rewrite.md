@@ -10,24 +10,24 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-09T21:59:48Z |
-| Iteration Count | 80 |
-| Best Metric | 1.0 |
+| Last Run | 2026-06-11T01:54:04Z |
+| Iteration Count | 81 |
+| Best Metric | -- |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
 | Strategy | greenfield |
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
-| PR | #117 |
+| PR | -- |
 | Issue | #78 |
 | Paused | false |
 | Pause Reason | -- |
-| Completed | true |
-| Completed Reason | target metric 1.0 reached; PR #117 head f028472 checks all passed (6/6: Lint, Python Unit Tests, Go Tests, Detect Migration Changes, Python-vs-Go Parity Gate, Migration Benchmarks) |
+| Completed | false |
+| Completed Reason | -- |
 | Completion Candidate | false |
 | Completion Gate | pr-head-checks |
-| Completion Gate Status | passed:f028472 |
+| Completion Gate Status | pending |
 | Consecutive Errors | 0 |
-| Recent Statuses | completed (iter80), accepted (iter79), completed (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72), accepted (iter71) |
+| Recent Statuses | accepted (iter81), completed-stale (iter80), accepted (iter79), completed-stale (iter78), accepted (iter77), accepted-ci-pending (iter76), accepted-ci-pending (iter75), accepted (iter74), accepted (iter73), accepted (iter72) |
 
 ---
 
@@ -37,16 +37,16 @@
 **Target**: Go (native binary)
 **Strategy**: greenfield
 **Branch**: [`crane/crane-migration-python-to-go-full-apm-cli-rewrite`](../../tree/crane/crane-migration-python-to-go-full-apm-cli-rewrite)
-**Pull Request**: #117
+**Pull Request**: -- (pending creation; crane branch pushed in iter 81)
 **Issue**: #78
 
 ---
 
 ## [map] Inventory
 
-**302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 903 passing. **Python baseline**: 247 tests. **Parity**: 858/858 (100%). All 13 deletion-grade gates pass.
+**302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 903 passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26 after iter 81 fix.
 
-**External consumers**: CLI binary only. Cutover-ready.
+**External consumers**: CLI binary only. Cutover-ready pending CI confirmation.
 
 ---
 
@@ -69,22 +69,24 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 22 | Re-verify all gates after stale-completion reset; fix deps info PACKAGE arg | done |
 | 23 | Update CUTOVER.md to deletion-grade ready; Completion Candidate pending CI | done |
 | 24 | Stale-completion reset (iter79); fix cache --help routing; --force/--yes; 3 new parity tests | done |
+| 25 | Stale-completion reset (iter81); fix 6 functional/state-diff contract regressions | done |
 
 ---
 
 ## [target] Current Focus
 
-**[+] Migration Complete**: All 13 deletion-grade gates passed. PR #117 head f028472 CI checks all green (6/6). Migration finalized after 80 iterations.
+**Awaiting CI confirmation**: Iteration 81 fixed 6 functional/state-diff contract regressions (functional: 26/26, state_diff: 26/26). PR pushed to crane branch. CI must confirm score=1.0 before setting Completion Candidate. Next run: check PR CI status, set Completion Candidate if all gates green.
 
 ---
 
 ## [docs] Lessons Learned
 
 - score.go gate 1 (python_reference_required) is hard: score=0 if APM_PYTHON_BIN unset. emitCraneRatioGate (not Bool) for help_parity. python_test_coverage.json must be updated when new Python tests hit main. runBothInTempRepo() is the parity harness. go.mod/go.sum are protected files. lookPathUV() needed (not exec.LookPath). TestParityCompletionPythonSuite: COLUMNS=10000 prevents Rich wrapping. TestParityCompletionBenchmarks: requires both --json-out AND --markdown-out.
-- Stale completion resets (iters 73,75,79): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys (only auto-integrate, temp-dir valid); exit 1 for unknown keys. real_behavior_test.go must use valid keys only. compile benchmark: .apm/prompts/bench.md not copilot-instructions.md.
+- Stale completion resets (iters 73,75,79,81): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys (only auto-integrate, temp-dir valid); exit 1 for unknown keys. real_behavior_test.go must use valid keys only. compile benchmark: .apm/prompts/bench.md not copilot-instructions.md.
 - Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml.obsolete is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
 - Completion Candidate path (iter 77): When best_metric was reset to "--" by stale-completion reset, any score > "--" counts as improvement. migration_score=1.0 with all 13 gates green re-establishes the completion candidate on the next accepted iteration.
 - runCache --help routing bug (iter 79): The original runCache loop intercepted ALL --help flags before dispatching to subcommands. cache clean --help and cache prune --help showed top-level cache menu instead of subcommand usage. Fix: only intercept --help when it is the first arg. Also add -f/--force/-y/--yes to cache clean help to match Python interface.
+- Gate hardening regression (iter 81): PR #116 added `TestGoCutoverRealFunctionalAndStateDiffContracts` with 26 subtests; 6 failed because command stubs (config get, config unset, mcp list, marketplace remove, marketplace validate, runtime remove) were not yet reading/writing real state. Fix: add readConfigKey/removeConfigKey helpers; implement real state reads/writes in each stub. The functional/state-diff gate is now 26/26.
 
 ---
 
@@ -105,44 +107,31 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 81 -- 2026-06-11T01:54:04Z -- [Run](https://github.com/githubnext/apm/actions/runs/27318507620)
+
+- **Status**: [+] Accepted (stale-completion reset)
+- **Milestone**: 25 -- Fix 6 functional/state-diff contract regressions after gate hardening
+- **Change**: Add readConfigKey/removeConfigKey helpers; fix config get (reads file), config unset (removes key), mcp list (reads apm.yml), marketplace remove (modifies apm.yml), marketplace validate (rejects unregistered), runtime remove (removes from config).
+- **Score**: -- (pending CI; functional/state-diff: 26/26 was 20/26)
+- **Commit**: fe90a9ce
+- **Notes**: Stale Completed:true reset (crane-completed label on #78, PR #117 merged). Gate regression from PR #116 hardening: 6 of 26 functional/state-diff subtests failed. All 6 fixed. crane-migration label restored on issue #78.
+
 ### Iteration 80 -- 2026-06-09T21:59:48Z -- [Run](https://github.com/githubnext/apm/actions/runs/27238532803)
 
-- **Status**: [+] Completed
+- **Status**: [+] Completed (stale)
 - **Milestone**: Completion Gate -- PR #117 head CI checks all green (6/6)
-- **Change**: Deterministic completion gate passed: all 6 checks green on PR #117 head f028472 (Lint, Python Unit Tests, Go Tests, Detect Migration Changes, Python-vs-Go Parity Gate, Migration Benchmarks).
+- **Change**: Deterministic completion gate passed: all 6 checks green on PR #117 head f028472.
 - **Score**: 1.0 (best: 1.0, delta: +0.0)
-- **Progress**: 858/858 parity (100%), Go 903 tests, Python 247 tests
-- **Notes**: Migration finalized after 80 iterations. Python -> Go full CLI rewrite complete. All 13 deletion-grade gates confirmed. crane-migration label removed, crane-completed label added.
+- **Notes**: Marked complete; PR #117 later merged and crane-completed label applied. Completion became stale when PR was merged and branch deleted.
 
 ### Iteration 79 -- 2026-06-09T21:35:12Z -- [Run](https://github.com/githubnext/apm/actions/runs/27236411257)
 
 - **Status**: [+] Accepted -- Completion Candidate
-- **Milestone**: 24 -- Stale-completion reset (iter79); fix cache --help routing; add --force/--yes; add 3 parity tests
-- **Change**: (1) Stale Completed:true from iter 78 reset (crane-completed label; PR #115 merged). (2) cmd_cache.go: fix runCache to route subcommand --help to handler; add -f/--force/-y/--yes to cache clean; align output messages to Python. (3) parity_harness_test.go: 3 new tests (GoCacheCleanHelp, GoCachePruneHelp, GoCacheCleanOutputMessages).
+- **Milestone**: 24 -- Stale-completion reset (iter79); fix cache --help routing; add --force/--yes; 3 parity tests
+- **Change**: Fix runCache --help routing; add -f/--force/-y/--yes to cache clean; 3 new parity tests.
 - **Score**: 1.0 (previous best: -- [reset], delta: +1.0)
-- **Progress**: 858/858 parity (100%), Go 903 tests, Python 247 tests
 - **Commit**: c4aa22e7
-- **Notes**: All 13 deletion-grade gates pass fresh. Completion Candidate set; waiting for CI on new PR head before finalizing.
 
-### Iteration 78 -- 2026-06-08T21:36:46Z -- [Run](https://github.com/githubnext/apm/actions/runs/27168423750)
-
-- **Status**: [+] Completed
-- **Milestone**: 23 -- Completion Gate: PR #115 head CI checks all green
-- **Change**: Deterministic completion gate passed: all 6 checks green on PR #115 head e759ab64.
-- **Score**: 1.0 (best: 1.0, delta: +0.0)
-- **Progress**: 855/855 parity (100%), Go 900 tests, Python 247 tests
-- **Notes**: Migration finalized after 78 iterations. Python -> Go rewrite complete. (Superseded by iter 79 stale-completion reset after PR #115 was merged and crane-completed label remained active with no open PR.)
-
-### Iteration 77 -- 2026-06-08T20:55:21Z -- [Run](https://github.com/githubnext/apm/actions/runs/27166284809)
-
-- **Status**: [+] Accepted -- Completion Candidate
-- **Milestone**: 23 -- Update CUTOVER.md to deletion-grade ready; set Completion Candidate
-- **Change**: cmd/apm/CUTOVER.md updated to deletion-grade ready state.
-- **Score**: 1.0 (previous best: -- [reset], delta: +1.0)
-- **Commit**: 4ba58f5
-
-### Iters 68-76 -- [+] (score 1.0, 849->855/855 parity): Stale resets, deps info fix, config key validation, CI fixes, 3 new deletion-grade gates. PRs #111/#112/#114/#115 merged to main.
-
-### Iters 43-67 -- [+] Verification passes (score 1.0, no code changes): Pre-step re-selects completed migration on every 5m tick.
+### Iters 43-78 -- [+] (score 1.0, multiple completions/resets): PRs #111-#117 merged. All 13 deletion-grade gates confirmed multiple times.
 
 ### Iters 1-42 -- [+] (score 0.0->1.0, milestones 0-21 done): Planning; scaffolding; parity harness; all 302 Python modules ported; deletion-grade gates 1-13; golden fixtures; completion candidate set and finalized.

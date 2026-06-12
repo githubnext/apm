@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-12T00:35:00Z |
-| Iteration Count | 90 |
+| Last Run | 2026-06-12T01:33:00Z |
+| Iteration Count | 91 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -19,15 +19,15 @@
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
 | PR | #119 |
 | Issue | #78 |
-| Paused | false |
-| Pause Reason | -- |
+| Paused | true |
+| Pause Reason | push-rejected-protected-files: safeoutputs rejects push because 9686d173 (in main ancestry) modifies .github/ protected files; fix: add protected-files: allowed to push-to-pull-request-branch in .github/workflows/crane.md, then unpause |
 | Completed | false |
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:5b29b450 |
+| Completion Gate Status | pending:27d55baa (local only, push rejected) |
 | Consecutive Errors | 0 |
-| Recent Statuses | accepted (iter90), accepted (iter89), accepted (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81), completed-stale (iter80) |
+| Recent Statuses | error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909 passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate: awaiting CI confirmation on PR #119 head 5b29b450 (iter 90: merged c27194e4 from main).
+**External consumers**: CLI binary only. Completion Candidate: PAUSED -- push rejected. See Pause Reason and Blockers.
 
 ---
 
@@ -74,33 +74,30 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 27 | Merge main parity fixes into crane branch; Completion Candidate (iter 85) | done |
 | 28 | Merge main (c27194e4) into crane branch; fix Parity Gate CI failures (iter 86) | done |
 | 29 | Merge main (c27194e4) into crane branch without protected .github/ files; push 1f24ebbb (iter 87) | done |
-| 32 | Merge main (c27194e4) into crane branch; push 5b29b450; await CI (iter 90) | in-progress |
+| 32 | Merge main (c27194e4) into crane branch; push 5b29b450; await CI (iter 90) | done |
+| 33 | Fix push-rejected-protected-files blocker: add protected-files: allowed to crane.md | blocked |
 
 ---
 
 ## [target] Current Focus
 
-**Completion Candidate -- awaiting CI confirmation on 5b29b450**: Iteration 90 merged origin/main (c27194e4) into crane branch from actual remote HEAD bf5ad77d (iters 88/89 push-report false positives confirmed; remote stayed at bf5ad77d). Protected .github/ files excluded. Conflict in cmd_marketplace.go resolved (posArgs[0] + --check-refs/--verbose). Score: 1.0 (858/858 parity, 909 Go tests, 247 Python tests, all 14 gates pass). Next run: if CI green on 5b29b450 and PR head contains c27194e4, run completion gate and finalize.
+**PAUSED -- push-rejected-protected-files**: Iters 88-91 all had push_to_pull_request_branch REJECTED (not false positives as previously recorded). Root cause: commit 9686d173 (in main ancestry between da06413a and c27194e4) modifies .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. The safeoutputs service scans INDIVIDUAL COMMITS in the format-patch (not the tree diff), finds .github/ changes in 9686d173, and rejects the push -- even though the merge commit itself restores those files to crane's pre-merge state. Fix: maintainer must add `protected-files: allowed` to push-to-pull-request-branch in .github/workflows/crane.md (or manually push crane branch). Merge commit 27d55baa is ready locally; re-run after config fix.
 
 ---
 
 ## [docs] Lessons Learned
 
-- Stale completion resets (iters 73,75,79,81): when crane branch merges and no active PR, completion state is invalidated. Always add fresh accepted iteration, restore crane-migration label. `deps info` without PACKAGE exits 2 (Python); Go must match. `config get/set/unset` must validate keys; exit 1 for unknown keys.
-- Coverage split (iter 76): python_test_coverage.json (cmd/apm/testdata/go_cutover/) is for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml is what TestParityCompletionPythonBehaviorContracts checks. New Python tests from main must be added to BOTH files.
-- runCache --help routing bug (iter 79): runCache intercepted ALL --help flags before dispatching. Fix: only intercept --help when it is the first arg. Also add -f/--force/-y/--yes to cache clean help.
-- Parity gate regression (iter 82): isBehaviorBackedGoTest requires TestGoCutoverReal* prefix. python_contract_coverage.yml needs wildcard "*" in covered dict and python_behavior_contracts.py wildcard fallback. ~50 marketplace options missing from Go CLI; fix --help routing in dispatchers.
-- Iter 82-84 push failures: three iterations accepted in sandbox (score=1.0) but push never reached remote. Human maintainer (mrjf) manually applied fixes to main as c27194e4. Iter 85 resolved by merging main.
-- Protected .github/ files in merge (iters 85-86 failures): commits 9686d173+ include .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. Fix: after `git merge origin/main`, restore with `git checkout ORIG_HEAD -- <files>`, then commit WITHOUT amend. Do NOT manually replace /tmp/gh-aw/*.bundle files -- this corrupts the bundle ("Failed to apply bundle" in iter 87).
-- Iter 88/89 push-report false positives: safeoutputs returned "success" but remote HEAD stayed at bf5ad77d. Always verify remote HEAD after push; treat remote as authoritative. Re-merge from actual remote HEAD in next iteration.
-- Iter 90: Push-report false positives confirmed (iters 88/89). Safeoutputs reported "success" but remote HEAD stayed at bf5ad77d. Resolved by reading actual remote HEAD from GitHub API before merging. Always verify `git rev-parse origin/<branch>` AFTER push completes before trusting safeoutputs return value.
-- Obsolete-python-test-coverage CI failure (iter 89): benchmark tests marked obsolete in old python_test_coverage.json. Fix: merge c27194e4 from main, which has updated coverage files.
+- **push-rejected-protected-files (iter 91)**: safeoutputs `push_to_pull_request_branch` returns `{"result":"success"}` on bundle staging, but actual push happens at end of workflow. If protected-files check fails, a WARNING comment appears on the issue and the push is NOT applied. The patch is format-patch (individual commits), not tree diff. Commit 9686d173 (main ancestry between da06413a..c27194e4) modifies .github/ protected files -- even a merge commit that restores those files will trigger the check. Fix: add `protected-files: allowed` to push-to-pull-request-branch in .github/workflows/crane.md. State file entries for iters 88-91 as "false positives" were wrong -- those were actual rejections.
+- **Protected .github/ in merge**: after `git merge origin/main`, restore with `git checkout ORIG_HEAD -- .github/aw/actions-lock.json .github/workflows/crane.md .github/workflows/scripts/crane_scheduler.py`, then commit. Do NOT replace /tmp/gh-aw/*.bundle files manually.
+- **Coverage split (iter 76)**: python_test_coverage.json (cmd/apm/testdata/go_cutover/) for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml for TestParityCompletionPythonBehaviorContracts. New Python tests must go in BOTH files.
+- **Stale completion resets (iters 73,75,79,81)**: when crane branch merges with no active PR, completion state invalidates. Always add fresh accepted iteration, restore crane-migration label.
+- **Parity gate regression (iter 82)**: isBehaviorBackedGoTest requires TestGoCutoverReal* prefix. python_contract_coverage.yml needs wildcard "*". ~50 marketplace options missing from Go CLI; fix --help routing in dispatchers.
 
 ---
 
 ## [wip] Blockers & Foreclosed Approaches
 
-- *(none)*
+- **ACTIVE BLOCKER (iter 91)**: push-rejected-protected-files. 9686d173 (main ancestry) modifies `.github/aw/actions-lock.json`, `.github/workflows/crane.md`, `.github/workflows/scripts/crane_scheduler.py`. safeoutputs format-patch finds these changes and rejects the push even though the merge commit tree has no .github/ change. **Fix**: add `protected-files: allowed` to `push-to-pull-request-branch` in `.github/workflows/crane.md`, then unpause and re-run. Or maintainer manually pushes `crane/crane-migration-python-to-go-full-apm-cli-rewrite`.
 
 ---
 
@@ -115,27 +112,25 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 91 -- 2026-06-12T01:33:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27388561614)
+
+- **Status**: [!] Error -- push rejected (protected files)
+- **Milestone**: 33 -- Merge main (c27194e4); push blocked (protected-files)
+- **Change**: Merged origin/main (c27194e4) into crane from bf5ad77d; resolved cmd_marketplace.go conflict; restored .github/ from ORIG_HEAD; commit 27d55baa local only. Root cause of iters 88-91 push failures identified: safeoutputs generates format-patch (individual commits), finds 9686d173 (.github/ changes) in the patch, and rejects push. The safeoutputs CLI returns success on bundle staging but the actual push fails at end of workflow with a WARNING comment on the issue.
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0) -- local only, not pushed
+- **Commit**: 27d55baa (local only)
+- **Notes**: Migration paused. Fix: add `protected-files: allowed` to push-to-pull-request-branch in .github/workflows/crane.md, then unpause and re-run. Or maintainer manually pushes crane branch.
+
 ### Iteration 90 -- 2026-06-12T00:35:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27385623130)
 
-- **Status**: [+] Accepted -- Completion Candidate
-- **Milestone**: 32 -- Merge main (c27194e4) from actual remote HEAD bf5ad77d; push 5b29b450
-- **Change**: Verified remote HEAD was still bf5ad77d (iters 88/89 push-report false positives). Merged origin/main (c27194e4) cleanly; restored .github/ protected files from ORIG_HEAD; resolved cmd_marketplace.go conflict (posArgs[0] + --check-refs/--verbose); confirmed score=1.0 locally (858/858 parity, 909 Go, 247 Python, all 14 gates pass).
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
-- **Progress**: 858/858 parity passing, 909 Go tests, 247 Python tests
-- **Commit**: 5b29b450
-- **Notes**: Root cause of iters 88/89 push failures confirmed: safeoutputs reported success but remote never received the bundle. This iteration rebases from actual remote bf5ad77d and pushes 5b29b450. Awaiting CI on PR #119 head 5b29b450; if green and PR head contains c27194e4, next run finalizes completion.
+- **Status**: [!] Error -- push rejected (protected files; previously misrecorded as accepted/false-positive)
+- **Milestone**: 32 -- Merge main (c27194e4) from actual remote HEAD bf5ad77d; push rejected
+- **Change**: Verified remote HEAD was still bf5ad77d. Merged origin/main (c27194e4) cleanly; restored .github/ protected files from ORIG_HEAD; resolved cmd_marketplace.go conflict; confirmed score=1.0 locally. Push bundle generated but rejected by safeoutputs at end of workflow (protected files check).
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0) -- local only
+- **Commit**: 5b29b450 (local only, never pushed)
+- **Notes**: Iteration recorded as "push-report false positive" but was actually a protected-files rejection.
 
-### Iteration 89 -- 2026-06-11T23:37:34Z -- [Run](https://github.com/githubnext/apm/actions/runs/27384323065)
-
-- **Status**: [+] Accepted -- Completion Candidate
-- **Milestone**: 31 -- Merge main (c27194e4); fix obsolete-python-test-coverage CI failure
-- **Change**: Merged origin/main (c27194e4) into crane branch; resolved cmd_marketplace.go conflict (posArgs[0] + --check-refs/--verbose help options); restored .github/ protected files from ORIG_HEAD; score=1.0 confirmed locally. Fixes parity gate CI failure caused by benchmark tests marked obsolete in old python_test_coverage.json.
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0)
-- **Progress**: 858/858 parity passing, 909 Go tests, 247 Python tests
-- **Commit**: 9001d958
-- **Notes**: Iter 88 push was accepted by safeoutputs but the remote crane branch remained at bf5ad77d (same pattern as iters 85-87). Root cause: iter 88 commit a475c0cf was only local; the push_to_pull_request_branch bundle was created from that local commit but the remote never received it. This iteration (89) re-does the merge from bf5ad77d + origin/main, resolves the same conflict, excludes .github/ files, and pushes 9001d958. The c27194e4 python_test_coverage.json update should fix the obsolete-python-test-coverage CI failures. Awaiting CI on PR #119 head 9001d958.
-
-### Iters 86-89 -- [+] (score 1.0, push-report false positives): iters 87-89 all attempted merge of c27194e4 but safeoutputs reported success while remote stayed at bf5ad77d. Iter 86 rejected due to protected .github/ files. All 14 gates passing throughout.
+### Iters 86-90 -- [!] Error (push rejected or false-positive): iters 86 rejected (protected .github/ files); iters 87-90 safeoutputs reported success but remote stayed at bf5ad77d (iters 87-89 as "false positives", iter 90 as "accepted" -- all were actually push rejections confirmed by WARNING comments on issue #78). All 14 gates passing throughout. Score=1.0 local only.
 
 ### Iters 79-85 -- [+] (score 1.0, multiple stale-completion resets): iter 79 stale-completion reset (fix cache --help); iter 81 fix 6 state-diff regressions; iters 82-85 attempted merge of main but push failed (protected files or push-report mismatch). All 14 gates passing throughout.
 

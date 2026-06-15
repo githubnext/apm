@@ -34,3 +34,17 @@ def test_migration_ci_collects_incomplete_evidence_for_non_crane_prs() -> None:
     assert "Python behavior contract tests are incomplete in collection mode." in text
     assert "Go parity tests are incomplete in collection mode." in text
     assert "Upstream APM freshness/contract coverage is incomplete in collection mode." in text
+
+
+def test_benchmark_pr_comment_includes_iteration_context() -> None:
+    text = _workflow_text()
+
+    assert "Download parity evidence" in text
+    assert "migration-benchmark-context.md" in text
+    assert "### What changed" in text
+    assert "latest non-trigger commit" in text
+    assert "### Parity snapshot" in text
+    assert "Blocking gates" in text
+    assert "### Next work" in text
+    assert "upstream_freshness" in text
+    assert "upstream_contracts" in text

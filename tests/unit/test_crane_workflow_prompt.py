@@ -55,6 +55,24 @@ def test_crane_completion_is_two_phase_and_pr_head_gated() -> None:
     assert "Completion Gate Status: passed:<sha>" in text
 
 
+def test_crane_base_sync_strips_protected_workflow_files_from_push_patch() -> None:
+    text = _workflow_text()
+
+    assert "trusted base-branch sync noise" in text
+    assert "git checkout ORIG_HEAD -- <path>" in text
+    assert (
+        "safe-output patch for an existing Crane PR must not include protected workflow/config files"
+        in text
+    )
+
+
+def test_crane_push_to_pr_branch_allows_protected_files() -> None:
+    text = _workflow_text()
+
+    push_config = text.split("push-to-pull-request-branch:", 1)[1].split("create-issue:", 1)[0]
+    assert "protected-files: allowed" in push_config
+
+
 def test_crane_state_template_tracks_completion_candidate_gate() -> None:
     text = _workflow_text()
 

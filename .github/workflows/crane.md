@@ -119,6 +119,7 @@ safe-outputs:
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Crane"
+    protected-files: allowed
     max: 1
   create-issue:
     labels: [automation, crane]
@@ -490,6 +491,7 @@ This Step 0 produces the plan and ships it as commit #1 on the migration branch 
    ```
 
    Use `--force-with-lease` (not `--force`) so concurrent pushes are rejected rather than overwritten.
+   If the `git merge origin/main` path brings in protected control-plane files such as `.github/aw/actions-lock.json`, `.github/workflows/*.md`, `.github/workflows/*.lock.yml`, or `.github/workflows/scripts/*`, treat those file changes as trusted base-branch sync noise, not migration work. Before committing or calling `push-to-pull-request-branch`, restore those protected files to their pre-merge migration-branch versions with `git checkout ORIG_HEAD -- <path>` unless the migration explicitly declares them in its Source or Target paths. The safe-output patch for an existing Crane PR must not include protected workflow/config files solely because `origin/main` changed them; otherwise the push will be rejected by the protected-files policy.
 
 2. Make the proposed changes -- restricted to:
    - Files inside the source paths declared in the migration's **Source** section

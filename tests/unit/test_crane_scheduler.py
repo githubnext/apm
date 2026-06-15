@@ -45,6 +45,14 @@ def _write_migration(path: Path, *, schedule: str = "every 6h") -> None:
 def test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due(
     tmp_path, monkeypatch
 ) -> None:
+    class FixedDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            current = cls(2026, 6, 10, 16, 10, 36, tzinfo=timezone.utc)
+            if tz is None:
+                return current.replace(tzinfo=None)
+            return current.astimezone(tz)
+
     _write_migration(tmp_path / ".crane" / "migrations" / "sample.md", schedule="weekly")
     output_dir = tmp_path / "out"
     github_output = tmp_path / "github-output.txt"
@@ -64,6 +72,7 @@ def test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due(
         "read_migration_state",
         lambda _name: {"last_run": last_run_str, "iteration_count": 72},
     )
+    monkeypatch.setattr(crane_scheduler, "datetime", FixedDatetime)
     monkeypatch.setenv("GITHUB_OUTPUT", str(github_output))
 
     assert crane_scheduler.main() == 0

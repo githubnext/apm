@@ -1,0 +1,137 @@
+name: Upstream APM Sync
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: upstream-apm-sync
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: https://github.com/microsoft/apm.git
+  UPSTREAM_BRANCH: main
+  SYNC_BRANCH: automation/upstream-microsoft-apm-main
+
+jobs:
+  sync:
+    name: Sync microsoft/apm main
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream "$UPSTREAM_REPO" 2>/dev/null || \
+            git remote set-url upstream "$UPSTREAM_REPO"
+          git fetch upstream "$UPSTREAM_BRANCH" --prune
+          git fetch origin main --prune
+
+      - name: Merge upstream into sync branch
+        id: merge
+        shell: bash
+        run: |
+          upstream_ref="upstream/${UPSTREAM_BRANCH}"
+          upstream_sha="$(git rev-parse "$upstream_ref")"
+          origin_sha="$(git rev-parse origin/main)"
+          echo "upstream_sha=$upstream_sha" >> "$GITHUB_OUTPUT"
+          echo "origin_sha=$origin_sha" >> "$GITHUB_OUTPUT"
+
+          if git merge-base --is-ancestor "$upstream_ref" origin/main; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "origin/main already contains ${upstream_ref} (${upstream_sha})."
+            exit 0
+          fi
+
+          git switch --force-create "$SYNC_BRANCH" origin/main
+          if ! git merge --no-ff --no-edit "$upstream_ref"; then
+            git status --short
+            echo "::error::Automatic upstream merge conflicted. Resolve manually by merging ${upstream_ref} into main."
+            exit 1
+          fi
+          git push --force-with-lease origin "$SYNC_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update sync PR
+        if: steps.merge.outputs.changed == 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          body="$RUNNER_TEMP/upstream-sync-pr.md"
+          cat > "$body" <<EOF
+          ## TL;DR
+
+          This PR merges \`microsoft/apm@${{ steps.merge.outputs.upstream_sha }}\` into \`githubnext/apm@main\`.
+
+          ## Required follow-up before Go migration completion
+
+          - Review the upstream Python diff for new CLI/runtime behavior.
+          - Add or update real Go behavior tests for every changed Python source/test contract.
+          - Advance \`tests/parity/upstream_contract_coverage.yml\` with a reviewed range from the previous upstream SHA to \`${{ steps.merge.outputs.upstream_sha }}\`.
+          - Run the enforcing migration gate before declaring issue #78 complete.
+
+          This PR is created by \`.github/workflows/upstream-apm-sync.yml\`.
+          EOF
+
+          pr_number="$(gh pr list \
+            --head "$SYNC_BRANCH" \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number')"
+
+          if [ -z "$pr_number" ]; then
+            pr_url="$(gh pr create \
+              --base main \
+              --head "$SYNC_BRANCH" \
+              --title "chore(upstream): merge microsoft/apm main" \
+              --body-file "$body")"
+            pr_number="${pr_url##*/}"
+          else
+            gh pr edit "$pr_number" --body-file "$body"
+          fi
+
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+          gh pr view "$pr_number" --json url --jq .url
+
+      - name: Request merge-commit auto-merge
+        if: steps.merge.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh pr merge "${{ steps.pr.outputs.number }}" --auto --merge --delete-branch; then
+            echo "Auto-merge requested for upstream sync PR #${{ steps.pr.outputs.number }}."
+          else
+            echo "::warning::Could not enable auto-merge. PR #${{ steps.pr.outputs.number }} is ready for maintainer review/merge."
+          fi
+
+      - name: Summarize
+        if: always()
+        run: |
+          {
+            echo "## Upstream APM Sync"
+            echo
+            echo "- Upstream: \`${UPSTREAM_REPO}\`"
+            echo "- Branch: \`${UPSTREAM_BRANCH}\`"
+            echo "- Sync branch: \`${SYNC_BRANCH}\`"
+            echo "- Changed: \`${{ steps.merge.outputs.changed || 'unknown' }}\`"
+            echo "- Upstream SHA: \`${{ steps.merge.outputs.upstream_sha || 'unknown' }}\`"
+            echo "- Origin SHA: \`${{ steps.merge.outputs.origin_sha || 'unknown' }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

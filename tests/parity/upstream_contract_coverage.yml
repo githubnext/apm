@@ -1,0 +1,13 @@
+schema_version: 1
+description: >
+  Upstream microsoft/apm freshness and Go migration coverage ledger. The Go
+  migration cannot be declared complete unless upstream.reviewed_sha matches
+  microsoft/apm@main, that SHA is contained in HEAD, and every reviewed range
+  from baseline_sha to reviewed_sha maps changed Python source/test contracts
+  to existing Go tests.
+upstream:
+  repo: microsoft/apm
+  branch: main
+  baseline_sha: ccdafc451ae92d2c2beb5fdaf9a0311252ce5577
+  reviewed_sha: ccdafc451ae92d2c2beb5fdaf9a0311252ce5577
+reviewed_ranges: []

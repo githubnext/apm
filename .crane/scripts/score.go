@@ -64,6 +64,8 @@ type CutoverGates struct {
 	FunctionalContracts     float64 `json:"functional_contracts"`
 	StateDiffContracts      float64 `json:"state_diff_contracts"`
 	PythonBehaviorContracts float64 `json:"python_behavior_contracts"`
+	UpstreamFreshness       string  `json:"upstream_freshness"`
+	UpstreamContracts       float64 `json:"upstream_contracts"`
 	GoldenFixtureCorpus     string  `json:"golden_fixture_corpus"`
 	AllGoGoldenTests        string  `json:"all_go_golden_tests"`
 	NoPythonRuntime         string  `json:"no_python_runtime_dependency"`
@@ -104,6 +106,8 @@ type Score struct {
 	PythonTestsPassing     bool            `json:"python_tests_passing"`
 	GoTestsPassing         bool            `json:"go_tests_passing"`
 	BenchmarksPassing      bool            `json:"benchmarks_passing"`
+	UpstreamFreshness      bool            `json:"upstream_freshness"`
+	UpstreamContracts      float64         `json:"upstream_contracts"`
 	GoldenFixtureCorpus    bool            `json:"golden_fixture_corpus"`
 	AllGoGoldenTests       bool            `json:"all_go_golden_tests"`
 	NoPythonRuntime        bool            `json:"no_python_runtime_dependency"`
@@ -152,6 +156,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	functional := RatioGate{}
 	stateDiff := RatioGate{}
 	behaviorContracts := RatioGate{}
+	upstreamFreshness := BoolGate{}
+	upstreamContracts := RatioGate{}
 	goldenFixtureCorpus := BoolGate{}
 	allGoGoldenTests := BoolGate{}
 	noPythonRuntime := BoolGate{}
@@ -172,6 +178,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 				&functional,
 				&stateDiff,
 				&behaviorContracts,
+				&upstreamFreshness,
+				&upstreamContracts,
 				&goldenFixtureCorpus,
 				&allGoGoldenTests,
 				&noPythonRuntime,
@@ -199,6 +207,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 					&functional,
 					&stateDiff,
 					&behaviorContracts,
+					&upstreamFreshness,
+					&upstreamContracts,
 					&goldenFixtureCorpus,
 					&allGoGoldenTests,
 					&noPythonRuntime,
@@ -283,6 +293,12 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 	if !behaviorContracts.Seen {
 		behaviorContracts = missingRatioGate()
 	}
+	if !upstreamFreshness.Seen {
+		upstreamFreshness = BoolGate{Seen: true, Passed: false}
+	}
+	if !upstreamContracts.Seen {
+		upstreamContracts = missingRatioGate()
+	}
 	if !pythonTests.Seen {
 		pythonTests = BoolGate{Seen: true, Passed: testPassed(passed, failed, "TestParityCompletionPythonSuite")}
 	}
@@ -302,6 +318,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		FunctionalContracts:     functional.Percent(),
 		StateDiffContracts:      stateDiff.Percent(),
 		PythonBehaviorContracts: behaviorContracts.Percent(),
+		UpstreamFreshness:       passFail(upstreamFreshness.OK()),
+		UpstreamContracts:       upstreamContracts.Percent(),
 		GoldenFixtureCorpus:     passFail(goldenFixtureCorpus.OK()),
 		AllGoGoldenTests:        passFail(allGoGoldenTests.OK()),
 		NoPythonRuntime:         passFail(noPythonRuntime.OK()),
@@ -328,6 +346,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		gates.FunctionalContracts == 1.0 &&
 		gates.StateDiffContracts == 1.0 &&
 		gates.PythonBehaviorContracts == 1.0 &&
+		gates.UpstreamFreshness == "pass" &&
+		gates.UpstreamContracts == 1.0 &&
 		gates.GoldenFixtureCorpus == "pass" &&
 		gates.AllGoGoldenTests == "pass" &&
 		gates.NoPythonRuntime == "pass" &&
@@ -372,6 +392,8 @@ func computeScore(input scanInput, getenv getenvFunc) (Score, error) {
 		PythonTestsPassing:     gates.PythonTests == "pass",
 		GoTestsPassing:         gates.GoTests == "pass",
 		BenchmarksPassing:      gates.Benchmarks == "pass",
+		UpstreamFreshness:      gates.UpstreamFreshness == "pass",
+		UpstreamContracts:      gates.UpstreamContracts,
 		GoldenFixtureCorpus:    gates.GoldenFixtureCorpus == "pass",
 		AllGoGoldenTests:       gates.AllGoGoldenTests == "pass",
 		NoPythonRuntime:        gates.NoPythonRuntime == "pass",
@@ -405,6 +427,8 @@ func applyGateEvent(
 	functional *RatioGate,
 	stateDiff *RatioGate,
 	behaviorContracts *RatioGate,
+	upstreamFreshness *BoolGate,
+	upstreamContracts *RatioGate,
 	goldenFixtureCorpus *BoolGate,
 	allGoGoldenTests *BoolGate,
 	noPythonRuntime *BoolGate,
@@ -427,6 +451,10 @@ func applyGateEvent(
 		*stateDiff = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "python_behavior_contracts":
 		*behaviorContracts = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
+	case "upstream_freshness":
+		*upstreamFreshness = BoolGate{Seen: true, Passed: gate.Passed}
+	case "upstream_contracts":
+		*upstreamContracts = RatioGate{Seen: true, Passing: gate.Passing, Total: gate.Total}
 	case "golden_fixture_corpus":
 		*goldenFixtureCorpus = BoolGate{Seen: true, Passed: gate.Passed}
 	case "all_go_golden_tests":
@@ -485,6 +513,8 @@ func gateResults(gates CutoverGates) []GateResult {
 		{Name: "functional_contracts", Passing: gates.FunctionalContracts == 1.0},
 		{Name: "state_diff_contracts", Passing: gates.StateDiffContracts == 1.0},
 		{Name: "python_behavior_contracts", Passing: gates.PythonBehaviorContracts == 1.0},
+		{Name: "upstream_freshness", Passing: gates.UpstreamFreshness == "pass"},
+		{Name: "upstream_contracts", Passing: gates.UpstreamContracts == 1.0},
 		{Name: "golden_fixture_corpus", Passing: gates.GoldenFixtureCorpus == "pass"},
 		{Name: "all_go_golden_tests", Passing: gates.AllGoGoldenTests == "pass"},
 		{Name: "no_python_runtime_dependency", Passing: gates.NoPythonRuntime == "pass"},

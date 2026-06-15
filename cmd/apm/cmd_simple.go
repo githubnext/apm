@@ -173,20 +173,72 @@ func runExperimental(args []string) int {
 	rest := args[1:]
 	switch sub {
 	case "list":
+		for _, a := range rest {
+			if a == "--help" || a == "-h" {
+				fmt.Println("Usage: apm experimental list [OPTIONS]")
+				fmt.Println()
+				fmt.Println("  List all experimental features")
+				fmt.Println()
+				fmt.Println("Options:")
+				fmt.Println("  --enabled  Show enabled features")
+				fmt.Println("  --disabled  Show disabled features")
+				fmt.Println("  --verbose, -v  Show detailed output")
+				fmt.Println("  --json  Output as JSON")
+				fmt.Println("  --help  Show this message and exit.")
+				return 0
+			}
+		}
 		fmt.Println("[i] No experimental features available.")
 	case "enable":
+		for _, a := range rest {
+			if a == "--help" || a == "-h" {
+				fmt.Println("Usage: apm experimental enable [OPTIONS] FEATURE")
+				fmt.Println()
+				fmt.Println("  Enable an experimental feature")
+				fmt.Println()
+				fmt.Println("Options:")
+				fmt.Println("  --verbose, -v  Show detailed output")
+				fmt.Println("  --help  Show this message and exit.")
+				return 0
+			}
+		}
 		if len(rest) == 0 {
 			fmt.Fprintln(os.Stderr, "Error: Missing argument 'FEATURE'.")
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' enabled.\n", rest[0])
 	case "disable":
+		for _, a := range rest {
+			if a == "--help" || a == "-h" {
+				fmt.Println("Usage: apm experimental disable [OPTIONS] FEATURE")
+				fmt.Println()
+				fmt.Println("  Disable an experimental feature")
+				fmt.Println()
+				fmt.Println("Options:")
+				fmt.Println("  --verbose, -v  Show detailed output")
+				fmt.Println("  --help  Show this message and exit.")
+				return 0
+			}
+		}
 		if len(rest) == 0 {
 			fmt.Fprintln(os.Stderr, "Error: Missing argument 'FEATURE'.")
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' disabled.\n", rest[0])
 	case "reset":
+		for _, a := range rest {
+			if a == "--help" || a == "-h" {
+				fmt.Println("Usage: apm experimental reset [OPTIONS]")
+				fmt.Println()
+				fmt.Println("  Reset experimental features to defaults")
+				fmt.Println()
+				fmt.Println("Options:")
+				fmt.Println("  --yes, -y  Skip confirmation prompt")
+				fmt.Println("  --verbose, -v  Show detailed output")
+				fmt.Println("  --help  Show this message and exit.")
+				return 0
+			}
+		}
 		fmt.Println("[+] Experimental features reset to defaults.")
 	default:
 		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", sub)

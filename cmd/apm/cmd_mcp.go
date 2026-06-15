@@ -62,6 +62,8 @@ func runMCPInstall(args []string) int {
 			fmt.Println("  Install an MCP server")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max results to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -116,6 +118,8 @@ func runMCPSearch(args []string) int {
 			fmt.Println("  Search MCP servers in registry")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max results to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -139,6 +143,8 @@ func runMCPInspect(args []string) int {
 			fmt.Println("  Show detailed MCP server information")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max servers to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
@@ -166,6 +172,8 @@ func runMCPList(args []string) int {
 			fmt.Println("  List all available MCP servers")
 			fmt.Println()
 			fmt.Println("Options:")
+			fmt.Println("  --limit INTEGER  Max servers to show")
+			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}

@@ -597,7 +597,8 @@ def get_pr_head_check_gate(repo, pr_number, github_token, http_get_json=_http_ge
     """Return ``(passed, reason)`` for the deterministic PR-head check gate.
 
     ``passed`` is:
-        True  - the current PR head has at least one check run and all are success
+        True  - the current PR head contains the current base and all check runs
+                are success
         False - the PR exists, but checks are missing, pending, or failing
         None  - the API could not provide enough data to decide
     """
@@ -615,6 +616,26 @@ def get_pr_head_check_gate(repo, pr_number, github_token, http_get_json=_http_ge
     head_sha = head.get("sha") if isinstance(head, dict) else None
     if not head_sha:
         return None, "pr-head-sha-unavailable"
+    base = pr_body.get("base") or {}
+    base_sha = base.get("sha") if isinstance(base, dict) else None
+    if not base_sha:
+        return None, "pr-base-sha-unavailable:{}".format(head_sha[:12])
+
+    compare_url = "https://api.github.com/repos/{}/compare/{}...{}".format(
+        repo,
+        base_sha,
+        head_sha,
+    )
+    compare_body, _ = http_get_json(compare_url, headers)
+    if not isinstance(compare_body, dict):
+        return None, "base-compare-unavailable:{}:{}".format(base_sha[:12], head_sha[:12])
+    compare_status = compare_body.get("status")
+    if compare_status not in {"ahead", "identical"}:
+        return False, "stale-base:{}:{}:base:{}".format(
+            head_sha[:12],
+            compare_status or "unknown",
+            base_sha[:12],
+        )
 
     check_runs = []
     next_url = "https://api.github.com/repos/{}/commits/{}/check-runs?per_page=100".format(

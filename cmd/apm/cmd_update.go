@@ -16,6 +16,8 @@ func runUpdate(args []string) int {
 		flagHelp    bool
 		flagVerbose bool
 		flagYes     bool
+		checkOnly   bool
+		hasTarget   bool
 	)
 
 	for i := 0; i < len(args); i++ {
@@ -28,8 +30,11 @@ func runUpdate(args []string) int {
 			flagVerbose = true
 		case "--yes", "-y":
 			flagYes = true
+		case "--check":
+			checkOnly = true
 		case "-t", "--target":
 			if i+1 < len(args) {
+				hasTarget = true
 				i++
 			}
 		}
@@ -38,6 +43,14 @@ func runUpdate(args []string) int {
 	if flagHelp {
 		printCmdHelp("update")
 		return 0
+	}
+
+	if checkOnly {
+		if hasTarget {
+			fmt.Fprintln(os.Stderr, "[!] --target is ignored when forwarding to 'apm self-update --check'. Use 'apm update --dry-run' to preview dependency changes.")
+		}
+		fmt.Fprintln(os.Stderr, "[!] 'apm update --check' is the deprecated self-updater shim. Use 'apm update --dry-run' to preview dependency changes, or 'apm self-update --check' to check for a new CLI binary. Forwarding for back-compat (deprecated).")
+		return runSelfUpdate([]string{"--check"})
 	}
 
 	cwd, _ := os.Getwd()

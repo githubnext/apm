@@ -11,7 +11,7 @@
 | Field | Value |
 |-------|-------|
 | Last Run | 2026-06-15T09:33:00Z |
-| Iteration Count | 92 |
+| Iteration Count | 93 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:43950ad2 |
+| Completion Gate Status | pending:cbec35fe |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter92), manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84) |
+| Recent Statuses | gate-fix (iter93), gate-fix (iter92), manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88), accepted (iter87), accepted (iter86), accepted (iter85) |
 
 ---
 
@@ -76,7 +76,8 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 29 | Merge main (c27194e4) into crane branch without protected .github/ files; push 1f24ebbb (iter 87) | done |
 | 32 | Merge main (c27194e4) into crane branch; push 5b29b450; await CI (iter 90) | done |
 | 33 | Fix push-rejected-protected-files blocker: add protected-files: allowed to crane.md | done |
-| 34 | Re-trigger CI on crane branch: push empty ci-trigger commit 43950ad2 (no .github/ changes); await CI completion gate | in-progress |
+| 34 | Re-trigger CI on crane branch: push empty ci-trigger commit 43950ad2 (no .github/ changes); await CI completion gate | done |
+| 35 | Fix upstream freshness ancestor check, advance reviewed_sha to 43a00c21, fix stale scheduler test; push cbec35fe | in-progress |
 
 ---
 

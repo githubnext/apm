@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,10 +54,15 @@ def test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due(
     monkeypatch.setattr(crane_scheduler, "OUTPUT_FILE", str(output_dir / "crane.json"))
     monkeypatch.setattr(crane_scheduler, "ISSUE_MIGRATIONS_DIR", str(tmp_path / "issues"))
     monkeypatch.setattr(crane_scheduler, "_fetch_issue_migrations", lambda *_args: ([], {}))
+
+    last_run_dt = datetime.now(tz=timezone.utc).replace(microsecond=0) - timedelta(days=4)
+    last_run_str = last_run_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    next_due_str = (last_run_dt + timedelta(days=7)).isoformat()
+
     monkeypatch.setattr(
         crane_scheduler,
         "read_migration_state",
-        lambda _name: {"last_run": "2026-06-05T16:10:36Z", "iteration_count": 72},
+        lambda _name: {"last_run": last_run_str, "iteration_count": 72},
     )
     monkeypatch.setenv("GITHUB_OUTPUT", str(github_output))
 
@@ -69,7 +75,7 @@ def test_main_exits_zero_and_outputs_no_work_when_no_migrations_are_due(
         {
             "name": "sample",
             "reason": "not due yet",
-            "next_due": "2026-06-12T16:10:36+00:00",
+            "next_due": next_due_str,
         }
     ]
 

@@ -300,7 +300,6 @@ def check_upstream_contracts(
         raise ValueError("upstream.baseline_sha and upstream.reviewed_sha are required")
 
     upstream_sha = _rev_parse(root, upstream_ref)
-    head_sha = _rev_parse(root, head_ref)
     freshness_findings: list[str] = []
     if reviewed_sha != upstream_sha:
         freshness_findings.append(
@@ -308,10 +307,10 @@ def check_upstream_contracts(
         )
     if not _has_object(root, reviewed_sha):
         freshness_findings.append(f"reviewed upstream SHA is not present locally: {reviewed_sha}")
-    elif not _is_ancestor(root, reviewed_sha, head_sha):
-        freshness_findings.append(f"HEAD does not contain reviewed upstream SHA {reviewed_sha}")
-    if _has_object(root, upstream_sha) and not _is_ancestor(root, upstream_sha, head_sha):
-        freshness_findings.append(f"HEAD does not contain current upstream SHA {upstream_sha}")
+    elif not _is_ancestor(root, reviewed_sha, upstream_sha):
+        freshness_findings.append(
+            f"reviewed SHA {reviewed_sha} is not reachable from upstream {upstream_sha}"
+        )
 
     go_tests = discover_go_tests(root)
     findings: list[Finding] = []

@@ -19,15 +19,15 @@
 | Branch | `crane/crane-migration-python-to-go-full-apm-cli-rewrite` |
 | PR | #119 |
 | Issue | #78 |
-| Paused | true |
-| Pause Reason | push-rejected-protected-files: safeoutputs rejects push because 9686d173 (in main ancestry) modifies .github/ protected files; fix: add protected-files: allowed to push-to-pull-request-branch in .github/workflows/crane.md, then unpause |
+| Paused | false |
+| Pause Reason | -- |
 | Completed | false |
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:27d55baa (local only, push rejected) |
+| Completion Gate Status | pending:config-fix-pr-122 |
 | Consecutive Errors | 0 |
-| Recent Statuses | error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83), accepted (iter81) |
+| Recent Statuses | manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88), accepted (iter87), accepted (iter86), accepted (iter85), accepted (iter84), accepted (iter83) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909 passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate: PAUSED -- push rejected. See Pause Reason and Blockers.
+**External consumers**: CLI binary only. Completion Candidate: unpaused -- protected-files safe-output fix is in PR #122; rerun Crane after that workflow config lands.
 
 ---
 
@@ -75,13 +75,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 | 28 | Merge main (c27194e4) into crane branch; fix Parity Gate CI failures (iter 86) | done |
 | 29 | Merge main (c27194e4) into crane branch without protected .github/ files; push 1f24ebbb (iter 87) | done |
 | 32 | Merge main (c27194e4) into crane branch; push 5b29b450; await CI (iter 90) | done |
-| 33 | Fix push-rejected-protected-files blocker: add protected-files: allowed to crane.md | blocked |
+| 33 | Fix push-rejected-protected-files blocker: add protected-files: allowed to crane.md | in-progress |
 
 ---
 
 ## [target] Current Focus
 
-**PAUSED -- push-rejected-protected-files**: Iters 88-91 all had push_to_pull_request_branch REJECTED (not false positives as previously recorded). Root cause: commit 9686d173 (in main ancestry between da06413a and c27194e4) modifies .github/aw/actions-lock.json, .github/workflows/crane.md, .github/workflows/scripts/crane_scheduler.py. The safeoutputs service scans INDIVIDUAL COMMITS in the format-patch (not the tree diff), finds .github/ changes in 9686d173, and rejects the push -- even though the merge commit itself restores those files to crane's pre-merge state. Fix: maintainer must add `protected-files: allowed` to push-to-pull-request-branch in .github/workflows/crane.md (or manually push crane branch). Merge commit 27d55baa is ready locally; re-run after config fix.
+**UNPAUSED -- resume after protected-files config fix**: PR #122 adds `protected-files: allowed` to `push-to-pull-request-branch` in `.github/workflows/crane.md` and recompiles the Crane lockfile. After PR #122 lands, rerun Crane for this migration; it should merge current `origin/main` into `crane/crane-migration-python-to-go-full-apm-cli-rewrite`, push the PR #119 branch without protected-files rejection, and let the up-to-date PR-head completion gate observe checks on the pushed head.
 
 ---
 
@@ -97,7 +97,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [wip] Blockers & Foreclosed Approaches
 
-- **ACTIVE BLOCKER (iter 91)**: push-rejected-protected-files. 9686d173 (main ancestry) modifies `.github/aw/actions-lock.json`, `.github/workflows/crane.md`, `.github/workflows/scripts/crane_scheduler.py`. safeoutputs format-patch finds these changes and rejects the push even though the merge commit tree has no .github/ change. **Fix**: add `protected-files: allowed` to `push-to-pull-request-branch` in `.github/workflows/crane.md`, then unpause and re-run. Or maintainer manually pushes `crane/crane-migration-python-to-go-full-apm-cli-rewrite`.
+- **RESOLVING (manual, 2026-06-15)**: push-rejected-protected-files. PR #122 adds `protected-files: allowed` to `push-to-pull-request-branch` in `.github/workflows/crane.md`; repo-memory is unpaused so Crane can resume after that config fix lands. If the next run still rejects the push, inspect whether safeoutputs is using the updated compiled workflow config.
 
 ---
 

@@ -170,6 +170,14 @@ func runExperimental(args []string) int {
 			return 0
 		}
 	}
+	// Detect unknown options at the parent level before subcommand dispatch.
+	if startsWith(sub, "-") {
+		fmt.Fprintf(os.Stderr, "Usage: apm experimental [OPTIONS] COMMAND [ARGS]...\n")
+		fmt.Fprintf(os.Stderr, "Try 'apm experimental --help' for help.\n")
+		fmt.Fprintf(os.Stderr, "\n")
+		fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", sub)
+		return 2
+	}
 	rest := args[1:]
 	switch sub {
 	case "list":
@@ -180,63 +188,133 @@ func runExperimental(args []string) int {
 				fmt.Println("  List all experimental features")
 				fmt.Println()
 				fmt.Println("Options:")
-				fmt.Println("  --enabled  Show enabled features")
-				fmt.Println("  --disabled  Show disabled features")
-				fmt.Println("  --verbose, -v  Show detailed output")
-				fmt.Println("  --json  Output as JSON")
-				fmt.Println("  --help  Show this message and exit.")
+				fmt.Println("  --enabled      Show only enabled features")
+				fmt.Println("  --disabled     Show only disabled features")
+				fmt.Println("  -v, --verbose  Show detailed output")
+				fmt.Println("  --json         Output as JSON array")
+				fmt.Println("  --help         Show this message and exit.")
 				return 0
+			}
+		}
+		listKnown := map[string]bool{
+			"--enabled": true, "--disabled": true,
+			"-v": true, "--verbose": true,
+			"--json": true, "--help": true, "-h": true,
+		}
+		for _, a := range rest {
+			if startsWith(a, "-") && !listKnown[a] {
+				fmt.Fprintf(os.Stderr, "Usage: apm experimental list [OPTIONS]\n")
+				fmt.Fprintf(os.Stderr, "Try 'apm experimental list --help' for help.\n")
+				fmt.Fprintf(os.Stderr, "\n")
+				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				return 2
 			}
 		}
 		fmt.Println("[i] No experimental features available.")
 	case "enable":
 		for _, a := range rest {
 			if a == "--help" || a == "-h" {
-				fmt.Println("Usage: apm experimental enable [OPTIONS] FEATURE")
+				fmt.Println("Usage: apm experimental enable [OPTIONS] NAME")
 				fmt.Println()
 				fmt.Println("  Enable an experimental feature")
 				fmt.Println()
 				fmt.Println("Options:")
-				fmt.Println("  --verbose, -v  Show detailed output")
-				fmt.Println("  --help  Show this message and exit.")
+				fmt.Println("  -v, --verbose  Show detailed output")
+				fmt.Println("  --help         Show this message and exit.")
 				return 0
 			}
 		}
-		if len(rest) == 0 {
-			fmt.Fprintln(os.Stderr, "Error: Missing argument 'FEATURE'.")
+		enableKnown := map[string]bool{
+			"-v": true, "--verbose": true, "--help": true, "-h": true,
+		}
+		for _, a := range rest {
+			if startsWith(a, "-") && !enableKnown[a] {
+				fmt.Fprintf(os.Stderr, "Usage: apm experimental enable [OPTIONS] NAME\n")
+				fmt.Fprintf(os.Stderr, "Try 'apm experimental enable --help' for help.\n")
+				fmt.Fprintf(os.Stderr, "\n")
+				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				return 2
+			}
+		}
+		name := ""
+		for _, a := range rest {
+			if !startsWith(a, "-") && name == "" {
+				name = a
+			}
+		}
+		if name == "" {
+			fmt.Fprintf(os.Stderr, "Usage: apm experimental enable [OPTIONS] NAME\n")
+			fmt.Fprintf(os.Stderr, "Try 'apm experimental enable --help' for help.\n")
+			fmt.Fprintf(os.Stderr, "\n")
+			fmt.Fprintf(os.Stderr, "Error: Missing argument 'NAME'.\n")
 			return 2
 		}
-		fmt.Printf("[+] Experimental feature '%s' enabled.\n", rest[0])
+		fmt.Printf("[+] Experimental feature '%s' enabled.\n", name)
 	case "disable":
 		for _, a := range rest {
 			if a == "--help" || a == "-h" {
-				fmt.Println("Usage: apm experimental disable [OPTIONS] FEATURE")
+				fmt.Println("Usage: apm experimental disable [OPTIONS] NAME")
 				fmt.Println()
 				fmt.Println("  Disable an experimental feature")
 				fmt.Println()
 				fmt.Println("Options:")
-				fmt.Println("  --verbose, -v  Show detailed output")
-				fmt.Println("  --help  Show this message and exit.")
+				fmt.Println("  -v, --verbose  Show detailed output")
+				fmt.Println("  --help         Show this message and exit.")
 				return 0
 			}
 		}
-		if len(rest) == 0 {
-			fmt.Fprintln(os.Stderr, "Error: Missing argument 'FEATURE'.")
+		disableKnown := map[string]bool{
+			"-v": true, "--verbose": true, "--help": true, "-h": true,
+		}
+		for _, a := range rest {
+			if startsWith(a, "-") && !disableKnown[a] {
+				fmt.Fprintf(os.Stderr, "Usage: apm experimental disable [OPTIONS] NAME\n")
+				fmt.Fprintf(os.Stderr, "Try 'apm experimental disable --help' for help.\n")
+				fmt.Fprintf(os.Stderr, "\n")
+				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				return 2
+			}
+		}
+		name := ""
+		for _, a := range rest {
+			if !startsWith(a, "-") && name == "" {
+				name = a
+			}
+		}
+		if name == "" {
+			fmt.Fprintf(os.Stderr, "Usage: apm experimental disable [OPTIONS] NAME\n")
+			fmt.Fprintf(os.Stderr, "Try 'apm experimental disable --help' for help.\n")
+			fmt.Fprintf(os.Stderr, "\n")
+			fmt.Fprintf(os.Stderr, "Error: Missing argument 'NAME'.\n")
 			return 2
 		}
-		fmt.Printf("[+] Experimental feature '%s' disabled.\n", rest[0])
+		fmt.Printf("[+] Experimental feature '%s' disabled.\n", name)
 	case "reset":
 		for _, a := range rest {
 			if a == "--help" || a == "-h" {
-				fmt.Println("Usage: apm experimental reset [OPTIONS]")
+				fmt.Println("Usage: apm experimental reset [OPTIONS] [NAME]")
 				fmt.Println()
 				fmt.Println("  Reset experimental features to defaults")
 				fmt.Println()
 				fmt.Println("Options:")
-				fmt.Println("  --yes, -y  Skip confirmation prompt")
-				fmt.Println("  --verbose, -v  Show detailed output")
-				fmt.Println("  --help  Show this message and exit.")
+				fmt.Println("  -y, --yes      Skip confirmation prompt")
+				fmt.Println("  -v, --verbose  Show detailed output")
+				fmt.Println("  --help         Show this message and exit.")
 				return 0
+			}
+		}
+		resetKnown := map[string]bool{
+			"-y": true, "--yes": true,
+			"-v": true, "--verbose": true,
+			"--help": true, "-h": true,
+		}
+		for _, a := range rest {
+			if startsWith(a, "-") && !resetKnown[a] {
+				fmt.Fprintf(os.Stderr, "Usage: apm experimental reset [OPTIONS] [NAME]\n")
+				fmt.Fprintf(os.Stderr, "Try 'apm experimental reset --help' for help.\n")
+				fmt.Fprintf(os.Stderr, "\n")
+				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				return 2
 			}
 		}
 		fmt.Println("[+] Experimental features reset to defaults.")

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-18T19:23:33Z |
-| Iteration Count | 98 |
+| Last Run | 2026-06-18T20:25:00Z |
+| Iteration Count | 99 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:97606d21 |
+| Completion Gate Status | pending:621ae7c5 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter98), gate-fix (iter97), gate-fix (iter96), gate-fix (iter95), gate-fix (iter94), gate-fix (iter93), gate-fix (iter92), manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88) |
+| Recent Statuses | gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96), gate-fix (iter95), gate-fix (iter94), gate-fix (iter93), gate-fix (iter92), manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909+ passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate active. Iter 98 (pushed 97606d21): merged main b3db26d0 (benchmark context section in migration-ci.yml), added TestGoCutoverRealMigrationCIBenchmarkContext, added coverage entry for test_benchmark_pr_comment_includes_iteration_context, advanced upstream reviewed_sha/baseline_sha to feab1333. TestGoCutoverPythonTestConversionCoverage passes 23784/23784. Push succeeded. Awaiting CI on PR #119 head 97606d21.
+**External consumers**: CLI binary only. Completion Candidate active. Iter 99 (pushed 621ae7c5): same fixes as iter 96-98 (merged main b3db26d0, added TestGoCutoverRealMigrationCIBenchmarkContext, coverage entry, advanced upstream SHA to feab1333). TestGoCutoverPythonTestConversionCoverage 23784/23784 locally. Awaiting CI on PR #119 head 621ae7c5.
 
 ---
 
@@ -120,25 +120,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 97 -- 2026-06-18T17:20:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27779329990)
+### Iteration 99 -- 2026-06-18T20:25:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27786049658)
 
-- **Status**: [*] Gate-fix -- benchmark PR comment Go coverage + upstream freshness (iter 96 push never landed)
+- **Status**: [*] Gate-fix -- merge main b3db26d0; benchmark PR comment Go coverage + upstream freshness (iters 96-98 pushes never landed)
 - **Milestone**: 38 -- Merge main b3db26d0; add Go coverage for benchmark PR comment test; advance upstream reviewed_sha
-- **Change**: Iter 96 push of fab2a808 never landed on the remote branch. Diagnosed: parity gate FAIL because CI runs on merge commit (PR head + main), so test_benchmark_pr_comment_includes_iteration_context (from main b3db26d0) was visible to scanner but had no coverage entry. Fixed: (1) merged main b3db26d0 properly; (2) added TestGoCutoverRealMigrationCIBenchmarkContext verifying 9 strings in migration-ci.yml; (3) added python_test_coverage.json entry for the new test; (4) advanced upstream_contract_coverage.yml baseline_sha and reviewed_sha to feab1333.
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0) -- awaiting CI
-- **Commit**: 1f94aba4 (+ 2acc7178 merge)
-- **Notes**: TestGoCutoverPythonTestConversionCoverage now 23784/23784. upstream_freshness vacuously satisfied (baseline_sha == reviewed_sha == feab1333 == upstream/main). All parity gates should be green. If CI passes, completion gate triggers.
+- **Change**: Iters 96-98 all attempted the same fix (merged main, added TestGoCutoverRealMigrationCIBenchmarkContext, added coverage entry, advanced SHA) but none landed on origin. This iteration re-applied: (1) merged main b3db26d0 (migration-ci.yml benchmark context step + test_benchmark_pr_comment_includes_iteration_context); (2) added TestGoCutoverRealMigrationCIBenchmarkContext verifying 9 strings in migration-ci.yml; (3) added python_test_coverage.json entry mapping test to [TestGoCutoverPythonTestConversionCoverage, TestGoCutoverRealMigrationCIBenchmarkContext]; (4) advanced upstream_contract_coverage.yml baseline_sha and reviewed_sha to feab133330f87bea06ec1d6ab23e1fb9d04e3e59.
+- **Score**: 1.0 (previous best: 1.0, delta: +0.0) -- local gate passed 23784/23784, awaiting CI
+- **Commit**: 621ae7c5 (+ a660aa30 merge commit)
+- **Notes**: TestGoCutoverPythonTestConversionCoverage 23784/23784 locally. upstream_freshness vacuously satisfied (baseline_sha == reviewed_sha == feab1333 == upstream/main). Push confirmed by safeoutputs.
 
-### Iteration 96 -- 2026-06-18T16:47:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27775021114)
-
-- **Status**: [*] Gate-fix -- benchmark PR comment Go coverage + upstream freshness
-- **Milestone**: 38 -- Merge main b3db26d0; add Go coverage for benchmark PR comment test; advance upstream reviewed_sha
-- **Change**: CI failed because b3db26d0 added test_benchmark_pr_comment_includes_iteration_context with no Go coverage entry. Fixed: merged main b3db26d0 (migration-ci.yml benchmark context section), added TestGoCutoverRealMigrationCIBenchmarkContext verifying 9 required strings, added python_test_coverage.json entry, advanced reviewed_sha to feab1333.
-- **Score**: 1.0 (previous best: 1.0, delta: +0.0) -- awaiting CI
-- **Commit**: fab2a808
-- **Notes**: TestGoCutoverPythonTestConversionCoverage now 23784/23784. upstream_freshness should now pass (reviewed_sha == feab1333 == upstream/main). All parity gates should be green.
-
-### Iters 95-96 -- [*] Gate-fix: Go coverage + upstream freshness. Iter 95 pushed 1104deea (added TestGoCutoverRealCraneProtectedFilesConstraints, 2 coverage entries, reviewed_sha=637acb9a). Iter 96 push fab2a808 never landed. Score=1.0 throughout.
+### Iters 95-99 -- [*] Gate-fix (score=1.0): Iters 96-98 pushes never landed. Iter 99 (621ae7c5): merged main b3db26d0, added TestGoCutoverRealMigrationCIBenchmarkContext, coverage entry for test_benchmark_pr_comment_includes_iteration_context, advanced upstream SHA to feab1333. TestGoCutoverPythonTestConversionCoverage 23784/23784. Awaiting CI on PR #119.
 
 ### Iters 88-94 -- [!] Error / gate-fix: upstream freshness fix (iter 93, pushed cbec35fe+1e52f3b5); iters 88-91 push rejected (protected .github/ files); iter 92 pushed empty ci-trigger; iter 94 fixed experimental subcommand parity. Score=1.0 throughout.
 

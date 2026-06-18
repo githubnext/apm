@@ -324,18 +324,206 @@ jobs:
             cat "$RUNNER_TEMP/migration-cli-benchmark.md" >> "$GITHUB_STEP_SUMMARY"
           fi
 
+      - name: Download parity evidence
+        if: always()
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: migration-parity-evidence
+          path: ${{ runner.temp }}/migration-parity-evidence
+
       - name: Post benchmark PR comment
         if: always() && github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PARITY_RESULT: ${{ needs.parity.result }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ ! -f "$RUNNER_TEMP/migration-cli-benchmark.md" ]; then
             echo "No migration benchmark markdown found; skipping PR comment."
             exit 0
           fi
+
+          SCORE_PATH="$RUNNER_TEMP/migration-parity-evidence/migration-score.json"
+          export SCORE_PATH
+
+          python - <<'PY' > "$RUNNER_TEMP/migration-benchmark-context.md"
+          from __future__ import annotations
+
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+
+          def gh_json(path: str) -> object | None:
+              try:
+                  completed = subprocess.run(
+                      ["gh", "api", path],
+                      check=True,
+                      capture_output=True,
+                      encoding="utf-8",
+                  )
+              except subprocess.CalledProcessError:
+                  return None
+              return json.loads(completed.stdout)
+
+
+          def subject(message: str) -> str:
+              return message.splitlines()[0] if message else "(no commit subject)"
+
+
+          def body_lines(message: str, limit: int = 5) -> list[str]:
+              items: list[str] = []
+              current: list[str] = []
+              for raw_line in message.splitlines()[1:]:
+                  line = raw_line.strip()
+                  if not line or line.startswith("Co-authored-by:"):
+                      continue
+                  if line.startswith(("Fixes ", "Run:")):
+                      continue
+                  is_bullet = line.startswith(("-", "*"))
+                  cleaned = line.lstrip("-* ").strip()
+                  if is_bullet:
+                      if current:
+                          items.append(" ".join(current))
+                      current = [cleaned]
+                  elif current:
+                      current.append(cleaned)
+                  else:
+                      current = [cleaned]
+              if current:
+                  items.append(" ".join(current))
+              return items[:limit]
+
+
+          def short(sha: str | None) -> str:
+              return (sha or "")[:7]
+
+
+          def is_trigger_only(message: str) -> bool:
+              return subject(message).strip().lower() in {"ci: trigger checks"}
+
+
+          def bool_word(value: object) -> str:
+              return "yes" if value is True else "no" if value is False else "unknown"
+
+
+          def format_float(value: object) -> str:
+              if isinstance(value, int | float):
+                  return f"{value:.3f}".rstrip("0").rstrip(".")
+              return "unknown"
+
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          pr_number = os.environ["PR_NUMBER"]
+          head_sha = os.environ["HEAD_SHA"]
+          parity_result = os.environ.get("PARITY_RESULT", "unknown")
+          score_path = Path(os.environ["SCORE_PATH"])
+
+          commits = gh_json(f"repos/{repo}/pulls/{pr_number}/commits?per_page=100")
+          commits = commits if isinstance(commits, list) else []
+          head_commit = next((item for item in commits if item.get("sha") == head_sha), None)
+          if head_commit is None and commits:
+              head_commit = commits[-1]
+          head_message = ((head_commit or {}).get("commit") or {}).get("message", "")
+
+          change_commit = head_commit
+          if is_trigger_only(head_message):
+              for item in reversed(commits[:-1]):
+                  message = (item.get("commit") or {}).get("message", "")
+                  if not is_trigger_only(message):
+                      change_commit = item
+                      break
+
+          change_sha = (change_commit or {}).get("sha") or head_sha
+          change_message = ((change_commit or {}).get("commit") or {}).get("message", "")
+          commit_detail = gh_json(f"repos/{repo}/commits/{change_sha}") or {}
+          files = [item.get("filename", "") for item in commit_detail.get("files", [])]
+          files = [filename for filename in files if filename]
+
+          print("### What changed")
+          print()
+          print(f"- **PR head**: `{short(head_sha)}` -- {subject(head_message)}")
+          if change_sha != head_sha:
+              print(
+                  f"- **Change commit**: `{short(change_sha)}` -- "
+                  f"{subject(change_message)} (latest non-trigger commit)"
+              )
+          notes = body_lines(change_message)
+          if notes:
+              print("- **Commit notes**:")
+              for line in notes:
+                  print(f"  - {line}")
+          if files:
+              shown = files[:10]
+              extra = len(files) - len(shown)
+              suffix = f", +{extra} more" if extra > 0 else ""
+              print(f"- **Files touched**: {', '.join(f'`{name}`' for name in shown)}{suffix}")
+          print()
+
+          score: dict[str, object] = {}
+          if score_path.is_file():
+              score = json.loads(score_path.read_text(encoding="utf-8"))
+
+          print("### Parity snapshot")
+          print()
+          if score:
+              gates = score.get("gates") or []
+              failing = [
+                  str(gate.get("name"))
+                  for gate in gates
+                  if isinstance(gate, dict) and gate.get("passing") is False
+              ]
+              parity_passing = score.get("parity_passing", "?")
+              parity_total = score.get("parity_total", "?")
+              print(f"- **Score**: {format_float(score.get('migration_score'))}")
+              print(f"- **Progress**: {format_float(score.get('progress'))}")
+              print(f"- **Parity**: {parity_passing}/{parity_total}")
+              print(
+                  "- **Tests**: "
+                  f"Go {score.get('target_tests_passing', '?')}, "
+                  f"Python {score.get('source_tests_passing', '?')}"
+              )
+              print(f"- **Deletion-grade ready**: {bool_word(score.get('deletion_grade_ready'))}")
+              print(f"- **Blocking gates**: {', '.join(failing) if failing else 'none'}")
+          else:
+              failing = []
+              print(f"- **Parity job result**: {parity_result}")
+              print("- **Score artifact**: unavailable")
+          print()
+
+          print("### Next work")
+          print()
+          failing_set = set(failing)
+          if score and not failing_set and score.get("deletion_grade_ready") is True:
+              print("- No benchmark or parity follow-up is needed; proceed to the completion gate.")
+          elif failing_set & {"upstream_freshness", "upstream_contracts"}:
+              print(
+                  "- Refresh the upstream APM baseline/reviewed SHA and repair upstream "
+                  "contract coverage until `upstream_freshness` and `upstream_contracts` pass."
+              )
+          elif failing_set & {
+              "surface_parity",
+              "help_parity",
+              "option_parity",
+              "functional_contracts",
+              "state_diff_contracts",
+              "python_behavior_contracts",
+          }:
+              print(
+                  "- Fix the listed Python/Go contract drift, add or update parity coverage, "
+                  "and rerun migration CI."
+              )
+          elif failing_set & {"benchmarks_pass"}:
+              print("- Investigate the benchmark regression and restore Go/Python return-code parity.")
+          elif score:
+              print("- Inspect the failing gate artifacts and turn the first failing gate into the next Crane task.")
+          else:
+              print("- Open the parity evidence artifact; the score summary was not available to this job.")
+          PY
 
           marker="<!-- apm-migration-benchmark:${HEAD_SHA} -->"
           {
@@ -344,6 +532,8 @@ jobs:
             echo
             echo "- **Commit**: \`${HEAD_SHA}\`"
             echo "- **Run**: ${RUN_URL}"
+            echo
+            cat "$RUNNER_TEMP/migration-benchmark-context.md"
             echo
             cat "$RUNNER_TEMP/migration-cli-benchmark.md"
           } > "$RUNNER_TEMP/migration-benchmark-pr-comment.md"

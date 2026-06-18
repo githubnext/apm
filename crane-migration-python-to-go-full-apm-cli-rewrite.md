@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-18T22:21:08Z |
-| Iteration Count | 101 |
+| Last Run | 2026-06-18T23:49:38Z |
+| Iteration Count | 102 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:cf72a238 |
+| Completion Gate Status | pending:a5120706 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96), gate-fix (iter95), gate-fix (iter94), gate-fix (iter93), gate-fix (iter92), manual-unpaused (config-pr-122), error-push-rejected (iter91), error-push-rejected (iter90), error-push-rejected (iter89), error-push-rejected (iter88) |
+| Recent Statuses | gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96), gate-fix (iter95), gate-fix (iter94), gate-fix (iter93) |
 
 ---
 
@@ -46,7 +46,7 @@
 
 **302 Python files** across 20 modules (all ported to Go under internal/). **Go tests**: 909+ passing (target). **Python baseline**: 247 tests. **Parity**: 858/858 (100%) target. **Functional/State-diff gates**: 26/26. All 14 deletion-grade gates: pass.
 
-**External consumers**: CLI binary only. Completion Candidate active. Iter 101 (cf72a238): targeted fix -- no b3db26d0 merge (diff was 10KB+); added TestGoCutoverRealMigrationCIBenchmarkContext checking existing crane-branch strings; added coverage entry for test_benchmark_pr_comment_includes_iteration_context; advanced upstream SHAs to feab1333. TestGoCutoverPythonTestConversionCoverage 23783/23783 locally (23784/23784 on PR merge commit). 5372 bytes patch, confirmed pushed.
+**External consumers**: CLI binary only. Completion Candidate active. Iter 102 (a5120706): applied migration-ci.yml benchmark context from b3db26d0 directly (9266 byte patch, under 10KB limit). Root cause of iter 95-101 failures: Python test test_benchmark_pr_comment_includes_iteration_context runs on PR merge commit using test file from main but migration-ci.yml from crane branch. Fix: cherry-pick only migration-ci.yml from b3db26d0 -- no other files needed.
 
 ---
 
@@ -93,6 +93,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [docs] Lessons Learned
 
+- **migration-ci.yml is not protected BUT its changes from main must be manually applied (iter 102)**: The Python test `test_benchmark_pr_comment_includes_iteration_context` in `tests/unit/test_migration_ci_workflow.py` runs on the PR MERGE COMMIT. On the merge commit, the Python test file comes from `main` (including new tests added there), but `migration-ci.yml` comes from the crane branch. So if `main` adds a new Python test that checks new strings in `migration-ci.yml`, those strings MUST be added to the crane branch's `migration-ci.yml` too. The fix is NOT to do a full `git merge origin/main` (which bundles too many files and exceeds 10KB), but to `git checkout origin/main -- .github/workflows/migration-ci.yml` to cherry-pick just that file.
 - **migration-ci.yml not protected (iter 96)**: `.github/workflows/migration-ci.yml` is a regular YAML workflow file, NOT a protected Crane control plane file (those are `*.md`, `*.lock.yml`, and `scripts/*`). When merging main, migration-ci.yml changes should be KEPT, not restored from ORIG_HEAD. The protected restore list is: `.github/aw/actions-lock.json`, `.github/workflows/*.md`, `.github/workflows/*.lock.yml`, `.github/workflows/scripts/*`.
 - **new-protected-files-tests (iter 95)**: When a PR adds Python tests that verify crane workflow text properties (e.g. protected-files config), corresponding Go coverage entries and a `TestGoCutoverReal*` test must be added to cmd/apm/ before the parity gate can pass. The Go test should verify the exact properties the Python test asserts. Also: advancing upstream reviewed_sha to match microsoft/apm@main is a periodic maintenance task whenever CI reports upstream_freshness: fail.
 - **new-python-tests-need-go-coverage (iter 95)**: When a PR merged from main adds Python tests that verify Crane workflow text properties, add a `TestGoCutoverReal*` Go test AND update `python_test_coverage.json` before the coverage gate can pass. Also advance `upstream_contract_coverage.yml reviewed_sha` whenever CI reports `upstream_freshness: fail` due to upstream/main advancing.
@@ -120,6 +121,14 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 102 -- 2026-06-18T23:49:38Z -- [Run](https://github.com/githubnext/apm/actions/runs/27796049109)
+
+- **Status**: [*] Gate-fix -- applied migration-ci.yml benchmark context from main
+- **Milestone**: Completion gate fix -- resolve PYTHON_CLI_CONTRACT_STATUS=1
+- **Change**: Applied b3db26d0's migration-ci.yml changes (190 new lines) via `git checkout origin/main -- .github/workflows/migration-ci.yml`. Root cause: test_benchmark_pr_comment_includes_iteration_context runs on PR merge commit with test file from main but migration-ci.yml from crane branch. Fix was previously blocked by 10KB patch limit; cherry-picking only migration-ci.yml is 9266 bytes (under limit). Commit: a5120706
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Notes**: All other gates (GO_TEST_STATUS=0, GO_CUTOVER_STATUS=0, UPSTREAM_APM_STATUS=0) were already passing. Only PYTHON_CLI_CONTRACT_STATUS was failing. After this fix, all 4 checks should be 0 and the completion gate should finalize.
 
 ### Iteration 101 -- 2026-06-18T22:21:08Z -- [Run](https://github.com/githubnext/apm/actions/runs/27792071310)
 

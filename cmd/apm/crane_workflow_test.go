@@ -7,6 +7,35 @@ import (
 	"testing"
 )
 
+// TestGoCutoverRealMigrationCIBenchmarkContext verifies that migration-ci.yml
+// posts benchmark results as a PR comment with an idempotent update mechanism
+// and includes iteration context so reviewers can correlate results with commits.
+//
+// This property corresponds to the Python test:
+//   - test_benchmark_pr_comment_includes_iteration_context
+func TestGoCutoverRealMigrationCIBenchmarkContext(t *testing.T) {
+	root := completionModuleRoot(t)
+	ciWorkflow := filepath.Join(root, ".github", "workflows", "migration-ci.yml")
+	data, err := os.ReadFile(ciWorkflow)
+	if err != nil {
+		t.Fatalf("read migration-ci workflow: %v", err)
+	}
+	text := string(data)
+
+	if !strings.Contains(text, "Post benchmark PR comment") {
+		t.Error("migration-ci.yml must include a 'Post benchmark PR comment' step")
+	}
+	if !strings.Contains(text, "migration-cli-benchmark.md") {
+		t.Error("migration-ci.yml must reference migration-cli-benchmark.md for the PR comment body")
+	}
+	if !strings.Contains(text, "apm-migration-benchmark") {
+		t.Error("migration-ci.yml must use an apm-migration-benchmark marker for idempotent comment updates")
+	}
+	if !strings.Contains(text, "Migration Benchmark Results") {
+		t.Error("migration-ci.yml must include 'Migration Benchmark Results' heading in the posted comment")
+	}
+}
+
 // TestGoCutoverRealCraneProtectedFilesConstraints verifies that the Crane
 // workflow prompt instructs the agent to strip protected workflow/config files
 // from push patches when merging the base branch, and that the

@@ -175,7 +175,7 @@ func runExperimental(args []string) int {
 		fmt.Fprintf(os.Stderr, "Usage: apm experimental [OPTIONS] COMMAND [ARGS]...\n")
 		fmt.Fprintf(os.Stderr, "Try 'apm experimental --help' for help.\n")
 		fmt.Fprintf(os.Stderr, "\n")
-		fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", sub)
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", sub)
 		return 2
 	}
 	rest := args[1:]
@@ -206,7 +206,7 @@ func runExperimental(args []string) int {
 				fmt.Fprintf(os.Stderr, "Usage: apm experimental list [OPTIONS]\n")
 				fmt.Fprintf(os.Stderr, "Try 'apm experimental list --help' for help.\n")
 				fmt.Fprintf(os.Stderr, "\n")
-				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
 				return 2
 			}
 		}
@@ -232,7 +232,7 @@ func runExperimental(args []string) int {
 				fmt.Fprintf(os.Stderr, "Usage: apm experimental enable [OPTIONS] NAME\n")
 				fmt.Fprintf(os.Stderr, "Try 'apm experimental enable --help' for help.\n")
 				fmt.Fprintf(os.Stderr, "\n")
-				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
 				return 2
 			}
 		}
@@ -271,7 +271,7 @@ func runExperimental(args []string) int {
 				fmt.Fprintf(os.Stderr, "Usage: apm experimental disable [OPTIONS] NAME\n")
 				fmt.Fprintf(os.Stderr, "Try 'apm experimental disable --help' for help.\n")
 				fmt.Fprintf(os.Stderr, "\n")
-				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
 				return 2
 			}
 		}
@@ -313,7 +313,7 @@ func runExperimental(args []string) int {
 				fmt.Fprintf(os.Stderr, "Usage: apm experimental reset [OPTIONS] [NAME]\n")
 				fmt.Fprintf(os.Stderr, "Try 'apm experimental reset --help' for help.\n")
 				fmt.Fprintf(os.Stderr, "\n")
-				fmt.Fprintf(os.Stderr, "Error: No such option '%s'.\n", a)
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
 				return 2
 			}
 		}

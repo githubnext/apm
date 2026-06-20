@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-20T11:00:00Z |
-| Iteration Count | 110 |
+| Last Run | 2026-06-20T12:00:00Z |
+| Iteration Count | 111 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:d00bb163 |
+| Completion Gate Status | pending:45472973 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100) |
+| Recent Statuses | gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**CI gate-fix awaiting CI**: Iter 110 (d00bb163) pushed to PR #119. Root cause: Python Click 8.4.1 outputs 4-line error format (Usage + Try + blank + Error) for unknown options. All prior iters had wrong format (2-line or wrong order). Iter 110 adds `rejectUnknownOption(usageLine, cmdPath, option string) int` helper to main.go and replaces all ~70 occurrences across 20 Go files. Also merged main (b3db26d0) in same commit -- only `tests/unit/test_migration_ci_workflow.py` (14 lines) was added; migration-ci.yml was already identical. Push bundle staged; new CI run expected on d00bb163.
+**CI gate-fix awaiting CI**: Iter 111 (45472973) pushed to PR #119. Complete fix: all 68 Go commands now emit the correct 4-line Click error format for unknown options. Added `rejectUnknownOption()` helper to main.go; replaced all occurrences across 20 Go files; fixed mcp install special case (ignore_unknown_options=True: accepts --X as NAME then emits MCP-specific error). Verified 68/68 test_every_python_command_rejects_unknown_option_consistently pass locally.
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 111 -- 2026-06-20T12:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27870535232)
+
+- **Status**: [*] Gate-fix -- complete fix: all 68 commands emit correct 4-line Click error format; mcp install special case fixed; verified 68/68 tests pass
+- **Change**: Added `rejectUnknownOption(usageLine, cmdPath, option string) int` helper to main.go. Fixed ALL unknown-option sites: (1) main.go root dispatch, (2) cmd_install.go apm uninstall (was missing from prior scripts), (3) cmd_update.go apm prune (was missing), (4) cmd_pack.go apm unpack (was missed), (5) all other 64 commands via batch. Fixed mcp install: changed to accept all args as NAME (ignore_unknown_options=True parity), then check HasPrefix(name, "-") and emit stdout `[!] Install interrupted...` + 4-line stderr with MCP-specific error message. Commit: 45472973.
 
 ### Iteration 110 -- 2026-06-20T11:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27869275658)
 

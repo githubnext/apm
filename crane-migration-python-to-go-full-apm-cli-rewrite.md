@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-20T10:30:00Z |
-| Iteration Count | 109 |
+| Last Run | 2026-06-20T11:00:00Z |
+| Iteration Count | 110 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:d4b5edf3 |
+| Completion Gate Status | pending:d00bb163 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99) |
+| Recent Statuses | gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**CI gate-fix awaiting CI**: Iter 109 (d4b5edf3) pushed to PR #119. Root cause confirmed: Python Click 8.4.1 outputs 4-line error format (Usage line + Try line + blank line + Error line) in COLON format `Error: No such option: --X` (no quotes, no period). Iter 108's lesson was wrong about single-quoted format. Iter 109 fixes all 68 error sites with correct format using `rejectUnknownOption()` helper. Also fixes mcp install: accepts flag-like args as NAME (ignore_unknown_options), then emits MCP delegated error. Verified locally: output matches Python exactly. Merged origin/main (b3db26d0 + test additions).
+**CI gate-fix awaiting CI**: Iter 110 (d00bb163) pushed to PR #119. Root cause: Python Click 8.4.1 outputs 4-line error format (Usage + Try + blank + Error) for unknown options. All prior iters had wrong format (2-line or wrong order). Iter 110 adds `rejectUnknownOption(usageLine, cmdPath, option string) int` helper to main.go and replaces all ~70 occurrences across 20 Go files. Also merged main (b3db26d0) in same commit -- only `tests/unit/test_migration_ci_workflow.py` (14 lines) was added; migration-ci.yml was already identical. Push bundle staged; new CI run expected on d00bb163.
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 110 -- 2026-06-20T11:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27869275658)
+
+- **Status**: [*] Gate-fix -- add rejectUnknownOption() helper; fix all ~70 unknown-option sites (4-line Click format); merge main (b3db26d0)
+- **Change**: Added `rejectUnknownOption(usageLine, cmdPath, option string) int` to main.go. Replaced 2-line wrong-order error pattern with correct 4-line format (Usage/Try/blank/Error) across all 20 Go cmd files. MCP install intentionally left unchanged (ignore_unknown_options special case). Merged main b3db26d0 in same commit (only test_migration_ci_workflow.py 14-line test added; migration-ci.yml already identical). Commit: d00bb163.
 
 ### Iteration 109 -- 2026-06-20T10:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27868135477)
 

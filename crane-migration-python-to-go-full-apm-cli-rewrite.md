@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-20T02:45:00Z |
-| Iteration Count | 105 |
+| Last Run | 2026-06-20T04:20:00Z |
+| Iteration Count | 106 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:9e9c4f3c |
+| Completion Gate Status | pending:162be7b3 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96) |
+| Recent Statuses | gate-fix (iter106), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97) |
 
 ---
 
@@ -111,21 +111,21 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 106 -- 2026-06-20T04:20:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27862962697)
+
+- **Status**: [*] Gate-fix -- fix unknown-option error format for all 68 commands (comprehensive)
+- **Milestone**: Completion gate fix -- resolve PYTHON_CLI_CONTRACT_STATUS=1 (final straggler: apm mcp install)
+- **Change**: Iter 104 fixed 60 commands but used `return 2` without the Click-compatible format (Usage line first, blank line, Error last). Iter 105 fixed 2 stragglers (root dispatcher + unpack) but still used wrong format. This iteration: (1) Added `cmdUsage` map (68 entries) and `errUnknownOpt(cmdPath, opt)` helper in cmdmeta.go that emits the exact 4-line Click format to stderr; (2) Replaced all 68 error sites across 20 files with `return errUnknownOpt(...)`; (3) Fixed `apm mcp install` specially -- Python delegates to `apm install --mcp` which treats unknown flags as MCP names and emits `Error: MCP name cannot start with '-'; did you forget a value for --mcp?` with stdout `[!] Install interrupted after 0.0s.` -- matched exactly. All 68 `test_every_python_command_rejects_unknown_option_consistently` tests now pass locally. Merged origin/main (b3db26d0). Commit: 162be7b3.
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Notes**: Root cause of iter 104-105 failures: previous fixes used `fmt.Fprintln(os.Stderr, "Error: No such option: X")` without the Click Usage/Try/blank-line prefix. errUnknownOpt() provides the canonical format. mcp install special case required stdout+stderr split matching Python behavior.
+
 ### Iteration 105 -- 2026-06-20T02:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27855113001)
 
-- **Status**: [*] Gate-fix -- root-cmd and unpack unknown-option; advance upstream reviewed_sha
-- **Milestone**: Completion gate fix -- resolve final 2 PYTHON_CLI_CONTRACT_STATUS failures + UPSTREAM_APM_STATUS
-- **Change**: (1) main.go: root dispatcher now emits "Error: No such option: FLAG\nTry 'apm --help' for help." (exit 2) when args[0] starts with "-" instead of "No such command"; (2) cmd_pack.go runUnpack(): arg loop now checks `if startsWith(args[i], "-")` in default case and emits "Error: No such option: FLAG\nTry 'apm unpack --help' for help." (exit 2) before the "Missing BUNDLE argument" fallthrough; (3) upstream_contract_coverage.yml: baseline_sha + reviewed_sha advanced to 975f8f00055806bbee4486c2ab6f1ebb2cfce746 (microsoft/apm@main). All Go tests pass locally (excluding Python-dependent).
-- **Score**: 1.0 (best: 1.0, delta: +0.0)
-- **Notes**: These are the last 2 unknown-option failures discovered via comprehensive rebuild+test in iter 104 analysis. Upstream SHA was stale since feab1333 -- CI upstream_freshness: fail. Commit: 9e9c4f3c.
+- **Status**: [*] Gate-fix -- root-cmd and unpack unknown-option; advance upstream reviewed_sha. Score: 1.0. Commit: 9e9c4f3c.
 
 ### Iteration 104 -- 2026-06-20T00:28:25Z -- [Run](https://github.com/githubnext/apm/actions/runs/27853415153)
 
-- **Status**: [*] Gate-fix -- comprehensive unknown-option rejection across ALL 60+ Go commands
-- **Milestone**: Completion gate fix -- resolve PYTHON_CLI_CONTRACT_STATUS=1 (comprehensive)
-- **Change**: Deep diagnosis revealed iter 103 only fixed the 5 experimental subcommands but 55+ other commands still failed. Root causes: (1) group dispatchers (cache/config/deps/marketplace/mcp/plugin/policy/runtime) dispatched `--X` as subcommand names -> wrong "No such command" error; (2) leaf commands (compile/audit/install/update/prune/pack/list/targets/view/uninstall) had `default:` cases that silently ignored unknown flags; (3) simple commands (search/run/outdated/self-update/preview) only checked for `--help`; (4) all ~40 subcommand handlers silently ignored unknown flags. Fix: added `if startsWith(a, "-") { return 2 }` pattern to all 17 command files, covering ~60 commands. Also fixed experimental error format (removed "Usage:" prefix before "Error:" in enable/disable/reset/list/parent handlers). All 60 tests pass locally (verified with comprehensive script). Commit: 302cc5a3
-- **Score**: 1.0 (best: 1.0, delta: +0.0)
-- **Notes**: 17 files changed, 569 insertions. Functional/state-diff gates still 26/26. This should be the comprehensive and final fix for PYTHON_CLI_CONTRACT_STATUS.
+- **Status**: [*] Gate-fix -- 17 files, ~60 commands: added `if startsWith(a, "-") { return 2 }`. Fixed experimental colon format. Score: 1.0. Commit: 302cc5a3.
 
 ### Iters 88-103 -- [!] Gate-fix sequence (score=1.0 throughout): iter 88-91 push rejected (protected .github/ files); iter 92 pushed empty ci-trigger; iter 94 fixed experimental option ordering but introduced wrong error format; iter 95-100 failed (b3db26d0 merge alone = 10334B > 10240 limit); iter 101 targeted minimal fixes (no merge); iter 102 cherry-picked only migration-ci.yml from b3db26d0 (9266B, under limit); iter 103 fixed colon format for experimental unknown-option (5 handlers only); PYTHON_CLI_CONTRACT_STATUS still failing -- 55+ other commands still silently ignored unknown options.
 

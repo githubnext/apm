@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-20T00:28:25Z |
-| Iteration Count | 104 |
+| Last Run | 2026-06-20T02:45:00Z |
+| Iteration Count | 105 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:302cc5a3 |
+| Completion Gate Status | pending:9e9c4f3c |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96), gate-fix (iter95) |
+| Recent Statuses | gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97), gate-fix (iter96) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**CI gate-fix awaiting CI**: Iter 100 (e12aae47) pushed to PR #119. Changes: merged main b3db26d0, added TestGoCutoverRealMigrationCIBenchmarkContext, updated python_test_coverage.json, advanced upstream reviewed_sha/baseline_sha to feab1333. Local: 23784/23784. Expected CI result: all gates pass -> migration_score=1.0 -> completion candidate finalizes.
+**CI gate-fix awaiting CI**: Iter 105 (9e9c4f3c) pushed to PR #119. Changes: (1) main.go root command now emits "No such option: FLAG" (exit 2) for flag-like args instead of "No such command"; (2) cmd_pack.go runUnpack() now checks for unknown options and emits "No such option: FLAG" (exit 2) before "Missing BUNDLE argument"; (3) upstream_contract_coverage.yml baseline_sha/reviewed_sha advanced to 975f8f00 (microsoft/apm@main). Expected CI result: PYTHON_CLI_CONTRACT_STATUS=0 (all 60+ unknown-option tests pass) and UPSTREAM_APM_STATUS=0 (freshness gate clears) -> migration_score=1.0 -> completion gate passes.
 
 ---
 
@@ -96,7 +96,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ## [wip] Blockers & Foreclosed Approaches
 
 - **RESOLVED**: push-rejected-protected-files. Maintainer (mrjf) manually pushed 701b6aa9 to unblock. Then pushed empty ci-trigger commit 43950ad2 (no .github/ changes) to work around the action_required CI problem. PR #122 (protected-files: allowed config) is still open but not blocking.
-- **ROOT CAUSE OF PERSISTENT PYTHON_CLI_CONTRACT_STATUS=1 (iter 104)**: The test `test_every_python_command_rejects_unknown_option_consistently` is parametrized over ALL public Python CLI commands (60+). It probes every command with `--definitely-not-an-apm-option`. Failing commands fell into three categories: (1) Group dispatchers -- dispatched `--X` as a subcommand name (wrong "No such command" error); (2) Leaf commands with switch -- `default:` case silently ignored unknown flags; (3) Simple loop commands -- only checked for `--help`, ignored everything else. Fixed all 17 files across ~60 commands/subcommands in iter 104.
+- **ROOT CAUSE OF PERSISTENT PYTHON_CLI_CONTRACT_STATUS=1 (iter 104)**: The test `test_every_python_command_rejects_unknown_option_consistently` is parametrized over ALL public Python CLI commands (60+). It probes every command with `--definitely-not-an-apm-option`. Failing commands fell into three categories: (1) Group dispatchers -- dispatched `--X` as a subcommand name (wrong "No such command" error); (2) Leaf commands with switch -- `default:` case silently ignored unknown flags; (3) Simple loop commands -- only checked for `--help`, ignored everything else. Fixed all 17 files across ~60 commands/subcommands in iter 104. Two stragglers remained unfixed: root `apm` dispatcher and `apm unpack` -- fixed in iter 105 (main.go HasPrefix check; cmd_pack.go unknown-option check in runUnpack() arg loop).
 
 ---
 
@@ -110,6 +110,14 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 105 -- 2026-06-20T02:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27855113001)
+
+- **Status**: [*] Gate-fix -- root-cmd and unpack unknown-option; advance upstream reviewed_sha
+- **Milestone**: Completion gate fix -- resolve final 2 PYTHON_CLI_CONTRACT_STATUS failures + UPSTREAM_APM_STATUS
+- **Change**: (1) main.go: root dispatcher now emits "Error: No such option: FLAG\nTry 'apm --help' for help." (exit 2) when args[0] starts with "-" instead of "No such command"; (2) cmd_pack.go runUnpack(): arg loop now checks `if startsWith(args[i], "-")` in default case and emits "Error: No such option: FLAG\nTry 'apm unpack --help' for help." (exit 2) before the "Missing BUNDLE argument" fallthrough; (3) upstream_contract_coverage.yml: baseline_sha + reviewed_sha advanced to 975f8f00055806bbee4486c2ab6f1ebb2cfce746 (microsoft/apm@main). All Go tests pass locally (excluding Python-dependent).
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Notes**: These are the last 2 unknown-option failures discovered via comprehensive rebuild+test in iter 104 analysis. Upstream SHA was stale since feab1333 -- CI upstream_freshness: fail. Commit: 9e9c4f3c.
 
 ### Iteration 104 -- 2026-06-20T00:28:25Z -- [Run](https://github.com/githubnext/apm/actions/runs/27853415153)
 

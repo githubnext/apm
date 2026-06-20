@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-20T04:20:00Z |
-| Iteration Count | 106 |
+| Last Run | 2026-06-20T08:20:00Z |
+| Iteration Count | 107 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:162be7b3 |
+| Completion Gate Status | pending:972f0d6b |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter106), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97) |
+| Recent Statuses | gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102), gate-fix (iter101), gate-fix (iter100), gate-fix (iter99), gate-fix (iter98), gate-fix (iter97) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**CI gate-fix awaiting CI**: Iter 105 (9e9c4f3c) pushed to PR #119. Changes: (1) main.go root command now emits "No such option: FLAG" (exit 2) for flag-like args instead of "No such command"; (2) cmd_pack.go runUnpack() now checks for unknown options and emits "No such option: FLAG" (exit 2) before "Missing BUNDLE argument"; (3) upstream_contract_coverage.yml baseline_sha/reviewed_sha advanced to 975f8f00 (microsoft/apm@main). Expected CI result: PYTHON_CLI_CONTRACT_STATUS=0 (all 60+ unknown-option tests pass) and UPSTREAM_APM_STATUS=0 (freshness gate clears) -> migration_score=1.0 -> completion gate passes.
+**CI gate-fix awaiting CI**: Iter 107 (972f0d6b) pushed to PR #119. Root cause analysis: iter 104 added unknown-option rejection to all 68 commands but in the WRONG FORMAT -- Error line came before Try line. Python Click 8 outputs Try first, blank line, then Error. Iter 105 fixed 2 stragglers but still wrong format. Iter 106 made the correct format fix but its push failed (safe_outputs job failure in run 27862962697). Iter 107 re-applies the same fix: (1) swap all 68 error sites to emit Try first, blank, Error last; (2) fix apm mcp install to treat flag-like token as NAME (Python ignore_unknown_options=True behavior) and emit MCP name error with install_interrupted stdout message. Expected CI result: PYTHON_CLI_CONTRACT_STATUS=0 -> migration_score=1.0 -> completion gate passes.
 
 ---
 
@@ -111,13 +111,17 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 107 -- 2026-06-20T08:20:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27864906486)
+
+- **Status**: [*] Gate-fix -- fix unknown-option error format for all 68 commands + mcp install special case
+- **Milestone**: Completion gate fix -- resolve PYTHON_CLI_CONTRACT_STATUS=1 (wrong error message order)
+- **Change**: Iter 104 added unknown-option rejection but in wrong order (Error first, Try second). Python Click 8 outputs: Try 'apm CMD --help' for help.\n\nError: No such option: X. This iter swaps all 68 error sites across 19 files to correct order. Also fixes apm mcp install: Python uses ignore_unknown_options=True so flag-like tokens become NAME positional, then validate_mcp_conflicts raises MCP name error (stdout: [!] Install interrupted after 0.0s., stderr: Error: MCP name cannot start with '-'..., exit 2). Iter 106 (run 27862962697) made same fix but push failed (safe_outputs job failure); this iter re-applies. Commit: 972f0d6b.
+- **Score**: 1.0 (best: 1.0, delta: +0.0)
+- **Notes**: The score script shows migration_score=1.0 even when PYTHON_CLI_CONTRACT_STATUS=1 (score reads cached JSON not live test results). Root cause of all iter 104-107 failures: Click 8 format is Try-blank-Error not Error-Try.
+
 ### Iteration 106 -- 2026-06-20T04:20:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27862962697)
 
-- **Status**: [*] Gate-fix -- fix unknown-option error format for all 68 commands (comprehensive)
-- **Milestone**: Completion gate fix -- resolve PYTHON_CLI_CONTRACT_STATUS=1 (final straggler: apm mcp install)
-- **Change**: Iter 104 fixed 60 commands but used `return 2` without the Click-compatible format (Usage line first, blank line, Error last). Iter 105 fixed 2 stragglers (root dispatcher + unpack) but still used wrong format. This iteration: (1) Added `cmdUsage` map (68 entries) and `errUnknownOpt(cmdPath, opt)` helper in cmdmeta.go that emits the exact 4-line Click format to stderr; (2) Replaced all 68 error sites across 20 files with `return errUnknownOpt(...)`; (3) Fixed `apm mcp install` specially -- Python delegates to `apm install --mcp` which treats unknown flags as MCP names and emits `Error: MCP name cannot start with '-'; did you forget a value for --mcp?` with stdout `[!] Install interrupted after 0.0s.` -- matched exactly. All 68 `test_every_python_command_rejects_unknown_option_consistently` tests now pass locally. Merged origin/main (b3db26d0). Commit: 162be7b3.
-- **Score**: 1.0 (best: 1.0, delta: +0.0)
-- **Notes**: Root cause of iter 104-105 failures: previous fixes used `fmt.Fprintln(os.Stderr, "Error: No such option: X")` without the Click Usage/Try/blank-line prefix. errUnknownOpt() provides the canonical format. mcp install special case required stdout+stderr split matching Python behavior.
+- **Status**: [!] Push failed -- safe_outputs job failure; changes never pushed to PR. Commit 162be7b3 was local-only. State file updated with stale 162be7b3 ref.
 
 ### Iteration 105 -- 2026-06-20T02:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27855113001)
 

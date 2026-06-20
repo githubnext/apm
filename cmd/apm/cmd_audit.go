@@ -80,7 +80,14 @@ func runAudit(args []string) int {
 				i++
 			}
 		default:
-			if !startsWith(args[i], "-") && pkg == "" {
+			if startsWith(args[i], "--target=") || startsWith(args[i], "--runtime=") ||
+				startsWith(args[i], "--exclude=") || startsWith(args[i], "--only=") {
+				// known key=value flags
+			} else if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm audit --help' for help.`)
+				return 2
+			} else if pkg == "" {
 				pkg = args[i]
 			}
 		}

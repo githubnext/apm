@@ -52,6 +52,12 @@ func runCache(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm cache --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 
@@ -79,6 +85,11 @@ func runCacheInfo(args []string) int {
 			fmt.Println("Options:")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm cache info --help' for help.`)
+			return 2
 		}
 	}
 	dir := cacheDir()
@@ -115,6 +126,16 @@ func runCacheClean(args []string) int {
 			fmt.Println("  --help       Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "-f", "--force", "-y", "--yes":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm cache clean --help' for help.`)
+				return 2
+			}
+		}
 	}
 	dir := cacheDir()
 	entries, err := os.ReadDir(dir)
@@ -143,7 +164,8 @@ func runCacheClean(args []string) int {
 }
 
 func runCachePrune(args []string) int {
-	for _, a := range args {
+	for i := 0; i < len(args); i++ {
+		a := args[i]
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm cache prune [OPTIONS]")
 			fmt.Println()
@@ -154,6 +176,20 @@ func runCachePrune(args []string) int {
 			fmt.Println("                  [default: 30]")
 			fmt.Println("  --help          Show this message and exit.")
 			return 0
+		}
+		if a == "--days" {
+			if i+1 < len(args) {
+				i++
+			}
+			continue
+		}
+		if startsWith(a, "--days=") {
+			continue
+		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm cache prune --help' for help.`)
+			return 2
 		}
 	}
 	fmt.Println("[*] Pruning old cache entries...")

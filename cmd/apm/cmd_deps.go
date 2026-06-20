@@ -26,6 +26,12 @@ func runDeps(args []string) int {
 		return 0
 	}
 
+	if startsWith(sub, "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", sub)
+		fmt.Fprintln(os.Stderr, `Try 'apm deps --help' for help.`)
+		return 2
+	}
+
 	switch sub {
 	case "list":
 		return runDepsList(rest)
@@ -73,6 +79,16 @@ func runDepsList(args []string) int {
 			fmt.Println("  --insecure  Include insecure dependencies")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "-g", "--global", "--all", "--insecure":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm deps list --help' for help.`)
+				return 2
+			}
 		}
 	}
 
@@ -128,6 +144,16 @@ func runDepsTree(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "-g", "--global":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm deps tree --help' for help.`)
+				return 2
+			}
+		}
 	}
 
 	cwd, _ := os.Getwd()
@@ -165,6 +191,11 @@ func runDepsInfo(args []string) int {
 			fmt.Println("Options:")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm deps info --help' for help.`)
+			return 2
 		}
 	}
 
@@ -227,6 +258,16 @@ func runDepsClean(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "--dry-run", "--yes", "-y":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm deps clean --help' for help.`)
+				return 2
+			}
+		}
 	}
 
 	cwd, _ := os.Getwd()
@@ -268,6 +309,17 @@ func runDepsUpdate(args []string) int {
 			fmt.Println("  --legacy-skill-paths  Use legacy per-client skill paths")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "--verbose", "-v", "--force", "--global", "-g", "--legacy-skill-paths",
+			"--target", "-t":
+			// known flags
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--parallel-downloads") && !startsWith(a, "--target=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm deps update --help' for help.`)
+				return 2
+			}
 		}
 	}
 	fmt.Println("[*] Updating dependencies...")

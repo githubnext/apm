@@ -30,6 +30,14 @@ func runPack(args []string) int {
 				i++
 				output = args[i]
 			}
+		default:
+			if startsWith(args[i], "--output=") {
+				output = args[i][9:]
+			} else if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm pack --help' for help.`)
+				return 2
+			}
 		}
 	}
 

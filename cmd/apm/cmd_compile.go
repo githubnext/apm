@@ -41,6 +41,10 @@ func runCompile(args []string) int {
 		default:
 			if startsWith(args[i], "--target=") {
 				target = args[i][9:]
+			} else if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm compile --help' for help.`)
+				return 2
 			}
 		}
 	}

@@ -20,6 +20,12 @@ func runMarketplace(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm marketplace --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 
@@ -96,6 +102,16 @@ func runMarketplaceList(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace list --help' for help.`)
+				return 2
+			}
+		}
 	}
 	cwd, _ := os.Getwd()
 	ymlPath, err := findApmYML(cwd)
@@ -137,9 +153,22 @@ func runMarketplaceAdd(args []string) int {
 	}
 
 	var posArgs []string
-	for _, a := range args {
-		if !startsWith(a, "-") {
-			posArgs = append(posArgs, a)
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--verbose", "-v":
+			// known no-value flags
+		case "--name", "-n", "--branch", "-b", "--host":
+			i++ // skip next value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--name=") && !startsWith(a, "--branch=") && !startsWith(a, "--host=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace add --help' for help.`)
+				return 2
+			}
+			if !startsWith(a, "-") {
+				posArgs = append(posArgs, a)
+			}
 		}
 	}
 	if len(posArgs) < 2 {
@@ -187,10 +216,16 @@ func runMarketplaceRemove(args []string) int {
 	}
 	var posArgs []string
 	for _, a := range args {
-		if a != "--yes" && a != "-y" && a != "--verbose" && a != "-v" {
-			if !startsWith(a, "-") {
-				posArgs = append(posArgs, a)
+		switch a {
+		case "--yes", "-y", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace remove --help' for help.`)
+				return 2
 			}
+			posArgs = append(posArgs, a)
 		}
 	}
 	if len(posArgs) == 0 {
@@ -245,6 +280,16 @@ func runMarketplaceUpdate(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace update --help' for help.`)
+				return 2
+			}
+		}
 	}
 	fmt.Println("[*] Refreshing marketplace cache...")
 	fmt.Println("[+] Marketplace cache updated.")
@@ -262,6 +307,16 @@ func runMarketplaceBrowse(args []string) int {
 			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace browse --help' for help.`)
+				return 2
+			}
 		}
 	}
 	fmt.Println("[i] Browse functionality requires network access.")
@@ -285,8 +340,18 @@ func runMarketplaceValidate(args []string) int {
 
 	name := ""
 	for _, a := range args {
-		if !startsWith(a, "-") && name == "" {
-			name = a
+		switch a {
+		case "--check-refs", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace validate --help' for help.`)
+				return 2
+			}
+			if name == "" {
+				name = a
+			}
 		}
 	}
 	if name == "" {
@@ -334,6 +399,21 @@ func runMarketplaceInit(args []string) int {
 			return 0
 		}
 	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--force", "--no-gitignore-check", "--verbose", "-v":
+			// known no-value flags
+		case "--name", "--owner":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--name=") && !startsWith(a, "--owner=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace init --help' for help.`)
+				return 2
+			}
+		}
+	}
 	cwd, _ := os.Getwd()
 	ymlPath, _ := findApmYML(cwd)
 	if ymlPath == "" {
@@ -366,6 +446,16 @@ func runMarketplaceCheck(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "--offline", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace check --help' for help.`)
+				return 2
+			}
+		}
 	}
 	fmt.Println("[*] Checking marketplace entries...")
 	fmt.Println("[+] All entries are resolvable.")
@@ -386,6 +476,16 @@ func runMarketplaceOutdated(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		switch a {
+		case "--offline", "--include-prerelease", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace outdated --help' for help.`)
+				return 2
+			}
+		}
 	}
 	fmt.Println("[i] No outdated packages found.")
 	return 0
@@ -402,6 +502,16 @@ func runMarketplaceDoctor(args []string) int {
 			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace doctor --help' for help.`)
+				return 2
+			}
 		}
 	}
 	fmt.Println("[*] Running marketplace diagnostics...")
@@ -430,6 +540,22 @@ func runMarketplacePublish(args []string) int {
 			return 0
 		}
 	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--dry-run", "--no-pr", "--draft", "--allow-downgrade", "--allow-ref-change",
+			"--yes", "-y", "--verbose", "-v":
+			// known no-value flags
+		case "--targets", "--parallel":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--targets=") && !startsWith(a, "--parallel=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace publish --help' for help.`)
+				return 2
+			}
+		}
+	}
 	fmt.Println("[*] Publishing marketplace updates...")
 	fmt.Println("[+] Published.")
 	return 0
@@ -449,6 +575,11 @@ func runMarketplacePackage(args []string) int {
 		fmt.Println("  remove  Remove a package from the marketplace config")
 		fmt.Println("  set     Update package settings in the marketplace config")
 		return 0
+	}
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm marketplace package --help' for help.`)
+		return 2
 	}
 	sub := args[0]
 	rest := args[1:]
@@ -487,6 +618,23 @@ func runMarketplacePackageAdd(args []string) int {
 			return 0
 		}
 	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--include-prerelease", "--no-verify", "--verbose", "-v":
+			// known no-value flags
+		case "--name", "--version", "--ref", "-s", "--subdir", "--tag-pattern", "--tags":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--name=") && !startsWith(a, "--version=") &&
+				!startsWith(a, "--ref=") && !startsWith(a, "--subdir=") && !startsWith(a, "-s=") &&
+				!startsWith(a, "--tag-pattern=") && !startsWith(a, "--tags=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace package add --help' for help.`)
+				return 2
+			}
+		}
+	}
 	fmt.Println("[*] Adding package to marketplace config...")
 	fmt.Println("[+] Package added.")
 	return 0
@@ -504,6 +652,16 @@ func runMarketplacePackageRemove(args []string) int {
 			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "--yes", "-y", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace package remove --help' for help.`)
+				return 2
+			}
 		}
 	}
 	fmt.Println("[*] Removing package from marketplace config...")
@@ -530,6 +688,22 @@ func runMarketplacePackageSet(args []string) int {
 			return 0
 		}
 	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--include-prerelease", "--verbose", "-v":
+			// known no-value flags
+		case "--version", "--ref", "--subdir", "--tag-pattern", "--tags":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--version=") && !startsWith(a, "--ref=") &&
+				!startsWith(a, "--subdir=") && !startsWith(a, "--tag-pattern=") && !startsWith(a, "--tags=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace package set --help' for help.`)
+				return 2
+			}
+		}
+	}
 	fmt.Println("[*] Updating package settings...")
 	fmt.Println("[+] Package settings updated.")
 	return 0
@@ -548,6 +722,16 @@ func runMarketplaceMigrate(args []string) int {
 			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		switch a {
+		case "--force", "--yes", "-y", "--dry-run", "--verbose", "-v":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm marketplace migrate --help' for help.`)
+				return 2
+			}
 		}
 	}
 	fmt.Println("[*] Migrating marketplace.yml into apm.yml...")

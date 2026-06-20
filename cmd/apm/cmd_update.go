@@ -37,6 +37,14 @@ func runUpdate(args []string) int {
 				hasTarget = true
 				i++
 			}
+		default:
+			if startsWith(args[i], "--target=") {
+				hasTarget = true
+			} else if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm update --help' for help.`)
+				return 2
+			}
 		}
 	}
 
@@ -129,6 +137,12 @@ func runPrune(args []string) int {
 			flagDryRun = true
 		case "-v", "--verbose":
 			flagVerbose = true
+		default:
+			if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm prune --help' for help.`)
+				return 2
+			}
 		}
 	}
 

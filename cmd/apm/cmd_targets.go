@@ -28,6 +28,12 @@ func runTargets(args []string) int {
 			flagAll = true
 		case "--help", "-h":
 			flagHelp = true
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm targets --help' for help.`)
+				return 2
+			}
 		}
 	}
 	if flagHelp {

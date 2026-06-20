@@ -32,6 +32,12 @@ func runPolicy(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm policy --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 	switch sub {
@@ -63,9 +69,21 @@ func runPolicyStatus(args []string) int {
 	}
 
 	flagJSON := false
-	for _, a := range args {
-		if a == "--json" {
-			flagJSON = true
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--json", "--no-cache", "--check":
+			if a == "--json" {
+				flagJSON = true
+			}
+		case "--policy-source", "-o", "--output":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--policy-source=") && !startsWith(a, "--output=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm policy status --help' for help.`)
+				return 2
+			}
 		}
 	}
 

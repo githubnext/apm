@@ -35,6 +35,12 @@ func runRuntime(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm runtime --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 	switch sub {
@@ -69,9 +75,22 @@ func runRuntimeSetup(args []string) int {
 	}
 
 	runtime := ""
-	for _, a := range args {
-		if !startsWith(a, "-") && runtime == "" {
-			runtime = a
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--vanilla":
+			// known no-value flag
+		case "--version":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--version=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm runtime setup --help' for help.`)
+				return 2
+			}
+			if !startsWith(a, "-") && runtime == "" {
+				runtime = a
+			}
 		}
 	}
 	if runtime == "" {
@@ -106,6 +125,11 @@ func runRuntimeList(args []string) int {
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
 		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm runtime list --help' for help.`)
+			return 2
+		}
 	}
 	fmt.Println("[i] Available runtimes: copilot, codex, llm, gemini")
 	fmt.Println("[i] Installed runtimes: none")
@@ -127,8 +151,18 @@ func runRuntimeRemove(args []string) int {
 	}
 	runtime := ""
 	for _, a := range args {
-		if !startsWith(a, "-") && runtime == "" {
-			runtime = a
+		switch a {
+		case "--yes", "-y":
+			// known flags
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm runtime remove --help' for help.`)
+				return 2
+			}
+			if runtime == "" {
+				runtime = a
+			}
 		}
 	}
 	if runtime == "" {
@@ -161,6 +195,11 @@ func runRuntimeStatus(args []string) int {
 			fmt.Println("Options:")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm runtime status --help' for help.`)
+			return 2
 		}
 	}
 	fmt.Println("[i] Active runtime: none configured")

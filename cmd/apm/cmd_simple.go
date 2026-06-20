@@ -20,8 +20,18 @@ func runSearch(args []string) int {
 	}
 	query := ""
 	for _, a := range args {
-		if !startsWith(a, "-") && query == "" {
-			query = a
+		switch a {
+		case "--help", "-h":
+			// already handled
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm search --help' for help.`)
+				return 2
+			}
+			if query == "" {
+				query = a
+			}
 		}
 	}
 	if query == "" {
@@ -44,7 +54,12 @@ func runRun(args []string) int {
 	}
 	script := ""
 	for _, a := range args {
-		if !startsWith(a, "-") && script == "" {
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm run --help' for help.`)
+			return 2
+		}
+		if script == "" {
 			script = a
 		}
 	}
@@ -94,6 +109,11 @@ func runOutdated(args []string) int {
 			printCmdHelp("outdated")
 			return 0
 		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm outdated --help' for help.`)
+			return 2
+		}
 	}
 	cwd, _ := os.Getwd()
 	ymlPath, err := findApmYML(cwd)
@@ -128,8 +148,15 @@ func runSelfUpdate(args []string) int {
 	}
 	checkOnly := false
 	for _, a := range args {
-		if a == "--check" {
+		switch a {
+		case "--check":
 			checkOnly = true
+		default:
+			if startsWith(a, "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm self-update --help' for help.`)
+				return 2
+			}
 		}
 	}
 	if checkOnly {
@@ -172,10 +199,8 @@ func runExperimental(args []string) int {
 	}
 	// Detect unknown options at the parent level before subcommand dispatch.
 	if startsWith(sub, "-") {
-		fmt.Fprintf(os.Stderr, "Usage: apm experimental [OPTIONS] COMMAND [ARGS]...\n")
-		fmt.Fprintf(os.Stderr, "Try 'apm experimental --help' for help.\n")
-		fmt.Fprintf(os.Stderr, "\n")
 		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", sub)
+		fmt.Fprintln(os.Stderr, `Try 'apm experimental --help' for help.`)
 		return 2
 	}
 	rest := args[1:]
@@ -203,10 +228,8 @@ func runExperimental(args []string) int {
 		}
 		for _, a := range rest {
 			if startsWith(a, "-") && !listKnown[a] {
-				fmt.Fprintf(os.Stderr, "Usage: apm experimental list [OPTIONS]\n")
-				fmt.Fprintf(os.Stderr, "Try 'apm experimental list --help' for help.\n")
-				fmt.Fprintf(os.Stderr, "\n")
 				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm experimental list --help' for help.`)
 				return 2
 			}
 		}
@@ -229,10 +252,8 @@ func runExperimental(args []string) int {
 		}
 		for _, a := range rest {
 			if startsWith(a, "-") && !enableKnown[a] {
-				fmt.Fprintf(os.Stderr, "Usage: apm experimental enable [OPTIONS] NAME\n")
-				fmt.Fprintf(os.Stderr, "Try 'apm experimental enable --help' for help.\n")
-				fmt.Fprintf(os.Stderr, "\n")
 				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm experimental enable --help' for help.`)
 				return 2
 			}
 		}
@@ -243,10 +264,8 @@ func runExperimental(args []string) int {
 			}
 		}
 		if name == "" {
-			fmt.Fprintf(os.Stderr, "Usage: apm experimental enable [OPTIONS] NAME\n")
-			fmt.Fprintf(os.Stderr, "Try 'apm experimental enable --help' for help.\n")
-			fmt.Fprintf(os.Stderr, "\n")
-			fmt.Fprintf(os.Stderr, "Error: Missing argument 'NAME'.\n")
+			fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+			fmt.Fprintln(os.Stderr, `Try 'apm experimental enable --help' for help.`)
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' enabled.\n", name)
@@ -268,10 +287,8 @@ func runExperimental(args []string) int {
 		}
 		for _, a := range rest {
 			if startsWith(a, "-") && !disableKnown[a] {
-				fmt.Fprintf(os.Stderr, "Usage: apm experimental disable [OPTIONS] NAME\n")
-				fmt.Fprintf(os.Stderr, "Try 'apm experimental disable --help' for help.\n")
-				fmt.Fprintf(os.Stderr, "\n")
 				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm experimental disable --help' for help.`)
 				return 2
 			}
 		}
@@ -282,10 +299,8 @@ func runExperimental(args []string) int {
 			}
 		}
 		if name == "" {
-			fmt.Fprintf(os.Stderr, "Usage: apm experimental disable [OPTIONS] NAME\n")
-			fmt.Fprintf(os.Stderr, "Try 'apm experimental disable --help' for help.\n")
-			fmt.Fprintf(os.Stderr, "\n")
-			fmt.Fprintf(os.Stderr, "Error: Missing argument 'NAME'.\n")
+			fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+			fmt.Fprintln(os.Stderr, `Try 'apm experimental disable --help' for help.`)
 			return 2
 		}
 		fmt.Printf("[+] Experimental feature '%s' disabled.\n", name)
@@ -310,10 +325,8 @@ func runExperimental(args []string) int {
 		}
 		for _, a := range rest {
 			if startsWith(a, "-") && !resetKnown[a] {
-				fmt.Fprintf(os.Stderr, "Usage: apm experimental reset [OPTIONS] [NAME]\n")
-				fmt.Fprintf(os.Stderr, "Try 'apm experimental reset --help' for help.\n")
-				fmt.Fprintf(os.Stderr, "\n")
 				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm experimental reset --help' for help.`)
 				return 2
 			}
 		}
@@ -335,7 +348,12 @@ func runPreview(args []string) int {
 	}
 	script := ""
 	for _, a := range args {
-		if !startsWith(a, "-") && script == "" {
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm preview --help' for help.`)
+			return 2
+		}
+		if script == "" {
 			script = a
 		}
 	}

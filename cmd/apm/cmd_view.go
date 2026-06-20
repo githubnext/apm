@@ -21,9 +21,12 @@ func runView(args []string) int {
 		case "--global", "-g":
 			flagGlobal = true
 		default:
-			if !startsWith(args[i], "-") {
-				posArgs = append(posArgs, args[i])
+			if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm view --help' for help.`)
+				return 2
 			}
+			posArgs = append(posArgs, args[i])
 		}
 	}
 

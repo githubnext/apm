@@ -36,6 +36,12 @@ func runMCP(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm mcp --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 	switch sub {
@@ -69,9 +75,22 @@ func runMCPInstall(args []string) int {
 		}
 	}
 	name := ""
-	for _, a := range args {
-		if !startsWith(a, "-") && name == "" {
-			name = a
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--verbose", "-v":
+			// known no-value flags
+		case "--limit":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--limit=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm mcp install --help' for help.`)
+				return 2
+			}
+			if !startsWith(a, "-") && name == "" {
+				name = a
+			}
 		}
 	}
 	if name == "" {
@@ -125,9 +144,22 @@ func runMCPSearch(args []string) int {
 		}
 	}
 	query := ""
-	for _, a := range args {
-		if !startsWith(a, "-") && query == "" {
-			query = a
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--verbose", "-v":
+			// known no-value flags
+		case "--limit":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--limit=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm mcp search --help' for help.`)
+				return 2
+			}
+			if !startsWith(a, "-") && query == "" {
+				query = a
+			}
 		}
 	}
 	fmt.Printf("[*] Searching MCP registry for: %s\n", query)
@@ -150,9 +182,22 @@ func runMCPInspect(args []string) int {
 		}
 	}
 	name := ""
-	for _, a := range args {
-		if !startsWith(a, "-") && name == "" {
-			name = a
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--verbose", "-v":
+			// known no-value flags
+		case "--limit":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--limit=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm mcp show --help' for help.`)
+				return 2
+			}
+			if !startsWith(a, "-") && name == "" {
+				name = a
+			}
 		}
 	}
 	if name == "" {
@@ -176,6 +221,21 @@ func runMCPList(args []string) int {
 			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
 			return 0
+		}
+	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--verbose", "-v":
+			// known no-value flags
+		case "--limit":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--limit=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm mcp list --help' for help.`)
+				return 2
+			}
 		}
 	}
 	cwd, _ := os.Getwd()

@@ -198,8 +198,13 @@ func run(args []string) int {
 	}
 
 	if _, ok := commands[cmd]; !ok {
-		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", cmd)
-		fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		if strings.HasPrefix(cmd, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", cmd)
+			fmt.Fprintln(os.Stderr, "Try 'apm --help' for help.")
+		} else {
+			fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", cmd)
+			fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		}
 		return 2
 	}
 

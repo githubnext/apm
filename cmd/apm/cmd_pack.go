@@ -115,7 +115,12 @@ func runUnpack(args []string) int {
 		case "--help", "-h":
 			flagHelp = true
 		default:
-			if !startsWith(args[i], "-") && bundle == "" {
+			if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, "Try 'apm unpack --help' for help.")
+				return 2
+			}
+			if bundle == "" {
 				bundle = args[i]
 			}
 		}

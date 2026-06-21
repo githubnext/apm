@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-21T02:54:39Z |
-| Iteration Count | 114 |
+| Last Run | 2026-06-21T06:00:00Z |
+| Iteration Count | 115 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:bea48024 |
+| Completion Gate Status | pending:075ee93a |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104) |
+| Recent Statuses | gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 114 (bea48024) pushed to PR #119.** Fixed the 4-line Click 8.4.1 error format for unknown options across ALL 68 public Go commands plus the mcp install special case. Changes: added `rejectUnknownOption()` helper, replaced all 67 Error+Try+return-2 triples + main.go's special handling; fixed 7 help-output usage-line mismatches (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove); fixed experimental reset rejectUnknownOption to include [NAME]; fixed mcp install to accept flag-like arg as NAME and emit Python-compatible MCP error. Merged main (b3db26d0) to satisfy completion gate branch-currency check. Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 115 (075ee93a) pushed to PR #119.** Fixed the 4-line Click 8.4.1 error format (Usage/Try/blank/Error) for all 68 public Go commands. Script-replaced 67 two-line error sites across 18 cmd files. Fixed mcp install to accept unknown flags as NAME (ignore_unknown_options parity) and emit Python-compatible mcp-name-starts-with-dash error. Fixed 7 help usage-line mismatches: deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME], runtime setup/remove {copilot|codex|llm|gemini}. Fixed root apm unknown-option to 4-line format. Merged main (b3db26d0). Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 115 -- 2026-06-21T06:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27892928200)
+
+- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format for all 68 public commands.
+- **Change**: Script-replaced 67 two-line (Error/Try) error sites across 18 cmd files with 4-line format (Usage/Try/blank/Error). Fixed mcp install to accept flag-like args as NAME (Python ignore_unknown_options=True parity) and emit stdout `[!] Install interrupted after 0.0s.` + stderr mcp-name-starts-with-dash error. Fixed root apm unknown-option to 4-line format. Fixed 7 help usage-line mismatches. Merged main (b3db26d0). Commit: 075ee93a.
 
 ### Iteration 113 -- 2026-06-21T02:14:24Z -- [Run](https://github.com/githubnext/apm/actions/runs/27889782601)
 

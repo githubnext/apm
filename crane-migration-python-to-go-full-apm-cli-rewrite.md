@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-21T00:00:00Z |
-| Iteration Count | 112 |
+| Last Run | 2026-06-21T02:14:24Z |
+| Iteration Count | 113 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:cad19026 |
+| Completion Gate Status | pending:aeb60830 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103), gate-fix (iter102) |
+| Recent Statuses | gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103) |
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 113 -- 2026-06-21T02:14:24Z -- [Run](https://github.com/githubnext/apm/actions/runs/27889782601)
+
+- **Status**: [*] Gate-fix PUSHED -- fixed all 68 Python-vs-Go error format mismatches.
+- **Change**: Fixed 4-line Click error format across all 20 cmd files. Additional fixes for 8 Usage-line text mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, mcp install flag-as-name special case, plugin init [PROJECT_NAME], runtime setup/remove {copilot|codex|llm|gemini}). Verified 0 mismatches with live Python CLI. Merged main (b3db26d0). Commit: aeb60830.
 
 ### Iteration 112 -- 2026-06-21T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27871856991)
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-21T02:14:24Z |
-| Iteration Count | 113 |
+| Last Run | 2026-06-21T02:54:39Z |
+| Iteration Count | 114 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:aeb60830 |
+| Completion Gate Status | pending:bea48024 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104), gate-fix (iter103) |
+| Recent Statuses | gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107), gate-fix (iter105), gate-fix (iter104) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**CI gate-fix pushed**: Iter 112 (cad19026) pushed to PR #119. Fixed the 4-line Click 8.4.1 error format for unknown options across ALL 68 public Go commands. Root cause: all error sites emitted 2 lines (Error+Try) in wrong order; correct format is 4 lines (Usage+Try+blank+Error). Added `rejectUnknownOption()` helper to main.go; replaced all ~67 occurrences across 20 Go files. Special case for `apm mcp install`: Python passes flag-like arg as NAME then delegates to `apm install --mcp NAME`; when NAME starts with `-`, install raises MCP-specific UsageError -- Go now matches this with `[!] Install interrupted after 0.0s.` on stdout and the 4-line MCP error on stderr. Also merged main (b3db26d0) into crane branch. Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 114 (bea48024) pushed to PR #119.** Fixed the 4-line Click 8.4.1 error format for unknown options across ALL 68 public Go commands plus the mcp install special case. Changes: added `rejectUnknownOption()` helper, replaced all 67 Error+Try+return-2 triples + main.go's special handling; fixed 7 help-output usage-line mismatches (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove); fixed experimental reset rejectUnknownOption to include [NAME]; fixed mcp install to accept flag-like arg as NAME and emit Python-compatible MCP error. Merged main (b3db26d0) to satisfy completion gate branch-currency check. Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 

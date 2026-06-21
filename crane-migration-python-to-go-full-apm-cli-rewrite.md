@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-21T09:00:00Z |
-| Iteration Count | 116 |
+| Last Run | 2026-06-23T00:00:00Z |
+| Iteration Count | 117 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:05266af0 |
+| Completion Gate Status | pending:127bf663 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108), gate-fix (iter107) |
+| Recent Statuses | gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 116 (05266af0) pushed to PR #119.** Fixed the 4-line Click 8.4.1 error format (Usage/Try/blank/Error) for all 68 public Go commands. Script-replaced 67 two-line error sites across 19 cmd files using a Python transformation script. Fixed mcp install to accept unknown flags as NAME (ignore_unknown_options parity) and emit Python-compatible mcp-name-starts-with-dash error. Fixed 7 help usage-line mismatches: deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME], runtime setup/remove {copilot|codex|llm|gemini}. Merged main (b3db26d0). Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 117 (127bf663) pushed to PR #119.** Same fix as iter 116 (which never landed on remote). Applied transformation script to fix 67 two-line error sites across 19 cmd files (+ main.go manually = 68 total) to emit correct 4-line Click 8.4.1 format: Usage line, Try help, blank, Error. Fixed 7 usage-line mismatches. Merged origin/main (b3db26d0). Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 117 -- 2026-06-23T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27900198124)
+
+- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format (68 commands) + 7 usage-line corrections.
+- **Change**: Transformation script fixed 67 two-line error sites across 19 cmd files; main.go fixed manually (1 site). All 68 commands now emit: Usage line / Try help / blank line / Error: No such option. 7 usage-line mismatches corrected (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove). Merged origin/main (b3db26d0). Commit: 127bf663.
 
 ### Iteration 116 -- 2026-06-21T09:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27898039951)
 

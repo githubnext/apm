@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-23T01:30:13Z |
-| Iteration Count | 118 |
+| Last Run | 2026-06-23T03:00:00Z |
+| Iteration Count | 119 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:70788291 |
+| Completion Gate Status | pending:22f3a61a |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109) |
+| Recent Statuses | gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 117 (127bf663) pushed to PR #119.** Same fix as iter 116 (which never landed on remote). Applied transformation script to fix 67 two-line error sites across 19 cmd files (+ main.go manually = 68 total) to emit correct 4-line Click 8.4.1 format: Usage line, Try help, blank, Error. Fixed 7 usage-line mismatches. Merged origin/main (b3db26d0). Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 119 (22f3a61a) pushed to PR #119.** This is the first iteration where the changes ACTUALLY landed on the remote branch (previous iters 116-118 all pushed the same ce1121c6 commit due to safe-outputs push failures). Applied transformation to fix all 68 two-line unknown-option error sites across 19 cmd files to emit correct 4-line Click 8.4.1 format: Usage line, Try help, blank, Error. Fixed 7 --help usage-line mismatches (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove). Also fixed main.go root dispatch (1 site). Merged origin/main. Completion Gate Status: pending:22f3a61a. Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-23T09:30:00Z |
-| Iteration Count | 121 |
+| Last Run | 2026-06-24T03:00:00Z |
+| Iteration Count | 122 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:667d5d25 |
+| Completion Gate Status | pending:ffcd5049 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112) |
+| Recent Statuses | gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 121 (667d5d25) pushed to PR #119.** Fixed all 68 unknown-option error sites across 20 cmd files to emit correct 4-line Click 8.4.1 format (Usage / Try / blank / Error). Fixed 5 --help usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]). Added TestGoCutoverRealMigrationCIBenchmarkIterationContext (Go coverage for new Python test). Merged origin/main (b3db26d0, +test_migration_ci_workflow.py only). Completion Gate Status: pending:667d5d25. Awaiting Python-vs-Go Parity Gate CI result. Note: Iters 116-120 claimed pushes but remote stayed at ce1121c6 (push_to_pull_request_branch silently failed). Iter 121 push returned success with 52KB patch (1305 lines).
+**Iter 122 (ffcd5049) pushed to PR #119.** Fixed all 68 "Error: No such option" sites across 20 cmd files to emit correct 4-line Click 8.4.1 format (Usage / Try / blank / Error). Fixed 5 --help usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]). Fixed wrong preview usage line (was "apm experimental reset", now "apm preview [OPTIONS] [SCRIPT_NAME]"). Also merged main (e15c7d03) and main was already at b3db26d0. Completion Gate Status: pending:ffcd5049. Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 

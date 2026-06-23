@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-23T00:00:00Z |
-| Iteration Count | 117 |
+| Last Run | 2026-06-23T01:30:13Z |
+| Iteration Count | 118 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:127bf663 |
+| Completion Gate Status | pending:70788291 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109), gate-fix (iter108) |
+| Recent Statuses | gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110), gate-fix (iter109) |
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 118 -- 2026-06-23T01:30:13Z -- [Run](https://github.com/githubnext/apm/actions/runs/27995438027)
+
+- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format (68 sites, confirmed) + 5 usage-line corrections. Commit: 70788291.
+- **Change**: Transformed all 68 unknown-option error sites to correct 4-line Click 8.4.1 format (Usage/Try/blank/Error). Corrected 5 help usage lines: deps update ([PACKAGES]...), marketplace add (REPO), marketplace browse (NAME), mcp show (SERVER_NAME), plugin init ([PROJECT_NAME]). Merged origin/main (b3db26d0). Go build + tests pass. Note: iters 116-117 had incorrect state file entries claiming pushes landed; branch was still at ce1121c6 (iter 105) until this iter. This is the actual first push of the 4-line format fix.
 
 ### Iteration 117 -- 2026-06-23T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27900198124)
 

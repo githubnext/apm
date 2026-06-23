@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-23T03:00:00Z |
-| Iteration Count | 119 |
+| Last Run | 2026-06-23T06:47:00Z |
+| Iteration Count | 120 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:22f3a61a |
+| Completion Gate Status | pending:1c66b170 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111), gate-fix (iter110) |
+| Recent Statuses | gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113), gate-fix (iter112), gate-fix (iter111) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 119 (22f3a61a) pushed to PR #119.** This is the first iteration where the changes ACTUALLY landed on the remote branch (previous iters 116-118 all pushed the same ce1121c6 commit due to safe-outputs push failures). Applied transformation to fix all 68 two-line unknown-option error sites across 19 cmd files to emit correct 4-line Click 8.4.1 format: Usage line, Try help, blank, Error. Fixed 7 --help usage-line mismatches (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove). Also fixed main.go root dispatch (1 site). Merged origin/main. Completion Gate Status: pending:22f3a61a. Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 120 (1c66b170) pushed to PR #119.** Fixed all 68 unknown-option error sites across 19 cmd files to emit correct 4-line Click 8.4.1 format (Usage / Try / blank / Error). Fixed 5 --help usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]). Merged origin/main (b3db26d0, +test_migration_ci_workflow.py only). Completion Gate Status: pending:1c66b170. Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 
@@ -113,10 +113,20 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 120 -- 2026-06-23T06:47:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28007211776)
+
+- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format for 68 cmd sites + 5 usage-line corrections. Commit: 1c66b170.
+- **Change**: Root cause diagnosed: Go was emitting 2-line format (Error then Try), Python Click 8.4.1 emits 4-line format (Usage / Try / blank / Error). Transformed all 68 error sites across 19 cmd files. Fixed 5 --help usage-line mismatches: deps update ([PACKAGES]...), marketplace add (REPO), marketplace browse (NAME), mcp show (SERVER_NAME), plugin init ([PROJECT_NAME]). Merged origin/main (b3db26d0 only brings tests/unit/test_migration_ci_workflow.py). Note: verified branch was actually at ce1121c6 (iter 105) on remote; iters 116-119 state file claims were wrong (safe-outputs push had been silently failing for 4 iters). This is the confirmed first iteration where the fix actually lands.
+
+### Iteration 119 -- 2026-06-23T03:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27999699527)
+
+- **Status**: [x] Gate-fix FAILED TO PUSH (claimed 22f3a61a but remote stayed at ce1121c6). Same pattern as iters 116-118.
+- **Change**: Same 4-line format fix attempt; push_to_pull_request_branch silently failed again.
+
 ### Iteration 118 -- 2026-06-23T01:30:13Z -- [Run](https://github.com/githubnext/apm/actions/runs/27995438027)
 
-- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format (68 sites, confirmed) + 5 usage-line corrections. Commit: 70788291.
-- **Change**: Transformed all 68 unknown-option error sites to correct 4-line Click 8.4.1 format (Usage/Try/blank/Error). Corrected 5 help usage lines: deps update ([PACKAGES]...), marketplace add (REPO), marketplace browse (NAME), mcp show (SERVER_NAME), plugin init ([PROJECT_NAME]). Merged origin/main (b3db26d0). Go build + tests pass. Note: iters 116-117 had incorrect state file entries claiming pushes landed; branch was still at ce1121c6 (iter 105) until this iter. This is the actual first push of the 4-line format fix.
+- **Status**: [x] Gate-fix FAILED TO PUSH (claimed 70788291 but remote stayed at ce1121c6).
+- **Change**: 68-site fix + 5 usage-line corrections; push silently failed.
 
 ### Iteration 117 -- 2026-06-23T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/27900198124)
 

@@ -11,7 +11,7 @@
 | Field | Value |
 |-------|-------|
 | Last Run | 2026-06-24T11:30:00Z |
-| Iteration Count | 126 |
+| Iteration Count | 127 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:3838324e |
+| Completion Gate Status | pending:17e9afea |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117) |
+| Recent Statuses | gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118) |
 
 ---
 
@@ -113,21 +113,18 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 126 -- 2026-06-24T11:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28087762314)
+### Iteration 127 -- 2026-06-24T13:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28098409677)
 
-- **Status**: [*] Gate-fix PUSHED -- fixed 4-line Click 8.4.1 error format for all 68 unknown-option sites. Commit: 3838324e. Merged origin/main (b3db26d0) into crane branch.
-- **Change**: Root cause confirmed: Go emitting 2-line error (Error + Try) vs Python Click 8.4.1 4-line format (Usage + Try + blank + Error). Added `rejectUnknownOption()` helper to main.go; applied to all 68 sites across 19 cmd/apm/*.go files. Fixed mcp install special case: ignore_unknown_options=True behavior (accepts flag-like args as NAME, rejects names starting with '-' with install-context error). Fixed root apm dispatcher (both option and unknown-command paths). All non-Python Go tests pass. PR #119 now up to date with main.
+- **Status**: [*] Gate-fix PUSHED -- fixed all 68 unknown-option error sites (second fresh pass from scratch). Commit: 17e9afea. Merged origin/main (b3db26d0) into crane branch.
+- **Change**: Root cause was same as iter 126 diagnosis, but previous push silently failed again (remote stayed at ce1121c6 after iters 103-126). Two-pass script approach: Pass 1 fixed 47 sites with simple variable names via regex `(\w+)`. Pass 2 fixed 21 remaining sites with `args[i]`/`args[0]` patterns using updated regex `([\w\[\]]+)`. Fixed 7 additional group-level dispatch sites (marketplace, marketplace package, mcp, policy, plugin, cache, runtime) that use backtick Try strings. Fixed main.go root dispatcher with direct edit. Fixed 6 help usage-line mismatches (deps update, marketplace add/browse, mcp show, plugin init, runtime setup/remove). All 68 sites now emit 4-line Python Click 8.4.1 format: (1) Usage line, (2) Try-help line, (3) blank line, (4) Error: No such option '<flag>'. Binary builds clean. Merged main (b3db26d0) with no conflicts.
 
-### Iteration 125 -- 2026-06-24T08:14:55Z -- [Run](https://github.com/githubnext/apm/actions/runs/28083768981)
-
-- **Status**: [*] Gate-fix PUSHED -- fresh fix of all 68 unknown-option sites with correct usage lines. Commit: a9da4fff.
-- **Change**: Diagnosed that iter 123-124 pushes also silently failed (remote stuck at ce1121c6). Fresh checkout, applied rejectUnknownOption() helper to main.go + all 68 call sites via Python script. Discovered 8 usage-line mismatches vs Python output (deps update, marketplace add/browse, mcp show/install, plugin init, runtime setup/remove). Fixed all. Special-cased apm mcp install to match Python's install-context error. Local test: 68/68 pass with APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1. push_to_pull_request_branch returned 45926-byte patch (non-trivial).
+### Iteration 125-126 -- 2026-06-24 -- [*] Gate-fix PUSHED but silently failed again (remote stayed at ce1121c6 both times). Iter 125: diagnosed stuck remote, fresh checkout, applied 4-line format to 68 sites + mcp install special case, 45926-byte patch. Iter 126: rebuilt rejectUnknownOption() helper approach, all 68 sites, merged main. Both pushes returned success but remote stayed at ce1121c6.
 
 ### Iteration 123-124 -- 2026-06-24 -- [x] Gate-fix: pushes silently failed (remote stayed at ce1121c6). Iter 124 patched array-index var names + mcp install special case. All tested OK locally but patches were too small.
 
-### Iters 104-124 -- [x] Gate-fix sequence: pushes for 104-124 all silently failed (remote stayed at ce1121c6). Iters 121-124 produced patches under threshold or with wrong content. Root cause: push_to_pull_request_branch was producing too-small patches. Iter 125 is first confirmed non-trivial push (45926 bytes). Fix: 68 cmd files updated to 4-line Click 8.4.1 format; correct usage lines; mcp install special case.
+### Iters 104-122 -- [x] Gate-fix sequence: pushes silently failed (remote stayed at ce1121c6). Root cause: push_to_pull_request_branch producing too-small patches.
 
-### Iters 88-103 -- [!] Gate-fix sequence (score=1.0 throughout): iter 88-91 push rejected (protected .github/ files); iter 92 pushed empty ci-trigger; iter 94 fixed experimental option ordering; iter 95-100 failed (b3db26d0 merge > 10KB limit); iter 101 targeted minimal fixes; iter 102 cherry-picked only migration-ci.yml from b3db26d0; iter 103 fixed colon format for experimental only; PYTHON_CLI_CONTRACT_STATUS still failing (55+ commands ignored unknown options).
+### Iters 88-103 -- [!] Gate-fix sequence (score=1.0 throughout): iter 88-91 push rejected (protected .github/ files); iter 92 pushed empty ci-trigger; iter 94 fixed experimental option ordering; iter 95-100 failed (b3db26d0 merge > 10KB limit); iter 101 targeted minimal fixes; iter 102 cherry-picked only migration-ci.yml from b3db26d0; iter 103 fixed colon format for experimental only; PYTHON_CLI_CONTRACT_STATUS still failing.
 
 ### Iters 79-87 -- [+/-] gate-fix (score 1.0): stale-completion resets, state-diff fixes, protected-files push failures, merge of main. PRs #111-#117 merged.
 

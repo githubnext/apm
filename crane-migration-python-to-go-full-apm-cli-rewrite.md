@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-24T04:00:00Z |
-| Iteration Count | 123 |
+| Last Run | 2026-06-24T05:00:00Z |
+| Iteration Count | 124 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:087406ee |
+| Completion Gate Status | pending:9bb66008 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114) |
+| Recent Statuses | gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 123 (087406ee) pushed to PR #119.** Root cause confirmed: iters 104-122 fixes were correct but iter 121/122 pushes landed empty (0/trivial bytes) -- remote stayed at ce1121c6. Iter 123 re-applies all fixes from scratch on a fresh checkout: added rejectUnknownOption() helper, replaced all 68 2-line error sites with 4-line Click 8.4.1 format, fixed 5 usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]), fixed apm targets usageLine in rejectUnknownOption call, merged origin/main (b3db26d0). Build: go build pass, go test pass. Completion Gate Status: pending:087406ee. Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 124 (9bb66008) pushed to PR #119.** Root cause of iter 123 push bogus: state file was updated to `087406ee` but remote actually stayed at `ce1121c6` (same push-too-small problem). Iter 124: diagnosed remaining failures -- script fix_unknown_option2.py only handled `\w+` variable names; `args[0]`, `args[i]`, `args[1]` were not matched. Wrote fix_unknown_option3.py to handle array-index variable names; 20 more sites fixed across 14 files. Fixed `apm mcp install` special case: removed option-rejection for dash-prefixed args, now accepts them as NAME then validates with `HasPrefix(name, "-")`, emits stdout `[!] Install interrupted after 0.0s.` + stderr `Usage: apm install [OPTIONS] [PACKAGES]...\n...Error: MCP name cannot start with '-'; did you forget a value for --mcp?`. Merged origin/main (b3db26d0). Build pass. Test: 68/68 `test_every_python_command_rejects_unknown_option_consistently` PASS with APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1. Completion Gate Status: pending:9bb66008.
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 124 -- 2026-06-24T05:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28076339347)
+
+- **Status**: [*] Gate-fix PUSHED -- fix remaining 20 unknown-option sites (array-index vars) and apm mcp install special case. Commit: 9bb66008.
+- **Change**: Script fix_unknown_option2.py (iter 123) only matched `\w+` variable names; missed `args[0]`, `args[i]`, `args[1]`. Wrote fix_unknown_option3.py with `[\w\[\]]+` pattern; 20 more fixes across 14 files. Fixed apm mcp install: removed dash-prefixed option rejection in default case; accepts as NAME; validates `HasPrefix(name, "-")` post-parse; emits install-context error (stdout: `[!] Install interrupted after 0.0s.`; stderr: `Usage: apm install [OPTIONS] [PACKAGES]...\nTry 'apm install --help' for help.\n\nError: MCP name cannot start with '-'; did you forget a value for --mcp?`). Merged origin/main. Local test: 68/68 pass.
 
 ### Iteration 123 -- 2026-06-24T04:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28073187037)
 

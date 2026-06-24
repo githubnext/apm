@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-24T16:45:00Z |
-| Iteration Count | 130 |
+| Last Run | 2026-06-25T00:00:00Z |
+| Iteration Count | 131 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:969a1148 |
+| Completion Gate Status | pushed:c64b2cd1 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121) |
+| Recent Statuses | gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122) |
 
 ---
 
@@ -113,7 +113,14 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 130 -- 2026-06-24T16:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28113626234)
+### Iteration 131 -- 2026-06-25T00:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28116707386)
+
+- **Status**: [*] Gate-fix PUSHED -- commit c64b2cd1 (patch 52891 bytes, 1287 lines). CI pending on c64b2cd1.
+- **Root cause (PYTHON_CLI_CONTRACT_STATUS: 1)**: All 68 Go commands had wrong unknown-option format. Correct Click 8.x format (4-line, single-quoted, period) confirmed. Additionally, `apm mcp install` needed special handling: Python uses `ignore_unknown_options=True` so `--X` becomes NAME positional, forwarded to `apm install --mcp --X`, producing install-context error.
+- **Fix**: (1) All 68 commands: correct format `Usage: CMD ...\nTry 'CMD --help' for help.\n\nError: No such option '--X'.\n`. (2) mcp install: removed flag-as-unknown-option rejection; when NAME starts with `-`, emit `[!] Install interrupted after 0.0s.` (stdout) + `Usage: apm install [OPTIONS] [PACKAGES]...\nTry 'apm install --help' for help.\n\nError: MCP name cannot start with '-'; did you forget a value for --mcp?\n` (stderr). (3) Merged main (b3db26d0). 19 files changed, 280 insertions.
+- **Lesson**: Click 8.x: `--X` captured as NAME positional by mcp install (ignore_unknown_options=True). Then `apm install --mcp --X` triggers `UsageError("MCP name cannot start with '-'...")` in conflicts.py. The `finally` block in install emits `[!] Install interrupted after 0.0s.` to stdout. iter130's 969a1148 push silently failed (mcp install fix not applied -- push_to_pull_request_branch returned success but commit never appeared on PR head).
+
+
 
 - **Status**: [*] Gate-fix PUSHED -- commit 969a1148 (bundle 7392 bytes). CI pending on 969a1148.
 - **Root cause (push failures 104-129)**: `push_to_pull_request_branch` requires `pull_request_number: 119` explicitly (workflow target is `*`). All prior pushes omitted this; "success" was false.

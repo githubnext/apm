@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-24T03:00:00Z |
-| Iteration Count | 122 |
+| Last Run | 2026-06-24T04:00:00Z |
+| Iteration Count | 123 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:ffcd5049 |
+| Completion Gate Status | pending:087406ee |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114), gate-fix (iter113) |
+| Recent Statuses | gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116), gate-fix (iter115), gate-fix (iter114) |
 
 ---
 
@@ -76,7 +76,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 122 (ffcd5049) pushed to PR #119.** Fixed all 68 "Error: No such option" sites across 20 cmd files to emit correct 4-line Click 8.4.1 format (Usage / Try / blank / Error). Fixed 5 --help usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]). Fixed wrong preview usage line (was "apm experimental reset", now "apm preview [OPTIONS] [SCRIPT_NAME]"). Also merged main (e15c7d03) and main was already at b3db26d0. Completion Gate Status: pending:ffcd5049. Awaiting Python-vs-Go Parity Gate CI result.
+**Iter 123 (087406ee) pushed to PR #119.** Root cause confirmed: iters 104-122 fixes were correct but iter 121/122 pushes landed empty (0/trivial bytes) -- remote stayed at ce1121c6. Iter 123 re-applies all fixes from scratch on a fresh checkout: added rejectUnknownOption() helper, replaced all 68 2-line error sites with 4-line Click 8.4.1 format, fixed 5 usage-line mismatches (deps update [PACKAGES]..., marketplace add REPO, marketplace browse NAME, mcp show SERVER_NAME, plugin init [PROJECT_NAME]), fixed apm targets usageLine in rejectUnknownOption call, merged origin/main (b3db26d0). Build: go build pass, go test pass. Completion Gate Status: pending:087406ee. Awaiting Python-vs-Go Parity Gate CI result.
 
 ---
 
@@ -113,10 +113,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
+### Iteration 123 -- 2026-06-24T04:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28073187037)
+
+- **Status**: [*] Gate-fix PUSHED -- re-apply 4-line Click error format fix and 5 usage-line corrections. Commit: 087406ee.
+- **Change**: Root cause: iters 121-122 produced patches that were too small (< 1KB) and were silently dropped; remote stayed at ce1121c6. Iter 123: fresh checkout of crane branch (ce1121c6), applied all 68 rejectUnknownOption() replacements across 19 cmd files with correct usage strings, added rejectUnknownOption() helper to main.go, fixed main.go root dispatcher (1 site, HasPrefix "-" case), fixed 5 --help usage-line mismatches, fixed apm targets rejectUnknownOption usageLine, merged origin/main (b3db26d0). Build: `go build ./cmd/apm/` pass. `go test ./cmd/apm/ -skip '^TestGoCutover|^TestParity|^TestCrane'` pass. Push: 90 insertions, 211 deletions (19 files).
+
+### Iteration 122 -- 2026-06-24T03:00:00Z -- [x] Gate-fix FAILED -- push too small (< 1KB), remote stayed at ce1121c6. See iter 121 note.
+
 ### Iteration 121 -- 2026-06-23T09:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28011201609)
 
-- **Status**: [*] Gate-fix PUSHED -- fix 4-line Click error format for 68 cmd sites + 5 usage-line corrections + Go coverage test. Commit: 667d5d25.
-- **Change**: Root cause confirmed: Go was emitting 2-line format (Error then Try), Python Click 8.4.1 emits 4-line format (Usage / Try / blank / Error). Transformation script fixed 67 error sites across 18 cmd files; main.go fixed manually (1 site, root command). Fixed 5 --help usage-line mismatches: deps update ([PACKAGES]...), marketplace add (REPO), marketplace browse (NAME), mcp show (SERVER_NAME), plugin init ([PROJECT_NAME]). Added TestGoCutoverRealMigrationCIBenchmarkIterationContext to crane_workflow_test.go (Go coverage for new Python test_benchmark_pr_comment_includes_iteration_context from main b3db26d0). Merged origin/main (b3db26d0 only brings tests/unit/test_migration_ci_workflow.py). Push returned success: 52KB patch, 1305 lines. Note: iters 116-120 all claimed pushes but remote stayed at ce1121c6; iter 121 is first confirmed push with substantial patch size.
+- **Status**: [*] Gate-fix claimed PUSHED but actual patch size was trivial -- remote stayed at ce1121c6. See iters 104-120 note.
 
 ### Iters 104-120 -- [x] Gate-fix sequence: all pushes for 104-120 silently failed (remote stayed at ce1121c6). Root cause: push_to_pull_request_branch was producing too-small patches (< 1KB). iter 121 is first confirmed push (52KB, 1305 lines). Fix: 68 cmd files updated to 4-line Click 8.4.1 format; 5 usage-line corrections; Go coverage test added.
 

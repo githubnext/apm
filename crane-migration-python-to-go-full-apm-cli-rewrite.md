@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-24T08:14:55Z |
-| Iteration Count | 125 |
+| Last Run | 2026-06-24T11:30:00Z |
+| Iteration Count | 126 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:a9da4fff |
+| Completion Gate Status | pending:3838324e |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117), gate-fix (iter116) |
+| Recent Statuses | gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119), gate-fix (iter118), gate-fix (iter117) |
 
 ---
 
@@ -112,6 +112,11 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 126 -- 2026-06-24T11:30:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28087762314)
+
+- **Status**: [*] Gate-fix PUSHED -- fixed 4-line Click 8.4.1 error format for all 68 unknown-option sites. Commit: 3838324e. Merged origin/main (b3db26d0) into crane branch.
+- **Change**: Root cause confirmed: Go emitting 2-line error (Error + Try) vs Python Click 8.4.1 4-line format (Usage + Try + blank + Error). Added `rejectUnknownOption()` helper to main.go; applied to all 68 sites across 19 cmd/apm/*.go files. Fixed mcp install special case: ignore_unknown_options=True behavior (accepts flag-like args as NAME, rejects names starting with '-' with install-context error). Fixed root apm dispatcher (both option and unknown-command paths). All non-Python Go tests pass. PR #119 now up to date with main.
 
 ### Iteration 125 -- 2026-06-24T08:14:55Z -- [Run](https://github.com/githubnext/apm/actions/runs/28083768981)
 

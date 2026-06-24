@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-24T13:45:00Z |
-| Iteration Count | 128 |
+| Last Run | 2026-06-24T14:20:00Z |
+| Iteration Count | 129 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:3ebe5fed |
+| Completion Gate Status | pending:3fd230d5 |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120), gate-fix (iter119) |
+| Recent Statuses | gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122), gate-fix (iter121), gate-fix (iter120) |
 
 ---
 
@@ -76,13 +76,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 125 (a9da4fff) pushed to PR #119.** Iters 123-124 pushes had silently failed (remote stuck at ce1121c6). Iter 125: fresh start, rewrote all 68 rejectUnknownOption() call sites with Python-matching usage lines, fixed 8 usage-line mismatches (deps update, marketplace add/browse, mcp show/install, plugin init, runtime setup/remove), special-cased mcp install to emit install-context error matching Python. Local test: 68/68 pass. patch=45926 bytes. Awaiting CI.
+**Iter 129: fixed unknown-option format using cmd_errors.go rejectUnknownOption() helper. Correct format is `Error: No such option: --X` (colon, no quotes, no period) -- iter 128 lesson was wrong. Commit 3fd230d5 pushed to PR #119. Merged main (b3db26d0) in same commit. CI pending on 3fd230d5.**
 
 ---
 
 ## [docs] Lessons Learned
 
-- **error-format CORRECTED (iter 128)**: The correct Python click (8.x) error format for unknown options is SINGLE-QUOTED with period: `Error: No such option '--X'.`. The lesson in iter 109 was WRONG (it said colon format). Verified by running actual `apm` binary (`~/.local/bin/apm`) with NO_COLOR=1. Full normalized stderr: `Usage: apm CMD [OPTIONS] ARGS...\nTry 'apm CMD --help' for help.\n\nError: No such option '--X'.`. All 68 error sites now emit this format. All 67 Python public commands pass local parity test.
+- **error-format RE-CORRECTED (iter 129)**: The correct Python click (8.x) format for unknown options is COLON format WITHOUT quotes/period: `Error: No such option: --X`. Verified by running click.testing.CliRunner directly in this environment. Full normalized stderr: `Usage: apm CMD [OPTIONS] ARGS...\nTry 'apm CMD --help' for help.\n\nError: No such option: --X\n`. The iter 128 lesson was WRONG (it falsely claimed single-quoted format `Error: No such option '--X'.`). Fixed with rejectUnknownOption() helper in cmd_errors.go, all 68 sites use colon format.
 - **mcp install ignore_unknown_options (iter 109)**: Python's `apm mcp install` sets `ignore_unknown_options=True`. So `--definitely-not-an-apm-option` is treated as NAME positional arg. When NAME starts with `-`, emits stdout `[!] Install interrupted after 0.0s.` and stderr `Usage: apm install [OPTIONS] [PACKAGES]...\nTry 'apm install --help' for help.\n\nError: MCP name cannot start with '-'; did you forget a value for --mcp?\n`. Go must accept all flag-like args as NAME, then check HasPrefix(name, "-").
 - **rejectUnknownOption() helper (iter 109)**: Added in main.go. Call signature: `rejectUnknownOption(usageLine, cmdPath, option string) int`. Emits 4 lines to stderr: usage, try (with cmdPath), blank, error. Returns 2.
 - **migration-ci.yml cherry-pick only (iter 102)**: The Python test `test_benchmark_pr_comment_includes_iteration_context` runs on PR MERGE COMMIT. Fix by cherry-picking only `migration-ci.yml` (not full merge which exceeds 10KB). `git checkout origin/main -- .github/workflows/migration-ci.yml`.
@@ -112,6 +112,12 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 129 -- 2026-06-24T14:20:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28110090497)
+
+- **Status**: [*] Gate-fix PUSHED -- commit 3fd230d5 (patch 44151 bytes, bundle 6851 bytes). CI pending.
+- **Root Cause**: Iter 128 lesson was wrong about Python click format. Actual Python click 8.x format for unknown options is `Error: No such option: --X` (colon separator, no quotes, no period). Verified with click.testing.CliRunner in current environment.
+- **Fix**: (1) Created cmd/apm/cmd_errors.go with `rejectUnknownOption(usageLine, cmdPath, opt string) int` helper emitting correct 4-line format (Usage, Try, blank, Error: No such option: OPT). (2) Replaced all 68 unknown-option error sites across 19 Go files with helper calls. (3) Merged origin/main (b3db26d0) in same commit (adds tests/unit/test_migration_ci_workflow.py). Build: OK. Go tests: OK.
 
 ### Iteration 128 -- 2026-06-24T13:45:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28106082238)
 

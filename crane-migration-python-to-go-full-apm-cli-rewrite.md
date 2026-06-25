@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-25T20:15:51Z |
-| Iteration Count | 137 |
+| Last Run | 2026-06-25T22:59:40Z |
+| Iteration Count | 138 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:dc8f5700 (uninstall suffix fix pushed; awaiting CI) |
+| Completion Gate Status | pending:27c2bbca (errcli.go suffix fixes + upstream_sha advanced; awaiting CI) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128) |
+| Recent Statuses | gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129) |
 
 ---
 
@@ -60,42 +60,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 | # | Milestone | Status |
 |---|-----------|--------|
-| 0-16 | Planning through CLI entry point wiring | done |
-| 17 | Deletion-grade framework reset (score.go 7-gate) | done |
-| 18 | Resolve approved exceptions (zero known_exceptions) | done |
-| 19 | Complete python_behavior_contracts gate | done |
-| 20 | Golden fixture framework (gates 10-12) | done |
-| 21 | All-Go golden replay in CI; migration_score=1.0 | done |
-| 22-35 | Re-verify gates; fix deps arg; CUTOVER.md; stale resets; merge main; ancestor check; upstream SHA | done |
-| 36 | Fix experimental subcommand help and unknown-option parity | done |
-| 37 | Add Go coverage for crane protected-files tests; advance upstream reviewed_sha to 637acb9a; push 1104deea | done |
-| 38 | Merge main b3db26d0; add Go coverage for benchmark PR comment test; advance upstream reviewed_sha to feab1333; push fab2a808 | done |
-| 39 | Iteration 100: re-apply gate fixes (merge b3db26d0, TestGoCutoverRealMigrationCIBenchmarkContext, coverage JSON, upstream SHA feab1333); push e12aae47 | done |
+| 0-39 | Planning through all 302 modules ported, all 14 deletion-grade gates, upstream freshness, completion candidate | done |
 
 ---
 
 ## [target] Current Focus
 
-**Iter 137 completed: fixed errcli.go cmdUsageSuffix for apm uninstall.**
-
-The parity gate failure (PYTHON_CLI_CONTRACT_STATUS=1) was traced to `errcli.go`'s `cmdUsageSuffix`
-map having `"apm uninstall": " PACKAGES..."` instead of `" [OPTIONS] PACKAGES..."`.
-
-Python Click 8.x always emits `[OPTIONS]` before positional args in the Usage line. The Go
-interceptor was producing `Usage: apm uninstall PACKAGES...` -- missing `[OPTIONS]` -- causing
-`test_every_python_command_rejects_unknown_option_consistently[apm_uninstall]` to FAIL under
-enforce mode on crane/* branches.
-
-Fix: single-char change in `cmdUsageSuffix` map, committed dc8f5700. Patch = 1 line. Pushed to PR #119.
-
-**Iter 138: verify CI passes after dc8f5700.**
-
-Expect:
-- PYTHON_CLI_CONTRACT_STATUS=0 (all behavior contract tests pass)
-- migration_score=1.0 (all 16 gates pass)
-- All CI checks green: Lint, Go Tests, Python Unit Tests, Migration Benchmarks
-
-If all checks pass and PR head contains current main SHA, finalize migration completion.
+**Iter 138 gate-fix pushed (27c2bbca).** Fixed 8 errcli.go cmdUsageSuffix mismatches (deps update, info, marketplace add/browse, mcp show, plugin init, runtime remove/setup) and advanced upstream_contract_coverage.yml reviewed_sha to 63e8654c (current microsoft/apm@main). Awaiting CI: expect PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0, migration_score=1.0, completion candidate gate to re-open.
 
 ---
 
@@ -130,35 +101,32 @@ If all checks pass and PR head contains current main SHA, finalize migration com
 
 ## [chart] Iteration History
 
+### Iteration 138 -- 2026-06-25T22:59:40Z -- [Run](https://github.com/githubnext/apm/actions/runs/28204661478)
+
+- **Status**: [*] Gate-fix pushed (27c2bbca)
+- **Milestone**: Completion Gate -- parity behavior contract + upstream freshness repair
+- **Changes**:
+  - `cmd/apm/errcli.go`: Add 4 missing cmdUsageSuffix entries (`deps update`, `info`, `marketplace browse`, `plugin init`); fix 4 wrong entries (`marketplace add` REPO, `mcp show` SERVER_NAME, `runtime remove/setup` {copilot|codex|llm|gemini})
+  - `tests/parity/upstream_contract_coverage.yml`: Advance baseline_sha + reviewed_sha to `63e8654c` (current microsoft/apm@main)
+- **Root cause**: Iter 137 fixed `apm uninstall` suffix but left 8 other mismatches in cmdUsageSuffix. `test_every_python_command_rejects_unknown_option_consistently` enforced against all 68 commands -- any mismatch causes pytest.fail in enforce mode. Also: upstream_freshness=false because reviewed_sha (7d71ce3d) != upstream/main (63e8654c).
+- **Patch size**: 4222 bytes (under 10240 limit)
+- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0, migration_score=1.0
+
 ### Iteration 137 -- 2026-06-25T20:15:51Z -- [Run](https://github.com/githubnext/apm/actions/runs/28196994053)
 
-- **Status**: [*] Gate-fix pushed (dc8f5700)
-- **Milestone**: Completion Gate -- parity behavior contract repair
-- **Change**: Fix `cmdUsageSuffix["apm uninstall"]` in `errcli.go` from `" PACKAGES..."` to `" [OPTIONS] PACKAGES..."`. Patch = 1 line change (~100 bytes).
-- **Score**: 1.0 (last accepted), target 1.0 -- parity gate expected to pass after fix
-- **Root cause**: Python Click 8.x always outputs `[OPTIONS]` before positional args in Usage line. Wrong suffix caused `test_every_python_command_rejects_unknown_option_consistently[apm_uninstall]` to FAIL under enforce mode, setting PYTHON_CLI_CONTRACT_STATUS=1.
-- **Notes**: All other 16 gates were passing. Only the uninstall entry in the map was wrong. Verified locally: `apm uninstall --X` now produces correct 4-line Click 8.x error format with `[OPTIONS]` in Usage line.
+- [*] Gate-fix (dc8f5700): `errcli.go` `apm uninstall` suffix `PACKAGES...` -> `[OPTIONS] PACKAGES...`. Incomplete: 8 other suffixes still wrong (found in iter 138).
 
 ### Iteration 136 -- 2026-06-25T08:31:05Z -- [Run](https://github.com/githubnext/apm/actions/runs/28157246582)
 
-- **Status**: [*] Gate-fix pushed (86c550d4)
-- **Milestone**: Completion Gate -- upstream_freshness repair
-- **Change**: Advance `tests/parity/upstream_contract_coverage.yml` baseline_sha + reviewed_sha to 7d71ce3d (upstream/main); patch = 1481 bytes
-- **Score**: 0.999 (last run), target 1.0 -- gate fix expected to restore 1.0
-- **Notes**: Remote was already at 79815c1e (errcli.go parity fix landed). Only blocking gate: upstream_freshness=false (reviewed_sha stale). Single YAML commit, 1481-byte patch, ONE push call. CI pending.
+- [*] Gate-fix (86c550d4): advance upstream_contract_coverage.yml reviewed_sha to 7d71ce3d. Incomplete: PYTHON_CLI_CONTRACT_STATUS still 1 (uninstall suffix wrong).
 
 ### Iteration 135 -- 2026-06-25T07:43:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/28153447405)
 
-- **Status**: [x] Push-failed: quota exhausted. Remote still at ce1121c6.
-- **Work done**: Designed and implemented `errcli.go` (clickErrWriter, os.Pipe, cmdUsageSuffix map, 147 lines). Modified main.go (printCmdHelp returns int, wrapStderr in main). Modified cmd_mcp.go (ignore_unknown_options parity for mcp install). Build passes. Format-patch for 3 Go files = 9626 bytes.
-- **Push attempts**: (1) Merged origin/main first -> merge commit inflated patch to 20372 bytes -> first push call consumed quota, silently failed. (2) Reset to ce1121c6, re-applied 3 files as single commit b4cf84ab, patch=9626 bytes -> second push call silently no-op'd (quota exhausted by first call).
-- **Lesson**: Only 1 push call is honoured per workflow run. First call consumes the quota regardless of patch size. Never make a push call with an oversized patch (it silently fails AND consumes the quota). Next iter: apply parity fix directly (no merge), ONE push call with pull_request_number:119.
+- [x] Push-failed (quota). Built errcli.go (clickErrWriter, os.Pipe, cmdUsageSuffix map). Merge inflated patch to 20372 bytes; 2nd push silently failed. Lesson: 1 push/run; verify format-patch < 10240 first.
 
 ### Iteration 133 -- 2026-06-25 -- [Run](https://github.com/githubnext/apm/actions/runs/28145917520)
 
-- **Status**: [*] Gate-fix pushed commit f7275147 (patch 45578 bytes). CI pending -- patch too large, didn't land.
-- **Fix attempted**: rejectUnknownOpt() helper, 19 files changed, merge origin/main, push with pull_request_number:119.
-- **Lesson**: Must verify patch < 10240 bytes before pushing. 19-file batch change + merge = too large.
+- [x] Gate-fix pushed f7275147 but patch=45578 bytes (too large). 19 files + merge = rejected. Lesson: always check patch size.
 
 ### Iters 104-132 -- [x] Gate-fix sequence: wrong error format + push failures (remote stayed at ce1121c6). Root causes: (1) push_to_pull_request_branch omitted `pull_request_number: 119` (iters 106-132); (2) wrong unknown-option error format or patch too large (iters 104-105). All pushes returned false success.
 

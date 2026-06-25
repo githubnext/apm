@@ -51,7 +51,7 @@ var cmdUsageSuffix = map[string]string{
 	"apm runtime remove":             " [OPTIONS] RUNTIME_NAME",
 	"apm runtime setup":              " [OPTIONS] RUNTIME_NAME",
 	"apm search":                     " [OPTIONS] QUERY@MARKETPLACE",
-	"apm uninstall":                  " PACKAGES...",
+	"apm uninstall":                  " [OPTIONS] PACKAGES...",
 	"apm unpack":                     " [OPTIONS] BUNDLE_PATH",
 	"apm view":                       " [OPTIONS] PACKAGE [FIELD]",
 }

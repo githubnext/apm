@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-25T00:00:00Z |
-| Iteration Count | 131 |
+| Last Run | 2026-06-25T01:36:23Z |
+| Iteration Count | 132 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pushed:c64b2cd1 |
+| Completion Gate Status | pushed:5166889f (CI pending) | |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123), gate-fix (iter122) |
+| Recent Statuses | gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124), gate-fix (iter123) |
 
 ---
 
@@ -76,7 +76,10 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 130: diagnosed root causes of 26 silent push failures + wrong format. Confirmed correct Python Click 8.x format is 4-line with single quotes. Fixed all 68 sites + mcp install special case. Verified 68/68 commands match. Commit 969a1148 pushed to PR #119 (bundle 7392 bytes). CI pending.**
+**Iter 132: fixed unknown-option error format for all 68 Go commands to match Python Click 8.x.
+- 67 standard commands: 4-line format (Usage, Try, blank, Error with single quotes+period), all stderr
+- apm mcp install: special case (ignore_unknown_options=True), emits install-context error when NAME starts with '-'
+- Merged origin/main (b3db26d0). Commit 5166889f pushed to PR #119. CI pending.**
 
 ---
 

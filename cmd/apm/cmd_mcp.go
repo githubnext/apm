@@ -83,18 +83,25 @@ func runMCPInstall(args []string) int {
 		case "--limit":
 			i++ // skip value
 		default:
-			if startsWith(a, "-") && !startsWith(a, "--limit=") {
-				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
-				fmt.Fprintln(os.Stderr, `Try 'apm mcp install --help' for help.`)
-				return 2
-			}
-			if !startsWith(a, "-") && name == "" {
+			if !startsWith(a, "--limit=") && name == "" {
+				// Mirror Python's ignore_unknown_options=True: treat any
+				// unrecognised arg (including --X) as the NAME positional.
 				name = a
 			}
 		}
 	}
 	if name == "" {
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+		return 2
+	}
+	// Python validates that an MCP name cannot start with '-'.
+	// The error is formatted by the delegated `apm install` command.
+	if strings.HasPrefix(name, "-") {
+		fmt.Println("[!] Install interrupted after 0.0s.")
+		fmt.Fprintln(os.Stderr, "Usage: apm install [OPTIONS] [PACKAGES]...")
+		fmt.Fprintln(os.Stderr, "Try 'apm install --help' for help.")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintf(os.Stderr, "Error: MCP name cannot start with '-'; did you forget a value for --mcp?\n")
 		return 2
 	}
 

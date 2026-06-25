@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-25T06:06:24Z |
-| Iteration Count | 134 |
+| Last Run | 2026-06-25T07:43:20Z |
+| Iteration Count | 135 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pushed:74f4dd03 (CI pending) |
-| Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125) |
+| Completion Gate Status | push-failed:quota-exhausted (remote still at ce1121c6) |
+| Consecutive Errors | 1 |
+| Recent Statuses | push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126) |
 
 ---
 
@@ -76,37 +76,41 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 134: fix unknown-option error format for all 68 Go commands to match Python Click 8.x.**
-- 67 standard commands: 4-line format (Usage, Try, blank, Error) via `rejectUnknownOption()` helper in new `cmd_errors.go`
-- 1 special case (`apm mcp install`): accept all args as NAME (ignore_unknown_options parity), emit timing stdout + install-context stderr when name starts with '-'
-- Merged origin/main (b3db26d0) to satisfy completion gate ancestor check
-- Commit 74f4dd03 pushed to PR #119 -- awaiting CI
+**Iter 136: apply errcli.go parity fix directly to ce1121c6 -- ONE commit, ONE push.**
 
-**Root cause addressed**: `PYTHON_CLI_CONTRACT_STATUS=1` from `test_every_python_command_rejects_unknown_option_consistently` -- Go was missing the Usage header line and had Error/Try in wrong order.
+Remote PR #119 is stuck at ce1121c6 (all iter 104-135 pushes failed). The fix is designed and tested:
 
-**Completion Gate Status**: CI pending on 74f4dd03. When Python-vs-Go Parity Gate turns green, gate passes and migration completes.
+1. errcli.go (NEW, 147 lines): `clickErrWriter` intercepts stderr, reformats 2-line Go error to 4-line Click 8.x format via `os.Pipe()` + goroutine
+2. main.go (MODIFY): `printCmdHelp()` returns `int` (no os.Exit); `main()` calls `wrapStderr()`
+3. cmd_mcp.go (MODIFY): `runMCPInstall()` treats all args as NAME positional (ignore_unknown_options parity); validates `name.HasPrefix("-")`
+
+**CRITICAL push rules**:
+- DO NOT merge origin/main before pushing -- merge commit inflates patch to 20KB+ (exceeds 10KB limit)
+- Make ONLY ONE push call per iteration (first call consumes the quota; second call is silently no-op'd)
+- Always include `pull_request_number: 119` in the push call
+- Expected patch size: 9626 bytes (under 10240 limit)
+- Expected format-patch: 1 commit, 3 files, ~169 insertions, ~13 deletions
+
+When successful, CI will run "Python-vs-Go Parity Gate". It MUST pass. Then merge origin/main (separate iteration after parity gate is green).
 
 ---
 
 ## [docs] Lessons Learned
 
-- **error-format RE-CORRECTED (iter 129)**: The correct Python click (8.x) format for unknown options is COLON format WITHOUT quotes/period: `Error: No such option: --X`. Verified by running click.testing.CliRunner directly in this environment. Full normalized stderr: `Usage: apm CMD [OPTIONS] ARGS...\nTry 'apm CMD --help' for help.\n\nError: No such option: --X\n`. The iter 128 lesson was WRONG (it falsely claimed single-quoted format `Error: No such option '--X'.`). Fixed with rejectUnknownOption() helper in cmd_errors.go, all 68 sites use colon format.
-- **mcp install ignore_unknown_options (iter 109)**: Python's `apm mcp install` sets `ignore_unknown_options=True`. So `--definitely-not-an-apm-option` is treated as NAME positional arg. When NAME starts with `-`, emits stdout `[!] Install interrupted after 0.0s.` and stderr `Usage: apm install [OPTIONS] [PACKAGES]...\nTry 'apm install --help' for help.\n\nError: MCP name cannot start with '-'; did you forget a value for --mcp?\n`. Go must accept all flag-like args as NAME, then check HasPrefix(name, "-").
-- **rejectUnknownOption() helper (iter 109)**: Added in main.go. Call signature: `rejectUnknownOption(usageLine, cmdPath, option string) int`. Emits 4 lines to stderr: usage, try (with cmdPath), blank, error. Returns 2.
-- **migration-ci.yml cherry-pick only (iter 102)**: The Python test `test_benchmark_pr_comment_includes_iteration_context` runs on PR MERGE COMMIT. Fix by cherry-picking only `migration-ci.yml` (not full merge which exceeds 10KB). `git checkout origin/main -- .github/workflows/migration-ci.yml`.
-- **migration-ci.yml not protected (iter 96)**: `.github/workflows/migration-ci.yml` is NOT a protected Crane control plane file. Protected files: `.github/aw/actions-lock.json`, `.github/workflows/*.md`, `.github/workflows/*.lock.yml`, `.github/workflows/scripts/*`.
-- **new-protected-files-tests (iter 95)**: When a PR adds Python tests verifying crane workflow text properties, add Go coverage entries and a `TestGoCutoverReal*` test. Also advance upstream reviewed_sha when CI reports upstream_freshness: fail.
-- **action_required on .github/ merge (iter 92)**: Merge commits touching `.github/workflows/` trigger `action_required` (0 CI jobs). Fix: push a new commit not touching `.github/` (empty `git commit --allow-empty` works).
-- **push-rejected-protected-files (iter 91)**: `push_to_pull_request_branch` fails if patch contains `.github/` files. Fix: `protected-files: allowed` in crane.md workflow config.
-- **Protected .github/ in merge**: after `git merge origin/main`, restore with `git checkout ORIG_HEAD -- .github/aw/actions-lock.json .github/workflows/crane.md .github/workflows/scripts/crane_scheduler.py`, then commit.
-- **Coverage split (iter 76)**: python_test_coverage.json for TestGoCutoverPythonTestConversionCoverage; tests/parity/python_contract_coverage.yml for TestParityCompletionPythonBehaviorContracts.
+- **errcli.go clickErrWriter approach (iter 135)**: `cmd/apm/errcli.go` intercepts stderr via `os.Pipe()` goroutine and reformats 2-line Go error to 4-line Click 8.x format. `cmdUsageSuffix` map has ~40 entries. `printCmdHelp()` must return `int` (no os.Exit). `wrapStderr()` in `main()`. 3 files: errcli.go (new), main.go, cmd_mcp.go. Format-patch = 9626 bytes.
+- **push quota (iter 135)**: EXACTLY 1 push call per workflow run. First call consumes quota regardless of outcome. Never push with oversized patch -- it silently fails AND burns the quota. Verify: `git format-patch <remote-tip>..HEAD --stdout | wc -c` must be under 10240. Merge commits inflate format-patch (merge of b3db26d0: 20372 bytes vs content-diff of 9306 bytes).
+- **error format (iter 129)**: Click 8.x unknown-option stderr: `Usage: apm CMD [OPTIONS] ARGS...\nTry 'apm CMD --help' for help.\n\nError: No such option: --X\n` (4 lines, colon format).
+- **mcp install (iter 109)**: Python `apm mcp install` uses `ignore_unknown_options=True` -- `--X` treated as NAME positional. When NAME starts with `-`: stdout `[!] Install interrupted after 0.0s.` + stderr `Usage: apm install [OPTIONS] [PACKAGES]...\nTry 'apm install --help' for help.\n\nError: MCP name cannot start with '-'; did you forget a value for --mcp?\n`.
+- **migration-ci.yml (iter 102)**: Cherry-pick only migration-ci.yml from origin/main; full merge exceeds 10KB limit.
+- **action_required (iter 92)**: Merge commits touching `.github/workflows/` trigger `action_required` (0 CI jobs). Fix: push empty commit not touching `.github/`.
+- **push-rejected-protected-files (iter 91)**: Patch cannot contain `.github/` files. Restore with `git checkout ORIG_HEAD -- .github/aw/actions-lock.json .github/workflows/crane.md .github/workflows/scripts/crane_scheduler.py` after merge.
 
 ---
 
 ## [wip] Blockers & Foreclosed Approaches
 
-- **RESOLVED**: push-rejected-protected-files. Maintainer (mrjf) manually pushed 701b6aa9 to unblock. Then pushed empty ci-trigger commit 43950ad2 (no .github/ changes) to work around the action_required CI problem. PR #122 (protected-files: allowed config) is still open but not blocking.
-- **ROOT CAUSE OF PERSISTENT PYTHON_CLI_CONTRACT_STATUS=1 (iter 104)**: The test `test_every_python_command_rejects_unknown_option_consistently` is parametrized over ALL public Python CLI commands (60+). It probes every command with `--definitely-not-an-apm-option`. Failing commands fell into three categories: (1) Group dispatchers -- dispatched `--X` as a subcommand name (wrong "No such command" error); (2) Leaf commands with switch -- `default:` case silently ignored unknown flags; (3) Simple loop commands -- only checked for `--help`, ignored everything else. Fixed all 17 files across ~60 commands/subcommands in iter 104. Two stragglers remained unfixed: root `apm` dispatcher and `apm unpack` -- fixed in iter 105 (main.go HasPrefix check; cmd_pack.go unknown-option check in runUnpack() arg loop).
+- **RESOLVED**: push-rejected-protected-files. Maintainer (mrjf) manually pushed 701b6aa9.
+- **PYTHON_CLI_CONTRACT_STATUS=1 (iter 104)**: test_every_python_command_rejects_unknown_option_consistently parametrized over 68 public Python CLI commands. Go commands were silently ignoring unknown flags or emitting wrong error format. Fixed all 68 in iters 104-105. All CI checks pass except the parity gate (format still wrong at ce1121c6).
 
 ---
 
@@ -121,18 +125,22 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 133 -- 2026-06-25T04:16:06Z -- [Run](https://github.com/githubnext/apm/actions/runs/28145917520)
+### Iteration 135 -- 2026-06-25T07:43:20Z -- [Run](https://github.com/githubnext/apm/actions/runs/28153447405)
 
-- **Status**: [*] Gate-fix PUSHED -- commit f7275147 (patch 45578 bytes). CI pending on f7275147.
-- **Root cause**: Previous pushes (iters 106-132) all failed silently: `push_to_pull_request_branch` was called without `pull_request_number: 119`. PR head was stuck at ce1121c6 (ci-trigger empty commit from iter 105). All 68 Go commands had wrong unknown-option format (Error: before Usage/Try, missing blank line).
-- **Fix**: (1) Add `rejectUnknownOpt()` helper to main.go -- 4-line Click 8.x format. (2) Fix root command (main.go) and unpack (cmd_pack.go) -- 2 manual fixes for regex misses. (3) Apply helper to all 66 other commands (batch-applied in prior context). (4) Fix mcp install: Python `ignore_unknown_options=True` means `--X` treated as NAME; when NAME starts with `-`, emit `[!] Install interrupted after 0.0s.` (stdout) + install-context error (stderr). (5) Merge origin/main (b3db26d0). (6) Push WITH pull_request_number: 119. 19 files changed.
-- **Lesson**: push_to_pull_request_branch MUST include pull_request_number: 119 (workflow target is '*'). Omitting it returns false success. Click 8.x format: Usage -> Try -> blank -> Error (4 lines). mcp install uses ignore_unknown_options=True -- treat all unknown flags as NAME positional.
+- **Status**: [x] Push-failed: quota exhausted. Remote still at ce1121c6.
+- **Work done**: Designed and implemented `errcli.go` (clickErrWriter, os.Pipe, cmdUsageSuffix map, 147 lines). Modified main.go (printCmdHelp returns int, wrapStderr in main). Modified cmd_mcp.go (ignore_unknown_options parity for mcp install). Build passes. Format-patch for 3 Go files = 9626 bytes.
+- **Push attempts**: (1) Merged origin/main first -> merge commit inflated patch to 20372 bytes -> first push call consumed quota, silently failed. (2) Reset to ce1121c6, re-applied 3 files as single commit b4cf84ab, patch=9626 bytes -> second push call silently no-op'd (quota exhausted by first call).
+- **Lesson**: Only 1 push call is honoured per workflow run. First call consumes the quota regardless of patch size. Never make a push call with an oversized patch (it silently fails AND consumes the quota). Next iter: apply parity fix directly (no merge), ONE push call with pull_request_number:119.
 
-### Iters 130-132 -- [*] Gate-fix sequence (push failures + format fix). Root causes: (1) push_to_pull_request_branch omitted `pull_request_number: 119` (all 27+ iters 106-132 silently failed); (2) wrong unknown-option error format. Iters 131-132 attempted correct fix but push still failed. PR head stuck at ce1121c6 throughout.
+### Iteration 133 -- 2026-06-25 -- [Run](https://github.com/githubnext/apm/actions/runs/28145917520)
 
-### Iters 104-129 -- [x] Gate-fix sequence: wrong error format + push failures (remote stayed at ce1121c6). Root causes: (1) push_to_pull_request_branch omitted `pull_request_number: 119`; (2) wrong error format (`Error: No such option: --X` colon style vs correct single-quote style); (3) iter 128 fixed format correctly but omitted pull_request_number. All pushes returned false success.
+- **Status**: [*] Gate-fix pushed commit f7275147 (patch 45578 bytes). CI pending -- patch too large, didn't land.
+- **Fix attempted**: rejectUnknownOpt() helper, 19 files changed, merge origin/main, push with pull_request_number:119.
+- **Lesson**: Must verify patch < 10240 bytes before pushing. 19-file batch change + merge = too large.
 
-### Iters 88-103 -- [!] Gate-fix sequence (score=1.0): push rejected (protected files); empty ci-trigger; experimental option fix; b3db26d0 merge too large; cherry-picked migration-ci.yml; colon format only for experimental -- PYTHON_CLI_CONTRACT_STATUS still failing.
+### Iters 104-132 -- [x] Gate-fix sequence: wrong error format + push failures (remote stayed at ce1121c6). Root causes: (1) push_to_pull_request_branch omitted `pull_request_number: 119` (iters 106-132); (2) wrong unknown-option error format or patch too large (iters 104-105). All pushes returned false success.
+
+### Iters 88-103 -- [!] Gate-fix sequence (score=1.0): protected-file push rejections; b3db26d0 merge too large; cherry-picked migration-ci.yml; PYTHON_CLI_CONTRACT_STATUS still failing.
 
 ### Iters 79-87 -- [+/-] gate-fix (score 1.0): stale-completion resets, state-diff fixes, protected-files push failures, merge of main. PRs #111-#117 merged.
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-25T22:59:40Z |
-| Iteration Count | 138 |
+| Last Run | 2026-06-25T23:07:01Z |
+| Iteration Count | 139 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:27c2bbca (errcli.go suffix fixes + upstream_sha advanced; awaiting CI) |
+| Completion Gate Status | pending:74690fd2 (main-sync merge push silently failed; format-patch 10736 bytes; CI running on 74690fd2) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129) |
+| Recent Statuses | push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130) |
 
 ---
 
@@ -66,12 +66,13 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 138 gate-fix pushed (27c2bbca).** Fixed 8 errcli.go cmdUsageSuffix mismatches (deps update, info, marketplace add/browse, mcp show, plugin init, runtime remove/setup) and advanced upstream_contract_coverage.yml reviewed_sha to 63e8654c (current microsoft/apm@main). Awaiting CI: expect PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0, migration_score=1.0, completion candidate gate to re-open.
+**Iter 139 push-failed.** Tried to merge origin/main (b3db26d0) into crane branch -- completion gate requires b3db26d0 as ancestor. Merge commit af4dfac7 created locally (14-line test_migration_ci_workflow.py change). push_to_pull_request_branch returned success but remote still at 74690fd2 (silent failure: format-patch 10736 bytes > 10240 limit). CI is running on 74690fd2 (Python-vs-Go Parity Gate in_progress, Go Tests in_progress, Lint/Python passed). Next run: cherry-pick only tests/unit/test_migration_ci_workflow.py (14 lines, tiny patch) to minimize patch size and avoid silent failure.
 
 ---
 
 ## [docs] Lessons Learned
 
+- **push silent failure threshold (iter 139)**: push_to_pull_request_branch returns "success" and creates patch/bundle files but does NOT update the remote branch when format-patch > 10240 bytes. Confirmed: format-patch 10736 bytes silently failed (remote stayed at 74690fd2). The 10240-byte limit applies to PR branch pushes, not just repo-memory. For merging main when format-patch inflates due to b3db26d0 history: either (a) cherry-pick only the new file (test_migration_ci_workflow.py, tiny patch) accepting that b3db26d0 won't be a formal ancestor, or (b) request maintainer to manually push the merge commit.
 - **upstream_freshness fix (iter 136)**: The crane branch was already at 79815c1e with errcli.go/parity fixes. Only failing gate was `upstream_freshness: false` (reviewed_sha: 975f8f00 != upstream/main: 7d71ce3d). Fix: update `tests/parity/upstream_contract_coverage.yml` -- set both `baseline_sha` and `reviewed_sha` to `7d71ce3d`. Patch = 1481 bytes. The 3-way merge in CI gives crane version priority (main unchanged since common ancestor d70027cc). The ancestor check in the FIXED script is `_is_ancestor(reviewed_sha, upstream_sha)` (not HEAD), so setting reviewed_sha == upstream_sha makes both sub-checks trivially pass.
 - **errcli.go clickErrWriter approach (iter 135)**: `cmd/apm/errcli.go` intercepts stderr via `os.Pipe()` goroutine and reformats 2-line Go error to 4-line Click 8.x format. `cmdUsageSuffix` map has ~40 entries. `printCmdHelp()` must return `int` (no os.Exit). `wrapStderr()` in `main()`. 3 files: errcli.go (new), main.go, cmd_mcp.go. Format-patch = 9626 bytes.
 - **push quota (iter 135)**: EXACTLY 1 push call per workflow run. First call consumes quota regardless of outcome. Never push with oversized patch -- it silently fails AND burns the quota. Verify: `git format-patch <remote-tip>..HEAD --stdout | wc -c` must be under 10240. Merge commits inflate format-patch (merge of b3db26d0: 20372 bytes vs content-diff of 9306 bytes).
@@ -100,6 +101,14 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 139 -- 2026-06-25T23:07:01Z -- [Run](https://github.com/githubnext/apm/actions/runs/28206013643)
+
+- **Status**: [x] Push-failed (silent)
+- **Milestone**: Completion Gate -- sync crane branch with origin/main (b3db26d0)
+- **Change**: Attempted merge of origin/main; local merge commit af4dfac7 created (14-line test_migration_ci_workflow.py); push_to_pull_request_branch silently failed (format-patch 10736 > 10240 bytes limit)
+- **Score**: 1.0 (best: 1.0, delta: 0.0)
+- **Notes**: CI running on old head 74690fd2 (Parity + Go Tests in_progress). Next: cherry-pick only test_migration_ci_workflow.py to stay under patch limit.
 
 ### Iteration 138 -- 2026-06-25T22:59:40Z -- [Run](https://github.com/githubnext/apm/actions/runs/28204661478)
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-25T04:16:06Z |
-| Iteration Count | 133 |
+| Last Run | 2026-06-25T06:06:24Z |
+| Iteration Count | 134 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pushed:f7275147 (CI pending) |
+| Completion Gate Status | pushed:74f4dd03 (CI pending) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125), gate-fix (iter124) |
+| Recent Statuses | gate-fix (iter134), gate-fix (iter133), gate-fix (iter132), gate-fix (iter131), gate-fix (iter130), gate-fix (iter129), gate-fix (iter128), gate-fix (iter127), gate-fix (iter126), gate-fix (iter125) |
 
 ---
 
@@ -76,10 +76,15 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Iter 132: fixed unknown-option error format for all 68 Go commands to match Python Click 8.x.
-- 67 standard commands: 4-line format (Usage, Try, blank, Error with single quotes+period), all stderr
-- apm mcp install: special case (ignore_unknown_options=True), emits install-context error when NAME starts with '-'
-- Merged origin/main (b3db26d0). Commit 5166889f pushed to PR #119. CI pending.**
+**Iter 134: fix unknown-option error format for all 68 Go commands to match Python Click 8.x.**
+- 67 standard commands: 4-line format (Usage, Try, blank, Error) via `rejectUnknownOption()` helper in new `cmd_errors.go`
+- 1 special case (`apm mcp install`): accept all args as NAME (ignore_unknown_options parity), emit timing stdout + install-context stderr when name starts with '-'
+- Merged origin/main (b3db26d0) to satisfy completion gate ancestor check
+- Commit 74f4dd03 pushed to PR #119 -- awaiting CI
+
+**Root cause addressed**: `PYTHON_CLI_CONTRACT_STATUS=1` from `test_every_python_command_rejects_unknown_option_consistently` -- Go was missing the Usage header line and had Error/Try in wrong order.
+
+**Completion Gate Status**: CI pending on 74f4dd03. When Python-vs-Go Parity Gate turns green, gate passes and migration completes.
 
 ---
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-26T03:28:03Z |
-| Iteration Count | 142 |
+| Last Run | 2026-06-26T08:10:29Z |
+| Iteration Count | 143 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:c7d2330f (iter142 fix pushed; usage lines corrected: "apm mcp install [OPTIONS] NAME"; PR.base.sha=d70027cc=merge-base, compare ahead; awaiting CI green to finalize) |
+| Completion Gate Status | pending:0090c315 (iter143 fix pushed; apm mcp install --X now outputs "Error: Missing argument 'NAME'." matching Python; PR.base.sha=d70027cc; awaiting CI green) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133) |
+| Recent Statuses | gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134) |
 
 ---
 
@@ -66,14 +66,15 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Completion Gate repair in progress.** Iter 142: fixed remaining PYTHON_CLI_CONTRACT_STATUS=1 -- corrected usage lines in runMCPInstall dash-prefix error path ("apm mcp install [OPTIONS] NAME" / "apm mcp install --help"). Pushed c7d2330f (1850 bytes). PR.base.sha=d70027cc (LCA of crane and main), compare d70027cc...c7d2330f should be ahead. If CI passes, next iteration runs completion gate and finalizes migration. No maintainer merge needed (LCA satisfies gate ancestry).
+**Completion Gate repair in progress.** Iter 143: diagnosed that iters 141-142 had incorrect root cause. Python Click's ignore_unknown_options=True treats --X as unknown OPTIONS (not positional NAME). So "apm mcp install --definitely-not-an-apm-option" outputs "Error: Missing argument 'NAME'." not the 4-line error. Fixed runMCPInstall to exclude -X args from NAME collection. Pushed 0090c315 (2454 bytes). If CI passes (PYTHON_CLI_CONTRACT_STATUS=0), completion gate should finalize.
 
 ---
 
 ## [docs] Lessons Learned
 
 - **error format**: Click 8.x unknown-option: `Error: No such option '--X'.` (quoted, period). errcli.go intercepts `Error: No such option: X` and converts. Groups with invoke_without_command=True (config, experimental, targets) show `[COMMAND]` not `COMMAND` in usage.
-- **mcp install error parity (iter 141)**: dash-prefix MCP name: Python raises ValueError -> Click UsageError -> 4-line stderr, empty stdout. Go must match exact message: `Error: Invalid MCP dependency name '%s': must start with a letter, digit, '@', or '_' and contain only [a-zA-Z0-9._@/:=-] (max 128 chars). Example: 'io.github.acme/cool-server' or 'my-server'.`
+- **mcp install --X parity (iter 143)**: Python Click ignore_unknown_options=True treats --X as unknown OPTIONS going to ctx.args, NOT as NAME positional. So "apm mcp install --foo" -> NAME missing -> "Error: Missing argument 'NAME'." (1 line stderr, rc=2). Iters 141-142 were wrong to assume 4-line UsageError.
+- **mcp install named arg (iter 141)**: When NAME positional IS provided but fails MCP regex (e.g. name starts with @), Python raises ValueError -> Click UsageError -> 4-line stderr format.
 - **push silent failure**: format-patch > 10240 bytes silently fails AND burns quota. Merge commits inflate (b3db26d0 merge: 20372 bytes). Verify: `git format-patch <remote>..HEAD --stdout | wc -c` must be < 10240.
 - **upstream_freshness**: set both `baseline_sha` and `reviewed_sha` in upstream_contract_coverage.yml to current microsoft/apm@main HEAD.
 - **errcli.go**: intercepts stderr via os.Pipe() goroutine; only transforms `Error: No such option: X` lines; all others pass through unchanged.
@@ -101,43 +102,20 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 142 -- 2026-06-26T03:28:03Z -- [Run](https://github.com/githubnext/apm/actions/runs/28214613649)
+### Iteration 143 -- 2026-06-26T08:10:29Z -- [Run](https://github.com/githubnext/apm/actions/runs/28225237618)
 
-- **Status**: [*] Gate-fix pushed (c7d2330f)
-- **Milestone**: Completion Gate -- fix apm mcp install usage lines (final PYTHON_CLI_CONTRACT_STATUS fix)
+- **Status**: [*] Gate-fix pushed (0090c315)
+- **Milestone**: Completion Gate -- fix apm mcp install unknown-option parity (root cause of PYTHON_CLI_CONTRACT_STATUS=1)
 - **Changes**:
-  - `cmd/apm/cmd_mcp.go`: Correct usage lines in runMCPInstall dash-prefix error path:
-    - `"Usage: apm install [OPTIONS] [PACKAGES]..."` -> `"Usage: apm mcp install [OPTIONS] NAME"`
-    - `"Try 'apm install --help' for help."` -> `"Try 'apm mcp install --help' for help."`
-- **Root cause**: Iter 141 fixed the error text and spurious stdout but left wrong usage header/help lines. test_every_python_command_rejects_unknown_option_consistently for `apm mcp install --definitely-not-an-apm-option` compares full 4-line stderr output including the usage line.
-- **Patch size**: 1850 bytes (under 10240 limit)
-- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0 (from iter 141), migration_score=1.0
-- **Completion gate**: PR.base.sha=d70027cc (LCA), compare d70027cc...c7d2330f should be ahead. If all CI green, next iteration finalizes migration.
+  - `cmd/apm/cmd_mcp.go`: Fix runMCPInstall NAME arg collection: --X args are unknown OPTIONS in Python Click (via ignore_unknown_options=True) and go to ctx.args, NOT to NAME positional. Changed condition from `!startsWith(a, "--limit=")` to also require `!startsWith(a, "-")`. Removed the now-unreachable strings.HasPrefix(name, "-") error block.
+- **Root cause**: Previous iterations 141-142 incorrectly assumed Python calls build_mcp_entry("--definitely-not-an-apm-option") and shows 4-line UsageError. In fact, Click's ignore_unknown_options=True puts --X args into ctx.args; NAME argument is never filled; Python outputs just "Error: Missing argument 'NAME'." Go was outputting the 4-line error. Fix: exclude --X from NAME collection.
+- **Verification**: `go build` clean; `apm-go mcp install --definitely-not-an-apm-option` outputs "Error: Missing argument 'NAME'." (rc=2, matches Python); TestParityHarnessMCPInstallMissingArg passes.
+- **Patch size**: 2454 bytes (under 10240 limit)
+- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, all CI checks pass, completion gate finalized.
 
-### Iteration 141 -- 2026-06-26T01:17:15Z -- [Run](https://github.com/githubnext/apm/actions/runs/28209892938)
+### Iteration 142 -- 2026-06-26T03:28:03Z -- [x/gate-fix] cmd_mcp.go usage line fix (wrong: 4-line error) -- CI: PYTHON_CLI_CONTRACT_STATUS=1 still
 
-- **Status**: [*] Gate-fix pushed (65bbd144)
-- **Milestone**: Completion Gate -- fix apm mcp install error parity + upstream freshness
-- **Changes**:
-  - `cmd/apm/cmd_mcp.go`: Fix dash-prefixed MCP name error output. Remove spurious stdout line `[!] Install interrupted after 0.0s.`. Replace incorrect error text with exact Python ValueError message: `Error: Invalid MCP dependency name '%s': must start with a letter, digit, '@', or '_' and contain only [a-zA-Z0-9._@/:=-] (max 128 chars). Example: 'io.github.acme/cool-server' or 'my-server'.`
-  - `tests/parity/upstream_contract_coverage.yml`: Advance `baseline_sha` + `reviewed_sha` to `e045e88d` (current microsoft/apm@main).
-- **Root cause**: Iter 140 fixed 67/68 parity tests; the remaining failure was `apm mcp install --definitely-not-an-apm-option`. Python uses `ignore_unknown_options=True`, treats the arg as NAME positional, calls `build_mcp_entry()` which raises `ValueError` → Click `UsageError` → 4-line stderr format with empty stdout. Go was emitting wrong error text and spurious stdout. Also: `upstream_freshness=false` (reviewed_sha a8f62c75 != upstream/main e045e88d).
-- **Patch size**: 3100 bytes (under 10240 limit)
-- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0, migration_score=1.0
-- **Remaining blocker**: origin/main (b3db26d0) is NOT a formal git ancestor of crane HEAD. Merge produces 10736-byte format-patch > 10240 limit. Completion gate will still fail. Maintainer must merge/rebase the crane branch.
-
-### Iteration 140 -- 2026-06-26T00:17:32Z -- [Run](https://github.com/githubnext/apm/actions/runs/28207751436)
-
-- **Status**: [*] Gate-fix pushed (eb08c87f)
-- **Milestone**: Completion Gate -- fix systematic error format mismatch in all 68 parity tests
-- **Changes**:
-  - `cmd/apm/errcli.go`: In `processLine()`, convert error line from Go colon format (`Error: No such option: --X`) to Click 8.x quoted format (`Error: No such option '--X'.`). Also fix 3 group cmdUsageSuffix entries: `apm config`, `apm experimental`, `apm targets` use `invoke_without_command=True` so show `[COMMAND]` not `COMMAND`.
-  - `tests/parity/upstream_contract_coverage.yml`: Advance `baseline_sha` + `reviewed_sha` to `a8f62c75` (current microsoft/apm@main).
-- **Root cause**: All 67/68 parity mismatches had the same error line format difference. The errcli.go was outputting the Go colon format but Python Click 8.x uses quoted-period format. Additionally 3 group commands showed wrong usage suffix. Also: upstream_freshness=false (reviewed_sha 63e8654c != upstream/main a8f62c75).
-- **Verification**: Ran all 68 public commands locally -- 0 mismatches after fix.
-- **Patch size**: 4464 bytes (under 10240 limit)
-- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0, migration_score=1.0
-- **Remaining blocker**: origin/main (b3db26d0) is NOT a formal git ancestor of crane HEAD. Merge produces 10736-byte format-patch > 10240 limit (single new file: tests/unit/test_migration_ci_workflow.py, 14 lines). Completion gate will still fail. Maintainer must merge/rebase the crane branch.
+### Iters 140-142 -- [x/gate-fix] apm mcp install parity fixes (wrong root cause). Iter 140: errcli.go error format fix (67/68 pass). Iters 141-142: attempted 4-line UsageError for --X args (wrong: Python outputs "Error: Missing argument 'NAME'." because ignore_unknown_options treats --X as ctx.args not NAME). Iter 143 corrected the root cause.
 
 ### Iters 133-139 -- [x/gate-fix] errcli.go buildout + push failures + error-format fixes. Iter 135 built errcli.go (patch 20372 bytes, failed). Iters 136-138: upstream freshness + cmdUsageSuffix fixes. Iter 139: merge of b3db26d0 produced 10736-byte patch > 10240 limit, silently failed.
 

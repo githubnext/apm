@@ -83,13 +83,9 @@ func (w *clickErrWriter) processLine(line string) {
 			tryContent := strings.TrimPrefix(line, "Try '")
 			tryContent = strings.TrimSuffix(strings.TrimRight(tryContent, "\n"), "' for help.")
 			cmdPath := strings.TrimSuffix(tryContent, " --help")
-			// Convert Go "Error: No such option: --X" to Click 8.x "Error: No such option '--X'."
+			// Pass through the error line unchanged -- Python Click 8.x uses
+			// "Error: No such option: --X" (colon, no quotes, no period).
 			errLine := w.pending
-			const errPrefix = "Error: No such option: "
-			if strings.HasPrefix(errLine, errPrefix) {
-				opt := strings.TrimRight(strings.TrimPrefix(errLine, errPrefix), "\n")
-				errLine = "Error: No such option '" + opt + "'.\n"
-			}
 			fmt.Fprintf(w.w, "%s\n%s\n%s", usageLine(cmdPath), line, errLine)
 			w.pending = ""
 			return

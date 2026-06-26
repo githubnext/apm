@@ -94,14 +94,13 @@ func runMCPInstall(args []string) int {
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
 		return 2
 	}
-	// Python validates that an MCP name cannot start with '-'.
-	// The error is formatted by the delegated `apm install` command.
+	// Python's build_mcp_entry() raises ValueError for names that fail the MCP
+	// name regex; Click converts it to UsageError and prints 4 lines to stderr.
 	if strings.HasPrefix(name, "-") {
-		fmt.Println("[!] Install interrupted after 0.0s.")
 		fmt.Fprintln(os.Stderr, "Usage: apm install [OPTIONS] [PACKAGES]...")
 		fmt.Fprintln(os.Stderr, "Try 'apm install --help' for help.")
 		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintf(os.Stderr, "Error: MCP name cannot start with '-'; did you forget a value for --mcp?\n")
+		fmt.Fprintf(os.Stderr, "Error: Invalid MCP dependency name '%s': must start with a letter, digit, '@', or '_' and contain only [a-zA-Z0-9._@/:=-] (max 128 chars). Example: 'io.github.acme/cool-server' or 'my-server'.\n", name)
 		return 2
 	}
 

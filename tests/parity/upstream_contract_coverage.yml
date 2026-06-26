@@ -8,6 +8,6 @@ description: >
 upstream:
   repo: microsoft/apm
   branch: main
-  baseline_sha: a8f62c7590724846328f7c72c88df35a229dd0b4
-  reviewed_sha: a8f62c7590724846328f7c72c88df35a229dd0b4
+  baseline_sha: e045e88d140c6cc168acd2746f4ddd23358c34bf
+  reviewed_sha: e045e88d140c6cc168acd2746f4ddd23358c34bf
 reviewed_ranges: []

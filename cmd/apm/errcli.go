@@ -16,9 +16,9 @@ import (
 var cmdUsageSuffix = map[string]string{
 	"apm":                            " [OPTIONS] COMMAND [ARGS]...",
 	"apm cache":                      " [OPTIONS] COMMAND [ARGS]...",
-	"apm config":                     " [OPTIONS] COMMAND [ARGS]...",
+	"apm config":                     " [OPTIONS] [COMMAND] [ARGS]...",
 	"apm deps":                       " [OPTIONS] COMMAND [ARGS]...",
-	"apm experimental":               " [OPTIONS] COMMAND [ARGS]...",
+	"apm experimental":               " [OPTIONS] [COMMAND] [ARGS]...",
 	"apm marketplace":                " [OPTIONS] COMMAND [ARGS]...",
 	"apm marketplace package":        " [OPTIONS] COMMAND [ARGS]...",
 	"apm mcp":                        " [OPTIONS] COMMAND [ARGS]...",
@@ -26,7 +26,7 @@ var cmdUsageSuffix = map[string]string{
 	"apm plugin init":                " [OPTIONS] [PROJECT_NAME]",
 	"apm policy":                     " [OPTIONS] COMMAND [ARGS]...",
 	"apm runtime":                    " [OPTIONS] COMMAND [ARGS]...",
-	"apm targets":                    " [OPTIONS] COMMAND [ARGS]...",
+	"apm targets":                    " [OPTIONS] [COMMAND] [ARGS]...",
 	"apm audit":                      " [OPTIONS] [PACKAGE]",
 	"apm config get":                 " [OPTIONS] [KEY]",
 	"apm config set":                 " [OPTIONS] KEY VALUE",
@@ -83,7 +83,14 @@ func (w *clickErrWriter) processLine(line string) {
 			tryContent := strings.TrimPrefix(line, "Try '")
 			tryContent = strings.TrimSuffix(strings.TrimRight(tryContent, "\n"), "' for help.")
 			cmdPath := strings.TrimSuffix(tryContent, " --help")
-			fmt.Fprintf(w.w, "%s\n%s\n%s", usageLine(cmdPath), line, w.pending)
+			// Convert Go "Error: No such option: --X" to Click 8.x "Error: No such option '--X'."
+			errLine := w.pending
+			const errPrefix = "Error: No such option: "
+			if strings.HasPrefix(errLine, errPrefix) {
+				opt := strings.TrimRight(strings.TrimPrefix(errLine, errPrefix), "\n")
+				errLine = "Error: No such option '" + opt + "'.\n"
+			}
+			fmt.Fprintf(w.w, "%s\n%s\n%s", usageLine(cmdPath), line, errLine)
 			w.pending = ""
 			return
 		}

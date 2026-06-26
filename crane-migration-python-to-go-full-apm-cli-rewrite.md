@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-26T01:17:15Z |
-| Iteration Count | 141 |
+| Last Run | 2026-06-26T03:28:03Z |
+| Iteration Count | 142 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:65bbd144 (iter141 fix pushed; PYTHON_CLI_CONTRACT_STATUS fix: apm mcp install error parity; UPSTREAM_APM_STATUS fix: reviewed_sha advanced to e045e88d; b3db26d0 not ancestor -- maintainer merge needed) |
+| Completion Gate Status | pending:c7d2330f (iter142 fix pushed; usage lines corrected: "apm mcp install [OPTIONS] NAME"; PR.base.sha=d70027cc=merge-base, compare ahead; awaiting CI green to finalize) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133), gate-fix (iter132) |
+| Recent Statuses | gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136), push-failed (iter135), gate-fix (iter134), gate-fix (iter133) |
 
 ---
 
@@ -66,7 +66,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Completion Gate repair in progress.** Iter 141: fixed `apm mcp install` error parity (dash-prefixed name: remove spurious stdout, use exact Python ValueError message) and advanced upstream_contract_coverage.yml to e045e88d. All 68 unknown-option parity tests should now pass. UPSTREAM_APM_STATUS=0. migration_score should reach 1.0. Blocker: origin/main (b3db26d0) cannot be merged due to 10736-byte format-patch > 10240 limit. Maintainer must merge/rebase crane branch to satisfy completion gate ancestor check.
+**Completion Gate repair in progress.** Iter 142: fixed remaining PYTHON_CLI_CONTRACT_STATUS=1 -- corrected usage lines in runMCPInstall dash-prefix error path ("apm mcp install [OPTIONS] NAME" / "apm mcp install --help"). Pushed c7d2330f (1850 bytes). PR.base.sha=d70027cc (LCA of crane and main), compare d70027cc...c7d2330f should be ahead. If CI passes, next iteration runs completion gate and finalizes migration. No maintainer merge needed (LCA satisfies gate ancestry).
 
 ---
 
@@ -77,6 +77,7 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 - **push silent failure**: format-patch > 10240 bytes silently fails AND burns quota. Merge commits inflate (b3db26d0 merge: 20372 bytes). Verify: `git format-patch <remote>..HEAD --stdout | wc -c` must be < 10240.
 - **upstream_freshness**: set both `baseline_sha` and `reviewed_sha` in upstream_contract_coverage.yml to current microsoft/apm@main HEAD.
 - **errcli.go**: intercepts stderr via os.Pipe() goroutine; only transforms `Error: No such option: X` lines; all others pass through unchanged.
+- **PR.base.sha is LCA not tip**: GitHub PR API base.sha = git merge-base(crane_head, main_head), NOT the current HEAD of main. Completion gate compare uses this LCA as base. If LCA is ancestor of crane HEAD, compare is "ahead" and gate proceeds. Previous agents incorrectly assumed b3db26d0 must be a formal ancestor; only d70027cc (the LCA) is needed.
 - **push quota**: EXACTLY 1 push per run. Never push oversized patch.
 - **protected files**: patch cannot contain .github/ files. action_required triggered by .github/workflows/ changes.
 
@@ -99,6 +100,19 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 142 -- 2026-06-26T03:28:03Z -- [Run](https://github.com/githubnext/apm/actions/runs/28214613649)
+
+- **Status**: [*] Gate-fix pushed (c7d2330f)
+- **Milestone**: Completion Gate -- fix apm mcp install usage lines (final PYTHON_CLI_CONTRACT_STATUS fix)
+- **Changes**:
+  - `cmd/apm/cmd_mcp.go`: Correct usage lines in runMCPInstall dash-prefix error path:
+    - `"Usage: apm install [OPTIONS] [PACKAGES]..."` -> `"Usage: apm mcp install [OPTIONS] NAME"`
+    - `"Try 'apm install --help' for help."` -> `"Try 'apm mcp install --help' for help."`
+- **Root cause**: Iter 141 fixed the error text and spurious stdout but left wrong usage header/help lines. test_every_python_command_rejects_unknown_option_consistently for `apm mcp install --definitely-not-an-apm-option` compares full 4-line stderr output including the usage line.
+- **Patch size**: 1850 bytes (under 10240 limit)
+- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, UPSTREAM_APM_STATUS=0 (from iter 141), migration_score=1.0
+- **Completion gate**: PR.base.sha=d70027cc (LCA), compare d70027cc...c7d2330f should be ahead. If all CI green, next iteration finalizes migration.
 
 ### Iteration 141 -- 2026-06-26T01:17:15Z -- [Run](https://github.com/githubnext/apm/actions/runs/28209892938)
 

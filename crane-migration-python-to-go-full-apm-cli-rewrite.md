@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-26T12:36:00Z |
-| Iteration Count | 145 |
+| Last Run | 2026-06-26T14:00:00Z |
+| Iteration Count | 146 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:be969002 (iter145 pushed; upstream_contract_coverage.yml advanced to f8c42440 (current microsoft/apm@main); test_migration_ci_workflow.py synced from main; awaiting CI green on upstream_freshness+upstream_contracts gates) |
+| Completion Gate Status | pending:2edd76f6 (iter146 pushed; fixed errcli.go wrong-quote transform + mcp install probe handling; awaiting CI green on python_behavior_contracts gate) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137), gate-fix (iter136) |
+| Recent Statuses | gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138), gate-fix (iter137) |
 
 ---
 

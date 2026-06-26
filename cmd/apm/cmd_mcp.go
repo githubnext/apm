@@ -83,24 +83,16 @@ func runMCPInstall(args []string) int {
 		case "--limit":
 			i++ // skip value
 		default:
-			if !startsWith(a, "--limit=") && name == "" {
-				// Mirror Python's ignore_unknown_options=True: treat any
-				// unrecognised arg (including --X) as the NAME positional.
+			// Mirror Python Click: args starting with '-' are unknown options
+			// (they go to ctx.args via ignore_unknown_options=True and never
+			// fill the NAME positional). Only non-dash args are positional.
+			if !startsWith(a, "--limit=") && !startsWith(a, "-") && name == "" {
 				name = a
 			}
 		}
 	}
 	if name == "" {
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
-		return 2
-	}
-	// Python's build_mcp_entry() raises ValueError for names that fail the MCP
-	// name regex; Click converts it to UsageError and prints 4 lines to stderr.
-	if strings.HasPrefix(name, "-") {
-		fmt.Fprintln(os.Stderr, "Usage: apm mcp install [OPTIONS] NAME")
-		fmt.Fprintln(os.Stderr, "Try 'apm mcp install --help' for help.")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintf(os.Stderr, "Error: Invalid MCP dependency name '%s': must start with a letter, digit, '@', or '_' and contain only [a-zA-Z0-9._@/:=-] (max 128 chars). Example: 'io.github.acme/cool-server' or 'my-server'.\n", name)
 		return 2
 	}
 

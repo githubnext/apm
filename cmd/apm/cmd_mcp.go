@@ -65,12 +65,23 @@ func runMCPInstall(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm mcp install [OPTIONS] NAME")
 			fmt.Println()
-			fmt.Println("  Install an MCP server")
+			fmt.Println("  Add an MCP server to apm.yml. Alias for 'apm install --mcp'.")
+			fmt.Println()
+			fmt.Println("  Examples:")
+			fmt.Println()
+			fmt.Println("    apm mcp install fetch -- npx -y @modelcontextprotocol/server-fetch")
+			fmt.Println()
+			fmt.Println("    apm mcp install api --transport http --url https://example.com/mcp")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --limit INTEGER  Max results to show")
-			fmt.Println("  --verbose, -v  Show detailed output")
 			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println()
+			fmt.Println("  Common options (see `apm install --mcp --help` for full list): --transport")
+			fmt.Println("  [stdio|http|sse|streamable-http] --url URL           Server URL for remote")
+			fmt.Println("  transports --env KEY=VALUE     Environment variable (repeatable) --header")
+			fmt.Println("  KEY=VALUE  HTTP header (repeatable) --registry URL      Custom registry URL")
+			fmt.Println("  --mcp-version VER    Pin registry entry to a specific version --dev / --dry-")
+			fmt.Println("  run / --force / --verbose / --no-policy")
 			return 0
 		}
 	}
@@ -83,16 +94,26 @@ func runMCPInstall(args []string) int {
 		case "--limit":
 			i++ // skip value
 		default:
-			// Python Click ignore_unknown_options=True puts --X args into ctx.args,
-			// not into the NAME positional. Only non-dash args are positional.
-			if !startsWith(a, "--limit=") && !startsWith(a, "-") && name == "" {
+			// Python Click ignore_unknown_options=True accepts any first arg as NAME,
+			// even if it starts with '-'.
+			if !startsWith(a, "--limit=") && name == "" {
 				name = a
 			}
 		}
 	}
 	if name == "" {
-		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+		fmt.Fprintln(os.Stderr, "Usage: apm mcp install [OPTIONS] NAME")
 		fmt.Fprintln(os.Stderr, "Try 'apm mcp install --help' for help.")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+		return 2
+	}
+	if startsWith(name, "-") {
+		fmt.Print("[!] Install interrupted after 0.0s.\n")
+		fmt.Fprintln(os.Stderr, "Usage: apm install [OPTIONS] [PACKAGES]...")
+		fmt.Fprintln(os.Stderr, "Try 'apm install --help' for help.")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, "Error: MCP name cannot start with '-'; did you forget a value for --mcp?")
 		return 2
 	}
 
@@ -135,9 +156,9 @@ func runMCPSearch(args []string) int {
 			fmt.Println("  Search MCP servers in registry")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --limit INTEGER  Max results to show")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --limit INTEGER  Number of results to show  [default: 10]")
+			fmt.Println("  -v, --verbose    Show detailed output")
+			fmt.Println("  --help           Show this message and exit.")
 			return 0
 		}
 	}
@@ -168,14 +189,13 @@ func runMCPSearch(args []string) int {
 func runMCPInspect(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm mcp show [OPTIONS] NAME")
+			fmt.Println("Usage: apm mcp show [OPTIONS] SERVER_NAME")
 			fmt.Println()
 			fmt.Println("  Show detailed MCP server information")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --limit INTEGER  Max servers to show")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 	}
@@ -215,9 +235,9 @@ func runMCPList(args []string) int {
 			fmt.Println("  List all available MCP servers")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --limit INTEGER  Max servers to show")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --limit INTEGER  Number of results to show  [default: 20]")
+			fmt.Println("  -v, --verbose    Show detailed output")
+			fmt.Println("  --help           Show this message and exit.")
 			return 0
 		}
 	}

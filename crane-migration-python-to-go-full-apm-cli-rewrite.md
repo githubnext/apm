@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-27T05:10:36Z |
-| Iteration Count | 148 |
+| Last Run | 2026-06-27T08:00:00Z |
+| Iteration Count | 149 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:d92a8a77 (iter148 pushed; restored -prefix filter + kept 4-line missing-arg format; awaiting CI green) |
+| Completion Gate Status | pending:6dc183c5 (iter149 pushed; correct fix: --X assigned to NAME, install-context error output; awaiting CI green) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139) |
+| Recent Statuses | gate-fix (iter149), gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140) |
 
 ---
 
@@ -72,8 +72,8 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [docs] Lessons Learned
 
-- **error format**: Click 8.x unknown-option: `Error: No such option '--X'.` (quoted, period). errcli.go intercepts `Error: No such option: X` and converts. Groups with invoke_without_command=True (config, experimental, targets) show `[COMMAND]` not `COMMAND` in usage.
-- **mcp install --X parity (iter 143+148)**: Python Click ignore_unknown_options=True treats --X as unknown OPTIONS going to ctx.args, NOT as NAME positional. "apm mcp install --foo" -> NAME missing -> Python outputs 4-line Click error (Usage/Try/blank/Error: Missing argument 'NAME'.), rc=2. The CORRECT Go behavior: exclude dash-prefixed args from NAME collection (!startsWith(a, "-")) AND output the 4-line format. Iter143 got the filter right but wrong format (2-line). Iter147 restored the filter but still 2-line. 8f799e3b got the 4-line format right but removed the filter (causing [!] install-context error for --X). Iter148 combined both fixes correctly.
+- **error format**: Click 8.2.1 (uv.lock) unknown-option: `Error: No such option: --X` (colon, no quotes, no period). errcli.go intercepts and wraps in 4-line format. Click 8.4.2 uses quoted+period format but CI uses 8.2.1. Groups with invoke_without_command=True (config, experimental, targets) show `[COMMAND]` not `COMMAND` in usage.
+- **mcp install --X parity (RESOLVED iter149)**: Python Click ignore_unknown_options=True assigns --X to the NAME positional (NOT ctx.args). Iters 143-148 had WRONG mental model. Correct: NAME="--X", mcp_install forwards to `apm install --mcp NAME`, install rejects NAME as unknown option. Python stderr: install-context 4-line error (Usage: apm install..., Error: No such option: --X). Fix: accept --X as NAME (remove !startsWith guard), when name startsWith("-") output install-context error.
 - **mcp install named arg (iter 141)**: When NAME positional IS provided but fails MCP regex (e.g. name starts with @), Python raises ValueError -> Click UsageError -> 4-line stderr format.
 - **push silent failure**: format-patch > 10240 bytes silently fails AND burns quota. Merge commits inflate (b3db26d0 merge: 20372 bytes). Verify: `git format-patch <remote>..HEAD --stdout | wc -c` must be < 10240.
 - **push_to_pull_request_branch has no patch-size limit**: the 10KB limit applies only to repo-memory pushes. format-patch size can be large; only actual content diff matters for protected-files check.
@@ -103,6 +103,16 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 149 -- 2026-06-27T08:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28280945708)
+
+- **Status**: [*] Gate-fix pushed (6dc183c5)
+- **Root cause discovered**: Iters 143-148 had WRONG mental model. Python Click ignore_unknown_options=True
+  assigns --X to NAME positional (not ctx.args). mcp_install then forwards NAME to `apm install --mcp NAME`,
+  which rejects it as unknown option. Python output: install-context 4-line error, NOT mcp install context.
+- **Fix**: Remove !startsWith(a,"-") guard in NAME collection; when name startsWith("-"), output install-context
+  error (`Usage: apm install...`, `Error: No such option: NAME`). Single-file patch: cmd_mcp.go, 13 lines.
+- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, all CI checks pass, completion gate finalizes.
 
 ### Iteration 148 -- 2026-06-27T05:10:36Z -- [Run](https://github.com/githubnext/apm/actions/runs/28279263309)
 

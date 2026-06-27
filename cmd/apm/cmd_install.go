@@ -44,7 +44,15 @@ func runInstall(args []string) int {
 		case "--update", "--no-policy", "--refresh", "--ssh", "--https", "--allow-insecure":
 			// boolean flags, consume only
 		default:
-			if !startsWith(args[i], "-") {
+			if startsWith(args[i], "--runtime=") || startsWith(args[i], "--exclude=") ||
+				startsWith(args[i], "--only=") || startsWith(args[i], "--mcp=") ||
+				startsWith(args[i], "--skill=") || startsWith(args[i], "--target=") {
+				// known key=value flags
+			} else if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm install --help' for help.`)
+				return 2
+			} else {
 				packages = append(packages, args[i])
 			}
 		}
@@ -227,9 +235,12 @@ func runUninstall(args []string) int {
 		case "-v", "--verbose":
 			// consumed
 		default:
-			if !startsWith(args[i], "-") {
-				packages = append(packages, args[i])
+			if startsWith(args[i], "-") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[i])
+				fmt.Fprintln(os.Stderr, `Try 'apm uninstall --help' for help.`)
+				return 2
 			}
+			packages = append(packages, args[i])
 		}
 	}
 

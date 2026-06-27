@@ -43,6 +43,12 @@ func runConfig(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm config --help' for help.`)
+		return 2
+	}
+
 	switch args[0] {
 	case "set":
 		return runConfigSet(args[1:])
@@ -66,6 +72,13 @@ func runConfigSet(args []string) int {
 		fmt.Println("Options:")
 		fmt.Println("  --help  Show this message and exit.")
 		return 0
+	}
+	for _, a := range args {
+		if startsWith(a, "-") && a != "--help" && a != "-h" {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm config set --help' for help.`)
+			return 2
+		}
 	}
 	if len(args) < 2 {
 		fmt.Fprintln(os.Stderr, "Error: Missing KEY and VALUE arguments.")
@@ -105,6 +118,11 @@ func runConfigGet(args []string) int {
 		fmt.Fprintln(os.Stderr, "Error: Missing KEY argument.")
 		return 2
 	}
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm config get --help' for help.`)
+		return 2
+	}
 	key := args[0]
 	if !validConfigKeys[key] {
 		fmt.Fprintf(os.Stderr, "[x] Unknown configuration key: '%s'\n", key)
@@ -138,6 +156,11 @@ func runConfigUnset(args []string) int {
 	}
 	if len(args) == 0 {
 		fmt.Fprintln(os.Stderr, "Error: Missing KEY argument.")
+		return 2
+	}
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm config unset --help' for help.`)
 		return 2
 	}
 	key := args[0]

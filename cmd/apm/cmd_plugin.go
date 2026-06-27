@@ -33,6 +33,12 @@ func runPlugin(args []string) int {
 		return 0
 	}
 
+	if startsWith(args[0], "-") {
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", args[0])
+		fmt.Fprintln(os.Stderr, `Try 'apm plugin --help' for help.`)
+		return 2
+	}
+
 	sub := args[0]
 	rest := args[1:]
 	switch sub {
@@ -48,16 +54,31 @@ func runPlugin(args []string) int {
 func runPluginInit(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm plugin init [OPTIONS]")
+			fmt.Println("Usage: apm plugin init [OPTIONS] [PROJECT_NAME]")
 			fmt.Println()
-			fmt.Println("  Scaffold a new plugin (plugin.json + apm.yml)")
+			fmt.Println("  Scaffold a plugin (creates plugin.json + apm.yml)")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --target TEXT  Target harness")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --yes        Skip interactive prompts and use auto-detected defaults")
+			fmt.Println("  --target TARGET  Comma-separated target list (skip prompt, write directly)")
+			fmt.Println("  -v, --verbose    Show detailed output")
+			fmt.Println("  --help           Show this message and exit.")
 			return 0
+		}
+	}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		switch a {
+		case "--yes", "-y", "--verbose", "-v":
+			// known no-value flags
+		case "--target":
+			i++ // skip value
+		default:
+			if startsWith(a, "-") && !startsWith(a, "--target=") {
+				fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+				fmt.Fprintln(os.Stderr, `Try 'apm plugin init --help' for help.`)
+				return 2
+			}
 		}
 	}
 	cwd, _ := os.Getwd()

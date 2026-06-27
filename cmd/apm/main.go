@@ -81,7 +81,7 @@ func isGroupCmd(name string) bool {
 	return false
 }
 
-func printCmdHelp(name string) {
+func printCmdHelp(name string) int {
 	canonical := name
 	if a, ok := aliases[name]; ok {
 		canonical = a
@@ -90,7 +90,7 @@ func printCmdHelp(name string) {
 	if !ok {
 		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", name)
 		fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
-		os.Exit(2)
+		return 2
 	}
 	// Full description for selected commands (matches Python Click output).
 	fullDesc := commandFullDesc[canonical]
@@ -141,6 +141,7 @@ func printCmdHelp(name string) {
 		// Default: only --help option.
 		fmt.Println("  --help  Show this message and exit.")
 	}
+	return 0
 }
 
 func run(args []string) int {
@@ -189,8 +190,7 @@ func run(args []string) int {
 			printHelp()
 			return 0
 		}
-		printCmdHelp(rest[0])
-		return 0
+		return printCmdHelp(rest[0])
 	}
 
 	if canonical, ok := aliases[cmd]; ok {
@@ -198,8 +198,13 @@ func run(args []string) int {
 	}
 
 	if _, ok := commands[cmd]; !ok {
-		fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", cmd)
-		fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		if strings.HasPrefix(cmd, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", cmd)
+			fmt.Fprintln(os.Stderr, "Try 'apm --help' for help.")
+		} else {
+			fmt.Fprintf(os.Stderr, "Error: No such command '%s'.\n", cmd)
+			fmt.Fprintln(os.Stderr, `Try 'apm --help' for help.`)
+		}
 		return 2
 	}
 
@@ -209,8 +214,7 @@ func run(args []string) int {
 			if isGroupCmd(cmd) {
 				break
 			}
-			printCmdHelp(cmd)
-			return 0
+			return printCmdHelp(cmd)
 		}
 	}
 
@@ -278,6 +282,9 @@ func run(args []string) int {
 }
 
 func main() {
-	os.Exit(run(os.Args[1:]))
+	flush := wrapStderr()
+	code := run(os.Args[1:])
+	flush()
+	os.Exit(code)
 }
 

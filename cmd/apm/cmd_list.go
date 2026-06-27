@@ -14,6 +14,11 @@ func runList(args []string) int {
 			printCmdHelp("list")
 			return 0
 		}
+		if startsWith(a, "-") {
+			fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", a)
+			fmt.Fprintln(os.Stderr, `Try 'apm list --help' for help.`)
+			return 2
+		}
 	}
 
 	cwd, _ := os.Getwd()

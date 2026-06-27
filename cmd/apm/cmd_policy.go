@@ -55,15 +55,20 @@ func runPolicyStatus(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm policy status [OPTIONS]")
 			fmt.Println()
-			fmt.Println("  Show current policy status and source")
+			fmt.Println("  Show the current policy posture (discovery, cache, rules)")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --json   Output as JSON")
-			fmt.Println("  --policy-source TEXT  Policy source")
-			fmt.Println("  --no-cache  Force fresh policy fetch")
-			fmt.Println("  -o, --output PATH  Write output to file")
-			fmt.Println("  --check  Exit non-zero when policy is not satisfied")
-			fmt.Println("  --help   Show this message and exit.")
+			fmt.Println("  --policy-source TEXT       Override discovery. Accepts: 'org' (auto-discover")
+			fmt.Println("                             from your project's git remote), 'owner/repo'")
+			fmt.Println("                             (defaults to github.com), an https:// URL, or a")
+			fmt.Println("                             local file path.")
+			fmt.Println("  --no-cache                 Force a fresh fetch (skip the policy cache).")
+			fmt.Println("  --json                     Emit the report as JSON (alias of -o json).")
+			fmt.Println("  -o, --output [table|json]  Output format (default: table).")
+			fmt.Println("  --check                    Exit non-zero (1) when no usable policy is found.")
+			fmt.Println("                             Use in CI to gate on policy resolvability;")
+			fmt.Println("                             default exit is always 0 for human / SIEM use.")
+			fmt.Println("  --help                     Show this message and exit.")
 			return 0
 		}
 	}

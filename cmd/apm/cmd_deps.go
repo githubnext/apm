@@ -74,10 +74,10 @@ func runDepsList(args []string) int {
 			fmt.Println("  List installed APM dependencies")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  -g, --global  List user-scope dependencies")
-			fmt.Println("  --all  Include all dependency scopes")
-			fmt.Println("  --insecure  Include insecure dependencies")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -g, --global  List user-scope dependencies (~/.apm/) instead of project")
+			fmt.Println("  --all         Show both project and user-scope dependencies")
+			fmt.Println("  --insecure    Show only installed dependencies locked to http:// sources")
+			fmt.Println("  --help        Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -140,8 +140,8 @@ func runDepsTree(args []string) int {
 			fmt.Println("  Show dependency tree structure")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  -g, --global  Show user-scope dependency tree")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -g, --global  Show user-scope dependency tree (~/.apm/)")
+			fmt.Println("  --help        Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -184,9 +184,6 @@ func runDepsInfo(args []string) int {
 			fmt.Println("Usage: apm deps info [OPTIONS] PACKAGE")
 			fmt.Println()
 			fmt.Println("  Show detailed package information")
-			fmt.Println()
-			fmt.Println("Arguments:")
-			fmt.Println("  PACKAGE  [required]")
 			fmt.Println()
 			fmt.Println("Options:")
 			fmt.Println("  --help  Show this message and exit.")
@@ -254,8 +251,8 @@ func runDepsClean(args []string) int {
 			fmt.Println()
 			fmt.Println("Options:")
 			fmt.Println("  --dry-run  Show what would be removed without removing")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --yes  Skip confirmation prompt")
+			fmt.Println("  --help     Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -296,18 +293,33 @@ func runDepsClean(args []string) int {
 func runDepsUpdate(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm deps update [OPTIONS]")
+			fmt.Println("Usage: apm deps update [OPTIONS] [PACKAGES]...")
 			fmt.Println()
 			fmt.Println("  Update APM dependencies to latest refs")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --force  Force dependency refresh")
-			fmt.Println("  --target, -t TARGET  Target harness to update")
-			fmt.Println("  --parallel-downloads INTEGER  Max concurrent downloads")
-			fmt.Println("  --global, -g  Update user-scope dependencies")
-			fmt.Println("  --legacy-skill-paths  Use legacy per-client skill paths")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose                 Show detailed update information")
+			fmt.Println("  --force                       Overwrite locally-authored files on collision")
+			fmt.Println("  -t, --target TARGET           Target platform (comma-separated). Values:")
+			fmt.Println("                                copilot, claude, cursor, opencode, codex,")
+			fmt.Println("                                gemini, windsurf, agent-skills, all. 'agent-")
+			fmt.Println("                                skills' deploys to .agents/skills/ (cross-")
+			fmt.Println("                                client). 'all' = copilot+claude+cursor+opencod")
+			fmt.Println("                                e+codex+gemini+windsurf (excludes agent-")
+			fmt.Println("                                skills); combine with 'agent-skills' for both.")
+			fmt.Println("                                'copilot-cowork' is also accepted when the")
+			fmt.Println("                                copilot-cowork experimental flag is enabled")
+			fmt.Println("                                (run 'apm experimental enable copilot-")
+			fmt.Println("                                cowork').")
+			fmt.Println("  --parallel-downloads INTEGER  Max concurrent package downloads (0 to disable")
+			fmt.Println("                                parallelism)  [default: 4]")
+			fmt.Println("  -g, --global                  Update user-scope dependencies (~/.apm/)")
+			fmt.Println("  --legacy-skill-paths          Deploy skill files to per-client paths (e.g.")
+			fmt.Println("                                .cursor/skills/) instead of the shared")
+			fmt.Println("                                .agents/skills/ directory. Compatibility flag")
+			fmt.Println("                                for projects that need per-client skill")
+			fmt.Println("                                layouts.")
+			fmt.Println("  --help                        Show this message and exit.")
 			return 0
 		}
 		switch a {

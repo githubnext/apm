@@ -98,8 +98,8 @@ func runMarketplaceList(args []string) int {
 			fmt.Println("  List registered marketplaces")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -138,16 +138,16 @@ func runMarketplaceList(args []string) int {
 func runMarketplaceAdd(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm marketplace add [OPTIONS] NAME URL")
+			fmt.Println("Usage: apm marketplace add [OPTIONS] REPO")
 			fmt.Println()
 			fmt.Println("  Register a marketplace")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --name, -n TEXT  Marketplace display name")
-			fmt.Println("  --branch, -b TEXT  Marketplace branch")
-			fmt.Println("  --host TEXT  Marketplace host")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -n, --name TEXT    Display name (defaults to repo name)")
+			fmt.Println("  -b, --branch TEXT  Branch to use  [default: main]")
+			fmt.Println("  --host TEXT        Git host FQDN (default: github.com)")
+			fmt.Println("  -v, --verbose      Show detailed output")
+			fmt.Println("  --help             Show this message and exit.")
 			return 0
 		}
 	}
@@ -208,9 +208,9 @@ func runMarketplaceRemove(args []string) int {
 			fmt.Println("  Remove a registered marketplace")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --yes      Skip confirmation prompt")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 	}
@@ -276,8 +276,8 @@ func runMarketplaceUpdate(args []string) int {
 			fmt.Println("  Refresh marketplace cache")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -299,13 +299,13 @@ func runMarketplaceUpdate(args []string) int {
 func runMarketplaceBrowse(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm marketplace browse [OPTIONS]")
+			fmt.Println("Usage: apm marketplace browse [OPTIONS] NAME")
 			fmt.Println()
 			fmt.Println("  Browse plugins in a marketplace")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -331,9 +331,8 @@ func runMarketplaceValidate(args []string) int {
 			fmt.Println("  Validate a marketplace manifest")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --check-refs  Verify version refs are reachable (network)")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 	}
@@ -341,7 +340,7 @@ func runMarketplaceValidate(args []string) int {
 	name := ""
 	for _, a := range args {
 		switch a {
-		case "--check-refs", "--verbose", "-v":
+		case "--verbose", "-v":
 			// known flags
 		default:
 			if startsWith(a, "-") {
@@ -387,15 +386,15 @@ func runMarketplaceInit(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm marketplace init [OPTIONS]")
 			fmt.Println()
-			fmt.Println("  Add a 'marketplace:' block to apm.yml")
+			fmt.Println("  Add a 'marketplace:' block to apm.yml (scaffolds apm.yml if missing)")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --force  Overwrite existing marketplace block")
-			fmt.Println("  --no-gitignore-check  Skip gitignore validation")
-			fmt.Println("  --name TEXT  Marketplace name")
-			fmt.Println("  --owner TEXT  Marketplace owner")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --force               Overwrite an existing 'marketplace:' block in apm.yml")
+			fmt.Println("  --no-gitignore-check  Skip the .gitignore staleness check")
+			fmt.Println("  --name TEXT           Marketplace/package name (default: my-marketplace)")
+			fmt.Println("  --owner TEXT          Owner name for the marketplace")
+			fmt.Println("  -v, --verbose         Show detailed output")
+			fmt.Println("  --help                Show this message and exit.")
 			return 0
 		}
 	}
@@ -441,9 +440,9 @@ func runMarketplaceCheck(args []string) int {
 			fmt.Println("  Validate marketplace entries are resolvable")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --offline  Use cached refs only (no network)")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --offline      Schema + cached-ref checks only (no network)")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -470,10 +469,10 @@ func runMarketplaceOutdated(args []string) int {
 			fmt.Println("  Show packages with available upgrades")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --offline  Use cached refs only (no network)")
+			fmt.Println("  --offline             Use cached refs only (no network)")
 			fmt.Println("  --include-prerelease  Include prerelease versions")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose         Show detailed output")
+			fmt.Println("  --help                Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -499,8 +498,8 @@ func runMarketplaceDoctor(args []string) int {
 			fmt.Println("  Run environment diagnostics for marketplace publishing")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -527,16 +526,18 @@ func runMarketplacePublish(args []string) int {
 			fmt.Println("  Publish marketplace updates to consumer repositories")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --targets PATH  Path to consumer-targets YAML file")
-			fmt.Println("  --dry-run  Preview without pushing or opening PRs")
-			fmt.Println("  --no-pr  Push branches but skip PR creation")
-			fmt.Println("  --draft  Create PRs as drafts")
-			fmt.Println("  --allow-downgrade  Allow version downgrades")
+			fmt.Println("  --targets PATH      Path to consumer-targets YAML file (default: ./consumer-")
+			fmt.Println("                      targets.yml)")
+			fmt.Println("  --dry-run           Preview without pushing or opening PRs")
+			fmt.Println("  --no-pr             Push branches but skip PR creation")
+			fmt.Println("  --draft             Create PRs as drafts")
+			fmt.Println("  --allow-downgrade   Allow version downgrades")
 			fmt.Println("  --allow-ref-change  Allow switching ref types")
-			fmt.Println("  --parallel INTEGER  Maximum number of concurrent target updates")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --parallel INTEGER  Maximum number of concurrent target updates  [default:")
+			fmt.Println("                      4]")
+			fmt.Println("  -y, --yes           Skip confirmation prompt")
+			fmt.Println("  -v, --verbose       Show detailed output")
+			fmt.Println("  --help              Show this message and exit.")
 			return 0
 		}
 	}
@@ -571,9 +572,9 @@ func runMarketplacePackage(args []string) int {
 		fmt.Println("  --help  Show this message and exit.")
 		fmt.Println()
 		fmt.Println("Commands:")
-		fmt.Println("  add     Add a package to the marketplace config")
-		fmt.Println("  remove  Remove a package from the marketplace config")
-		fmt.Println("  set     Update package settings in the marketplace config")
+		fmt.Println("  add     Add a package to marketplace authoring config")
+		fmt.Println("  remove  Remove a package from marketplace authoring config")
+		fmt.Println("  set     Update a package entry in marketplace authoring config")
 		return 0
 	}
 	if startsWith(args[0], "-") {
@@ -602,19 +603,20 @@ func runMarketplacePackageAdd(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm marketplace package add [OPTIONS] SOURCE")
 			fmt.Println()
-			fmt.Println("  Add a package to the marketplace config")
+			fmt.Println("  Add a package to marketplace authoring config")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --name TEXT  Package name (default: repo name)")
-			fmt.Println("  --version TEXT  Semver range (e.g. '>=1.0.0')")
-			fmt.Println("  --ref TEXT  Pin to a git ref (SHA, tag, or HEAD)")
-			fmt.Println("  -s, --subdir TEXT  Subdirectory inside source repo")
-			fmt.Println("  --tag-pattern TEXT  Tag pattern (e.g. 'v{version}')")
-			fmt.Println("  --tags TEXT  Comma-separated tags")
+			fmt.Println("  --name TEXT           Package name (default: repo name)")
+			fmt.Println("  --version TEXT        Semver range (e.g. '>=1.0.0')")
+			fmt.Println("  --ref TEXT            Pin to a git ref (SHA, tag, or HEAD). Mutable refs are")
+			fmt.Println("                        auto-resolved to SHA.")
+			fmt.Println("  -s, --subdir TEXT     Subdirectory inside source repo")
+			fmt.Println("  --tag-pattern TEXT    Tag pattern (e.g. 'v{version}')")
+			fmt.Println("  --tags TEXT           Comma-separated tags")
 			fmt.Println("  --include-prerelease  Include prerelease versions")
-			fmt.Println("  --no-verify  Skip remote reachability check")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  --no-verify           Skip remote reachability check")
+			fmt.Println("  -v, --verbose         Show detailed output")
+			fmt.Println("  --help                Show this message and exit.")
 			return 0
 		}
 	}
@@ -645,12 +647,12 @@ func runMarketplacePackageRemove(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm marketplace package remove [OPTIONS] NAME")
 			fmt.Println()
-			fmt.Println("  Remove a package from the marketplace config")
+			fmt.Println("  Remove a package from marketplace authoring config")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --yes      Skip confirmation prompt")
+			fmt.Println("  -v, --verbose  Show detailed output")
+			fmt.Println("  --help         Show this message and exit.")
 			return 0
 		}
 		switch a {
@@ -674,17 +676,18 @@ func runMarketplacePackageSet(args []string) int {
 		if a == "--help" || a == "-h" {
 			fmt.Println("Usage: apm marketplace package set [OPTIONS] NAME")
 			fmt.Println()
-			fmt.Println("  Update package settings in the marketplace config")
+			fmt.Println("  Update a package entry in marketplace authoring config")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --version TEXT  Semver range (e.g. '>=1.0.0')")
-			fmt.Println("  --ref TEXT  Pin to a git ref (SHA, tag, or HEAD)")
-			fmt.Println("  --subdir TEXT  Subdirectory inside source repo")
-			fmt.Println("  --tag-pattern TEXT  Tag pattern (e.g. 'v{version}')")
-			fmt.Println("  --tags TEXT  Comma-separated tags")
+			fmt.Println("  --version TEXT        Semver range (e.g. '>=1.0.0')")
+			fmt.Println("  --ref TEXT            Pin to a git ref (SHA, tag, or HEAD). Mutable refs are")
+			fmt.Println("                        auto-resolved to SHA.")
+			fmt.Println("  --subdir TEXT         Subdirectory inside source repo")
+			fmt.Println("  --tag-pattern TEXT    Tag pattern (e.g. 'v{version}')")
+			fmt.Println("  --tags TEXT           Comma-separated tags")
 			fmt.Println("  --include-prerelease  Include prerelease versions")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -v, --verbose         Show detailed output")
+			fmt.Println("  --help                Show this message and exit.")
 			return 0
 		}
 	}
@@ -717,10 +720,11 @@ func runMarketplaceMigrate(args []string) int {
 			fmt.Println("  Fold marketplace.yml into apm.yml's 'marketplace:' block")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --force, --yes, -y  Overwrite an existing 'marketplace:' block in apm.yml")
-			fmt.Println("  --dry-run  Show the proposed apm.yml changes without writing them")
-			fmt.Println("  --verbose, -v  Show detailed output")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --force, --yes  Overwrite an existing 'marketplace:' block in apm.yml")
+			fmt.Println("                      (alias: --yes/-y)")
+			fmt.Println("  --dry-run           Show the proposed apm.yml changes without writing them")
+			fmt.Println("  -v, --verbose       Show detailed output")
+			fmt.Println("  --help              Show this message and exit.")
 			return 0
 		}
 		switch a {

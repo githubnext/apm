@@ -112,10 +112,11 @@ func runMCPInstall(args []string) int {
 	// Python's mcp_install forwards NAME to `apm install --mcp NAME`, which
 	// rejects any option-like value as an unknown option. Mirror that error.
 	if startsWith(name, "-") {
+		fmt.Println("[!] Install interrupted after 0.0s.")
 		fmt.Fprintln(os.Stderr, "Usage: apm install [OPTIONS] [PACKAGES]...")
 		fmt.Fprintln(os.Stderr, "Try 'apm install --help' for help.")
 		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", name)
+		fmt.Fprintln(os.Stderr, "Error: MCP name cannot start with '-'; did you forget a value for --mcp?")
 		return 2
 	}
 

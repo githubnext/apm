@@ -172,8 +172,8 @@ func runCachePrune(args []string) int {
 			fmt.Println("  Remove cache entries older than N days")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --days INTEGER  Remove entries not accessed within this many days")
-			fmt.Println("                  [default: 30]")
+			fmt.Println("  --days INTEGER  Remove entries not accessed within this many days  [default:")
+			fmt.Println("                  30]")
 			fmt.Println("  --help          Show this message and exit.")
 			return 0
 		}

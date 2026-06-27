@@ -62,13 +62,14 @@ func runRuntime(args []string) int {
 func runRuntimeSetup(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm runtime setup [OPTIONS] RUNTIME_NAME")
+			fmt.Println("Usage: apm runtime setup [OPTIONS] {copilot|codex|llm|gemini}")
 			fmt.Println()
 			fmt.Println("  Set up a runtime")
 			fmt.Println()
 			fmt.Println("Options:")
 			fmt.Println("  --version TEXT  Specific version to install")
-			fmt.Println("  --vanilla       Skip APM-specific configuration")
+			fmt.Println("  --vanilla       Install runtime without APM configuration (uses runtime's")
+			fmt.Println("                  native defaults)")
 			fmt.Println("  --help          Show this message and exit.")
 			return 0
 		}
@@ -139,13 +140,13 @@ func runRuntimeList(args []string) int {
 func runRuntimeRemove(args []string) int {
 	for _, a := range args {
 		if a == "--help" || a == "-h" {
-			fmt.Println("Usage: apm runtime remove [OPTIONS] RUNTIME_NAME")
+			fmt.Println("Usage: apm runtime remove [OPTIONS] {copilot|codex|llm|gemini}")
 			fmt.Println()
 			fmt.Println("  Remove an installed runtime")
 			fmt.Println()
 			fmt.Println("Options:")
-			fmt.Println("  --yes, -y  Skip confirmation prompt")
-			fmt.Println("  --help  Show this message and exit.")
+			fmt.Println("  -y, --yes  Confirm the action without prompting")
+			fmt.Println("  --help     Show this message and exit.")
 			return 0
 		}
 	}

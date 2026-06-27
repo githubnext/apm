@@ -94,9 +94,10 @@ func runMCPInstall(args []string) int {
 		case "--limit":
 			i++ // skip value
 		default:
-			// Python Click ignore_unknown_options=True puts --X args into ctx.args,
-			// not into the NAME positional. Only non-dash args are positional.
-			if !startsWith(a, "--limit=") && !startsWith(a, "-") && name == "" {
+			// Python Click ignore_unknown_options=True assigns --X args to the
+			// NAME positional (they do NOT go to ctx.args). Accept all
+			// unrecognized args (including --X) as NAME to match that behavior.
+			if !startsWith(a, "--limit=") && name == "" {
 				name = a
 			}
 		}
@@ -106,6 +107,15 @@ func runMCPInstall(args []string) int {
 		fmt.Fprintln(os.Stderr, "Try 'apm mcp install --help' for help.")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "Error: Missing argument 'NAME'.")
+		return 2
+	}
+	// Python's mcp_install forwards NAME to `apm install --mcp NAME`, which
+	// rejects any option-like value as an unknown option. Mirror that error.
+	if startsWith(name, "-") {
+		fmt.Fprintln(os.Stderr, "Usage: apm install [OPTIONS] [PACKAGES]...")
+		fmt.Fprintln(os.Stderr, "Try 'apm install --help' for help.")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintf(os.Stderr, "Error: No such option: %s\n", name)
 		return 2
 	}
 

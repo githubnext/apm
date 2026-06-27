@@ -20,11 +20,18 @@ from python_behavior_contracts import (  # noqa: E402
 
 def _normalize_cli_output(text: str) -> str:
     lines: list[str] = []
+    after_banner = False
     for line in text.splitlines():
         if "A new version of APM is available" in line:
+            after_banner = True
             continue
         if "Run apm update to upgrade" in line:
+            after_banner = True
             continue
+        if after_banner and not line.strip():
+            after_banner = False
+            continue
+        after_banner = False
         lines.append(line.rstrip())
     return "\n".join(lines).rstrip()
 

@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-27T10:00:00Z |
-| Iteration Count | 150 |
+| Last Run | 2026-06-27T12:00:00Z |
+| Iteration Count | 151 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:ddaec062 (iter150 pushed; fixed all 33 parity failures: normalize blank-line, [COMMAND] brackets, mcp install error, help text alignment+content for 28 cmds; 139/139 tests pass locally; awaiting CI green) |
+| Completion Gate Status | pending:8b535a21 (iter151 pushed; fixed all 32 Python behavior contract failures -- 28 help text + 4 unknown-option mismatches; 139/139 tests pass locally; awaiting CI green) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter150), gate-fix (iter149), gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141) |
+| Recent Statuses | gate-fix (iter151), gate-fix (iter150), gate-fix (iter149), gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142) |
 
 ---
 
@@ -103,6 +103,21 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 ---
 
 ## [chart] Iteration History
+
+### Iteration 151 -- 2026-06-27T12:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28298378534)
+
+- **Status**: [*] Gate-fix pushed (8b535a21)
+- **Root cause**: PYTHON_CLI_CONTRACT_STATUS=1 from 32 Python behavior contract test failures.
+  Previous fixes addressed mcp install but missed 28 help text mismatches + 3 unknown-option
+  format issues (config/experimental/targets had [COMMAND] instead of COMMAND in errcli.go).
+- **Changes** (9 files): cmd_cache.go, cmd_deps.go, cmd_marketplace.go, cmd_mcp.go,
+  cmd_plugin.go, cmd_policy.go, cmd_runtime.go, cmdmeta.go, errcli.go.
+  Fixed: 28 help text descriptions/alignment/option-order mismatches; removed extra
+  --marketplace-output and --check-refs options not in Python; fixed errcli.go [COMMAND]
+  brackets for config/experimental/targets; fixed mcp install error to '[!] Install
+  interrupted after 0.0s.' + 'MCP name cannot start with ...' message.
+- **Verified**: 139/139 tests pass locally (APM_ENFORCE_PYTHON_BEHAVIOR_CONTRACTS=1).
+- **Expected**: Python-vs-Go Parity Gate CI check green, completion gate finalizes.
 
 ### Iteration 149 -- 2026-06-27T08:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28280945708)
 

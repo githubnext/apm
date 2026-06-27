@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-27T08:00:00Z |
-| Iteration Count | 149 |
+| Last Run | 2026-06-27T10:00:00Z |
+| Iteration Count | 150 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:6dc183c5 (iter149 pushed; correct fix: --X assigned to NAME, install-context error output; awaiting CI green) |
+| Completion Gate Status | pending:ddaec062 (iter150 pushed; fixed all 33 parity failures: normalize blank-line, [COMMAND] brackets, mcp install error, help text alignment+content for 28 cmds; 139/139 tests pass locally; awaiting CI green) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter149), gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140) |
+| Recent Statuses | gate-fix (iter150), gate-fix (iter149), gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141) |
 
 ---
 

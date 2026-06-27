@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| Last Run | 2026-06-27T01:29:00Z |
-| Iteration Count | 147 |
+| Last Run | 2026-06-27T05:10:36Z |
+| Iteration Count | 148 |
 | Best Metric | 1.0 |
 | Target Metric | 1.0 |
 | Metric Direction | higher |
@@ -25,9 +25,9 @@
 | Completed Reason | -- |
 | Completion Candidate | true |
 | Completion Gate | up-to-date-pr-head-checks |
-| Completion Gate Status | pending:3ccaf12a (iter147 pushed; reverted iter146 mcp install regression; awaiting CI green) |
+| Completion Gate Status | pending:d92a8a77 (iter148 pushed; restored -prefix filter + kept 4-line missing-arg format; awaiting CI green) |
 | Consecutive Errors | 0 |
-| Recent Statuses | gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139), gate-fix (iter138) |
+| Recent Statuses | gate-fix (iter148), gate-fix (iter147), gate-fix (iter146), gate-fix (iter145), gate-fix (iter144), gate-fix (iter143), gate-fix (iter142), gate-fix (iter141), gate-fix (iter140), push-failed (iter139) |
 
 ---
 
@@ -66,14 +66,14 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [target] Current Focus
 
-**Completion Gate repair in progress.** Iter 147: iter146 regression in cmd_mcp.go (accepting dash-prefixed args as NAME) caused PYTHON_CLI_CONTRACT_STATUS=1. Fixed: restored dash-prefix filter so --X goes to missing-NAME path. errcli.go wrong-quote fix from iter146 retained. Pushed 3ccaf12a. Expected: PYTHON_CLI_CONTRACT_STATUS=0, migration_score=1.0, completion gate finalizes.
+**Completion Gate repair in progress.** Iter 148: 8f799e3b (iter148 from prev run) incorrectly re-introduced the startsWith(name, "-") error block and removed the !startsWith(a, "-") name-collection filter. Fixed: restored !startsWith(a, "-") guard AND kept 8f799e3b's correct 4-line missing-arg format (Usage/Try/blank/Error). Pushed d92a8a77. Expected: PYTHON_CLI_CONTRACT_STATUS=0, all CI checks pass, completion gate finalizes.
 
 ---
 
 ## [docs] Lessons Learned
 
 - **error format**: Click 8.x unknown-option: `Error: No such option '--X'.` (quoted, period). errcli.go intercepts `Error: No such option: X` and converts. Groups with invoke_without_command=True (config, experimental, targets) show `[COMMAND]` not `COMMAND` in usage.
-- **mcp install --X parity (iter 143+147)**: Python Click ignore_unknown_options=True treats --X as unknown OPTIONS going to ctx.args, NOT as NAME positional. "apm mcp install --foo" -> NAME missing -> "Error: Missing argument 'NAME'.\nTry 'apm mcp install --help' for help." (2 lines, rc=2). Iter146 incorrectly reversed this -- it accepted dash-prefixed as NAME and emitted an install-context 4-line error. Iter147 restored the filter.
+- **mcp install --X parity (iter 143+148)**: Python Click ignore_unknown_options=True treats --X as unknown OPTIONS going to ctx.args, NOT as NAME positional. "apm mcp install --foo" -> NAME missing -> Python outputs 4-line Click error (Usage/Try/blank/Error: Missing argument 'NAME'.), rc=2. The CORRECT Go behavior: exclude dash-prefixed args from NAME collection (!startsWith(a, "-")) AND output the 4-line format. Iter143 got the filter right but wrong format (2-line). Iter147 restored the filter but still 2-line. 8f799e3b got the 4-line format right but removed the filter (causing [!] install-context error for --X). Iter148 combined both fixes correctly.
 - **mcp install named arg (iter 141)**: When NAME positional IS provided but fails MCP regex (e.g. name starts with @), Python raises ValueError -> Click UsageError -> 4-line stderr format.
 - **push silent failure**: format-patch > 10240 bytes silently fails AND burns quota. Merge commits inflate (b3db26d0 merge: 20372 bytes). Verify: `git format-patch <remote>..HEAD --stdout | wc -c` must be < 10240.
 - **push_to_pull_request_branch has no patch-size limit**: the 10KB limit applies only to repo-memory pushes. format-patch size can be large; only actual content diff matters for protected-files check.
@@ -104,59 +104,26 @@ Strategy: **greenfield** -- Python stays as oracle; Go binary built in parallel 
 
 ## [chart] Iteration History
 
-### Iteration 147 -- 2026-06-27T01:29:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28274189929)
+### Iteration 148 -- 2026-06-27T05:10:36Z -- [Run](https://github.com/githubnext/apm/actions/runs/28279263309)
 
-- **Status**: [*] Gate-fix pushed (3ccaf12a)
-- **Milestone**: Completion Gate -- revert iter146 mcp install regression (PYTHON_CLI_CONTRACT_STATUS=1)
-- **Changes**:
-  - `cmd/apm/cmd_mcp.go`: Restored dash-prefix filter in runMCPInstall so --X args
-    go to the missing-NAME path ("Error: Missing argument 'NAME'." + Try line), not
-    accepted as NAME. Removed unreachable `if startsWith(name, "-")` block.
-- **Root cause**: iter146 changed the NAME collection condition to accept dash-prefixed
-  args (removing `&& !startsWith(a, "-")`), then emitted a 4-line install-context error
-  for them. Python outputs a 2-line missing-argument error because
-  ignore_unknown_options=True routes --X to ctx.args not NAME. This contradicted iter143.
-  iter146's errcli.go fix (remove wrong-quote transform) was correct and is retained.
-- **Verification**: go build OK; apm-go mcp install --definitely-not-an-apm-option
-  outputs "Error: Missing argument 'NAME'.\nTry 'apm mcp install --help' for help."
-  (rc=2); TestParityHarnessMCPInstallMissingArg + all MCP tests pass.
-- **Patch size**: 2689 bytes (under 10240 limit)
-- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, all CI checks pass, completion gate finalizes.
+- **Status**: [*] Gate-fix pushed (d92a8a77)
+- **Change**: Restored !startsWith(a, "-") guard in NAME collection + kept 4-line missing-arg format.
+- **Root cause**: 8f799e3b (prev iter148 attempt) got 4-line format right but removed dash guard,
+  causing --X probe to emit wrong [!] install-context error. This run combines correct filter
+  (iter143/147) + correct 4-line format (8f799e3b). Patch: 2200 bytes.
+- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, CI green, completion gate finalizes.
 
-### Iteration 146 -- 2026-06-26T14:00:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28269459014)
+### Iters 143-147 -- [x/gate-fix] mcp install --X parity loop (PYTHON_CLI_CONTRACT_STATUS=1):
 
-- **Status**: [x] Gate-fix pushed (d56da2d6) -- introduced regression in cmd_mcp.go
-- **Changes**: errcli.go wrong-quote fix (correct); cmd_mcp.go accepted dash-prefixed as
-  NAME and emitted install-context 4-line error (wrong -- contradicts iter143 lesson).
-- **Result**: PYTHON_CLI_CONTRACT_STATUS still 1 on CI for apm mcp install probe case.
+- Iter143 (0090c315): Restored !startsWith(a,"-") filter -- correct; but kept 2-line error format -- wrong.
+- Iter144 (8718e544): push failed; crane branch stayed at prev SHA.
+- Iters 145-146: upstream freshness fixes + errcli.go quote fix (be969002, d56da2d6).
+  Iter146 also re-introduced dash-prefix acceptance as NAME -- wrong.
+- Iter147 (3ccaf12a): Restored dash-prefix filter again. Still 2-line format -- wrong.
+- 8f799e3b (unlabeled iter148): Got 4-line format right but removed dash filter -- wrong again.
+- Lesson: need BOTH: !startsWith(a,"-") filter AND 4-line (Usage/Try/blank/Error) format.
 
-- **Status**: [*] Gate-fix pushed (be969002)
-- **Milestone**: Completion Gate -- fix upstream_freshness (reviewed_sha e045e88d stale; microsoft/apm@main now at f8c42440)
-- **Changes**:
-  - `tests/parity/upstream_contract_coverage.yml`: advance baseline_sha + reviewed_sha to f8c42440157a9c52b6b96dce3770a15b90ce4ea6
-  - `tests/unit/test_migration_ci_workflow.py`: synced from main via `git checkout origin/main -- file` (adds test_benchmark_pr_comment_includes_iteration_context)
-- **Root cause**: iter144 push (8718e544) failed -- crane branch was still at 1b72c9fc. microsoft/apm@main had also advanced from 78811e38 to f8c42440. Used single-file checkout (not merge commit) to avoid .github/ in patch.
-- **Patch size**: 2522 bytes (clean; no .github/ files)
-- **Expected**: upstream_freshness=pass, upstream_contracts=1.0, migration_score=1.0, completion gate finalizes.
-
-### Iteration 144 -- 2026-06-26T09:40:00Z -- [Run](https://github.com/githubnext/apm/actions/runs/28229064071)
-
-- **Status**: [x] Gate-fix push failed (8718e544 not applied -- crane stayed at 1b72c9fc)
-
-### Iteration 143 -- 2026-06-26T08:10:29Z -- [Run](https://github.com/githubnext/apm/actions/runs/28225237618)
-
-- **Status**: [*] Gate-fix pushed (0090c315)
-- **Milestone**: Completion Gate -- fix apm mcp install unknown-option parity (root cause of PYTHON_CLI_CONTRACT_STATUS=1)
-- **Changes**:
-  - `cmd/apm/cmd_mcp.go`: Fix runMCPInstall NAME arg collection: --X args are unknown OPTIONS in Python Click (via ignore_unknown_options=True) and go to ctx.args, NOT to NAME positional. Changed condition from `!startsWith(a, "--limit=")` to also require `!startsWith(a, "-")`. Removed the now-unreachable strings.HasPrefix(name, "-") error block.
-- **Root cause**: Previous iterations 141-142 incorrectly assumed Python calls build_mcp_entry("--definitely-not-an-apm-option") and shows 4-line UsageError. In fact, Click's ignore_unknown_options=True puts --X args into ctx.args; NAME argument is never filled; Python outputs just "Error: Missing argument 'NAME'." Go was outputting the 4-line error. Fix: exclude --X from NAME collection.
-- **Verification**: `go build` clean; `apm-go mcp install --definitely-not-an-apm-option` outputs "Error: Missing argument 'NAME'." (rc=2, matches Python); TestParityHarnessMCPInstallMissingArg passes.
-- **Patch size**: 2454 bytes (under 10240 limit)
-- **Expected**: PYTHON_CLI_CONTRACT_STATUS=0, all CI checks pass, completion gate finalized.
-
-### Iteration 142 -- 2026-06-26T03:28:03Z -- [x/gate-fix] cmd_mcp.go usage line fix (wrong: 4-line error) -- CI: PYTHON_CLI_CONTRACT_STATUS=1 still
-
-### Iters 140-142 -- [x/gate-fix] apm mcp install parity fixes (wrong root cause). Iter 140: errcli.go error format fix (67/68 pass). Iters 141-142: attempted 4-line UsageError for --X args (wrong: Python outputs "Error: Missing argument 'NAME'." because ignore_unknown_options treats --X as ctx.args not NAME). Iter 143 corrected the root cause.
+### Iters 140-142 -- [x/gate-fix] apm mcp install parity fixes (wrong root cause). Iter 140: errcli.go error format fix (67/68 pass). Iters 141-142: attempted 4-line UsageError for --X args (wrong: Python uses ctx.args not NAME). Iter 143 corrected it.
 
 ### Iters 133-139 -- [x/gate-fix] errcli.go buildout + push failures + error-format fixes. Iter 135 built errcli.go (patch 20372 bytes, failed). Iters 136-138: upstream freshness + cmdUsageSuffix fixes. Iter 139: merge of b3db26d0 produced 10736-byte patch > 10240 limit, silently failed.
 
